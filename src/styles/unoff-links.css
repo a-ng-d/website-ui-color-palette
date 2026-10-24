@@ -1,51 +1,51 @@
 /*
  * @unoff/ui styles button states with `:enabled`, which only matches form
  * controls. The site uses `.text-button` on links (<a>) and disclosure
- * toggles (<summary>), so their hover/active states are mirrored here with
+ * toggles (<summary>) and tabs (<label>), so their hover/active states are mirrored here with
  * the same @unoff/ui variables.
  */
-:is(a, summary).text-button {
+:is(a, summary, label).text-button {
   cursor: pointer;
 }
 
-:is(a, summary).text-button--primary:hover {
+:is(a, summary, label).text-button--primary:hover {
   --button-base-background-color: var(--button-primary-background-color-hover);
   --button-base-text-color: var(--button-primary-text-color-hover);
 }
 
-:is(a, summary).text-button--primary:active {
+:is(a, summary, label).text-button--primary:active {
   --button-base-background-color: var(
     --button-primary-background-color-pressed
   );
   --button-base-text-color: var(--button-primary-text-color-pressed);
 }
 
-:is(a, summary).text-button--secondary:hover {
+:is(a, summary, label).text-button--secondary:hover {
   --button-base-background-color: var(
     --button-secondary-background-color-hover
   );
   --button-base-border-color: var(--button-secondary-border-color-hover);
 }
 
-:is(a, summary).text-button--secondary:active {
+:is(a, summary, label).text-button--secondary:active {
   --button-base-background-color: var(
     --button-secondary-background-color-pressed
   );
   --button-base-border-color: var(--button-secondary-border-color-pressed);
 }
 
-:is(a, summary).text-button--tertiary:hover,
-:is(a, summary).text-button--tertiary:focus-visible {
+:is(a, summary, label).text-button--tertiary:hover,
+:is(a, summary, label).text-button--tertiary:focus-visible {
   --button-base-text-decoration: var(--button-tertiary-text-decoration-hover);
 }
 
-:is(a, summary).text-button--alternative:hover {
+:is(a, summary, label).text-button--alternative:hover {
   --button-base-background-color: var(
     --button-alternative-background-color-hover
   );
 }
 
-:is(a, summary).text-button:active {
+:is(a, summary, label).text-button:active {
   transform: var(--button-base-transform-pressed);
 }
 

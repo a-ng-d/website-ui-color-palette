@@ -51,6 +51,8 @@ export const links = {
   skills: 'https://uicp.ylb.lt/skills',
   docsApi: 'https://uicp.ylb.lt/docs-api',
   store: 'https://uicp.ylb.lt/store',
+  subscription: 'https://uicp.ylb.lt/subscription',
+  ultimateRequest: 'https://uicp.ylb.lt/ultimate-request',
   privacy: 'https://uicp.ylb.lt/privacy',
   terms: 'https://uicp.ylb.lt/terms',
   cookies: 'https://uicp.ylb.lt/cookies',

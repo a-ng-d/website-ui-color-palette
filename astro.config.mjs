@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 import preact from '@astrojs/preact'
+import devFunctions from './netlify/dev-functions.mjs'
 
 // @unoff/ui only exposes its barrel file in `exports`, which pulls the CSS of
 // every component. An alias lets us import one component (and its CSS) at a time.
@@ -31,7 +32,8 @@ export default defineConfig({
     format: 'file',
   },
   // compat: @unoff/ui is written for React; Preact renders it at build time.
-  integrations: [preact({ compat: true }), sitemap()],
+  // devFunctions: Netlify functions (/api/*) on the dev server.
+  integrations: [preact({ compat: true }), sitemap(), devFunctions()],
   vite: {
     // @unoff/ui imports its CSS from JS: let Vite bundle it during SSR.
     environments: {

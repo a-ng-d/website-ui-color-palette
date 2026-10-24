@@ -1,0 +1,138 @@
+---
+/**
+ * Pill tabs from the Figma “Tabs” component, with no JavaScript.
+ *
+ * The tabs are a native radio group (`<fieldset>` + radios + labels) and the
+ * content that depends on the selected tab is plain HTML: mark every panel
+ * (or any element) with `data-tab="<item id>"` inside the default slot. CSS
+ * (`:has(:checked)`) hides the ones of the other tabs, so every tab is in the
+ * page for crawlers, and everything stays visible if `:has()` is missing.
+ *
+ *   <Tabs name="plans" label="Billing period" items={[{ id: 'a', label: 'A' }]}>
+ *     <div data-tab="a">…</div>
+ *     <div data-tab="b">…</div>
+ *   </Tabs>
+ *
+ * Labels wear the @unoff/ui tertiary button classes (hover and focus states
+ * are mirrored for <label> in styles/unoff-links.css).
+ *
+ * The wrapper uses `display: contents`: the tab list and the slot take part
+ * in the layout of the parent.
+ */
+interface Item {
+  id: string
+  label: string
+}
+
+interface Props {
+  /** Unique per page: ids and radio group name. */
+  name: string
+  /** Accessible name of the group (not displayed). */
+  label: string
+  items: Item[]
+  /** Tab selected on load (defaults to the first one). */
+  active?: string
+}
+
+const { name, label, items, active = items[0]?.id } = Astro.props
+
+// One rule per tab: hide the elements of the other tabs.
+const css = items
+  .map(
+    (item) =>
+      `[data-tabs="${name}"]:has(#${name}-${item.id}:checked) [data-tab]:not([data-tab="${item.id}"]){display:none !important}`
+  )
+  .join('')
+---
+
+<div
+  class="tabs"
+  data-tabs={name}
+>
+  <fieldset class="tabs__list">
+    <legend class="visually-hidden">{label}</legend>
+    {items.map((item) => (
+      <>
+        <input
+          class="visually-hidden"
+          type="radio"
+          name={name}
+          id={`${name}-${item.id}`}
+          value={item.id}
+          checked={item.id === active}
+        />
+        <label
+          class="text-button text-button--tertiary text-button--large"
+          for={`${name}-${item.id}`}
+        >
+          <span class="text-button__label">{item.label}</span>
+        </label>
+      </>
+    ))}
+  </fieldset>
+  <slot />
+</div>
+<style
+  is:inline
+  set:html={css}
+></style>
+
+<style>
+  .tabs {
+    display: contents;
+  }
+
+  .tabs__list {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-self: center;
+    gap: var(--space-gap-100);
+    margin: 0;
+    border: var(--stroke-width-thin) solid var(--site-border-strong);
+    border-radius: var(--site-radius-pill);
+    padding: var(--space-inset-200);
+    min-inline-size: 0;
+  }
+
+  /* Type, padding and hover come from the @unoff/ui tertiary button. */
+  .tabs__list label {
+    position: relative;
+    justify-content: center;
+    border: var(--stroke-width-thin) solid transparent;
+    border-radius: var(--site-radius-pill);
+    padding: var(--space-inset-100) var(--space-inset-400);
+    min-height: 48px; /* Figma tab button */
+    white-space: nowrap;
+  }
+
+  .tabs__list input:checked + label {
+    border-color: var(--site-border-soft);
+    background-color: var(--site-surface-muted);
+  }
+
+  /* The little indicator under the selected tab. */
+  .tabs__list input:checked + label::after {
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    translate: -50% 0;
+    border-radius: 4px;
+    background-color: var(--site-ink);
+    width: 16px;
+    height: 4px;
+    content: '';
+  }
+
+  .tabs__list input:focus-visible + label {
+    outline: 2px solid var(--site-ink);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 479.98px) {
+    .tabs__list {
+      border-radius: var(--site-radius-card);
+    }
+  }
+</style>

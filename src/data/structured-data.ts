@@ -4,6 +4,12 @@
  */
 import { site } from '@/config/site'
 import type { FaqItem } from '@/data/faq'
+import {
+  billingPeriods,
+  plans,
+  type Plan,
+  type PlanVariant,
+} from '@/data/pricing'
 
 const absolute = (path: string) => new URL(path, site.url).href
 const stripHtml = (html: string) => html.replace(/<[^>]+>/g, '')
@@ -38,7 +44,14 @@ export const website = () => ({
   publisher: { '@id': organizationId },
 })
 
-export const softwareApplication = () => ({
+const freeOffer = {
+  '@type': 'Offer',
+  name: '/basic',
+  price: '0',
+  priceCurrency: 'USD',
+}
+
+export const softwareApplication = (offers: object | object[] = freeOffer) => ({
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
   '@id': softwareId,
@@ -49,14 +62,32 @@ export const softwareApplication = () => ({
   operatingSystem: 'Figma, Penpot, Sketch, Framer, Claude (MCP)',
   downloadUrl: absolute('/download'),
   publisher: { '@id': organizationId },
-  // TODO(content): add the paid plans when the Pricing page is migrated.
-  offers: {
-    '@type': 'Offer',
-    name: '/basic',
-    price: '0',
-    priceCurrency: 'USD',
-  },
+  offers,
 })
+
+/** The plans of the Pricing page, as offers of the application. */
+export const pricingOffers = () => {
+  const offer = (plan: Plan, period: string, variant: PlanVariant) => ({
+    '@type': 'Offer',
+    name: `${plan.tag} (${period})`,
+    ...(variant.price ? { price: variant.price } : {}),
+    priceCurrency: 'USD',
+    url: variant.cta?.href.startsWith('http')
+      ? variant.cta.href
+      : absolute('/pricing'),
+    description: [variant.title, variant.subtitle].filter(Boolean).join(' — '),
+  })
+
+  return softwareApplication(
+    plans.flatMap((plan) =>
+      plan.variants
+        ? billingPeriods
+            .filter(({ id }) => plan.variants![id].price)
+            .map(({ id, label }) => offer(plan, label, plan.variants![id]))
+        : [offer(plan, 'Free', plan.fixed!)]
+    )
+  )
+}
 
 export const faqPage = (items: FaqItem[]) => ({
   '@context': 'https://schema.org',

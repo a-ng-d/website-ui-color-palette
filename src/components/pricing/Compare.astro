@@ -1,0 +1,162 @@
+---
+import CheckIcon from '@lucide/astro/icons/circle-check-big'
+import SlashIcon from '@lucide/astro/icons/square-slash'
+import Tag from '@/components/ui/Tag.astro'
+import { compareColumns, compareRows } from '@/data/pricing'
+---
+
+<section
+  class="section compare"
+  aria-labelledby="compare-title"
+>
+  <div class="compare__intro surface-card">
+    <Tag size="large">Compare</Tag>
+    <h2
+      class="t-section-title"
+      id="compare-title"
+    >
+      Find the right plan that fits your need
+    </h2>
+  </div>
+
+  <!--
+    Four cards side by side that scroll horizontally on small screens; the
+    feature names stay pinned on the left. Rows share a fixed height so the
+    columns line up. Each cell names its feature for assistive technologies.
+  -->
+  <div
+    class="compare__cards"
+    role="region"
+    aria-labelledby="compare-title"
+    tabindex="0"
+  >
+    <div class="compare__card compare__card--features surface-card">
+      <div class="compare__head">
+        <Tag size="large">Features</Tag>
+      </div>
+      <ul class="compare__list">
+        {compareRows.map((row) => (
+          <li>{row.feature}</li>
+        ))}
+      </ul>
+    </div>
+
+    {compareColumns.map((column, columnIndex) => (
+      <div class="compare__card surface-card">
+        <div class="compare__head">
+          <Tag size="large">{column}</Tag>
+        </div>
+        <ul class="compare__list">
+          {compareRows.map((row) => {
+            const value = row.values[columnIndex]
+            return (
+              <li>
+                <span class="visually-hidden">{row.feature}: </span>
+                {typeof value === 'string' ? (
+                  value
+                ) : value ? (
+                  <>
+                    <CheckIcon aria-hidden="true" />
+                    <span class="visually-hidden">Included</span>
+                  </>
+                ) : (
+                  <>
+                    <SlashIcon aria-hidden="true" />
+                    <span class="visually-hidden">Not included</span>
+                  </>
+                )}
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .compare {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-200);
+  }
+
+  .compare__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    /* Dotted pattern from the Figma “Section Card”. */
+    background-image: radial-gradient(
+      circle,
+      var(--site-border-soft) 1.5px,
+      transparent 1.5px
+    );
+    background-size: 16px 16px;
+    background-color: var(--site-surface-muted);
+    padding: var(--space-inset-800);
+  }
+
+  .compare__cards {
+    display: flex;
+    gap: var(--space-gap-200);
+    isolation: isolate;
+    overflow-x: auto;
+    overflow-y: clip;
+  }
+
+  .compare__card {
+    flex: 1 1 280px;
+    background-color: var(--site-surface);
+    min-width: 280px;
+  }
+
+  .compare__card--features {
+    position: sticky;
+    left: 0;
+    flex-grow: 1.4;
+    z-index: 4;
+    min-width: 400px;
+  }
+
+  .compare__head {
+    padding: var(--space-inset-800);
+  }
+
+  .compare__list {
+    margin: 0;
+    padding: 0 var(--space-inset-800) var(--space-inset-800);
+    list-style: none;
+  }
+
+  .compare__list li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-gap-200);
+    padding: var(--space-inset-200) var(--space-inset-100);
+    height: 48px;
+    font-weight: var(--text-weight-text);
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+    letter-spacing: var(--text-body-tracking);
+  }
+
+  .compare__list li :global(svg) {
+    width: var(--control-icon-600);
+    height: var(--control-icon-600);
+  }
+
+  @media (max-width: 1023.98px) {
+    .compare__card--features {
+      min-width: 240px;
+    }
+
+    .compare__head,
+    .compare__list {
+      padding-inline: var(--space-inset-600);
+    }
+
+    .compare__intro {
+      padding: var(--space-inset-600);
+    }
+  }
+</style>

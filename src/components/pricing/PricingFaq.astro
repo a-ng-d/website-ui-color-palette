@@ -1,0 +1,141 @@
+---
+import PlusIcon from '@lucide/astro/icons/plus'
+import CloseIcon from '@lucide/astro/icons/x'
+import Tabs from '@/components/ui/Tabs.astro'
+import type { FaqCategory } from '@/data/faq'
+
+interface Props {
+  categories: FaqCategory[]
+}
+
+// A category without questions has no tab.
+const categories = Astro.props.categories.filter((c) => c.items.length)
+---
+
+<section
+  class="section pricing-faq"
+  aria-labelledby="pricing-faq-title"
+>
+  <h2
+    class="visually-hidden"
+    id="pricing-faq-title"
+  >
+    FAQ
+  </h2>
+
+  <div class="pricing-faq__card surface-card">
+    <Tabs
+      name="faq"
+      label="Question category"
+      items={categories}
+    >
+      {categories.map((category) => (
+        <div
+          class="pricing-faq__panel"
+          data-tab={category.id}
+        >
+          {category.items.map((item) => (
+            <details
+              class="pricing-faq__item"
+              name={`faq-${category.id}`}
+            >
+              <summary class="pricing-faq__question">
+                <h3 class="t-accent">{item.question}</h3>
+                <span
+                  class="pricing-faq__toggle icon-button icon-button--default"
+                  aria-hidden="true"
+                >
+                  <PlusIcon class="pricing-faq__open" />
+                  <CloseIcon class="pricing-faq__close" />
+                </span>
+              </summary>
+              <div
+                class="pricing-faq__answer"
+                set:html={item.answer}
+              />
+            </details>
+          ))}
+        </div>
+      ))}
+    </Tabs>
+  </div>
+</section>
+
+<style>
+  .pricing-faq__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-gap-800);
+    padding: var(--space-inset-800);
+  }
+
+  .pricing-faq__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    width: 100%;
+    max-width: var(--layout-content-max);
+  }
+
+  /* ---- Accordion (same as the home FAQ) ---- */
+  .pricing-faq__item {
+    border-bottom: var(--stroke-width-thin) solid var(--site-border-strong);
+    padding-block: var(--space-inset-400);
+  }
+
+  .pricing-faq__question {
+    display: flex;
+    align-items: center;
+    gap: var(--space-gap-400);
+    cursor: pointer;
+    padding-block: var(--space-inset-400);
+    list-style: none;
+  }
+
+  .pricing-faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .pricing-faq__question h3 {
+    flex: 1 1 auto;
+    font-weight: inherit;
+  }
+
+  .pricing-faq__toggle {
+    flex-shrink: 0;
+    color: var(--icon-button-base-icon-color);
+  }
+
+  .pricing-faq__toggle :global(svg) {
+    width: var(--icon-button-base-icon-width);
+    height: var(--icon-button-base-icon-width);
+  }
+
+  .pricing-faq__toggle :global(.pricing-faq__close),
+  .pricing-faq__item[open] .pricing-faq__toggle :global(.pricing-faq__open) {
+    display: none;
+  }
+
+  .pricing-faq__item[open] .pricing-faq__toggle :global(.pricing-faq__close) {
+    display: block;
+  }
+
+  .pricing-faq__answer {
+    padding-bottom: var(--space-inset-400);
+  }
+
+  .pricing-faq__answer :global(a) {
+    text-decoration: underline;
+  }
+
+  .pricing-faq__answer :global(strong) {
+    font-weight: 700;
+  }
+
+  @media (max-width: 1023.98px) {
+    .pricing-faq__card {
+      padding: var(--space-inset-600);
+    }
+  }
+</style>

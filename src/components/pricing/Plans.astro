@@ -1,0 +1,353 @@
+---
+import ArrowRightIcon from '@lucide/astro/icons/arrow-right'
+import BadgePercentIcon from '@lucide/astro/icons/badge-percent'
+import Button from '@/components/ui/Button.astro'
+import Tabs from '@/components/ui/Tabs.astro'
+import Tag from '@/components/ui/Tag.astro'
+import { billingPeriods, plans } from '@/data/pricing'
+
+/** [period or null, content]: one entry when it never changes. */
+const variantsOf = (plan: (typeof plans)[number]) =>
+  plan.variants
+    ? billingPeriods.map((p) => [p.id, plan.variants![p.id]] as const)
+    : ([[null, plan.fixed!]] as const)
+
+const arrow = (plan: (typeof plans)[number]) => plan.id === 'pro'
+---
+
+<section
+  class="section plans"
+  aria-labelledby="plans-title"
+>
+  <h2
+    class="visually-hidden"
+    id="plans-title"
+  >
+    Plans
+  </h2>
+
+  <Tabs
+    name="billing"
+    label="Billing period"
+    items={billingPeriods}
+  >
+    <div class="plans__cards">
+      {plans.map((plan) => (
+        <article class:list={['plan', 'surface-card', `plan--${plan.id}`]}>
+          <div class="plan__info">
+            <div class="plan__top">
+              <Tag size="large">{plan.tag}</Tag>
+              {variantsOf(plan).map(([period, variant]) => (
+                <div
+                  class="plan__price"
+                  data-tab={period ?? undefined}
+                >
+                  <h3
+                    class="t-paragraph-primary-title"
+                    data-price={variant.priceOf?.productId ?? variant.productId}
+                    data-multiplier={variant.priceOf?.multiplier}
+                    data-months={variant.months}
+                  >
+                    {variant.title}
+                  </h3>
+                  {variant.subtitle && (
+                    <p
+                      class="t-accent"
+                      data-template={variant.subtitleTemplate}
+                    >
+                      {variant.subtitle}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <ul class="plan__features">
+              {plan.features.map((feature) => (
+                <li>
+                  <feature.icon aria-hidden="true" />
+                  <span>{feature.label}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {variantsOf(plan).some(([, v]) => v.cta) && (
+            <div class="plan__action">
+              {variantsOf(plan).map(([period, variant]) =>
+                variant.cta ? (
+                  <Button
+                    href={variant.cta.href}
+                    variant={variant.cta.variant}
+                    data-tab={period ?? undefined}
+                    data-product={variant.productId}
+                    block
+                  >
+                    {variant.cta.label}
+                    {arrow(plan) && (
+                      <ArrowRightIcon
+                        slot="end"
+                        aria-hidden="true"
+                        class="plan__arrow"
+                      />
+                    )}
+                  </Button>
+                ) : null
+              )}
+            </div>
+          )}
+
+          {plan.badge && (
+            <p class="plan__badge">
+              <BadgePercentIcon aria-hidden="true" />
+              {plan.badge}
+            </p>
+          )}
+        </article>
+      ))}
+    </div>
+  </Tabs>
+</section>
+
+<script>
+  // Embedded checkout. Without JS (or if anything fails) the button is a plain
+  // link to /api/checkout, which redirects to the hosted Polar checkout.
+  import { PolarEmbedCheckout } from '@polar-sh/checkout/embed'
+
+  const theme = () =>
+    document.documentElement.dataset.mode === 'yelbolt-uicp-dark'
+      ? 'dark'
+      : 'light'
+
+  // ---- Localized prices -------------------------------------------------
+  // The HTML carries the USD prices. /api/prices returns every currency of
+  // each Polar product; we pick the visitor's currency from their locale
+  // (same rules as the plugin) and quietly keep the USD prices on any failure.
+  const CURRENCIES: Record<string, string> = {
+    GB: 'gbp',
+    CH: 'chf',
+    CA: 'cad',
+    BR: 'brl',
+    IN: 'inr',
+    SG: 'sgd',
+    JP: 'jpy',
+    CN: 'cny',
+    TW: 'twd',
+    KR: 'krw',
+    TR: 'try',
+    ID: 'idr',
+    VN: 'vnd',
+    AR: 'ars',
+    ...Object.fromEntries(
+      'AT BE CY DE EE ES FI FR GR IE IT LT LU LV MT NL PT SI SK'
+        .split(' ')
+        .map((region) => [region, 'eur'])
+    ),
+  }
+
+  const locale = navigator.languages?.[0] ?? navigator.language ?? 'en-US'
+  let currency = 'usd'
+  try {
+    const region =
+      new Intl.Locale(locale).maximize().region?.toUpperCase() ?? ''
+    currency = CURRENCIES[region] ?? 'usd'
+  } catch {}
+
+  fetch('/api/prices')
+    .then((response) => (response.ok ? response.json() : null))
+    .then(
+      (data: { prices?: Record<string, Record<string, number>> } | null) => {
+        if (!data?.prices) return
+        const format = (cents: number) =>
+          new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency,
+            minimumFractionDigits: 0,
+          }).format(cents / 100)
+
+        for (const title of document.querySelectorAll<HTMLElement>(
+          '[data-price]'
+        )) {
+          const base = data.prices?.[title.dataset.price ?? '']?.[currency]
+          if (!base) continue // currency unknown for this product: keep USD
+
+          // /ultimate = N × /pro. Doubling a x.99 price gives x.98: keep the
+          // x.99 look, as in the USD prices.
+          let cents = base * (Number(title.dataset.multiplier) || 1)
+          if (cents % 100 === 98) cents += 1
+
+          // Per-month price of a yearly plan, rounded down like the USD one.
+          const months = Number(title.dataset.months) || 1
+          title.textContent = format(Math.floor(cents / months))
+
+          const note = title
+            .closest('.plan__price')
+            ?.querySelector<HTMLElement>('[data-template]')
+          if (note?.dataset.template)
+            note.textContent = note.dataset.template.replace(
+              '{total}',
+              format(cents)
+            )
+        }
+      }
+    )
+    .catch(() => {})
+
+  for (const button of document.querySelectorAll<HTMLAnchorElement>(
+    'a[data-product]'
+  )) {
+    button.addEventListener('click', async (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.button)
+        return
+      event.preventDefault()
+      if (button.getAttribute('aria-busy') === 'true') return
+      button.setAttribute('aria-busy', 'true')
+      try {
+        const response = await fetch(`${button.href}&format=json`)
+        const { url } = await response.json()
+        if (!response.ok || !url) throw new Error('checkout')
+        await PolarEmbedCheckout.create(url, { theme: theme() })
+      } catch {
+        window.location.assign(button.href)
+      } finally {
+        button.removeAttribute('aria-busy')
+      }
+    })
+  }
+</script>
+
+<style>
+  .plans {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-gap-200);
+    padding-top: var(--space-inset-200);
+  }
+
+  .plan__price {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-200);
+  }
+
+  /* ---- Cards ---- */
+  .plans__cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-gap-200);
+    width: 100%;
+  }
+
+  .plan {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 680px;
+  }
+
+  .plan__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-800);
+    padding: var(--space-inset-800);
+  }
+
+  .plan__top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-gap-400);
+  }
+
+  .plan__features {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .plan__features li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-gap-200);
+    padding: var(--space-inset-200) var(--space-inset-100);
+    font-weight: var(--text-weight-text);
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+    letter-spacing: var(--text-body-tracking);
+  }
+
+  .plan__features li :global(svg) {
+    flex-shrink: 0;
+    width: var(--control-icon-600);
+    height: var(--control-icon-600);
+  }
+
+  .plan__features li span {
+    padding-top: 2px;
+  }
+
+  .plan__action {
+    display: flex;
+    padding: var(--space-inset-800);
+  }
+
+  .plan__arrow {
+    width: var(--control-icon-600);
+    height: var(--control-icon-600);
+  }
+
+  /* "Most popular": inverse pill pinned to the top right of the card. */
+  .plan__badge {
+    display: inline-flex;
+    position: absolute;
+    top: 31px;
+    right: 31px;
+    align-items: center;
+    gap: var(--space-gap-400);
+    border: var(--stroke-width-thin) solid var(--site-border-soft);
+    border-radius: var(--site-radius-pill);
+    background-color: var(--button-primary-background-color-default);
+    padding: var(--space-inset-100) var(--space-inset-600)
+      var(--space-inset-100) var(--space-inset-400);
+    min-height: 56px;
+    color: var(--button-primary-text-color-default);
+    font-weight: var(--text-weight-text);
+    font-size: var(--text-tag-size);
+    line-height: 1;
+    letter-spacing: var(--text-body-tracking);
+    white-space: nowrap;
+  }
+
+  .plan__badge :global(svg) {
+    width: var(--control-icon-600);
+    height: var(--control-icon-600);
+  }
+
+  @media (max-width: 1023.98px) {
+    .plans__cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .plan {
+      min-height: 0;
+    }
+
+    .plan__info,
+    .plan__action {
+      padding: var(--space-inset-600);
+    }
+  }
+
+  @media (max-width: 479.98px) {
+    .plan__badge {
+      position: static;
+      align-self: flex-start;
+      order: -1;
+      margin: 0 var(--space-inset-600) var(--space-inset-600);
+    }
+  }
+</style>
