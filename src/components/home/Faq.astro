@@ -1,0 +1,151 @@
+---
+import PlusIcon from '@lucide/astro/icons/plus'
+import CloseIcon from '@lucide/astro/icons/x'
+import type { FaqItem } from '@/data/faq'
+
+interface Props {
+  items: FaqItem[]
+  title?: string
+  intro?: string
+}
+
+const {
+  items,
+  title = 'FAQ',
+  intro = 'Everything you need to know about color, accessibility, and how UI Color Palette works.',
+} = Astro.props
+---
+
+<section
+  class="section faq"
+  aria-labelledby="faq-title"
+>
+  <div class="faq__layout">
+    <div class="faq__intro">
+      <h2
+        class="t-section-title"
+        id="faq-title"
+      >
+        {title}
+      </h2>
+      <p class="t-accent">{intro}</p>
+    </div>
+
+    <div class="faq__card surface-card">
+      {items.map((item) => (
+        <details
+          class="faq__item"
+          name="faq"
+        >
+          <summary class="faq__question">
+            <h3 class="t-accent">{item.question}</h3>
+            <!--
+              @unoff/ui icon button styles on a <span>: a real <button> inside
+              <summary> would swallow the click and the item would not open.
+            -->
+            <span
+              class="faq__toggle icon-button icon-button--default"
+              aria-hidden="true"
+            >
+              <PlusIcon class="faq__toggle-open" />
+              <CloseIcon class="faq__toggle-close" />
+            </span>
+          </summary>
+          <div
+            class="faq__answer"
+            set:html={item.answer}
+          />
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr);
+    gap: var(--space-gap-200);
+  }
+
+  .faq__intro {
+    display: flex;
+    position: sticky;
+    top: var(--layout-header-height);
+    flex-direction: column;
+    align-self: start;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+  }
+
+  .faq__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+  }
+
+  .faq__item {
+    border-bottom: var(--stroke-width-thin) solid var(--site-border-strong);
+    padding-block: var(--space-inset-400);
+  }
+
+  .faq__question {
+    display: flex;
+    align-items: center;
+    gap: var(--space-gap-400);
+    cursor: pointer;
+    padding-block: var(--space-inset-400);
+    list-style: none;
+  }
+
+  .faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__question h3 {
+    flex: 1 1 auto;
+    font-weight: inherit;
+  }
+
+  .faq__toggle {
+    flex-shrink: 0;
+    color: var(--icon-button-base-icon-color);
+  }
+
+  .faq__toggle :global(svg) {
+    width: var(--icon-button-base-icon-width);
+    height: var(--icon-button-base-icon-width);
+  }
+
+  .faq__toggle :global(.faq__toggle-close),
+  .faq__item[open] .faq__toggle :global(.faq__toggle-open) {
+    display: none;
+  }
+
+  .faq__item[open] .faq__toggle :global(.faq__toggle-close) {
+    display: block;
+  }
+
+  .faq__answer {
+    padding-bottom: var(--space-inset-400);
+  }
+
+  .faq__answer :global(a) {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 1023.98px) {
+    .faq__layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .faq__intro {
+      position: static;
+    }
+
+    .faq__card {
+      padding: var(--space-inset-400) var(--space-inset-600);
+    }
+  }
+</style>

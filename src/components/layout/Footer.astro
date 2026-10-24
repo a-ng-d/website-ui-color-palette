@@ -1,0 +1,230 @@
+---
+import { Image } from 'astro:assets'
+
+import Logotype from '@/assets/brand/logotype-footer.svg'
+import LinkedinIcon from '@/assets/icons/linkedin.svg'
+import CoffeeIcon from '@lucide/astro/icons/coffee'
+import startupFame from '@/assets/badges/startup-fame.png'
+import tlGuide from '@/assets/badges/tl-guide.png'
+import Chip from '@unoff-dist/components/tags/chip/Chip.js'
+import Button from '@/components/ui/Button.astro'
+import TertiaryLink from '@/components/ui/TertiaryLink.astro'
+import { footerNav, isExternal, links, site, type NavLink } from '@/config/site'
+
+const columns: { title: string; items: NavLink[] }[] = [
+  { title: 'Products', items: footerNav.products },
+  { title: 'Tools', items: footerNav.tools },
+  { title: 'Resources', items: footerNav.resources },
+  { title: 'Get involved', items: footerNav.involved },
+]
+
+const year = new Date().getFullYear()
+const ext = (href: string) =>
+  isExternal(href) ? { target: '_blank', rel: 'noopener' } : {}
+---
+
+<footer class="footer">
+  <div class="footer__grid">
+    {columns.map((column) => (
+      <nav
+        class="footer__card surface-card"
+        aria-label={column.title}
+      >
+        <h2 class="t-paragraph-primary-title">{column.title}</h2>
+        <ul class="footer__list">
+          {column.items.map((item) => (
+            <li>
+              <TertiaryLink
+                href={item.href}
+                label={item.label}
+                size="default"
+              />
+              {item.badge && <Chip>{item.badge}</Chip>}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    ))}
+
+    <section
+      class="footer__card footer__card--wide surface-card"
+      aria-labelledby="footer-support"
+    >
+      <h2
+        class="t-paragraph-primary-title"
+        id="footer-support"
+      >
+        Support us
+      </h2>
+      <div class="footer__buttons">
+        <Button
+          href={links.linkedin}
+          variant="secondary"
+          iconOnly
+          label="Follow UI Color Palette on LinkedIn"
+        >
+          <LinkedinIcon
+            slot="icon"
+            aria-hidden="true"
+          />
+        </Button>
+        <Button
+          href={links.coffee}
+          variant="secondary"
+          iconOnly
+          label="Buy the author a coffee"
+        >
+          <CoffeeIcon
+            slot="icon"
+            aria-hidden="true"
+          />
+        </Button>
+      </div>
+      <div class="footer__badges">
+        <a
+          href={links.startupFame}
+          {...ext(links.startupFame)}
+        >
+          <Image
+            src={startupFame}
+            alt="Featured on Startup Fame"
+            width={224}
+            loading="lazy"
+          />
+        </a>
+        <a
+          href={links.tlGuide}
+          {...ext(links.tlGuide)}
+        >
+          <Image
+            src={tlGuide}
+            alt="Featured on TL Guide"
+            width={267}
+            loading="lazy"
+          />
+        </a>
+      </div>
+    </section>
+
+    <div class="footer__card footer__card--wide footer__brand surface-card">
+      <Logotype
+        class="footer__logo"
+        preserveAspectRatio="xMinYMid meet"
+        role="img"
+        aria-label={site.name}
+      />
+      <div class="footer__legal">
+        <span>
+          MIT {year},{' '}
+          <a
+            href={site.publisher.url}
+            {...ext(site.publisher.url)}
+          >
+            {site.publisher.name}
+          </a>
+        </span>
+        {footerNav.legal.map((item) => (
+          <>
+            <span aria-hidden="true">・</span>
+            <TertiaryLink
+              href={item.href}
+              label={item.label}
+              size="default"
+            />
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding: var(--layout-section-gap) var(--layout-gutter) var(--layout-gutter);
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: minmax(400px, auto);
+    gap: var(--space-gap-200);
+  }
+
+  .footer__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+  }
+
+  .footer__card--wide {
+    grid-column: span 2;
+  }
+
+  .footer__list li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-gap-200);
+  }
+
+  .footer__list {
+    display: grid;
+    gap: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-gap-200);
+  }
+
+  .footer__badges {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-gap-200);
+  }
+
+  .footer__brand {
+    gap: var(--space-gap-800);
+  }
+
+  .footer__brand :global(.footer__logo) {
+    flex: 1 1 auto;
+    width: 100%;
+    height: auto;
+    max-height: 240px;
+  }
+
+  .footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-gap-200);
+  }
+
+  @media (max-width: 1023.98px) {
+    .footer__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: minmax(320px, auto);
+    }
+  }
+
+  @media (max-width: 639.98px) {
+    .footer__grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-auto-rows: auto;
+    }
+
+    .footer__card--wide {
+      grid-column: auto;
+    }
+
+    .footer__card {
+      min-height: 240px;
+    }
+  }
+</style>

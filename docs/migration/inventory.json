@@ -1,0 +1,939 @@
+{
+  "blog_3-ways-ai-now-builds-audits-and-deploys-your-color-systems": {
+    "title": "3 ways AI now builds, audits, and deploys your color systems",
+    "meta_title": "3 ways AI now builds, audits, and deploys your color systems",
+    "description": "Generate, master, and deploy accessible color palettes in seconds. WCAG & APCA-ready scales for Figma, Penpot, Sketch, Framer, and any AI.",
+    "canonical": null,
+    "og_image": "https://ui-color-palette.com/_assets/v11/3cc7efce05668e6f811dc78bdb14a3a4e7a40921.png",
+    "robots": "index,follow",
+    "jsonld": [
+      "Organization",
+      "SoftwareApplication"
+    ],
+    "headings": {
+      "h1": {
+        "count": 0,
+        "unique": []
+      },
+      "h2": {
+        "count": 20,
+        "unique": [
+          "Aurélien Grimaud",
+          "1 · Deploy a color system to your design tool",
+          "2 · Generate W3C tokens & Tailwind V4 from your IDE",
+          "3 · Manage color at scale with the Claude plugin",
+          "Get started in 2 minutes"
+        ]
+      },
+      "h3": {
+        "count": 20,
+        "unique": [
+          "Support us",
+          "Get involved",
+          "Get help",
+          "Tools",
+          "Products",
+          "Resources"
+        ]
+      },
+      "h4": {
+        "count": 0,
+        "unique": []
+      }
+    },
+    "images": 112,
+    "images_without_alt": 104,
+    "words": 3056,
+    "bytes": 280564,
+    "internal_links": [
+      "/",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.css",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.js",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/_cms/blog/3-ways-ai-now-builds-audits-and-deploys-your-color-systems.json",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/blog/3-ways-ai-now-builds-audits-and-deploys-your-color-systems.json",
+      "/_runtimes/sites-runtime.c8f48c29cf318bddeaa96faf2405f43d01a2399293bf1ec8f04e0ed487e37df5.js",
+      "/claude",
+      "/figma",
+      "/framer",
+      "/penpot",
+      "/sketch"
+    ],
+    "external_links": [
+      "https://tlguide.com/reviews/ui-color-palette",
+      "https://uicp.ylb.lt/community",
+      "https://uicp.ylb.lt/contact",
+      "https://uicp.ylb.lt/cookies",
+      "https://uicp.ylb.lt/docs",
+      "https://uicp.ylb.lt/docs-api",
+      "https://uicp.ylb.lt/docs-mcp",
+      "https://uicp.ylb.lt/feedback",
+      "https://uicp.ylb.lt/ideas",
+      "https://uicp.ylb.lt/network",
+      "https://uicp.ylb.lt/privacy",
+      "https://uicp.ylb.lt/repository",
+      "https://uicp.ylb.lt/run-claude-plugin",
+      "https://uicp.ylb.lt/sale",
+      "https://uicp.ylb.lt/skills",
+      "https://uicp.ylb.lt/store",
+      "https://uicp.ylb.lt/support",
+      "https://uicp.ylb.lt/terms",
+      "https://www.linkedin.com/feed/update/urn:li:activity:7467598417150586880",
+      "https://yelbolt.co/"
+    ],
+    "url": "https://ui-color-palette.com/blog/3-ways-ai-now-builds-audits-and-deploys-your-color-systems"
+  },
+  "blog_goodbye-2025-plugin-and-welcome-to-2026-app": {
+    "title": "Goodbye 2025 plugin and welcome to 2026 app",
+    "meta_title": "Goodbye 2025 plugin and welcome to 2026 app",
+    "description": "Generate, master, and deploy accessible color palettes in seconds. WCAG & APCA-ready scales for Figma, Penpot, Sketch, Framer, and any AI.",
+    "canonical": null,
+    "og_image": "https://ui-color-palette.com/_assets/v11/3cc7efce05668e6f811dc78bdb14a3a4e7a40921.png",
+    "robots": "index,follow",
+    "jsonld": [
+      "Organization",
+      "SoftwareApplication"
+    ],
+    "headings": {
+      "h1": {
+        "count": 0,
+        "unique": []
+      },
+      "h2": {
+        "count": 24,
+        "unique": [
+          "Aurélien Grimaud",
+          "Multi-Platform Expansion",
+          "AI-Powered Color Tools",
+          "An App That Speaks Your Language",
+          "What's Next?",
+          "Thank You"
+        ]
+      },
+      "h3": {
+        "count": 32,
+        "unique": [
+          "AI Generation",
+          "Image Extractor",
+          "Color Wheel",
+          "Support us",
+          "Get involved",
+          "Get help",
+          "Tools",
+          "Products",
+          "Resources"
+        ]
+      },
+      "h4": {
+        "count": 0,
+        "unique": []
+      }
+    },
+    "images": 124,
+    "images_without_alt": 116,
+    "words": 2105,
+    "bytes": 269677,
+    "internal_links": [
+      "/",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.css",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.js",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/_cms/blog/goodbye-2025-plugin-and-welcome-to-2026-app.json",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/blog/goodbye-2025-plugin-and-welcome-to-2026-app.json",
+      "/_runtimes/sites-runtime.c8f48c29cf318bddeaa96faf2405f43d01a2399293bf1ec8f04e0ed487e37df5.js",
+      "/claude",
+      "/figma",
+      "/framer",
+      "/penpot",
+      "/sketch"
+    ],
+    "external_links": [
+      "https://tlguide.com/reviews/ui-color-palette",
+      "https://uicp.ylb.lt/community",
+      "https://uicp.ylb.lt/contact",
+      "https://uicp.ylb.lt/cookies",
+      "https://uicp.ylb.lt/docs",
+      "https://uicp.ylb.lt/docs-api",
+      "https://uicp.ylb.lt/docs-mcp",
+      "https://uicp.ylb.lt/feedback",
+      "https://uicp.ylb.lt/ideas",
+      "https://uicp.ylb.lt/privacy",
+      "https://uicp.ylb.lt/repository",
+      "https://uicp.ylb.lt/sale",
+      "https://uicp.ylb.lt/skills",
+      "https://uicp.ylb.lt/store",
+      "https://uicp.ylb.lt/support",
+      "https://uicp.ylb.lt/terms",
+      "https://uicp.ylb.lt/whats-new",
+      "https://yelbolt.co/"
+    ],
+    "url": "https://ui-color-palette.com/blog/goodbye-2025-plugin-and-welcome-to-2026-app"
+  },
+  "capabilities": {
+    "title": "Capabilities — Generate, Master & Deploy Color",
+    "meta_title": "Capabilities — Generate, Master & Deploy Color",
+    "description": "Explore everything UI Color Palette can do: AI generation, image extraction, contrast mastering, color modes, and token & Tailwind export.",
+    "canonical": null,
+    "og_image": "https://ui-color-palette.com/_assets/v11/3cc7efce05668e6f811dc78bdb14a3a4e7a40921.png",
+    "robots": "index,follow",
+    "jsonld": [
+      "Organization",
+      "SoftwareApplication"
+    ],
+    "headings": {
+      "h1": {
+        "count": 0,
+        "unique": []
+      },
+      "h2": {
+        "count": 4,
+        "unique": [
+          "Shared across Figma, Penpot, Sketch, and Framer."
+        ]
+      },
+      "h3": {
+        "count": 28,
+        "unique": [
+          "Developers",
+          "Designers",
+          "Support us",
+          "Get involved",
+          "Get help",
+          "Tools",
+          "Products",
+          "Resources"
+        ]
+      },
+      "h4": {
+        "count": 68,
+        "unique": [
+          "Ready from the very first second",
+          "AI generation",
+          "Image extraction",
+          "Color wheel",
+          "Explore & import",
+          "Fine-tune every stop",
+          "Light, Dark, and beyond",
+          "Contrast mastering",
+          "Share with the community",
+          "Publish & reuse anywhere",
+          "Grab your tokens & config",
+          "Sync with your team",
+          "Readability playground",
+          "Colors in outer Spaces",
+          "Ultra Handoff",
+          "Simulations that empathize",
+          "Best-in-class presets"
+        ]
+      }
+    },
+    "images": 1208,
+    "images_without_alt": 1200,
+    "words": 5226,
+    "bytes": 1570526,
+    "internal_links": [
+      "/",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.css",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.js",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/capabilities.json",
+      "/_runtimes/sites-runtime.c8f48c29cf318bddeaa96faf2405f43d01a2399293bf1ec8f04e0ed487e37df5.js",
+      "/claude",
+      "/figma",
+      "/framer",
+      "/penpot",
+      "/sketch"
+    ],
+    "external_links": [
+      "https://tlguide.com/reviews/ui-color-palette",
+      "https://uicp.ylb.lt/community",
+      "https://uicp.ylb.lt/contact",
+      "https://uicp.ylb.lt/cookies",
+      "https://uicp.ylb.lt/docs",
+      "https://uicp.ylb.lt/docs-api",
+      "https://uicp.ylb.lt/docs-mcp",
+      "https://uicp.ylb.lt/feedback",
+      "https://uicp.ylb.lt/ideas",
+      "https://uicp.ylb.lt/privacy",
+      "https://uicp.ylb.lt/repository",
+      "https://uicp.ylb.lt/sale",
+      "https://uicp.ylb.lt/skills",
+      "https://uicp.ylb.lt/store",
+      "https://uicp.ylb.lt/support",
+      "https://uicp.ylb.lt/terms",
+      "https://yelbolt.co/"
+    ],
+    "url": "https://ui-color-palette.com/capabilities"
+  },
+  "claude": {
+    "title": "UI Color Palette for Claude — A Color Studio in Claude",
+    "meta_title": "UI Color Palette for Claude — A Color Studio in Claude",
+    "description": "Design accessible color palettes right inside Claude, with agents, skills, and pre-connected design & code integrations for GitHub and GitLab.",
+    "canonical": null,
+    "og_image": "https://ui-color-palette.com/_assets/v11/3cc7efce05668e6f811dc78bdb14a3a4e7a40921.png",
+    "robots": "index,follow",
+    "jsonld": [
+      "Organization",
+      "SoftwareApplication"
+    ],
+    "headings": {
+      "h1": {
+        "count": 0,
+        "unique": []
+      },
+      "h2": {
+        "count": 4,
+        "unique": [
+          "The dedicated, optimized way to design color with AI."
+        ]
+      },
+      "h3": {
+        "count": 44,
+        "unique": [
+          "Pre-connected integrations",
+          "Skills",
+          "Integrated agents",
+          "Switch platform",
+          "Compare plans",
+          "Explore the features",
+          "Support us",
+          "Get involved",
+          "Get help",
+          "Tools",
+          "Products",
+          "Resources"
+        ]
+      },
+      "h4": {
+        "count": 12,
+        "unique": [
+          "Tokens, Tailwind & CSS export",
+          "Guided creation & semantic structuring",
+          "One-click marketplace install"
+        ]
+      }
+    },
+    "images": 196,
+    "images_without_alt": 188,
+    "words": 1041,
+    "bytes": 303734,
+    "internal_links": [
+      "/",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.css",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.js",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/claude.json",
+      "/_runtimes/sites-runtime.c8f48c29cf318bddeaa96faf2405f43d01a2399293bf1ec8f04e0ed487e37df5.js",
+      "/claude",
+      "/figma",
+      "/framer",
+      "/penpot",
+      "/sketch"
+    ],
+    "external_links": [
+      "https://tlguide.com/reviews/ui-color-palette",
+      "https://uicp.ylb.lt/community",
+      "https://uicp.ylb.lt/contact",
+      "https://uicp.ylb.lt/cookies",
+      "https://uicp.ylb.lt/docs",
+      "https://uicp.ylb.lt/docs-api",
+      "https://uicp.ylb.lt/docs-mcp",
+      "https://uicp.ylb.lt/feedback",
+      "https://uicp.ylb.lt/ideas",
+      "https://uicp.ylb.lt/privacy",
+      "https://uicp.ylb.lt/repository",
+      "https://uicp.ylb.lt/sale",
+      "https://uicp.ylb.lt/skills",
+      "https://uicp.ylb.lt/store",
+      "https://uicp.ylb.lt/support",
+      "https://uicp.ylb.lt/terms",
+      "https://yelbolt.co/"
+    ],
+    "url": "https://ui-color-palette.com/claude"
+  },
+  "download": {
+    "title": "Download UI Color Palette — Every Platform",
+    "meta_title": "Download UI Color Palette — Every Platform",
+    "description": "Get UI Color Palette for Figma, Penpot, Sketch, Framer, MCP, and Claude. Install in seconds and start building accessible color palettes today.",
+    "canonical": null,
+    "og_image": "https://ui-color-palette.com/_assets/v11/3cc7efce05668e6f811dc78bdb14a3a4e7a40921.png",
+    "robots": "index,follow",
+    "jsonld": [
+      "Organization",
+      "SoftwareApplication"
+    ],
+    "headings": {
+      "h1": {
+        "count": 0,
+        "unique": []
+      },
+      "h2": {
+        "count": 4,
+        "unique": [
+          "Get UI Color Palette on your favorite platform and start building accessible color palettes."
+        ]
+      },
+      "h3": {
+        "count": 40,
+        "unique": [
+          "UI Color Palette /one on Framer",
+          "UI Color Palette /team on Figma",
+          "UI Color Palette /one on Figma",
+          "UI Color Palette /one on Penpot",
+          "UI Color Palette /one on Sketch",
+          "Support us",
+          "Get involved",
+          "Get help",
+          "Tools",
+          "Products",
+          "Resources"
+        ]
+      },
+      "h4": {
+        "count": 0,
+        "unique": []
+      }
+    },
+    "images": 180,
+    "images_without_alt": 172,
+    "words": 892,
+    "bytes": 274684,
+    "internal_links": [
+      "/",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.css",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.js",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/download.json",
+      "/_runtimes/sites-runtime.c8f48c29cf318bddeaa96faf2405f43d01a2399293bf1ec8f04e0ed487e37df5.js",
+      "/claude",
+      "/figma",
+      "/framer",
+      "/penpot",
+      "/sketch"
+    ],
+    "external_links": [
+      "https://tlguide.com/reviews/ui-color-palette",
+      "https://uicp.ylb.lt/community",
+      "https://uicp.ylb.lt/contact",
+      "https://uicp.ylb.lt/cookies",
+      "https://uicp.ylb.lt/docs",
+      "https://uicp.ylb.lt/docs-api",
+      "https://uicp.ylb.lt/docs-mcp",
+      "https://uicp.ylb.lt/feedback",
+      "https://uicp.ylb.lt/ideas",
+      "https://uicp.ylb.lt/privacy",
+      "https://uicp.ylb.lt/repository",
+      "https://uicp.ylb.lt/sale",
+      "https://uicp.ylb.lt/skills",
+      "https://uicp.ylb.lt/store",
+      "https://uicp.ylb.lt/support",
+      "https://uicp.ylb.lt/terms",
+      "https://yelbolt.co/"
+    ],
+    "url": "https://ui-color-palette.com/download"
+  },
+  "figma": {
+    "title": "UI Color Palette for Figma — Accessible Color Scales",
+    "meta_title": "UI Color Palette for Figma — Accessible Color Scales",
+    "description": "Build WCAG-compliant color palettes right inside Figma. Generate scales, check contrast, and sync styles, variables, and tokens without leaving your file.",
+    "canonical": null,
+    "og_image": "https://ui-color-palette.com/_assets/v11/3cc7efce05668e6f811dc78bdb14a3a4e7a40921.png",
+    "robots": "index,follow",
+    "jsonld": [
+      "Organization",
+      "SoftwareApplication"
+    ],
+    "headings": {
+      "h1": {
+        "count": 0,
+        "unique": []
+      },
+      "h2": {
+        "count": 4,
+        "unique": [
+          "Accessible color scales, native to the whole Figma family."
+        ]
+      },
+      "h3": {
+        "count": 44,
+        "unique": [
+          "VS Code (Figma plugin)",
+          "Figma Buzz & FigJam",
+          "Figma Design",
+          "Switch platform",
+          "Compare plans",
+          "Explore the features",
+          "Support us",
+          "Get involved",
+          "Get help",
+          "Tools",
+          "Products",
+          "Resources"
+        ]
+      },
+      "h4": {
+        "count": 12,
+        "unique": [
+          "Design tokens, Tailwind & CSS export",
+          "WCAG & APCA contrast checks",
+          "AI-powered generation"
+        ]
+      }
+    },
+    "images": 264,
+    "images_without_alt": 256,
+    "words": 1439,
+    "bytes": 441385,
+    "internal_links": [
+      "/",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.css",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.js",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/figma.json",
+      "/_runtimes/sites-runtime.c8f48c29cf318bddeaa96faf2405f43d01a2399293bf1ec8f04e0ed487e37df5.js",
+      "/claude",
+      "/figma",
+      "/framer",
+      "/penpot",
+      "/sketch"
+    ],
+    "external_links": [
+      "https://tlguide.com/reviews/ui-color-palette",
+      "https://uicp.ylb.lt/community",
+      "https://uicp.ylb.lt/contact",
+      "https://uicp.ylb.lt/cookies",
+      "https://uicp.ylb.lt/docs",
+      "https://uicp.ylb.lt/docs-api",
+      "https://uicp.ylb.lt/docs-mcp",
+      "https://uicp.ylb.lt/feedback",
+      "https://uicp.ylb.lt/ideas",
+      "https://uicp.ylb.lt/privacy",
+      "https://uicp.ylb.lt/repository",
+      "https://uicp.ylb.lt/sale",
+      "https://uicp.ylb.lt/skills",
+      "https://uicp.ylb.lt/store",
+      "https://uicp.ylb.lt/support",
+      "https://uicp.ylb.lt/terms",
+      "https://yelbolt.co/"
+    ],
+    "url": "https://ui-color-palette.com/figma"
+  },
+  "framer": {
+    "title": "UI Color Palette for Framer — Ship Accessible Color",
+    "meta_title": "UI Color Palette for Framer — Ship Accessible Color",
+    "description": "Go from blank canvas to shipped site with accessible color in Framer. Generate palettes, check contrast, and export production-ready tokens.",
+    "canonical": null,
+    "og_image": "https://ui-color-palette.com/_assets/v11/3cc7efce05668e6f811dc78bdb14a3a4e7a40921.png",
+    "robots": "index,follow",
+    "jsonld": [
+      "Organization",
+      "SoftwareApplication"
+    ],
+    "headings": {
+      "h1": {
+        "count": 0,
+        "unique": []
+      },
+      "h2": {
+        "count": 4,
+        "unique": [
+          "Generate a palette, ship the whole site."
+        ]
+      },
+      "h3": {
+        "count": 40,
+        "unique": [
+          "Deploy to styles",
+          "Generate with powerful tools",
+          "Switch platform",
+          "Compare plans",
+          "Explore the features",
+          "Support us",
+          "Get involved",
+          "Get help",
+          "Tools",
+          "Products",
+          "Resources"
+        ]
+      },
+      "h4": {
+        "count": 12,
+        "unique": [
+          "Design tokens, Tailwind & CSS export",
+          "WCAG & APCA contrast checks",
+          "AI-powered generation"
+        ]
+      }
+    },
+    "images": 244,
+    "images_without_alt": 236,
+    "words": 1327,
+    "bytes": 431737,
+    "internal_links": [
+      "/",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.css",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.js",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/framer.json",
+      "/_runtimes/sites-runtime.c8f48c29cf318bddeaa96faf2405f43d01a2399293bf1ec8f04e0ed487e37df5.js",
+      "/claude",
+      "/figma",
+      "/framer",
+      "/penpot",
+      "/sketch"
+    ],
+    "external_links": [
+      "https://tlguide.com/reviews/ui-color-palette",
+      "https://uicp.ylb.lt/community",
+      "https://uicp.ylb.lt/contact",
+      "https://uicp.ylb.lt/cookies",
+      "https://uicp.ylb.lt/docs",
+      "https://uicp.ylb.lt/docs-api",
+      "https://uicp.ylb.lt/docs-mcp",
+      "https://uicp.ylb.lt/feedback",
+      "https://uicp.ylb.lt/ideas",
+      "https://uicp.ylb.lt/privacy",
+      "https://uicp.ylb.lt/repository",
+      "https://uicp.ylb.lt/sale",
+      "https://uicp.ylb.lt/skills",
+      "https://uicp.ylb.lt/store",
+      "https://uicp.ylb.lt/support",
+      "https://uicp.ylb.lt/terms",
+      "https://yelbolt.co/"
+    ],
+    "url": "https://ui-color-palette.com/framer"
+  },
+  "home": {
+    "title": "UI Color Palette — WCAG Color Palettes for UI",
+    "meta_title": "UI Color Palette — WCAG Color Palettes for UI",
+    "description": "Generate, master, and deploy accessible color palettes in seconds. WCAG & APCA-ready scales for Figma, Penpot, Sketch, Framer, and any AI.",
+    "canonical": null,
+    "og_image": "https://ui-color-palette.com/_assets/v11/3cc7efce05668e6f811dc78bdb14a3a4e7a40921.png",
+    "robots": "index,follow",
+    "jsonld": [
+      "Organization",
+      "SoftwareApplication"
+    ],
+    "headings": {
+      "h1": {
+        "count": 0,
+        "unique": []
+      },
+      "h2": {
+        "count": 4,
+        "unique": [
+          "Accessible color palettes — generated in seconds, mastered with precision, deployed everywhere."
+        ]
+      },
+      "h3": {
+        "count": 32,
+        "unique": [
+          "Generate it",
+          "Manage it",
+          "Deploy it",
+          "Support us",
+          "Get involved",
+          "Get help",
+          "Tools",
+          "Products",
+          "Resources",
+          "Master it"
+        ]
+      },
+      "h4": {
+        "count": 30,
+        "unique": [
+          "Claude",
+          "Framer",
+          "Sketch",
+          "Penpot",
+          "Figma",
+          "MCP server",
+          "Skills",
+          "3 ways AI now builds, audits, and deploys your color systems",
+          "Goodbye 2025 plugin and welcome to 2026 app"
+        ]
+      }
+    },
+    "images": 510,
+    "images_without_alt": 502,
+    "words": 3104,
+    "bytes": 552406,
+    "internal_links": [
+      "/",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.css",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.js",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/_cms/_index.json",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/_index.json",
+      "/_runtimes/sites-runtime.c8f48c29cf318bddeaa96faf2405f43d01a2399293bf1ec8f04e0ed487e37df5.js",
+      "/blog/3-ways-ai-now-builds-audits-and-deploys-your-color-systems",
+      "/blog/goodbye-2025-plugin-and-welcome-to-2026-app",
+      "/claude",
+      "/figma",
+      "/framer",
+      "/penpot",
+      "/pricing",
+      "/sketch"
+    ],
+    "external_links": [
+      "https://tlguide.com/reviews/ui-color-palette",
+      "https://uicp.ylb.lt/community",
+      "https://uicp.ylb.lt/contact",
+      "https://uicp.ylb.lt/cookies",
+      "https://uicp.ylb.lt/docs",
+      "https://uicp.ylb.lt/docs-api",
+      "https://uicp.ylb.lt/docs-mcp",
+      "https://uicp.ylb.lt/feedback",
+      "https://uicp.ylb.lt/ideas",
+      "https://uicp.ylb.lt/privacy",
+      "https://uicp.ylb.lt/repository",
+      "https://uicp.ylb.lt/repository-skills",
+      "https://uicp.ylb.lt/sale",
+      "https://uicp.ylb.lt/skills",
+      "https://uicp.ylb.lt/store",
+      "https://uicp.ylb.lt/support",
+      "https://uicp.ylb.lt/terms",
+      "https://yelbolt.co/"
+    ],
+    "url": "https://ui-color-palette.com/"
+  },
+  "penpot": {
+    "title": "UI Color Palette for Penpot — Open-Source Color",
+    "meta_title": "UI Color Palette for Penpot — Open-Source Color",
+    "description": "Create accessible color palettes in Penpot, tokens included. Generate scales, master contrast, and export open design tokens for your whole team.",
+    "canonical": null,
+    "og_image": "https://ui-color-palette.com/_assets/v11/3cc7efce05668e6f811dc78bdb14a3a4e7a40921.png",
+    "robots": "index,follow",
+    "jsonld": [
+      "Organization",
+      "SoftwareApplication"
+    ],
+    "headings": {
+      "h1": {
+        "count": 0,
+        "unique": []
+      },
+      "h2": {
+        "count": 4,
+        "unique": [
+          "Accessible color scales, the open-source way."
+        ]
+      },
+      "h3": {
+        "count": 40,
+        "unique": [
+          "Open source, open standards",
+          "Everything, with tokens",
+          "Switch platform",
+          "Compare plans",
+          "Explore the features",
+          "Support us",
+          "Get involved",
+          "Get help",
+          "Tools",
+          "Products",
+          "Resources"
+        ]
+      },
+      "h4": {
+        "count": 12,
+        "unique": [
+          "Design tokens, Tailwind & CSS export",
+          "WCAG & APCA contrast checks",
+          "AI-powered generation"
+        ]
+      }
+    },
+    "images": 252,
+    "images_without_alt": 244,
+    "words": 1346,
+    "bytes": 434991,
+    "internal_links": [
+      "/",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.css",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.js",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/penpot.json",
+      "/_runtimes/sites-runtime.c8f48c29cf318bddeaa96faf2405f43d01a2399293bf1ec8f04e0ed487e37df5.js",
+      "/claude",
+      "/figma",
+      "/framer",
+      "/penpot",
+      "/sketch"
+    ],
+    "external_links": [
+      "https://tlguide.com/reviews/ui-color-palette",
+      "https://uicp.ylb.lt/community",
+      "https://uicp.ylb.lt/contact",
+      "https://uicp.ylb.lt/cookies",
+      "https://uicp.ylb.lt/docs",
+      "https://uicp.ylb.lt/docs-api",
+      "https://uicp.ylb.lt/docs-mcp",
+      "https://uicp.ylb.lt/feedback",
+      "https://uicp.ylb.lt/ideas",
+      "https://uicp.ylb.lt/privacy",
+      "https://uicp.ylb.lt/repository",
+      "https://uicp.ylb.lt/sale",
+      "https://uicp.ylb.lt/skills",
+      "https://uicp.ylb.lt/store",
+      "https://uicp.ylb.lt/support",
+      "https://uicp.ylb.lt/terms",
+      "https://yelbolt.co/"
+    ],
+    "url": "https://ui-color-palette.com/penpot"
+  },
+  "pricing": {
+    "title": "Pricing — UI Color Palette Plans",
+    "meta_title": "Pricing — UI Color Palette Plans",
+    "description": "Simple, honest pricing for solo makers and teams. Start free on /basic, unlock unlimited color on /pro at $3.99/week, or scale with /ultimate.",
+    "canonical": null,
+    "og_image": "https://ui-color-palette.com/_assets/v11/3cc7efce05668e6f811dc78bdb14a3a4e7a40921.png",
+    "robots": "index,follow",
+    "jsonld": [
+      "Organization",
+      "SoftwareApplication"
+    ],
+    "headings": {
+      "h1": {
+        "count": 0,
+        "unique": []
+      },
+      "h2": {
+        "count": 4,
+        "unique": [
+          "Working in a team? Solo designer? We've got you covered."
+        ]
+      },
+      "h3": {
+        "count": 32,
+        "unique": [
+          "Free",
+          "$2.99",
+          "Only billed monthly and yearly",
+          "Support us",
+          "Get involved",
+          "Get help",
+          "Tools",
+          "Products",
+          "Resources"
+        ]
+      },
+      "h4": {
+        "count": 0,
+        "unique": []
+      }
+    },
+    "images": 700,
+    "images_without_alt": 692,
+    "words": 1822,
+    "bytes": 569879,
+    "internal_links": [
+      "/",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.css",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.js",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/pricing.json",
+      "/_runtimes/sites-runtime.c8f48c29cf318bddeaa96faf2405f43d01a2399293bf1ec8f04e0ed487e37df5.js",
+      "/claude",
+      "/figma",
+      "/framer",
+      "/penpot",
+      "/sketch"
+    ],
+    "external_links": [
+      "https://tlguide.com/reviews/ui-color-palette",
+      "https://uicp.ylb.lt/community",
+      "https://uicp.ylb.lt/contact",
+      "https://uicp.ylb.lt/cookies",
+      "https://uicp.ylb.lt/docs",
+      "https://uicp.ylb.lt/docs-api",
+      "https://uicp.ylb.lt/docs-mcp",
+      "https://uicp.ylb.lt/feedback",
+      "https://uicp.ylb.lt/ideas",
+      "https://uicp.ylb.lt/privacy",
+      "https://uicp.ylb.lt/repository",
+      "https://uicp.ylb.lt/sale",
+      "https://uicp.ylb.lt/skills",
+      "https://uicp.ylb.lt/store",
+      "https://uicp.ylb.lt/support",
+      "https://uicp.ylb.lt/terms",
+      "https://yelbolt.co/"
+    ],
+    "url": "https://ui-color-palette.com/pricing"
+  },
+  "sketch": {
+    "title": "UI Color Palette for Sketch — Native Mac Color",
+    "meta_title": "UI Color Palette for Sketch — Native Mac Color",
+    "description": "Design accessible color palettes natively on Mac with Sketch. Generate WCAG scales, fine-tune every shade, and sync with your local libraries.",
+    "canonical": null,
+    "og_image": "https://ui-color-palette.com/_assets/v11/3cc7efce05668e6f811dc78bdb14a3a4e7a40921.png",
+    "robots": "index,follow",
+    "jsonld": [
+      "Organization",
+      "SoftwareApplication"
+    ],
+    "headings": {
+      "h1": {
+        "count": 0,
+        "unique": []
+      },
+      "h2": {
+        "count": 4,
+        "unique": [
+          "Accessible color scales, native to Mac."
+        ]
+      },
+      "h3": {
+        "count": 40,
+        "unique": [
+          "Native Mac, rooted community",
+          "Fully compatible",
+          "Switch platform",
+          "Compare plans",
+          "Explore the features",
+          "Support us",
+          "Get involved",
+          "Get help",
+          "Tools",
+          "Products",
+          "Resources"
+        ]
+      },
+      "h4": {
+        "count": 12,
+        "unique": [
+          "Design tokens, Tailwind & CSS export",
+          "WCAG & APCA contrast checks",
+          "AI-powered generation"
+        ]
+      }
+    },
+    "images": 240,
+    "images_without_alt": 232,
+    "words": 1240,
+    "bytes": 432292,
+    "internal_links": [
+      "/",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.css",
+      "/_components/v2/3d4d65cb7cd9585fc897d778486411fe3f3c553e.js",
+      "/_json/c62b15fd-39b4-4d54-8e72-0584421f070c/sketch.json",
+      "/_runtimes/sites-runtime.c8f48c29cf318bddeaa96faf2405f43d01a2399293bf1ec8f04e0ed487e37df5.js",
+      "/claude",
+      "/figma",
+      "/framer",
+      "/penpot",
+      "/sketch"
+    ],
+    "external_links": [
+      "https://tlguide.com/reviews/ui-color-palette",
+      "https://uicp.ylb.lt/community",
+      "https://uicp.ylb.lt/contact",
+      "https://uicp.ylb.lt/cookies",
+      "https://uicp.ylb.lt/docs",
+      "https://uicp.ylb.lt/docs-api",
+      "https://uicp.ylb.lt/docs-mcp",
+      "https://uicp.ylb.lt/feedback",
+      "https://uicp.ylb.lt/ideas",
+      "https://uicp.ylb.lt/privacy",
+      "https://uicp.ylb.lt/repository",
+      "https://uicp.ylb.lt/sale",
+      "https://uicp.ylb.lt/skills",
+      "https://uicp.ylb.lt/store",
+      "https://uicp.ylb.lt/support",
+      "https://uicp.ylb.lt/terms",
+      "https://yelbolt.co/"
+    ],
+    "url": "https://ui-color-palette.com/sketch"
+  }
+}

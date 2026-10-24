@@ -1,0 +1,169 @@
+---
+import gridBackground from '@/assets/decor/grid-platform.svg'
+import { platforms } from '@/data/platforms'
+---
+
+<section
+  id="platforms"
+  class="section platforms"
+  aria-labelledby="platforms-title"
+>
+  <div class="platforms__grid">
+    <div class="platforms__intro">
+      <h2
+        class="t-section-title"
+        id="platforms-title"
+      >
+        Choose your platform
+      </h2>
+      <p class="t-accent">
+        Shape every shade until it's accessible and just right.
+      </p>
+    </div>
+
+    {platforms.map((platform) => (
+      <a
+        class="platform card"
+        href={platform.href}
+      >
+        <div class="platform__illustration">
+          <figure
+            class="platform__thumbnail thumbnail"
+            style={`background-image:url(${gridBackground.src})`}
+          >
+            <span
+              class="platform__tile"
+              style={`--tile:${platform.tile};--tilt:${platform.tilt}deg`}
+            >
+              <img
+                class="platform__logo"
+                src={platform.logo.src}
+                width={platform.logo.width}
+                height={platform.logo.height}
+                alt=""
+                loading="lazy"
+              />
+              <img
+                class="platform__shards"
+                src={platform.shards.src}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                style={`inset:${platform.shardsInset}`}
+              />
+            </span>
+          </figure>
+        </div>
+        <div class="platform__info">
+          <h3 class="t-paragraph-secondary-title">{platform.name}</h3>
+          <p class="t-accent">
+            {platform.pun} <span aria-hidden="true">→</span>
+            <span class="visually-hidden">
+              — UI Color Palette for {platform.name}
+            </span>
+          </p>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .platforms__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: minmax(520px, auto);
+    gap: var(--space-gap-200);
+  }
+
+  .platforms__intro {
+    display: flex;
+    grid-row: 1;
+    grid-column: 2;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--space-gap-400);
+    transform: rotate(1deg);
+    border: var(--stroke-width-thin) solid var(--site-border-soft);
+    border-radius: var(--site-radius-card);
+    background-color: var(--site-surface);
+    padding: var(--space-inset-800);
+  }
+
+  /* Hover, focus and outline come from the @unoff/ui .card class. */
+  .platform {
+    text-decoration: none;
+  }
+
+  .platform__illustration {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: var(--space-inset-800) var(--space-inset-800) 0;
+  }
+
+  .platform__thumbnail {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+    background-size: cover;
+    padding: var(--space-inset-800);
+    min-height: 200px;
+    overflow: clip;
+  }
+
+  .platform__tile {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(var(--tilt));
+    border: var(--stroke-width-thin) solid rgb(0 0 0 / 0.1);
+    border-radius: var(--site-radius-card);
+    background-color: var(--tile);
+    padding: var(--space-inset-300);
+    width: var(--control-size-1600);
+    height: var(--control-size-1600);
+  }
+
+  .platform__logo {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
+
+  .platform__shards {
+    position: absolute;
+    max-width: none;
+    pointer-events: none;
+  }
+
+  .platform__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+  }
+
+  @media (max-width: 1023.98px) {
+    .platforms__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: minmax(420px, auto);
+    }
+
+    .platforms__intro {
+      grid-column: 1 / -1;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 639.98px) {
+    .platforms__grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-auto-rows: auto;
+    }
+  }
+</style>

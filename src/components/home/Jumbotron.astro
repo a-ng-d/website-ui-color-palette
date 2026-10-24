@@ -1,0 +1,204 @@
+---
+import graphs from '@/assets/decor/graphs-jumbotron.svg'
+import BadgePlus from '@lucide/astro/icons/badge-plus'
+import Button from '@/components/ui/Button.astro'
+import ShadeGrid from '@/components/ui/ShadeGrid.astro'
+import Tag from '@/components/ui/Tag.astro'
+import { site } from '@/config/site'
+---
+
+<section
+  class="jumbotron"
+  aria-labelledby="hero-title"
+>
+  <ShadeGrid
+    class="jumbotron__grid"
+    cols={12}
+    rows={9}
+    graphs={graphs}
+    areas={[
+      { name: 'hero', colStart: 2, colSpan: 10, rowStart: 2, rowSpan: 3 },
+      { name: 'demo', colStart: 2, colSpan: 10, rowStart: 5, rowSpan: 4 },
+    ]}
+  >
+    <div
+      class="hero"
+      slot="hero"
+    >
+      <div class="hero__texts">
+        <a
+          class="hero__news"
+          href="/claude"
+        >
+          <Tag>
+            <BadgePlus
+              slot="start"
+              aria-hidden="true"
+            />
+            The Claude plugin is here
+          </Tag>
+        </a>
+        <h1
+          class="t-main-title"
+          id="hero-title"
+        >
+          The WCAG Color Palette Manager for Apps &amp; Websites
+        </h1>
+        <p class="t-tagline">
+          Accessible color palettes — generated in seconds, mastered with
+          precision, deployed everywhere.
+        </p>
+      </div>
+      <div class="hero__actions">
+        <Button
+          href="#platforms"
+          variant="secondary"
+          block
+        >
+          Add plugin
+        </Button>
+        <Button
+          href={site.appUrl}
+          variant="primary"
+          block
+        >
+          Start a palette
+        </Button>
+      </div>
+    </div>
+
+    <div
+      class="demo"
+      slot="demo"
+    >
+      <!--
+        The src is set by the script below, with the current colour mode
+        (?embed=1&theme=…). The app is a JS app, so without JS the link below
+        is the useful fallback.
+      -->
+      <iframe
+        class="demo__frame"
+        data-src={site.demoPaletteUrl}
+        data-demo-frame
+        title="Interactive reference palette in UI Color Palette"
+        loading="lazy"
+        allow="clipboard-write"
+        referrerpolicy="strict-origin-when-cross-origin"
+      ></iframe>
+      <a
+        class="demo__fallback"
+        href={site.demoPaletteUrl}
+        target="_blank"
+        rel="noopener"
+      >
+        Open the reference palette in the app
+      </a>
+    </div>
+  </ShadeGrid>
+</section>
+
+<script>
+  const frame = document.querySelector<HTMLIFrameElement>('[data-demo-frame]')
+  const root = document.documentElement
+  const currentTheme = () =>
+    root.dataset.mode === 'yelbolt-uicp-dark' ? 'dark' : 'light'
+
+  if (frame?.dataset.src) {
+    const url = new URL(frame.dataset.src)
+    url.searchParams.set('embed', '1')
+    url.searchParams.set('theme', currentTheme())
+    frame.src = url.href
+
+    // Follow the site's light/dark toggle without reloading the embed.
+    new MutationObserver(() => {
+      frame.contentWindow?.postMessage(
+        { type: 'UICP_SET_THEME', theme: currentTheme() },
+        url.origin
+      )
+    }).observe(root, { attributes: true, attributeFilter: ['data-mode'] })
+  }
+</script>
+
+<style>
+  .jumbotron {
+    padding: var(--space-inset-200) var(--layout-gutter) 0;
+  }
+
+  .jumbotron :global(.jumbotron__grid) {
+    --shade-row-min: clamp(48px, 9vw, 176px);
+  }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-gap-800);
+    padding: var(--space-inset-800);
+    width: 100%;
+    max-width: calc(var(--layout-content-max) + 2 * var(--space-inset-800));
+  }
+
+  .hero__texts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-gap-400);
+  }
+
+  .hero__news {
+    border-radius: var(--site-radius-pill);
+    text-decoration: none;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-gap-200);
+  }
+
+  /* Fill the whole Demo slot of the grid (the slot is a centred flex column). */
+  .demo {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-self: stretch;
+    width: 100%;
+    min-height: 480px;
+  }
+
+  .demo__frame {
+    flex: 1 1 auto;
+    border: 0;
+    background-color: var(--site-surface); /* no white flash while loading */
+    width: 100%;
+    min-height: 480px;
+  }
+
+  /* Visible to keyboard and screen-reader users, for whom the app is easier in its own tab. */
+  .demo__fallback {
+    position: absolute;
+    clip-path: inset(50%);
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .demo__fallback:focus {
+    position: static;
+    clip-path: none;
+    margin: var(--space-inset-200);
+    width: auto;
+    height: auto;
+  }
+
+  @media (max-width: 639.98px) {
+    .hero {
+      padding: var(--space-inset-600) var(--space-inset-400);
+    }
+
+    .hero__actions {
+      flex-direction: column;
+    }
+  }
+</style>

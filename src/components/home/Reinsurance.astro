@@ -1,0 +1,206 @@
+---
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+
+import graphs from '@/assets/decor/graphs-reinsurance.svg'
+import Button from '@/components/ui/Button.astro'
+import ShadeGrid from '@/components/ui/ShadeGrid.astro'
+import Tag from '@/components/ui/Tag.astro'
+import Chip from '@unoff-dist/components/tags/chip/Chip.js'
+import { platforms } from '@/data/platforms'
+
+// Palette previews, split in two reels as in the design.
+const palettes = Object.values(
+  import.meta.glob<{ default: ImageMetadata }>('@/assets/palettes/*.png', {
+    eager: true,
+  })
+).map((module) => module.default)
+
+const reels = [palettes.slice(0, 8), palettes.slice(8)]
+
+// “Add to …” order from the design: Claude first.
+const addTo = [...platforms].sort(
+  (a, b) => Number(!!b.isNew) - Number(!!a.isNew)
+)
+---
+
+<section
+  class="section reinsurance"
+  aria-labelledby="reinsurance-title"
+>
+  <div class="reinsurance__layout">
+    <div
+      class="reinsurance__gallery surface-card"
+      aria-hidden="true"
+    >
+      {reels.map((reel, index) => (
+        <div class:list={['reel', { 'reel--reverse': index === 1 }]}>
+          <div class="reel__track">
+            {[...reel, ...reel].map((palette) => (
+              <Image
+                src={palette}
+                alt=""
+                height={512}
+                loading="lazy"
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <ShadeGrid
+      class="reinsurance__grid"
+      cols={8}
+      rows={6}
+      graphs={graphs}
+      areas={[
+        { name: 'pitch', colStart: 2, colSpan: 6, rowStart: 2, rowSpan: 4 },
+      ]}
+    >
+      <div
+        class="pitch"
+        slot="pitch"
+      >
+        <Tag
+          size="large"
+          as="p"
+        >
+          Try for free
+        </Tag>
+        <h2
+          class="t-section-title"
+          id="reinsurance-title"
+        >
+          Trusted by +100K users from +130 countries
+        </h2>
+        <p class="t-accent">
+          Join creators from all over the world building accessible color
+          systems with UI Color Palette.
+        </p>
+        <ul class="pitch__links">
+          {addTo.map((platform) => (
+            <li>
+              <Button
+                href={platform.href}
+                variant="secondary"
+                class="pitch__link"
+              >
+                <platform.icon slot="icon" />
+                Add to {platform.name}
+                {platform.isNew && <Chip slot="end">New</Chip>}
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </ShadeGrid>
+  </div>
+</section>
+
+<style>
+  .reinsurance__layout {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-gap-200);
+    min-height: 1000px;
+  }
+
+  .reinsurance__gallery {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-gap-800);
+  }
+
+  .reel {
+    overflow: clip;
+  }
+
+  .reel__track {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-gap-800);
+    animation: reel 80s linear infinite;
+    padding-inline: var(--space-inset-400);
+    width: max-content;
+  }
+
+  .reel--reverse .reel__track {
+    align-items: flex-start;
+    animation-direction: reverse;
+  }
+
+  .reel__track :global(img) {
+    flex-shrink: 0;
+    width: auto;
+    max-width: 512px;
+    height: auto;
+    max-height: 360px;
+  }
+
+  @keyframes reel {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reel__track {
+      animation: none;
+    }
+  }
+
+  .reinsurance :global(.reinsurance__grid) {
+    --shade-row-min: clamp(48px, 7vw, 160px);
+  }
+
+  .pitch {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+    width: 100%;
+  }
+
+  /* 2 × 3 grid: the new platform spans the first row, each button fills its cell. */
+  .pitch__links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-gap-200);
+    padding: 0;
+    width: 100%;
+    list-style: none;
+  }
+
+  .pitch__links li:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .pitch__links :global(.pitch__link) {
+    width: 100%;
+  }
+
+  @media (max-width: 479.98px) {
+    .pitch__links {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 1023.98px) {
+    .reinsurance__layout {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: 0;
+    }
+
+    .reinsurance__gallery {
+      order: 2;
+      padding-block: var(--space-inset-800);
+    }
+
+    .reel__track :global(img) {
+      max-height: 200px;
+    }
+  }
+</style>

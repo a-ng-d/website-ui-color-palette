@@ -1,0 +1,51 @@
+---
+/**
+ * Text link made of the @unoff/ui <Button type="tertiary"> wrapped in an <a>.
+ * The component is rendered at build time (no JS shipped); the <a> carries
+ * the navigation so the link is crawlable and works without JavaScript.
+ */
+import Button from '@unoff-dist/components/actions/button/Button.js'
+import { isExternal } from '@/config/site'
+
+interface Props {
+  href: string
+  label: string
+  size?: 'default' | 'large'
+  current?: boolean
+}
+
+const { href, label, size = 'large', current = false } = Astro.props
+const external = isExternal(href)
+---
+
+<a
+  class="tertiary-link"
+  href={href}
+  target={external && !href.startsWith('mailto:') ? '_blank' : undefined}
+  rel={external ? 'noopener' : undefined}
+  aria-current={current ? 'page' : undefined}
+>
+  <Button
+    type="tertiary"
+    size={size}
+    label={label}
+  />
+</a>
+
+<style>
+  .tertiary-link {
+    display: inline-flex;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Hovering the link shows the tertiary hover state of the inner button. */
+  .tertiary-link:hover :global(.text-button--tertiary),
+  .tertiary-link:focus-visible :global(.text-button--tertiary) {
+    --button-base-text-decoration: var(--button-tertiary-text-decoration-hover);
+  }
+
+  .tertiary-link :global(.text-button) {
+    cursor: pointer;
+  }
+</style>

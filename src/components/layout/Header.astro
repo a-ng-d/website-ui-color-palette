@@ -1,0 +1,343 @@
+---
+import Logotype from '@/assets/brand/logotype-header.svg'
+import ChevronDown from '@lucide/astro/icons/chevron-down'
+import SunIcon from '@lucide/astro/icons/sun'
+import MoonIcon from '@lucide/astro/icons/moon'
+import Chip from '@unoff-dist/components/tags/chip/Chip.js'
+import Button from '@/components/ui/Button.astro'
+import TertiaryLink from '@/components/ui/TertiaryLink.astro'
+import { isExternal, mainNav, resourcesNav, site } from '@/config/site'
+
+const current = Astro.url.pathname.replace(/\.html$/, '')
+---
+
+<header
+  class="header"
+  data-header
+>
+  <nav
+    class="header__bar"
+    aria-label="Main"
+  >
+    <a
+      class="header__logo"
+      href="/"
+      aria-label={`${site.name} — home`}
+    >
+      <Logotype
+        aria-hidden="true"
+        width={148}
+        height={49}
+      />
+    </a>
+
+    <button
+      class="header__menu-toggle text-button text-button--tertiary text-button--large"
+      type="button"
+      aria-expanded="false"
+      aria-controls="header-links"
+      hidden
+      data-menu-toggle
+    >
+      Menu
+    </button>
+
+    <div
+      class="header__links"
+      id="header-links"
+    >
+      {mainNav.map((item) => (
+        <TertiaryLink
+          href={item.href}
+          label={item.label}
+          current={current === item.href}
+        />
+      ))}
+
+      <details
+        class="header__dropdown"
+        data-dropdown
+      >
+        <summary class="header__dropdown-toggle text-button text-button--tertiary text-button--large">
+          <span class="text-button__label">Resources</span>
+          <span
+            class="text-button__caret"
+            aria-hidden="true"
+          >
+            <ChevronDown />
+          </span>
+        </summary>
+
+        <!-- Full-width panel of link cards (@unoff/ui .card on <a>). -->
+        <ul class="header__panel">
+          {resourcesNav.map((item) => (
+            <li>
+              <a
+                class="resource card"
+                href={item.href}
+                target={isExternal(item.href) ? '_blank' : undefined}
+                rel={isExternal(item.href) ? 'noopener' : undefined}
+              >
+                {item.badge && <Chip>{item.badge}</Chip>}
+                <span class="resource__body">
+                  <span class="resource__title t-paragraph-secondary-title">
+                    {item.label}
+                  </span>
+                  <span class="resource__text">
+                    {item.description} <span aria-hidden="true">→</span>
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+
+      <!-- Hidden without JS: switching modes needs a script. -->
+      <button
+        class="header__theme icon-button icon-button--default"
+        type="button"
+        aria-label="Switch to dark mode"
+        hidden
+        data-theme-toggle
+      >
+        <MoonIcon class="header__theme-dark" />
+        <SunIcon class="header__theme-light" />
+      </button>
+
+      <Button
+        href={site.appUrl}
+        variant="primary"
+      >
+        Go to app
+      </Button>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // Progressive enhancement: without JS, every link stays visible.
+  const header = document.querySelector<HTMLElement>('[data-header]')
+  const toggle = header?.querySelector<HTMLButtonElement>('[data-menu-toggle]')
+  const themeToggle = header?.querySelector<HTMLButtonElement>(
+    '[data-theme-toggle]'
+  )
+  const dropdowns =
+    document.querySelectorAll<HTMLDetailsElement>('[data-dropdown]')
+
+  if (header && toggle) {
+    header.dataset.enhanced = ''
+    toggle.hidden = false
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true'
+      toggle.setAttribute('aria-expanded', String(open))
+    })
+  }
+
+  // Light / dark: the initial mode is set before paint in BaseLayout.
+  if (themeToggle) {
+    const root = document.documentElement
+    const isDark = () => root.dataset.mode === 'yelbolt-uicp-dark'
+    const sync = () => {
+      const dark = isDark()
+      themeToggle.setAttribute(
+        'aria-label',
+        dark ? 'Switch to light mode' : 'Switch to dark mode'
+      )
+      themeToggle.setAttribute('aria-pressed', String(dark))
+    }
+    themeToggle.hidden = false
+    sync()
+    themeToggle.addEventListener('click', () => {
+      const next = isDark() ? 'light' : 'dark'
+      root.dataset.mode = `yelbolt-uicp-${next}`
+      try {
+        localStorage.setItem('uicp-theme', next)
+      } catch {
+        // Private mode or blocked storage: the choice lasts for this page only.
+      }
+      sync()
+    })
+  }
+
+  document.addEventListener('click', (event) => {
+    dropdowns.forEach((d) => {
+      if (d.open && !d.contains(event.target as Node)) d.open = false
+    })
+  })
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return
+    dropdowns.forEach((d) => {
+      if (!d.open) return
+      d.open = false
+      d.querySelector('summary')?.focus()
+    })
+    if (toggle?.getAttribute('aria-expanded') === 'true') {
+      toggle.setAttribute('aria-expanded', 'false')
+      toggle.focus()
+    }
+  })
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: var(--space-inset-200) var(--layout-gutter) 0;
+  }
+
+  .header__bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-gap-200);
+    border: var(--stroke-width-thin) solid var(--site-border-strong);
+    border-radius: var(--site-radius-pill);
+    background-color: var(--site-surface);
+    padding: var(--space-inset-100) var(--space-inset-200)
+      var(--space-inset-100) var(--space-inset-400);
+    min-height: var(--control-size-1600); /* 64px */
+  }
+
+  .header__logo {
+    display: block;
+    color: var(--site-ink);
+  }
+
+  .header__logo :global(svg) {
+    width: 148px;
+    height: auto;
+  }
+
+  .header__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-gap-600);
+  }
+
+  .header__links :global([aria-current='page']) {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+
+  /* Toggles use the @unoff/ui tertiary button; only the caret is custom. */
+  .header__dropdown-toggle :global(svg) {
+    transition: transform var(--motion-duration-fast)
+      var(--motion-easing-standard);
+    width: 100%;
+    height: 100%;
+  }
+
+  .header__dropdown[open] .header__dropdown-toggle :global(svg) {
+    transform: rotate(180deg);
+  }
+
+  /* The panel spans the header (the sticky header is its containing block). */
+  .header__panel {
+    display: grid;
+    position: absolute;
+    top: calc(100% + var(--space-offset-200));
+    right: var(--layout-gutter);
+    left: var(--layout-gutter);
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-gap-200);
+    border: var(--stroke-width-thin) solid var(--site-border-strong);
+    border-radius: var(--site-radius-card);
+    background: var(--site-surface);
+    padding: var(--space-inset-200);
+    list-style: none;
+  }
+
+  .resource {
+    justify-content: space-between;
+    gap: var(--space-gap-400);
+    aspect-ratio: 1;
+    height: 100%;
+    --card-padding-top: var(--space-inset-600);
+    --card-padding-right: var(--space-inset-600);
+    --card-padding-bottom: var(--space-inset-600);
+    --card-padding-left: var(--space-inset-600);
+    color: var(--site-ink);
+    text-decoration: none;
+  }
+
+  .resource :global(.chip) {
+    align-self: flex-start;
+  }
+
+  .resource__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-200);
+    margin-top: auto;
+  }
+
+  .resource__text {
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+  }
+
+  .header__theme {
+    flex-shrink: 0;
+    cursor: pointer;
+    color: var(--icon-button-base-icon-color);
+  }
+
+  .header__theme :global(svg) {
+    width: var(--icon-button-base-icon-width);
+    height: var(--icon-button-base-icon-width);
+  }
+
+  /* Show the mode the button switches to. */
+  .header__theme :global(.header__theme-light) {
+    display: none;
+  }
+
+  :global([data-mode$='dark']) .header__theme :global(.header__theme-light) {
+    display: block;
+  }
+
+  :global([data-mode$='dark']) .header__theme :global(.header__theme-dark) {
+    display: none;
+  }
+
+  @media (min-width: 800px) {
+    .header__menu-toggle {
+      display: none;
+    }
+  }
+
+  @media (max-width: 799.98px) {
+    .header__bar {
+      border-radius: var(--site-radius-card);
+    }
+
+    /* With JS: links collapse behind the Menu button. */
+    .header[data-enhanced] .header__links {
+      display: none;
+    }
+
+    .header[data-enhanced]:has([aria-expanded='true']) .header__links {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding-bottom: var(--space-inset-200);
+      width: 100%;
+    }
+
+    .header__panel {
+      position: static;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: var(--space-offset-200);
+    }
+
+    .resource {
+      aspect-ratio: auto;
+      min-height: 160px;
+    }
+  }
+</style>

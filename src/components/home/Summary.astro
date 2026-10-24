@@ -1,0 +1,119 @@
+---
+import PaletteIcon from '@lucide/astro/icons/palette'
+import SlidersIcon from '@lucide/astro/icons/sliders-vertical'
+import RocketIcon from '@lucide/astro/icons/rocket'
+import Button from '@/components/ui/Button.astro'
+
+const steps = [
+  {
+    icon: PaletteIcon,
+    title: 'Generate it',
+    text: 'Create palettes in minutes with AI, images, color wheel, canvas, or 1M+ imported combinations.',
+  },
+  {
+    icon: SlidersIcon,
+    title: 'Manage it',
+    text: 'Control every shade against WCAG & APCA. Filter, simulate color-blind vision, build light/dark modes.',
+  },
+  {
+    icon: RocketIcon,
+    title: 'Deploy it',
+    text: 'Push to styles, variables, and tokens. Export Tailwind, CSS, and W3C Design Tokens — ready for production.',
+  },
+]
+---
+
+<section
+  class="section summary"
+  aria-labelledby="summary-title"
+>
+  <h2
+    class="visually-hidden"
+    id="summary-title"
+  >
+    How UI Color Palette works
+  </h2>
+  <ol class="summary__cards">
+    {steps.map((step) => (
+      <li class="summary__card surface-card">
+        <div class="summary__illustration" />
+        <div class="summary__info">
+          <span class="summary__icon">
+            <step.icon aria-hidden="true" />
+          </span>
+          <h3 class="t-paragraph-primary-title">{step.title}</h3>
+          <p class="t-accent">{step.text}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+  <div class="summary__cta">
+    <Button
+      href="/capabilities"
+      variant="primary"
+    >
+      See the capabilities
+    </Button>
+  </div>
+</section>
+
+<style>
+  .summary__cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-gap-200);
+    padding: 0;
+    list-style: none;
+  }
+
+  .summary__card {
+    display: flex;
+    flex-direction: column;
+    min-height: 520px;
+  }
+
+  .summary__illustration {
+    flex: 1 1 auto;
+  }
+
+  .summary__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+  }
+
+  .summary__icon {
+    display: inline-flex;
+    border-radius: var(--site-radius-card);
+    background-color: var(--button-primary-background-color-default);
+    padding: var(--space-inset-300);
+    color: var(--button-primary-text-color-default);
+  }
+
+  .summary__icon :global(svg) {
+    width: var(--control-icon-600);
+    height: var(--control-icon-600);
+  }
+
+  .summary__cta {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-inset-400) var(--space-inset-800);
+  }
+
+  @media (max-width: 1023.98px) {
+    .summary__cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .summary__card {
+      min-height: 0;
+    }
+
+    .summary__illustration {
+      display: none;
+    }
+  }
+</style>

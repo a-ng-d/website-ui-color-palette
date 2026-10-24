@@ -1,0 +1,31 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Jumbotron from '@/components/home/Jumbotron.astro'
+import Summary from '@/components/home/Summary.astro'
+import Platforms from '@/components/home/Platforms.astro'
+import ExtraTools from '@/components/home/ExtraTools.astro'
+import Faq from '@/components/home/Faq.astro'
+import LatestPosts from '@/components/home/LatestPosts.astro'
+import Reinsurance from '@/components/home/Reinsurance.astro'
+import { homeFaq } from '@/data/faq'
+import {
+  faqPage,
+  organization,
+  softwareApplication,
+  website,
+} from '@/data/structured-data'
+---
+
+<BaseLayout
+  title="UI Color Palette — WCAG Color Palettes for UI"
+  description="Generate, master, and deploy accessible color palettes in seconds. WCAG & APCA-ready scales for Figma, Penpot, Sketch, Framer, and any AI."
+  jsonLd={[organization(), website(), softwareApplication(), faqPage(homeFaq)]}
+>
+  <Jumbotron />
+  <Summary />
+  <Platforms />
+  <ExtraTools />
+  <Faq items={homeFaq} />
+  <LatestPosts />
+  <Reinsurance />
+</BaseLayout>

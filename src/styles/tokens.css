@@ -1,0 +1,138 @@
+/*
+ * Design tokens.
+ *
+ * Colours, spacing, radii and motion come from @unoff/ui (Yelbolt modes,
+ * active through `data-theme="yelbolt"` + `data-mode="yelbolt-uicp-light"` on <html>).
+ * This file only adds the website roles that @unoff/ui does not cover
+ * (large marketing typography) and maps the Figma roles onto @unoff/ui variables.
+ */
+@import '@unoff-assets/styles/tokens/modules/commons.css';
+@import '@unoff-assets/styles/tokens/modules/yelbolt-colors.css';
+@import '@unoff-assets/styles/tokens/modules/yelbolt-modes.css';
+@import '@unoff-assets/card.css';
+@import '@unoff-assets/Thumbnail.css';
+@import '@unoff-assets/Button.css';
+
+:root {
+  /* ---- Typography (Figma “Website/*” text styles) ---- */
+  --font-display:
+    'Martian Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --font-text:
+    'Lexend Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --text-main-title-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem); /* 56px */
+  --text-main-title-leading: 1.143; /* 64/56 */
+  --text-main-title-tracking: 3px;
+
+  --text-section-title-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem); /* 40px */
+  --text-section-title-leading: 1.2; /* 48/40 */
+  --text-section-title-tracking: 2px;
+
+  --text-paragraph-primary-title-size: clamp(
+    1.5rem,
+    1.3rem + 0.8vw,
+    2rem
+  ); /* 32px */
+  --text-paragraph-primary-title-leading: 1.25; /* 40/32 */
+  --text-paragraph-primary-title-tracking: 2px;
+
+  --text-paragraph-secondary-title-size: 1.5rem; /* 24px */
+  --text-paragraph-secondary-title-leading: 1.333; /* 32/24 */
+  --text-paragraph-secondary-title-tracking: 1px;
+
+  --text-accent-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem); /* 24px */
+  --text-accent-leading: 1.333;
+  --text-accent-tracking: 1px;
+
+  --text-tagline-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem); /* 24px */
+  --text-tagline-leading: 1.333;
+  --text-tagline-tracking: 0.5px;
+
+  --text-tag-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem); /* 24px */
+
+  --text-body-size: 1rem; /* 16px */
+  --text-body-leading: 1.5; /* 24/16 */
+  --text-body-tracking: 0.5px;
+
+  --text-weight-text: 500;
+  --text-weight-display: 700;
+
+  /* ---- Layout ---- */
+  --layout-gutter: var(--space-inset-200); /* 8px around every card */
+  --layout-section-gap: var(--scale-pos-xxxlarge); /* 80px between sections */
+  --layout-content-max: 960px;
+  --layout-header-height: var(--scale-pos-xxxlarge);
+}
+
+/*
+ * Site roles → @unoff/ui variables (Yelbolt UICP palette).
+ * Colours always come from @unoff/ui, so the site follows the plugin's palette
+ * and gets dark mode for free.
+ */
+:root[data-theme='yelbolt'] {
+  --site-surface: var(--global-background-color-default);
+  --site-surface-muted: var(--color-background-secondary-default);
+  --site-ink: var(--color-text-primary-default);
+  --site-border-strong: var(--color-border-tertiary-strong);
+  --site-border-soft: var(--color-border-secondary-default);
+  --site-radius-card: var(--border-radius-xxxlarge); /* 16px */
+  --site-radius-inner: var(--radius-xlarge); /* 8px */
+  --site-radius-pill: var(--radius-full);
+
+  /* Terminal-like snippets (MCP, skills) use raw UICP primitives, as in Figma. */
+  --snippet-background: var(--uicp-8);
+  --snippet-border: var(--uicp-5);
+  --snippet-text: var(--uicp-2);
+  --snippet-tag-background: var(--uicp-7);
+  --snippet-tag-border: var(--uicp-4);
+  --snippet-tag-text: var(--uicp-4);
+}
+
+/*
+ * Overrides of @unoff/ui component variables.
+ *
+ * Component stylesheets (Button, Chip, texts…) declare their variables on
+ * `:root[data-theme=yelbolt]` and may load after this file when a component is
+ * imported, so these overrides use one more attribute of specificity.
+ */
+:root[data-theme='yelbolt'][data-mode] {
+  /* The text styles set "Lexend" (Google Fonts name); the site self-hosts it
+     under another name. */
+  --text-font-family: var(--font-text);
+
+  /* Website density: the library is sized for plugin panels. */
+
+  /* Button (large) — 48px tall, 16px label, as in the Figma website kit */
+  --button-base-gap: var(--space-gap-400);
+  --button-base-text-font-weight: var(--type-weight-500);
+  --button-base-text-letter-spacing: var(--text-body-tracking);
+  --button-base-text-line-height: var(
+    --type-leading-large
+  ); /* 16px leading clips descenders at 16px */
+  --button-large-height: var(--control-size-1200);
+  --button-large-padding-left: var(--space-inset-400);
+  --button-large-padding-right: var(--space-inset-400);
+  --button-large-text-font-size: var(--text-body-size);
+  --button-tertiary-text-font-size: var(--text-body-size);
+
+  /* Card — bordered surfaces of the website, no inner padding */
+  --card-radius: var(--site-radius-card);
+  --card-width: auto; /* the grid sizes cards, not the 200px plugin default */
+  --card-gap: 0;
+  --card-padding-top: 0;
+  --card-padding-right: 0;
+  --card-padding-bottom: 0;
+  --card-padding-left: 0;
+  --card-border-color-default: var(--site-border-strong);
+  --card-border-color-hover: var(--site-border-strong);
+  --card-border-color-focus: var(--color-border-selected-default);
+  --card-border-offset-default: var(--stroke-offset-thin);
+  --card-border-offset-hover: var(--stroke-offset-thin);
+  --card-border-width-hover: var(--stroke-width-thin);
+
+  /* Chip — “New” badges */
+  --chip-height: var(--control-size-600);
+  --chip-padding-left: var(--space-inset-300);
+  --chip-padding-right: var(--space-inset-300);
+  --chip-text-size: var(--type-size-03);
+}

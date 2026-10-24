@@ -1,0 +1,51 @@
+---
+/** Outlined pill label from the Figma “Tag” component. */
+interface Props {
+  size?: 'small' | 'large'
+  as?: 'span' | 'p'
+}
+
+const { size = 'small', as: Tag = 'span' } = Astro.props
+---
+
+<Tag class:list={['tag', `tag--${size}`]}>
+  <slot name="start" />
+  <slot />
+</Tag>
+
+<style>
+  .tag {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--space-gap-400);
+    border: var(--stroke-width-thin) solid var(--site-border-strong);
+    border-radius: var(--site-radius-pill);
+    background-color: var(--button-tertiary-background-color-default);
+    width: fit-content;
+    color: var(--site-ink);
+    font-weight: var(--text-weight-text);
+    letter-spacing: var(--text-body-tracking);
+  }
+
+  .tag--small {
+    padding: var(--space-inset-100) var(--space-inset-400)
+      var(--space-inset-100) var(--space-inset-300);
+    min-height: var(--control-size-1000); /* 40px */
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+  }
+
+  .tag--large {
+    padding: var(--space-inset-100) var(--space-inset-600);
+    min-height: 56px;
+    font-size: var(--text-tag-size);
+    line-height: 1;
+  }
+
+  .tag :global(svg) {
+    flex-shrink: 0;
+    width: var(--control-icon-600);
+    height: var(--control-icon-600);
+  }
+</style>

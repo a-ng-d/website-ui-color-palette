@@ -1,0 +1,9 @@
+{
+  "plugins": ["prettier-plugin-astro", "prettier-plugin-css-order"],
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "semi": false,
+  "singleQuote": true,
+  "singleAttributePerLine": true,
+  "overrides": [{ "files": "*.astro", "options": { "parser": "astro" } }]
+}

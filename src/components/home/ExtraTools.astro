@@ -1,0 +1,372 @@
+---
+import type { ImageMetadata } from 'astro'
+
+import gridBackground from '@/assets/decor/grid-ai.svg'
+import shardsTopLeft from '@/assets/decor/shards-ai-claude.svg'
+import shardsTopRight from '@/assets/decor/shards-ai-top-right.svg'
+import shardsBottomLeft from '@/assets/decor/shards-ai-bottom-left.svg'
+import shardsBottomRight from '@/assets/decor/shards-ai-bottom-right.svg'
+import claude from '@/assets/ai/claude.svg'
+import cursor from '@/assets/ai/cursor.svg'
+import windsurf from '@/assets/ai/windsurf.svg'
+import openai from '@/assets/ai/openai.svg'
+import vscode from '@/assets/ai/vscode.png'
+import gemini from '@/assets/ai/gemini.png'
+import qwen from '@/assets/ai/qwen.png'
+import { links } from '@/config/site'
+
+interface FloatingLogo {
+  name: string
+  logo: ImageMetadata
+  tile: string
+  tilt: number
+  /** Position around the snippet, from the Figma layout (px from the centre). */
+  x: number
+  top?: number
+  bottom?: number
+  shards: ImageMetadata
+  shardsInset: string
+}
+
+interface Tool {
+  title: string
+  text: string
+  cta: string
+  href: string
+  command?: string
+  snippet: string
+  logos: FloatingLogo[]
+}
+
+const tools: Tool[] = [
+  {
+    title: 'MCP server',
+    text: 'Drive UI Color Palette from the LLM of your choice.',
+    cta: 'Plug it in',
+    href: links.docsMcp,
+    snippet: links.mcpEndpoint,
+    logos: [
+      {
+        name: 'Claude',
+        logo: claude,
+        tile: '#f4f3ee',
+        tilt: -5,
+        x: -56,
+        top: -46,
+        shards: shardsTopLeft,
+        shardsInset: '-64.48% -51.32% 0 -54.32%',
+      },
+      {
+        name: 'VS Code',
+        logo: vscode,
+        tile: '#ffffff',
+        tilt: 5,
+        x: 60,
+        top: -60,
+        shards: shardsTopRight,
+        shardsInset: '-45.41% -45.15% 0 -45.58%',
+      },
+      {
+        name: 'Cursor',
+        logo: cursor,
+        tile: '#ffffff',
+        tilt: 5,
+        x: -68,
+        bottom: -61,
+        shards: shardsBottomLeft,
+        shardsInset: '0 -52.13% -40.22% -43.77%',
+      },
+      {
+        name: 'Windsurf',
+        logo: windsurf,
+        tile: '#feffff',
+        tilt: -5,
+        x: 50,
+        bottom: -46,
+        shards: shardsBottomRight,
+        shardsInset: '0 -40.14% -48.24% -48.46%',
+      },
+    ],
+  },
+  {
+    title: 'Skills',
+    text: 'Open-source instructions that teach any AI the method.',
+    cta: 'Skill up',
+    href: links.repositorySkills,
+    command: '/skills',
+    snippet: 'ui-color-palette-build-color-system',
+    logos: [
+      {
+        name: 'Claude',
+        logo: claude,
+        tile: '#f4f3ee',
+        tilt: -5,
+        x: -36,
+        top: -46,
+        shards: shardsTopLeft,
+        shardsInset: '-64.48% -51.32% 0 -54.32%',
+      },
+      {
+        name: 'OpenAI',
+        logo: openai,
+        tile: '#feffff',
+        tilt: 5,
+        x: 84,
+        top: -38,
+        shards: shardsTopRight,
+        shardsInset: '-45.41% -45.15% 0 -45.58%',
+      },
+      {
+        name: 'Qwen',
+        logo: qwen,
+        tile: '#feffff',
+        tilt: 5,
+        x: -80,
+        bottom: -42,
+        shards: shardsBottomRight,
+        shardsInset: '0 -40.14% -48.24% -48.46%',
+      },
+      {
+        name: 'Gemini',
+        logo: gemini,
+        tile: '#feffff',
+        tilt: -5,
+        x: 46,
+        bottom: -44,
+        shards: shardsBottomRight,
+        shardsInset: '0 -40.14% -48.24% -48.46%',
+      },
+    ],
+  },
+]
+---
+
+<section
+  class="section extra"
+  aria-labelledby="extra-title"
+>
+  <div class="extra__layout">
+    <div class="extra__intro">
+      <h2
+        class="t-section-title"
+        id="extra-title"
+      >
+        Extra tools for any AI
+      </h2>
+      <p class="t-accent">
+        Optional add-ons to bring UI Color Palette into the assistant you
+        already work with.
+      </p>
+    </div>
+
+    <div class="extra__cards">
+      {tools.map((tool) => (
+        <a
+          class="tool card"
+          href={tool.href}
+          target="_blank"
+          rel="noopener"
+        >
+          <div class="tool__info">
+            <h3 class="t-paragraph-secondary-title">{tool.title}</h3>
+            <p class="t-accent">
+              {tool.text} {tool.cta} <span aria-hidden="true">→</span>
+            </p>
+          </div>
+          <div class="tool__illustration">
+            <figure
+              class="tool__thumbnail thumbnail"
+              style={`background-image:url(${gridBackground.src})`}
+            >
+              <div class="snippet">
+                {tool.command && (
+                  <span class="snippet__command">{tool.command}</span>
+                )}
+                <code class="snippet__text">{tool.snippet}</code>
+                {tool.logos.map((item) => (
+                  <span
+                    class="snippet__logo"
+                    title={item.name}
+                    style={[
+                      `--tile:${item.tile}`,
+                      `--tilt:${item.tilt}deg`,
+                      `--x:${item.x}px`,
+                      item.top !== undefined
+                        ? `top:${item.top}px`
+                        : `bottom:${item.bottom}px`,
+                    ].join(';')}
+                  >
+                    <img
+                      src={item.logo.src}
+                      alt={item.name}
+                      loading="lazy"
+                    />
+                    <img
+                      class="snippet__shards"
+                      src={item.shards.src}
+                      alt=""
+                      aria-hidden="true"
+                      loading="lazy"
+                      style={`inset:${item.shardsInset}`}
+                    />
+                  </span>
+                ))}
+              </div>
+            </figure>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .extra__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.5fr);
+    gap: var(--space-gap-200);
+  }
+
+  .extra__intro {
+    display: flex;
+    position: sticky;
+    top: var(--layout-header-height);
+    grid-row: 1;
+    grid-column: 2;
+    flex-direction: column;
+    align-self: start;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+    max-width: var(--layout-content-max);
+  }
+
+  .extra__cards {
+    display: grid;
+    grid-row: 1;
+    grid-column: 1;
+    gap: var(--layout-section-gap);
+  }
+
+  .tool {
+    display: flex;
+    position: sticky;
+    top: calc(var(--layout-header-height) + var(--space-inset-400));
+    flex-direction: column;
+    min-height: 540px;
+    text-decoration: none;
+  }
+
+  .tool__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+  }
+
+  .tool__illustration {
+    display: flex;
+    flex: 1 1 auto;
+    padding: 0 var(--space-inset-800) var(--space-inset-800);
+  }
+
+  .tool__thumbnail {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+    background-size: cover;
+    padding: var(--scale-pos-large);
+    min-height: 240px;
+    overflow: clip;
+  }
+
+  .snippet {
+    display: flex;
+    position: relative;
+    align-items: center;
+    gap: var(--space-gap-200);
+    border: var(--stroke-width-thin) solid var(--snippet-border);
+    border-radius: var(--site-radius-card);
+    background-color: var(--snippet-background);
+    padding: var(--space-inset-600);
+    width: 100%;
+    max-width: 552px;
+    color: var(--snippet-text);
+  }
+
+  .snippet__command {
+    border: var(--stroke-width-thin) solid var(--snippet-tag-border);
+    border-radius: var(--site-radius-inner);
+    background-color: var(--snippet-tag-background);
+    padding: var(--space-inset-100) var(--space-inset-200);
+    color: var(--snippet-tag-text);
+    line-height: 1.2;
+  }
+
+  .snippet__text {
+    font: inherit;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  .snippet__logo {
+    display: flex;
+    position: absolute;
+    left: calc(50% + var(--x));
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-50%) rotate(var(--tilt));
+    border: 0.75px solid rgb(0 0 0 / 0.1);
+    border-radius: var(--site-radius-card);
+    background-color: var(--tile);
+    padding: 9px;
+    width: var(--control-size-1200);
+    height: var(--control-size-1200);
+  }
+
+  .snippet__logo img:not(.snippet__shards) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .snippet__shards {
+    position: absolute;
+    max-width: none;
+    pointer-events: none;
+  }
+
+  @media (max-width: 1023.98px) {
+    .extra__layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .extra__intro {
+      position: static;
+      grid-column: 1;
+    }
+
+    .extra__cards {
+      grid-row: 2;
+      gap: var(--space-gap-200);
+    }
+
+    .tool {
+      position: static;
+      min-height: 0;
+    }
+  }
+
+  @media (max-width: 639.98px) {
+    .tool__thumbnail {
+      padding: var(--scale-pos-large) var(--space-inset-200);
+    }
+
+    .snippet {
+      flex-wrap: wrap;
+      padding: var(--space-inset-400);
+      font-size: var(--font-size-medium);
+    }
+  }
+</style>

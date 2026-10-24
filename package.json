@@ -1,0 +1,34 @@
+{
+  "name": "website-ui-color-palette",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Static website for UI Color Palette (ui-color-palette.com), built with Astro.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "format": "prettier --write ."
+  },
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "dependencies": {
+    "@astrojs/preact": "^6.1.1",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/lexend": "^5.3.0",
+    "@fontsource-variable/martian-mono": "^5.3.0",
+    "@lucide/astro": "^1.61.0",
+    "@unoff/ui": "^1.26.5",
+    "astro": "^7.4.2",
+    "preact": "^10.29.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.2",
+    "prettier-plugin-css-order": "^2.2.0",
+    "typescript": "^6.0.3"
+  }
+}

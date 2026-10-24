@@ -1,0 +1,99 @@
+---
+/**
+ * Website button built on the @unoff/ui Button styles (`.text-button`).
+ *
+ * It mirrors the markup of the @unoff/ui <Button> (label, left icon slot,
+ * type, size) but renders a single real <a href> for links:
+ * - <Button> renders a <button> that navigates in JS (not crawlable);
+ * - <Button isLink> nests an <a target="_blank"> inside a <button>
+ *   (invalid HTML, two tab stops, internal links open a new tab).
+ *
+ * Link states (hover, active) are mirrored in `styles/unoff-links.css`.
+ */
+import type { HTMLAttributes } from 'astro/types'
+import { isExternal } from '@/config/site'
+
+type Variant = 'primary' | 'secondary' | 'tertiary' | 'alternative'
+
+interface Props extends Omit<HTMLAttributes<'a'>, 'href' | 'type'> {
+  href?: string
+  variant?: Variant
+  /** @unoff/ui size: `default` for inline text links, `large` for actions. */
+  size?: 'default' | 'large'
+  /** Stretch to fill the parent (used in the hero). */
+  block?: boolean
+  /** Square button with only an icon; `label` becomes its accessible name. */
+  iconOnly?: boolean
+  label?: string
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'large',
+  block = false,
+  iconOnly = false,
+  label,
+  class: className,
+  ...rest
+} = Astro.props
+
+const external = href ? isExternal(href) : false
+const Tag = href ? 'a' : 'button'
+const hasIcon = Astro.slots.has('icon')
+---
+
+<Tag
+  class:list={[
+    'text-button',
+    `text-button--${variant}`,
+    `text-button--${size}`,
+    'site-button',
+    { 'site-button--block': block, 'site-button--icon-only': iconOnly },
+    className,
+  ]}
+  href={href}
+  type={href ? undefined : 'button'}
+  target={external && !href?.startsWith('mailto:') ? '_blank' : undefined}
+  rel={external ? 'noopener' : undefined}
+  aria-label={iconOnly ? label : undefined}
+  {...rest}
+>
+  {hasIcon && (
+    <span
+      class="text-button__icon"
+      aria-hidden="true"
+    >
+      <slot name="icon" />
+    </span>
+  )}
+  {!iconOnly && (
+    <span class="text-button__label">
+      <slot />
+    </span>
+  )}
+  <slot name="end" />
+</Tag>
+
+<style>
+  .site-button {
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .site-button--block {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .site-button--icon-only {
+    aspect-ratio: 1;
+    --button-large-padding-left: 0;
+    --button-large-padding-right: 0;
+  }
+
+  .site-button :global(.text-button__icon svg) {
+    width: 100%;
+    height: 100%;
+  }
+</style>
