@@ -1,5 +1,4 @@
 ---
-import gridBackground from '@/assets/decor/grid-platform.svg'
 import { platforms } from '@/data/platforms'
 ---
 
@@ -21,16 +20,13 @@ import { platforms } from '@/data/platforms'
       </p>
     </div>
 
-    {platforms.map((platform) => (
+    {platforms.map((platform, index) => (
       <a
         class="platform card"
         href={platform.href}
       >
         <div class="platform__illustration">
-          <figure
-            class="platform__thumbnail thumbnail"
-            style={`background-image:url(${gridBackground.src})`}
-          >
+          <figure class="platform__thumbnail thumbnail illustration-grid">
             <span
               class="platform__tile"
               style={`--tile:${platform.tile};--tilt:${platform.tilt}deg`}
@@ -43,13 +39,10 @@ import { platforms } from '@/data/platforms'
                 alt=""
                 loading="lazy"
               />
-              <img
-                class="platform__shards"
-                src={platform.shards.src}
-                alt=""
+              <span
+                class="platform__shards shards"
                 aria-hidden="true"
-                loading="lazy"
-                style={`inset:${platform.shardsInset}`}
+                style={`inset:${platform.shardsInset};mask-image:url(${platform.shards.src});--sparkle-delay:${index * 0.35}s`}
               />
             </span>
           </figure>
@@ -107,8 +100,6 @@ import { platforms } from '@/data/platforms'
     flex: 1 1 auto;
     justify-content: center;
     align-items: center;
-    background-position: center;
-    background-size: cover;
     padding: var(--space-inset-800);
     min-height: 200px;
     overflow: clip;
@@ -137,8 +128,6 @@ import { platforms } from '@/data/platforms'
 
   .platform__shards {
     position: absolute;
-    max-width: none;
-    pointer-events: none;
   }
 
   .platform__info {

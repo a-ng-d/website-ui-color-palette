@@ -32,6 +32,15 @@ export type Props = SeoProps
           ? 'yelbolt-uicp-dark'
           : 'yelbolt-uicp-light'
       } catch {}
+      // Entrance motion: only with JS and when the visitor accepts motion.
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('motion')
+        // Safety net: if the reveal script never runs, show everything.
+        setTimeout(() => {
+          if (!window.__revealReady)
+            document.documentElement.classList.remove('motion')
+        }, 3000)
+      }
     </script>
     <link
       rel="icon"
@@ -60,5 +69,8 @@ export type Props = SeoProps
       <slot />
     </main>
     <Footer />
+    <script>
+      import '@/scripts/reveal'
+    </script>
   </body>
 </html>

@@ -1,0 +1,354 @@
+/*
+ * Entrance and ambient motion.
+ *
+ * Sequence for every card (matched by its existing class, see REVEAL):
+ *   1. the card scales in while the @unoff/ui spinner turns in its centre;
+ *   2. a cover in the card's own colour slides down with a bright edge,
+ *      unveiling the content from top to bottom (ease-in-out).
+ * The content itself never moves or blurs: it is painted from the start,
+ * only covered, so it stays readable for crawlers and screen readers.
+ *
+ * - Hidden states only exist under `html.motion`, set before paint by
+ *   BaseLayout when JS runs and the visitor accepts motion.
+ * - scripts/reveal.ts sets `data-revealed` (once) and `data-inview` (loops).
+ * - `scale`/`translate` are used instead of `transform`, so they never fight
+ *   the @unoff/ui `.card` hover or the rotated title cards.
+ */
+:root {
+  --reveal-stagger: 90ms;
+  --reveal-scale-duration: 560ms;
+  --reveal-wipe-delay: 720ms; /* spinner time before the cover slides */
+  --reveal-wipe-duration: 680ms;
+  --reveal-delay: calc(var(--reveal-index, 0) * var(--reveal-stagger));
+}
+
+/* REVEAL: .card, .surface-card, .shade-grid__area, .platforms__intro,
+   .posts__intro, .extra__intro, .faq__intro (keep in sync with reveal.ts) */
+
+/* ---- 1. Scale in ---- */
+.motion
+  :is(
+    .card,
+    .surface-card,
+    .shade-grid__area,
+    .platforms__intro,
+    .posts__intro,
+    .extra__intro,
+    .faq__intro
+  ) {
+  scale: 0.94;
+  opacity: 0;
+  overflow: clip;
+}
+
+.motion
+  :is(
+    .card,
+    .surface-card,
+    .shade-grid__area,
+    .platforms__intro,
+    .posts__intro,
+    .extra__intro,
+    .faq__intro
+  )[data-revealed] {
+  animation: card-in var(--reveal-scale-duration) var(--easing-emphasized)
+    var(--reveal-delay) both;
+}
+
+@keyframes card-in {
+  from {
+    scale: 0.94;
+    opacity: 0;
+  }
+
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+/* Positioning context for the spinner and the cover. */
+.motion
+  :is(
+    .surface-card,
+    .shade-grid__area,
+    .platforms__intro,
+    .posts__intro,
+    .extra__intro,
+    .faq__intro
+  ) {
+  position: relative;
+}
+
+/* ---- Spinner (@unoff/ui icon) ---- */
+.motion
+  :is(
+    .card,
+    .surface-card,
+    .shade-grid__area,
+    .platforms__intro,
+    .posts__intro,
+    .extra__intro,
+    .faq__intro
+  )::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  z-index: 3;
+  mask: var(--icon-spinner) center / contain no-repeat;
+  margin: calc(var(--control-icon-600) / -2);
+  background-color: var(--color-icon-primary-default);
+  width: var(--control-icon-600);
+  height: var(--control-icon-600);
+  pointer-events: none;
+  content: '';
+}
+
+.motion
+  :is(
+    .card,
+    .surface-card,
+    .shade-grid__area,
+    .platforms__intro,
+    .posts__intro,
+    .extra__intro,
+    .faq__intro
+  )[data-revealed]::before {
+  animation: spinner-life calc(var(--reveal-wipe-delay) + 160ms) linear
+    var(--reveal-delay) both;
+}
+
+@keyframes spinner-life {
+  0% {
+    opacity: 0;
+  }
+
+  18%,
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ---- 2. Cover with a bright edge, sliding down ---- */
+.motion
+  :is(
+    .card,
+    .surface-card,
+    .shade-grid__area,
+    .platforms__intro,
+    .posts__intro,
+    .extra__intro,
+    .faq__intro
+  )::after {
+  position: absolute;
+  z-index: 2;
+  /* 1px inside, so the @unoff/ui card outline (drawn inward) stays visible. */
+  inset: var(--stroke-width-thin);
+  /* The scan line, switched on by the unveil keyframes. */
+  box-shadow: none;
+  /* Straight top edge: it is the scan line; the bottom follows the card. */
+  border-radius: 0 0 var(--site-radius-card) var(--site-radius-card);
+  /* Faint horizontal scanlines: the cover reads as a TV screen. */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-text-primary-default) 7%, transparent) 0 1px,
+    transparent 1px 4px
+  );
+  background-color: inherit; /* the card's own surface */
+  pointer-events: none;
+  content: '';
+}
+
+.motion
+  :is(
+    .card,
+    .surface-card,
+    .shade-grid__area,
+    .platforms__intro,
+    .posts__intro,
+    .extra__intro,
+    .faq__intro
+  )[data-revealed]::after {
+  animation: unveil var(--reveal-wipe-duration) var(--easing-standard)
+    calc(var(--reveal-delay) + var(--reveal-wipe-delay)) both;
+}
+
+@keyframes unveil {
+  0% {
+    translate: 0 0;
+    opacity: 1;
+    box-shadow: none;
+  }
+
+  /* A soft, blooming scan band (like a CRT refresh) lights up as the cover
+     starts to move: a blurred core plus two wider halos. */
+  6%,
+  88% {
+    opacity: 1;
+    box-shadow:
+      0 -2px 6px 1px var(--color-border-brand-strong),
+      0 -8px 18px 0 var(--color-icon-brand-default),
+      0 -20px 40px -4px
+        color-mix(in srgb, var(--color-icon-brand-default) 55%, transparent);
+  }
+
+  100% {
+    translate: 0 100%;
+    opacity: 0;
+  }
+}
+
+/* ---- Shade grids: tiles scale in as a wave, then the light comes on ---- */
+.motion .shade-grid__tile {
+  scale: 0.85;
+  opacity: 0;
+  transition:
+    opacity 520ms var(--easing-emphasized),
+    scale 520ms var(--easing-emphasized);
+  transition-delay: calc(var(--i, 0) * 22ms);
+}
+
+.motion .shade-grid[data-revealed] .shade-grid__tile {
+  scale: 1;
+  opacity: 1;
+}
+
+.motion .shade-grid__glow {
+  opacity: 0;
+}
+
+/* Entrance as an animation (after the tile wave); the transition only
+   serves the quick dim/restore around the pointer spotlight. */
+.motion .shade-grid[data-revealed] .shade-grid__glow {
+  opacity: 1;
+  transition: opacity 500ms var(--easing-standard);
+  animation:
+    wave-travel 16s linear infinite,
+    glow-in 1400ms var(--easing-decelerate) 900ms backwards;
+}
+
+@keyframes glow-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* The lit wave itself circles under the grid (bottom → right → top → left),
+   lighting some grooves and leaving the others dark. */
+.motion .shade-grid__glow {
+  animation: wave-travel 16s linear infinite;
+}
+
+@keyframes wave-travel {
+  /* An ellipse: up on the right, down on the left. */
+  0% {
+    translate: 0% 20%;
+  }
+
+  12.5% {
+    translate: 5.7% 10.3%;
+  }
+
+  25% {
+    translate: 8% -13%;
+  }
+
+  37.5% {
+    translate: 5.7% -36.3%;
+  }
+
+  50% {
+    translate: 0% -46%;
+  }
+
+  62.5% {
+    translate: -5.7% -36.3%;
+  }
+
+  75% {
+    translate: -8% -13%;
+  }
+
+  87.5% {
+    translate: -5.7% 10.3%;
+  }
+
+  100% {
+    translate: -0% 20%;
+  }
+}
+
+/* Coloured light points run in a straight line inside the wave. */
+.motion .shade-grid__light {
+  animation: light-flow 14s linear infinite;
+}
+
+@keyframes light-flow {
+  to {
+    translate: -50% 0;
+  }
+}
+
+/* ---- Shards around logos sparkle; hovering the card makes them burst ---- */
+.motion .shards {
+  animation: sparkle 2.8s var(--easing-standard) infinite;
+  animation-delay: var(--sparkle-delay, 0s);
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    scale: 0.92;
+    opacity: 0.55;
+  }
+
+  50% {
+    scale: 1.06;
+    opacity: 1;
+  }
+}
+
+.motion .card:hover .shards {
+  animation-duration: 1.1s;
+}
+
+/* ---- Pause ambient loops off screen ---- */
+.motion .card:not([data-inview]) .shards,
+.motion .shade-grid:not([data-inview]) .shade-grid__glow,
+.motion .shade-grid:not([data-inview]) .shade-grid__light {
+  animation-play-state: paused;
+}
+
+/* ---- Pointer spotlight (hero, “Trusted by”): see ShadeGrid.astro ---- */
+@property --spot-x {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --spot-y {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+
+/* The beam trails the cursor slightly. */
+.motion .shade-grid {
+  transition:
+    --spot-x 420ms var(--easing-decelerate),
+    --spot-y 420ms var(--easing-decelerate);
+}
+
+.motion .shade-grid__spot {
+  transition: opacity 500ms var(--easing-standard);
+}
+
+/* While the beam is on, the autonomous wave steps back. */
+.motion .shade-grid[data-revealed][data-spot] .shade-grid__glow {
+  opacity: 0.35;
+}

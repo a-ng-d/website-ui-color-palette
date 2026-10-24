@@ -1,7 +1,7 @@
 ---
-import graphs from '@/assets/decor/graphs-jumbotron.svg'
 import BadgePlus from '@lucide/astro/icons/badge-plus'
 import Button from '@/components/ui/Button.astro'
+import wave from '@/assets/decor/graphs-jumbotron.svg'
 import ShadeGrid from '@/components/ui/ShadeGrid.astro'
 import Tag from '@/components/ui/Tag.astro'
 import { site } from '@/config/site'
@@ -13,9 +13,9 @@ import { site } from '@/config/site'
 >
   <ShadeGrid
     class="jumbotron__grid"
+    wave={{ src: wave, inset: '0 -2.58% -2.03% -2.58%' }}
     cols={12}
     rows={9}
-    graphs={graphs}
     areas={[
       { name: 'hero', colStart: 2, colSpan: 10, rowStart: 2, rowSpan: 3 },
       { name: 'demo', colStart: 2, colSpan: 10, rowStart: 5, rowSpan: 4 },

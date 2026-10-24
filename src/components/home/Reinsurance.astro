@@ -2,8 +2,8 @@
 import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
 
-import graphs from '@/assets/decor/graphs-reinsurance.svg'
 import Button from '@/components/ui/Button.astro'
+import wave from '@/assets/decor/graphs-reinsurance.svg'
 import ShadeGrid from '@/components/ui/ShadeGrid.astro'
 import Tag from '@/components/ui/Tag.astro'
 import Chip from '@unoff-dist/components/tags/chip/Chip.js'
@@ -51,9 +51,9 @@ const addTo = [...platforms].sort(
 
     <ShadeGrid
       class="reinsurance__grid"
+      wave={{ src: wave, inset: '0 -5.19% -2.73% -5.19%' }}
       cols={8}
       rows={6}
-      graphs={graphs}
       areas={[
         { name: 'pitch', colStart: 2, colSpan: 6, rowStart: 2, rowSpan: 4 },
       ]}

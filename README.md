@@ -2,6 +2,13 @@
 
 Source of [ui-color-palette.com](https://ui-color-palette.com): a static site built with [Astro](https://astro.build) and deployed on Netlify. It replaces the Figma Sites version.
 
+## Design guidelines
+
+The design intent, tokens, component choices, layout patterns, motion system and the
+checklist for new pages are documented as a Claude Code skill in
+[`.claude/skills/ui-color-palette-corpo-website`](.claude/skills/ui-color-palette-corpo-website/SKILL.md). Read it before
+adding or migrating a page.
+
 ## Getting started
 
 ```sh

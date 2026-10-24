@@ -2,6 +2,7 @@
 @import '@fontsource-variable/lexend/wght.css';
 @import './tokens.css';
 @import './unoff-links.css';
+@import './motion.css';
 
 *,
 *::before,
@@ -150,6 +151,34 @@ button {
 
 .skip-link:focus {
   transform: none;
+}
+
+/* ---- Illustrations ---- */
+
+/* Grid behind logos (92 × 124 cells centred, as in the Figma illustrations). */
+.illustration-grid {
+  --illustration-grid-color: var(--color-border-tertiary-default);
+  background-image:
+    linear-gradient(
+      to right,
+      var(--illustration-grid-color) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      var(--illustration-grid-color) 1px,
+      transparent 1px
+    );
+  background-position: center;
+  background-size: 92px 124px;
+}
+
+/* Rays around logos: the SVG is a mask, the colour comes from a token. */
+.shards {
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  background-color: var(--color-icon-brand-default);
+  pointer-events: none;
 }
 
 /* ---- Shared section layout ---- */

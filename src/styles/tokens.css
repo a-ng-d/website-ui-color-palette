@@ -12,6 +12,8 @@
 @import '@unoff-assets/card.css';
 @import '@unoff-assets/Thumbnail.css';
 @import '@unoff-assets/Button.css';
+/* Yelbolt icon set (~5 KB gzip), used for the @unoff/ui spinner. */
+@import '@unoff-assets/styles/icons/styles/yelbolt.css';
 
 :root {
   /* ---- Typography (Figma “Website/*” text styles) ---- */
@@ -78,6 +80,32 @@
   --site-radius-card: var(--border-radius-xxxlarge); /* 16px */
   --site-radius-inner: var(--radius-xlarge); /* 8px */
   --site-radius-pill: var(--radius-full);
+
+  /* Brand gradient (Figma “UICP GRD”: Red, Yellow, Green, Blue, Indigo).
+     The loop version repeats it twice so a 200% strip can slide seamlessly. */
+  --brand-gradient: linear-gradient(
+    90deg,
+    #ff0000,
+    #ffb800 20%,
+    #24ff00 40%,
+    #00d1ff 60%,
+    #4200ff 80%,
+    #ff0000
+  );
+  --brand-gradient-loop: linear-gradient(
+    90deg,
+    #ff0000,
+    #ffb800 10%,
+    #24ff00 20%,
+    #00d1ff 30%,
+    #4200ff 40%,
+    #ff0000 50%,
+    #ffb800 60%,
+    #24ff00 70%,
+    #00d1ff 80%,
+    #4200ff 90%,
+    #ff0000
+  );
 
   /* Terminal-like snippets (MCP, skills) use raw UICP primitives, as in Figma. */
   --snippet-background: var(--uicp-8);

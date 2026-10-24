@@ -22,13 +22,15 @@ const {
 >
   <div class="faq__layout">
     <div class="faq__intro">
-      <h2
-        class="t-section-title"
-        id="faq-title"
-      >
-        {title}
-      </h2>
-      <p class="t-accent">{intro}</p>
+      <div class="faq__intro-content">
+        <h2
+          class="t-section-title"
+          id="faq-title"
+        >
+          {title}
+        </h2>
+        <p class="t-accent">{intro}</p>
+      </div>
     </div>
 
     <div class="faq__card surface-card">
@@ -70,12 +72,22 @@ const {
 
   .faq__intro {
     display: flex;
+    flex-direction: column;
+    align-self: stretch; /* full height of the row, like the title cards */
+    border: var(--stroke-width-thin) solid var(--site-border-soft);
+    border-radius: var(--site-radius-card);
+    background-color: var(--site-surface);
+  }
+
+  /* The text stays in view while the cards beside it scroll. */
+  .faq__intro-content {
+    display: flex;
     position: sticky;
     top: var(--layout-header-height);
     flex-direction: column;
-    align-self: start;
     gap: var(--space-gap-400);
     padding: var(--space-inset-800);
+    max-width: var(--layout-content-max);
   }
 
   .faq__card {
@@ -140,7 +152,7 @@ const {
       grid-template-columns: minmax(0, 1fr);
     }
 
-    .faq__intro {
+    .faq__intro-content {
       position: static;
     }
 
