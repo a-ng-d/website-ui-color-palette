@@ -65,6 +65,34 @@ export const softwareApplication = (offers: object | object[] = freeOffer) => ({
   offers,
 })
 
+/**
+ * A platform edition of the plugin (/figma, /penpot…), part of the main
+ * application so engines tie the pages together.
+ */
+export const platformApplication = (page: {
+  path: string
+  name: string
+  description: string
+  operatingSystem: string
+  installUrl: string
+  featureList: string[]
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  '@id': `${absolute(page.path)}#software`,
+  name: page.name,
+  url: absolute(page.path),
+  description: page.description,
+  applicationCategory: 'DesignApplication',
+  applicationSubCategory: 'Plugin',
+  operatingSystem: page.operatingSystem,
+  installUrl: page.installUrl,
+  featureList: page.featureList,
+  isPartOf: { '@id': softwareId },
+  publisher: { '@id': organizationId },
+  offers: freeOffer,
+})
+
 /** The plans of the Pricing page, as offers of the application. */
 export const pricingOffers = () => {
   const offer = (plan: Plan, period: string, variant: PlanVariant) => ({

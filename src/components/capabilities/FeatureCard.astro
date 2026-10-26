@@ -28,9 +28,11 @@ const { card, mediaFirst = false, class: className } = Astro.props
     <h3 class="t-paragraph-secondary-title">{card.title}</h3>
     <p class="t-accent">{card.text}</p>
   </div>
-  <div class="feature__media">
-    <Demo id={card.demo} />
-  </div>
+  {card.demo && (
+    <div class="feature__media">
+      <Demo id={card.demo} />
+    </div>
+  )}
 </article>
 
 <style>

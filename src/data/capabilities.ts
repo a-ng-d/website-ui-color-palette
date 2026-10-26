@@ -27,7 +27,8 @@ export type DemoId =
 export interface Capability {
   title: string
   text: string
-  demo: DemoId
+  /** Text-only card when omitted (/claude "Why it matters"). */
+  demo?: DemoId
   /** Columns spanned in the mosaic (desktop). */
   span?: number
 }
@@ -35,7 +36,7 @@ export interface Capability {
 export interface CapabilityGroup {
   id: string
   title: string
-  intro: string
+  intro?: string
   cards: Capability[]
 }
 

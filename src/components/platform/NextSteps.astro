@@ -1,0 +1,76 @@
+---
+/**
+ * Three whole-card links that close a platform page (Figma “Reinassurance”):
+ * capabilities, pricing, downloads.
+ */
+import IconTile from '@/components/ui/IconTile.astro'
+import { nextSteps } from '@/data/platform-pages'
+---
+
+<section
+  class="section next-steps"
+  aria-labelledby="next-steps-title"
+>
+  <h2
+    class="visually-hidden"
+    id="next-steps-title"
+  >
+    Keep exploring UI Color Palette
+  </h2>
+  <ul class="next-steps__grid">
+    {nextSteps.map((step) => (
+      <li class="next-steps__item">
+        <a
+          class="next-steps__card card"
+          href={step.href}
+        >
+          <IconTile icon={step.icon} />
+          <h3 class="t-paragraph-primary-title">{step.title}</h3>
+          <p class="t-accent">
+            {step.label} <span aria-hidden="true">→</span>
+          </p>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .next-steps__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: minmax(416px, auto);
+    gap: var(--space-gap-200);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .next-steps__item {
+    display: flex;
+  }
+
+  /* Hover, focus and outline come from the @unoff/ui .card class. */
+  .next-steps__card {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+    text-decoration: none;
+  }
+
+  @media (max-width: 1023.98px) {
+    .next-steps__grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-auto-rows: minmax(240px, auto);
+    }
+  }
+
+  @media (max-width: 639.98px) {
+    .next-steps__card {
+      padding: var(--space-inset-600);
+    }
+  }
+</style>

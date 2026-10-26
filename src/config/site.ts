@@ -63,6 +63,13 @@ export const links = {
     'https://startupfa.me/s/ui-color-palette?utm_source=ui-color-palette.com',
   tlGuide: 'https://tlguide.com/reviews/ui-color-palette',
   mcpEndpoint: 'https://mcp.ui-color-palette.com/mcp',
+  runFigmaPlugin: 'https://uicp.ylb.lt/run-figma-plugin',
+  runPenpotPlugin: 'https://uicp.ylb.lt/run-penpot-plugin',
+  runSketchPlugin: 'https://uicp.ylb.lt/run-sketch-plugin',
+  runFramerPlugin: 'https://uicp.ylb.lt/run-framer-plugin',
+  runClaudePlugin: 'https://uicp.ylb.lt/run-claude-plugin',
+  /** The plugin UI in embed mode, shown on the platform pages. */
+  pluginEmbed: 'https://plugin.ui-color-palette.com/',
 } as const
 
 export const mainNav: NavLink[] = [

@@ -3,7 +3,7 @@
 ## 1. Source and inventory
 
 - Figma file `edb7rYGuOugjDuxo1FqaYO`, one section per page with 4 frames (1920, 1280,
-  800, 357/375). Known nodes: Home `0:1926`, Pricing `3:3959`, Capabilities `3:20329`.
+  800, 357/375). Known nodes: Home `0:1926`, Pricing `3:3959`, Capabilities `3:20329`, Figma `14:32192`.
   Work from the **Desktop 1280** frame; check Tablet/Mobile frames for responsive intent.
 - Call `create_session` once, then `get_design_context` per section (not per page: pages
   exceed the response limit). Use `get_variable_defs` for type styles.

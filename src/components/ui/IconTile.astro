@@ -1,0 +1,58 @@
+---
+/**
+ * The dark rounded tile holding a Lucide icon at the top of a card's info
+ * (Figma “Card/Section” → Icon). Decorative: the card title carries the meaning.
+ */
+import Apple from '@lucide/astro/icons/apple'
+import BadgeDollarSign from '@lucide/astro/icons/badge-dollar-sign'
+import CodeXml from '@lucide/astro/icons/code-xml'
+import Coins from '@lucide/astro/icons/coins'
+import Download from '@lucide/astro/icons/download'
+import Glasses from '@lucide/astro/icons/glasses'
+import PackageOpen from '@lucide/astro/icons/package-open'
+import Paintbrush from '@lucide/astro/icons/paintbrush'
+import RefreshCcwDot from '@lucide/astro/icons/refresh-ccw-dot'
+import Ruler from '@lucide/astro/icons/ruler'
+import ThumbsUp from '@lucide/astro/icons/thumbs-up'
+import Wrench from '@lucide/astro/icons/wrench'
+import type { IconId } from '@/data/platform-pages'
+
+interface Props {
+  icon: IconId
+}
+
+const icons = {
+  apple: Apple,
+  'badge-dollar-sign': BadgeDollarSign,
+  'code-xml': CodeXml,
+  coins: Coins,
+  download: Download,
+  glasses: Glasses,
+  'package-open': PackageOpen,
+  paintbrush: Paintbrush,
+  'refresh-ccw-dot': RefreshCcwDot,
+  ruler: Ruler,
+  'thumbs-up': ThumbsUp,
+  wrench: Wrench,
+} satisfies Record<IconId, unknown>
+
+const Icon = icons[Astro.props.icon]
+---
+
+<span class="icon-tile"><Icon aria-hidden="true" /></span>
+
+<style>
+  .icon-tile {
+    display: inline-flex;
+    align-self: flex-start;
+    border-radius: var(--site-radius-card);
+    background-color: var(--button-primary-background-color-default);
+    padding: var(--space-inset-300);
+    color: var(--button-primary-text-color-default);
+  }
+
+  .icon-tile :global(svg) {
+    width: var(--control-icon-600);
+    height: var(--control-icon-600);
+  }
+</style>

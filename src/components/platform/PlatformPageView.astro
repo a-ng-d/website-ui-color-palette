@@ -1,0 +1,58 @@
+---
+/**
+ * A whole platform page (/figma, /penpot, /sketch, /framer, /claude) from its
+ * data in `data/platform-pages.ts`. The `media` slot replaces the plugin embed
+ * for pages that have none.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import MosaicSection from '@/components/capabilities/MosaicSection.astro'
+import Reinsurance from '@/components/home/Reinsurance.astro'
+import NextSteps from '@/components/platform/NextSteps.astro'
+import PlatformHero from '@/components/platform/PlatformHero.astro'
+import PlatformSurfaces from '@/components/platform/PlatformSurfaces.astro'
+import type { PlatformPage } from '@/data/platform-pages'
+import { organization, platformApplication } from '@/data/structured-data'
+
+interface Props {
+  page: PlatformPage
+}
+
+const { page } = Astro.props
+// Demo cards pair up on 2 columns; text-only cards sit on one row with the title.
+const textOnly = page.why.cards.every((card) => !card.demo)
+
+const jsonLd = [
+  organization(),
+  platformApplication({
+    path: page.path,
+    name: page.hero.title,
+    description: page.seo.description,
+    operatingSystem: page.platform,
+    installUrl: page.hero.cta.href,
+    featureList: [
+      ...page.surfaces.cards.map((card) => card.title),
+      ...page.why.cards.map((card) => card.title),
+    ],
+  }),
+]
+---
+
+<BaseLayout
+  title={page.seo.title}
+  description={page.seo.description}
+  jsonLd={jsonLd}
+>
+  <PlatformHero hero={page.hero} />
+  <PlatformSurfaces surfaces={page.surfaces}>
+    <slot
+      name="media"
+      slot="media"
+    />
+  </PlatformSurfaces>
+  <MosaicSection
+    group={page.why}
+    columns={textOnly ? 4 : 2}
+  />
+  <NextSteps />
+  <Reinsurance />
+</BaseLayout>

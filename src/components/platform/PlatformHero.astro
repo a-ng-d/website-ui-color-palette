@@ -1,0 +1,86 @@
+---
+/**
+ * Hero of a platform page: the 16 × 2 shade grid of Pricing/Capabilities,
+ * with the install link under the tagline.
+ */
+import wave from '@/assets/decor/graphs-pricing.svg'
+import Button from '@/components/ui/Button.astro'
+import ShadeGrid from '@/components/ui/ShadeGrid.astro'
+import type { PlatformPage } from '@/data/platform-pages'
+
+interface Props {
+  hero: PlatformPage['hero']
+}
+
+const { hero } = Astro.props
+---
+
+<section
+  class="platform-hero"
+  aria-labelledby="platform-hero-title"
+>
+  <ShadeGrid
+    class="platform-hero__grid"
+    wave={{ src: wave, inset: '0 -2.58% -11.05% -2.58%' }}
+    cols={16}
+    rows={2}
+    areas={[
+      { name: 'hero', colStart: 3, colSpan: 12, rowStart: 1, rowSpan: 2 },
+    ]}
+  >
+    <div
+      class="platform-hero__content"
+      slot="hero"
+    >
+      <div class="platform-hero__texts">
+        <h1
+          class="t-section-title"
+          id="platform-hero-title"
+        >
+          {hero.title}
+        </h1>
+        <p class="t-tagline">{hero.tagline}</p>
+      </div>
+      <Button
+        href={hero.cta.href}
+        variant="primary"
+      >
+        {hero.cta.label}
+      </Button>
+    </div>
+  </ShadeGrid>
+</section>
+
+<style>
+  .platform-hero {
+    padding: var(--space-inset-200) var(--layout-gutter) 0;
+  }
+
+  .platform-hero :global(.platform-hero__grid) {
+    --shade-row-min: 144px;
+  }
+
+  .platform-hero__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-gap-800);
+    padding: var(--space-inset-800);
+    width: 100%;
+    max-width: calc(var(--layout-content-max) + 2 * var(--space-inset-800));
+    text-align: center;
+  }
+
+  .platform-hero__texts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+  }
+
+  @media (max-width: 639.98px) {
+    .platform-hero__content {
+      padding: var(--space-inset-600) var(--space-inset-400);
+    }
+  }
+</style>

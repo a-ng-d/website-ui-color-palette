@@ -8,8 +8,8 @@ import FeatureCard from './FeatureCard.astro'
 
 interface Props {
   group: CapabilityGroup
-  /** Columns on desktop (2 for Master, 3 otherwise). */
-  columns?: 2 | 3
+  /** Columns on desktop (2 for Master, 4 for /claude, 3 otherwise). */
+  columns?: 2 | 3 | 4
   /** Columns from 640 to 1024px. */
   tabletColumns?: 1 | 2
   /** Demos above the text (Superpowers). */
@@ -38,7 +38,7 @@ const lastAlone = tabletColumns === 2 && singles % 2 === 1
       >
         {group.title}
       </h2>
-      <p class="t-accent">{group.intro}</p>
+      {group.intro && <p class="t-accent">{group.intro}</p>}
     </div>
 
     {group.cards.map((card, i) => (

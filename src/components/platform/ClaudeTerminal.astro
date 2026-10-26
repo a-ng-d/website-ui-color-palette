@@ -1,0 +1,182 @@
+---
+/**
+ * The /claude illustration: a Claude Code session installing the plugin from
+ * the Yelbolt marketplace. Real text in the HTML (the commands are worth
+ * crawling); with motion, the lines type in once the card is revealed.
+ */
+interface Line {
+  kind: 'banner' | 'command' | 'progress' | 'success'
+  text: string
+}
+
+const lines: Line[] = [
+  { kind: 'banner', text: 'Claude Code v1.0.0 - AI-Powered Development Assistant' },
+  { kind: 'banner', text: 'Type /help for available commands' },
+  { kind: 'command', text: '/plugin marketplace add yelbolt/claude-marketplace' },
+  { kind: 'progress', text: 'Fetching plugin from marketplace...' },
+  {
+    kind: 'success',
+    text: "Plugin 'yelbolt/claude-marketplace' installed successfully!",
+  },
+  { kind: 'command', text: '/plugin install ui-color-palette@yelbolt' },
+  { kind: 'progress', text: 'Installing ui-color-palette from yelbolt marketplace.' },
+]
+
+// Typing rhythm: commands type character by character, outputs print at once.
+const TYPE_MS = 28
+const PAUSE_MS = 500
+let at = 400
+// Real line breaks in the <pre> (copy, crawlers): a blank line before each
+// command, outputs indented, no break after the last line (the caret ends it).
+const timed = lines.map((line, i) => {
+  const start = at
+  const duration = line.kind === 'command' ? line.text.length * TYPE_MS : 0
+  at += duration + PAUSE_MS
+  const before = line.kind === 'command' ? '\n' : ''
+  const prefix = { banner: '', command: '❯ ', progress: '  ', success: '  ✓ ' }[
+    line.kind
+  ]
+  const after = i < lines.length - 1 ? '\n' : ''
+  return { ...line, start, duration, before, prefix, after }
+})
+---
+
+<figure class="terminal surface-card">
+  <figcaption class="terminal__bar">
+    <span
+      class="terminal__dots"
+      aria-hidden="true"
+    ><span></span><span></span><span></span></span>
+    <span>Claude Code terminal</span>
+  </figcaption>
+  <pre class="terminal__body"><code>{timed.map((line) => (
+    <span
+      class:list={['terminal__line', `terminal__line--${line.kind}`]}
+      style={`--start:${line.start}ms;--duration:${line.duration}ms;--chars:${line.text.length}`}
+    >{line.before}<span class="terminal__prefix">{line.prefix}</span><span class="terminal__text">{line.text}</span>{line.after}</span>
+  ))}<span class="terminal__caret" aria-hidden="true"></span></code></pre>
+</figure>
+
+<style>
+  .terminal {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    margin: 0;
+    border-color: var(--snippet-border);
+    background-color: var(--snippet-background);
+    min-height: 480px;
+    overflow: clip;
+    color: var(--snippet-text);
+    font-family: var(--font-display);
+  }
+
+  .terminal__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-gap-400);
+    border-bottom: var(--stroke-width-thin) solid var(--snippet-border);
+    padding: var(--space-inset-300) var(--space-inset-600);
+    color: var(--snippet-tag-text);
+    font-size: 0.75rem;
+  }
+
+  .terminal__dots {
+    display: flex;
+    gap: var(--space-gap-200);
+  }
+
+  .terminal__dots span {
+    border-radius: var(--site-radius-pill);
+    background-color: var(--snippet-tag-border);
+    width: 10px;
+    height: 10px;
+  }
+
+  .terminal__body {
+    flex: 1 1 auto;
+    margin: 0;
+    padding: var(--space-inset-600);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .terminal__body code {
+    font: inherit;
+  }
+
+  .terminal__line--banner,
+  .terminal__line--progress {
+    color: var(--snippet-tag-text);
+  }
+
+  .terminal__line--success {
+    font-weight: 600;
+  }
+
+  .terminal__line--command .terminal__prefix {
+    font-weight: 600;
+  }
+
+  .terminal__caret {
+    display: inline-block;
+    vertical-align: text-bottom;
+    background-color: currentColor;
+    width: 1ch;
+    height: 1.2em;
+  }
+
+  /* Motion: lines wait for the reveal, commands type, the caret blinks. */
+  :global(.motion) .terminal__line {
+    animation: terminal-line 1ms var(--start) both paused;
+  }
+
+  /* Typing needs the command on one line: only where it fits. */
+  @media (min-width: 640px) {
+    :global(.motion) .terminal__line--command .terminal__text {
+      display: inline-block;
+      vertical-align: top;
+      animation: terminal-type var(--duration) steps(var(--chars), end)
+        var(--start) both paused;
+      white-space: nowrap;
+    }
+  }
+
+  :global(.motion) .terminal__caret {
+    animation: terminal-blink 1s steps(1) infinite;
+  }
+
+  :global(.motion) .terminal[data-revealed] .terminal__line,
+  :global(.motion) .terminal[data-revealed] .terminal__text {
+    animation-play-state: running;
+  }
+
+  @keyframes terminal-line {
+    from {
+      visibility: hidden;
+    }
+
+    to {
+      visibility: visible;
+    }
+  }
+
+  /* Clip from the right: the end state is the text at its natural width. */
+  @keyframes terminal-type {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+
+    to {
+      clip-path: inset(0);
+    }
+  }
+
+  @keyframes terminal-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+</style>

@@ -21,6 +21,16 @@ column), `479.98px` (small phones). Mobile first is not required; keep desktop r
 | **Sticky intro left + stacked cards** | `capabilities/GenerateSection` | `600fr 656fr`, intro left, `FeatureCard`s sticky and stacking, **all as tall as the tallest** (`grid-auto-rows: 1fr`) so a card always covers the one beneath; 1 col < 1024 |
 | **Capability mosaic** | `capabilities/MosaicSection` | `columns` 2/3 (`tabletColumns` 1/2), rotated title card first, `FeatureCard`s (`span` from data, `mediaFirst` for demo-on-top), rows ≥ 504px |
 | **Tall title card + persona cards** | `capabilities/AudienceSection` | 3 cols, straight tall title card, check-list cards |
+| **Platform hero** | `platform/PlatformHero` | `ShadeGrid` 16 × 2 (as Pricing/Capabilities) + install `Button` |
+| **Title card + live embed + editor cards** | `platform/PlatformSurfaces` | 3 cols: rotated title (col 1, rows 1–2), plugin iframe (cols 2–3, rows 1–2), `IconTile` cards on row 3; 2 cols < 1024 with the embed last on a full row; 1 col < 640 |
+| **Next steps link cards** | `platform/NextSteps` | 3 whole-card `<a class="card">` (capabilities, pricing, downloads); 1 col < 1024 |
+
+Platform pages (`/figma`, `/penpot`, `/sketch`, `/framer`, `/claude`) are data-driven:
+a `PlatformPage` in `src/data/platform-pages.ts`, rendered by
+`platform/PlatformPageView` (hero, surfaces, “Why it matters” mosaic, next steps,
+reinsurance). Variants: two surface cards → the second gets `span: 2`; no plugin
+embed → fill the `media` slot (`/claude` uses `platform/ClaudeTerminal`); “Why it
+matters” cards without `demo` → a 4-column row of text cards.
 
 ## Sticky intro container
 
