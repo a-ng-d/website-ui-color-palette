@@ -65,9 +65,6 @@ const { surfaces } = Astro.props
 </section>
 
 <script>
-  // The embed URL carries mode=dark (also the no-JS default). Follow the site's
-  // light / dark mode instead, including when the visitor switches it: the
-  // plugin reads `mode` once at load, so the frame is reloaded with the new one.
   const frames = document.querySelectorAll<HTMLIFrameElement>(
     'iframe[data-embed-frame]'
   )
@@ -81,7 +78,12 @@ const { surfaces } = Astro.props
       const url = new URL(frame.src)
       if (url.searchParams.get('mode') === mode) continue
       url.searchParams.set('mode', mode)
-      frame.src = url.href
+      try {
+        if (frame.contentWindow) frame.contentWindow.location.replace(url.href)
+        else frame.src = url.href
+      } catch {
+        frame.src = url.href
+      }
     }
   }
 
