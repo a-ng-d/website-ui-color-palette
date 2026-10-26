@@ -23,6 +23,12 @@ You do not rewrite anything; you say what is true, what is not, and where the pr
 
 The `ui-color-palette-blog-writing` skill, §1, defines what counts as grounded.
 
+**Sources unreachable.** The specs and docs live in sibling repos outside this one. Before
+checking any claim, Glob `../specs-ui-color-palette/02-features/` and
+`../docs-ui-color-palette/`. If either returns nothing or is denied, stop and answer
+`Verdict: BLOCKED — sources unreachable (<paths>)`. Never return PASS, and never mark a
+claim Unsupported, on the strength of a lookup that could not run.
+
 ## Method
 
 1. Read the article or the page copy in scope (for a page, the copy may live in

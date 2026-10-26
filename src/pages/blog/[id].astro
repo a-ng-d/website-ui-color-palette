@@ -83,7 +83,7 @@ const path = `/blog/${post.id}`
     class="section article"
     aria-label="Article"
   >
-    <div class="article__card surface-card">
+    <div class="article__card">
       <figure class="article__cover">
         <Image
           src={cover}
@@ -108,9 +108,14 @@ const path = `/blog/${post.id}`
     padding: var(--space-inset-100, 4px) var(--layout-gutter) 0;
   }
 
-  /* .surface-card: the static content card (not the interactive .card, which
-     scales on press and swallows clicks on inner links). */
+  /* A static container, deliberately NOT .surface-card: that class joins the
+     reveal system (opacity 0 until 12% is visible, scale, overflow: clip), which
+     a page-length card never satisfies and would clip embeds and focus rings.
+     Not the interactive @unoff/ui .card either (scale on press, swallows clicks). */
   .article__card {
+    border: var(--stroke-width-thin) solid var(--site-border-strong);
+    border-radius: var(--site-radius-card);
+    background-color: var(--site-surface);
     display: flex;
     flex-direction: column;
     align-items: center;

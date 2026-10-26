@@ -25,6 +25,10 @@ reference file the task needs — never plan from memory of the site.
 | `style-guardian` | Checks @unoff/ui tokens and components, layout patterns, motion, dark mode, a11y of markup | no |
 
 Subagents cannot spawn subagents: **you** run every review, never ask a specialist to.
+If you were yourself launched as a subagent (no Agent tool available), you cannot spawn
+anything: do the site work, then end your report with a **Reviews still required** list
+(which reviewer, on which files, from the routing rules below) for the calling session to
+run. Never report a change as reviewed when no review ran.
 
 ## Routing rules
 

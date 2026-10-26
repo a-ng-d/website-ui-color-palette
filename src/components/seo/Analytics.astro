@@ -1,0 +1,48 @@
+---
+/**
+ * Third-party scripts carried over from the previous site:
+ * Google Analytics 4 (consent denied by default) and the Tawk.to chat widget.
+ * IDs live in src/config/site.ts.
+ */
+import { site } from '@/config/site'
+
+const { googleAnalyticsId, tawkWidget } = site
+---
+
+<script
+  is:inline
+  async
+  src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+></script>
+<script
+  is:inline
+  define:vars={{ googleAnalyticsId }}
+>
+  window.dataLayer = window.dataLayer || []
+  function gtag() {
+    dataLayer.push(arguments)
+  }
+  // Consent defaults must be declared before the first config call.
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    analytics_storage: 'denied',
+  })
+  gtag('js', new Date())
+  gtag('config', googleAnalyticsId)
+</script>
+<script
+  is:inline
+  define:vars={{ tawkWidget }}
+>
+  var Tawk_API = Tawk_API || {},
+    Tawk_LoadStart = new Date()
+  ;(function () {
+    var s1 = document.createElement('script'),
+      s0 = document.getElementsByTagName('script')[0]
+    s1.async = true
+    s1.src = 'https://embed.tawk.to/' + tawkWidget
+    s1.charset = 'UTF-8'
+    s1.setAttribute('crossorigin', '*')
+    s0.parentNode.insertBefore(s1, s0)
+  })()
+</script>
