@@ -1,76 +1,63 @@
 ---
-import { getCollection } from 'astro:content'
-import { Image } from 'astro:assets'
-
+import PostCard from '@/components/blog/PostCard.astro'
+import Button from '@/components/ui/Button.astro'
 import Tag from '@/components/ui/Tag.astro'
+import { getPosts, type Post } from '@/data/blog'
 
 interface Props {
+  /** Defaults to the latest articles. */
+  posts?: Post[]
   limit?: number
+  tag?: string
+  title?: string
+  /** Date and category on the cards. */
+  meta?: boolean
 }
 
-const { limit = 2 } = Astro.props
-
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
-  .sort(
-    (a, b) =>
-      (b.data.pubDate?.getTime() ?? 0) - (a.data.pubDate?.getTime() ?? 0) ||
-      a.id.localeCompare(b.id)
-  )
-  .slice(0, limit)
+const {
+  limit = 2,
+  tag = 'News',
+  title = 'Latest from the UI Color Palette blog',
+  meta = false,
+} = Astro.props
+const posts = (Astro.props.posts ?? (await getPosts())).slice(0, limit)
 ---
 
-<section
-  class="section posts"
-  aria-labelledby="posts-title"
->
-  <div class="posts__layout">
-    <div class="posts__intro">
-      <Tag size="large">News</Tag>
-      <h2
-        class="t-section-title"
-        id="posts-title"
-      >
-        Here are some exciting updates from our team!
-      </h2>
-    </div>
+{posts.length > 0 && (
+  <section
+    class="section posts"
+    aria-labelledby="posts-title"
+  >
+    <div class="posts__layout">
+      <div class="posts__intro">
+        <Tag size="large">{tag}</Tag>
+        <h2
+          class="t-section-title"
+          id="posts-title"
+        >
+          {title}
+        </h2>
+        <Button
+          href="/blog"
+          variant="secondary"
+        >
+          See all articles
+        </Button>
+      </div>
 
-    <ul class="posts__list">
-      {posts.map((post) => (
-        <li>
-          <article class="post card">
-            <div class="post__cover">
-              <Image
-                src={post.data.cover}
-                alt={post.data.coverAlt}
-                widths={[480, 800, 1200]}
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                loading="lazy"
-              />
-            </div>
-            <div class="post__body">
-              <h3 class="t-paragraph-secondary-title">
-                <a
-                  class="post__link"
-                  href={`/blog/${post.id}`}
-                >
-                  {post.data.title}
-                </a>
-              </h3>
-              <p class="post__excerpt">{post.data.description}</p>
-              <!-- Looks like a secondary button; the title link makes the whole card clickable. -->
-              <span
-                class="post__more text-button text-button--secondary text-button--large"
-                aria-hidden="true"
-              >
-                <span class="text-button__label">Read more</span>
-              </span>
-            </div>
-          </article>
-        </li>
-      ))}
-    </ul>
-  </div>
-</section>
+      <ul class="posts__list">
+        {posts.map((post) => (
+          <li>
+            <PostCard
+              post={post}
+              meta={meta}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
 
 <style>
   .posts__layout {
@@ -99,68 +86,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     list-style: none;
   }
 
-  .post {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    --card-radius: var(--space-inset-600);
-    height: 400px;
-    overflow: clip;
-  }
-
-  .post__cover {
-    flex: 1 1 auto;
-    min-height: 0;
-  }
-
-  .post__cover :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .post__body {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-gap-200);
-    border-top: var(--stroke-width-thin) solid var(--site-border-strong);
-    padding: var(--space-inset-800);
-  }
-
-  .post__link {
-    text-decoration: none;
-  }
-
-  /* The whole card is clickable through the title link. */
-  .post__link::after {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    content: '';
-  }
-
-  .post__link:focus-visible {
-    outline: none;
-  }
-
-  .post:has(.post__link:focus-visible) {
-    outline: var(--stroke-width-thick) solid
-      var(--color-border-selected-default);
-    outline-offset: var(--stroke-offset-positive-thick);
-  }
-
-  .post__more {
-    cursor: pointer;
-  }
-
-  .post:hover .post__more {
-    --button-base-background-color: var(
-      --button-secondary-background-color-hover
-    );
-    --button-base-border-color: var(--button-secondary-border-color-hover);
-  }
-
   @media (max-width: 1023.98px) {
     .posts__layout {
       grid-template-columns: minmax(0, 1fr);
@@ -169,14 +94,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     .posts__intro {
       transform: none;
       min-height: 240px;
-    }
-
-    .post {
-      height: auto;
-    }
-
-    .post__cover {
-      aspect-ratio: 16 / 9;
     }
   }
 </style>
