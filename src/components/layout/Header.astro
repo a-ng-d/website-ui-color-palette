@@ -31,16 +31,32 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
       />
     </a>
 
-    <button
-      class="header__menu-toggle text-button text-button--tertiary text-button--large"
-      type="button"
-      aria-expanded="false"
-      aria-controls="header-links"
-      hidden
-      data-menu-toggle
-    >
-      Menu
-    </button>
+    <!-- Small screens: theme switch sits just left of the Menu button. -->
+    <div class="header__actions">
+      <button
+        class="header__theme header__theme--compact icon-button icon-button--default"
+        type="button"
+        aria-label="Switch to dark mode"
+        hidden
+        data-theme-toggle
+      >
+        <MoonIcon class="header__theme-dark" />
+        <SunIcon class="header__theme-light" />
+      </button>
+
+      <button
+        class="header__menu-toggle text-button text-button--tertiary text-button--large"
+        type="button"
+        aria-expanded="false"
+        aria-controls="header-links"
+        hidden
+        data-menu-toggle
+      >
+        <!-- Both labels share one grid cell: the button keeps the width of the longest. -->
+        <span class="header__menu-label header__menu-label--open">Menu</span>
+        <span class="header__menu-label header__menu-label--close">Close</span>
+      </button>
+    </div>
 
     <div
       class="header__links"
@@ -95,7 +111,7 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
 
       <!-- Hidden without JS: switching modes needs a script. -->
       <button
-        class="header__theme icon-button icon-button--default"
+        class="header__theme header__theme--inline icon-button icon-button--default"
         type="button"
         aria-label="Switch to dark mode"
         hidden
@@ -119,9 +135,11 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
   // Progressive enhancement: without JS, every link stays visible.
   const header = document.querySelector<HTMLElement>('[data-header]')
   const toggle = header?.querySelector<HTMLButtonElement>('[data-menu-toggle]')
-  const themeToggle = header?.querySelector<HTMLButtonElement>(
-    '[data-theme-toggle]'
-  )
+  const themeToggles = header
+    ? Array.from(
+        header.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]')
+      )
+    : []
   const dropdowns =
     document.querySelectorAll<HTMLDetailsElement>('[data-dropdown]')
 
@@ -135,29 +153,33 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
   }
 
   // Light / dark: the initial mode is set before paint in BaseLayout.
-  if (themeToggle) {
+  if (themeToggles.length) {
     const root = document.documentElement
     const isDark = () => root.dataset.mode === 'yelbolt-uicp-dark'
     const sync = () => {
       const dark = isDark()
-      themeToggle.setAttribute(
-        'aria-label',
-        dark ? 'Switch to light mode' : 'Switch to dark mode'
-      )
-      themeToggle.setAttribute('aria-pressed', String(dark))
+      themeToggles.forEach((button) => {
+        button.setAttribute(
+          'aria-label',
+          dark ? 'Switch to light mode' : 'Switch to dark mode'
+        )
+        button.setAttribute('aria-pressed', String(dark))
+      })
     }
-    themeToggle.hidden = false
-    sync()
-    themeToggle.addEventListener('click', () => {
-      const next = isDark() ? 'light' : 'dark'
-      root.dataset.mode = `yelbolt-uicp-${next}`
-      try {
-        localStorage.setItem('uicp-theme', next)
-      } catch {
-        // Private mode or blocked storage: the choice lasts for this page only.
-      }
-      sync()
+    themeToggles.forEach((button) => {
+      button.hidden = false
+      button.addEventListener('click', () => {
+        const next = isDark() ? 'light' : 'dark'
+        root.dataset.mode = `yelbolt-uicp-${next}`
+        try {
+          localStorage.setItem('uicp-theme', next)
+        } catch {
+          // Private mode or blocked storage: the choice lasts for this page only.
+        }
+        sync()
+      })
     })
+    sync()
   }
 
   document.addEventListener('click', (event) => {
@@ -305,8 +327,28 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
     display: none;
   }
 
+  .header__menu-toggle {
+    display: inline-grid;
+    justify-items: center;
+  }
+
+  .header__menu-label {
+    grid-area: 1 / 1;
+  }
+
+  .header__menu-toggle[aria-expanded='false'] .header__menu-label--close,
+  .header__menu-toggle[aria-expanded='true'] .header__menu-label--open {
+    visibility: hidden;
+  }
+
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-gap-200);
+  }
+
   @media (min-width: 800px) {
-    .header__menu-toggle {
+    .header__actions {
       display: none;
     }
   }
@@ -314,6 +356,26 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
   @media (max-width: 799.98px) {
     .header__bar {
       border-radius: var(--site-radius-card);
+      /* Breathing room on the right, matching the logo side. */
+      padding-right: var(--space-inset-400);
+      /* The first row (logo + actions) owns the bar height, so opening the
+         menu (second row) does not move it. */
+      min-height: 0;
+    }
+
+    .header__logo,
+    .header__actions {
+      display: flex;
+      align-items: center;
+      min-height: calc(
+        var(--control-size-1600) - 2 * var(--space-inset-100) - 2 *
+          var(--stroke-width-thin)
+      );
+    }
+
+    /* The theme switch lives next to Menu on small screens. */
+    .header__theme--inline {
+      display: none;
     }
 
     /* With JS: links collapse behind the Menu button. */
@@ -324,9 +386,14 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
     .header[data-enhanced]:has([aria-expanded='true']) .header__links {
       display: flex;
       flex-direction: column;
-      align-items: stretch;
+      align-items: center;
       padding-bottom: var(--space-inset-200);
       width: 100%;
+      text-align: center;
+    }
+
+    .header__links :global(.text-button--primary) {
+      align-self: stretch;
     }
 
     .header__panel {

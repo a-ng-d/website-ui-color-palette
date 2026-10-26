@@ -202,7 +202,7 @@
 
 @keyframes unveil {
   0% {
-    translate: 0 0;
+    top: var(--stroke-width-thin);
     opacity: 1;
     box-shadow: none;
   }
@@ -219,8 +219,10 @@
         color-mix(in srgb, var(--color-icon-brand-default) 55%, transparent);
   }
 
+  /* The cover shrinks from the top, its bottom stays put: it never slides
+     over the card's bottom border. */
   100% {
-    translate: 0 100%;
+    top: calc(100% - var(--stroke-width-thin));
     opacity: 0;
   }
 }
