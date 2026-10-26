@@ -41,6 +41,7 @@ const { surfaces } = Astro.props
         <>
           <iframe
             class="surfaces__frame"
+            data-embed-frame
             src={surfaces.embed.src}
             title={surfaces.embed.title}
             loading="lazy"
@@ -62,6 +63,36 @@ const { surfaces } = Astro.props
     </div>
   </div>
 </section>
+
+<script>
+  // The embed URL carries mode=dark (also the no-JS default). Follow the site's
+  // light / dark mode instead, including when the visitor switches it: the
+  // plugin reads `mode` once at load, so the frame is reloaded with the new one.
+  const frames = document.querySelectorAll<HTMLIFrameElement>(
+    'iframe[data-embed-frame]'
+  )
+  const root = document.documentElement
+  const modeOf = () =>
+    root.dataset.mode === 'yelbolt-uicp-dark' ? 'dark' : 'light'
+
+  const sync = () => {
+    const mode = modeOf()
+    for (const frame of frames) {
+      const url = new URL(frame.src)
+      if (url.searchParams.get('mode') === mode) continue
+      url.searchParams.set('mode', mode)
+      frame.src = url.href
+    }
+  }
+
+  if (frames.length) {
+    sync()
+    new MutationObserver(sync).observe(root, {
+      attributes: true,
+      attributeFilter: ['data-mode'],
+    })
+  }
+</script>
 
 <style>
   .surfaces__grid {
