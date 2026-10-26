@@ -73,7 +73,7 @@ the specs or docs answer.
 7. **Verify the build**: `npm run build` (0 errors), then in `dist/blog/<slug>.html`: one
    `h1`, the canonical, JSON-LD that parses (`BlogPosting`, plus `VideoObject` /
    `FAQPage` when used). Don't start, stop or kill a dev server the user is running; if a port is taken, build
-without a server (`npm run build` needs none) rather than freeing it.
+   without a server (`npm run build` needs none) rather than freeing it.
    If the build fails for a reason outside the article (page, template, plugin, config),
    don't fix it and don't retry: after one confirming re-run, hand over with the exact
    error and file, state the draft is **unverified**, and let the orchestrator/user decide.

@@ -1,0 +1,96 @@
+/* vanilla-cookieconsent re-skinned with the site's @unoff/ui roles. */
+#cc-main {
+  --cc-font-family: var(--font-text);
+  --cc-bg: var(--site-surface);
+  --cc-primary-color: var(--site-ink);
+  --cc-secondary-color: var(--site-ink);
+  --cc-link-color: var(--site-ink);
+  --cc-modal-border-radius: var(--site-radius-card);
+  --cc-btn-border-radius: var(--site-radius-pill);
+  --cc-btn-primary-bg: var(--site-ink);
+  --cc-btn-primary-color: var(--site-surface);
+  --cc-btn-primary-border-color: var(--site-ink);
+  --cc-btn-primary-hover-bg: var(--site-ink);
+  --cc-btn-primary-hover-color: var(--site-surface);
+  --cc-btn-primary-hover-border-color: var(--site-ink);
+  --cc-btn-secondary-bg: var(--site-surface-muted);
+  --cc-btn-secondary-color: var(--site-ink);
+  --cc-btn-secondary-border-color: var(--site-border-strong);
+  --cc-btn-secondary-hover-bg: var(--site-surface-muted);
+  --cc-btn-secondary-hover-color: var(--site-ink);
+  --cc-btn-secondary-hover-border-color: var(--site-ink);
+  --cc-separator-border-color: var(--site-border-soft);
+  --cc-footer-bg: var(--site-surface-muted);
+  --cc-footer-color: var(--site-ink);
+  --cc-footer-border-color: var(--site-border-soft);
+  --cc-toggle-on-bg: var(--site-ink);
+  --cc-toggle-off-bg: var(--site-border-strong);
+  --cc-toggle-on-knob-bg: var(--site-surface);
+  --cc-toggle-off-knob-bg: var(--site-surface);
+  --cc-toggle-readonly-bg: var(--site-border-soft);
+  --cc-toggle-readonly-knob-bg: var(--site-surface);
+  --cc-cookie-category-block-bg: var(--site-surface-muted);
+  --cc-cookie-category-block-border: var(--site-border-soft);
+  --cc-cookie-category-block-hover-bg: var(--site-surface-muted);
+  --cc-cookie-category-block-hover-border: var(--site-border-strong);
+  --cc-cookie-category-expanded-block-bg: var(--site-surface-muted);
+  --cc-cookie-category-expanded-block-hover-bg: var(--site-surface-muted);
+}
+
+/* Category drawers share the button radius var in the lib: give them the
+   site's inner radius instead of a pill. */
+#cc-main .pm__section,
+#cc-main .pm__section--toggle,
+#cc-main .pm__section--toggle .pm__section-desc-wrapper,
+#cc-main .pm__section-title {
+  border-radius: var(--site-radius-inner);
+}
+
+/* Button hierarchy: Accept all = primary, Reject all = secondary (outlined),
+   Customize = tertiary (text only). One primary per modal. */
+#cc-main .cm__btn[data-role='necessary'],
+#cc-main .pm__btn[data-role='necessary'] {
+  background: transparent;
+  color: var(--site-ink);
+  border-color: var(--site-ink);
+}
+
+#cc-main .cm__btn[data-role='show'] {
+  background: transparent;
+  border-color: transparent;
+  color: var(--site-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+#cc-main .cm__btn[data-role='show']:hover {
+  background: transparent;
+  border-color: transparent;
+}
+
+/* "Continue without accepting": text link in the banner footer. */
+#cc-main .consent-link {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin-right: var(--space-gap-400, 16px);
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* Titles use the display font, like the site's headings. */
+#cc-main .cm__title,
+#cc-main .pm__title,
+#cc-main .pm__section-title {
+  font-family: var(--font-display);
+}
+
+/* Same border as the site's cards, on both modals. */
+#cc-main .cm,
+#cc-main .pm {
+  border: var(--stroke-width-thin) solid var(--site-border-strong);
+}

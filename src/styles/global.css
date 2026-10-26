@@ -186,9 +186,13 @@ button {
   padding: var(--layout-section-gap) var(--layout-gutter) 0;
 }
 
+.surface-frame,
 .surface-card {
   border: var(--stroke-width-thin) solid var(--site-border-strong);
   border-radius: var(--site-radius-card);
+}
+
+.surface-card {
   background: var(--card-background-color-default);
   overflow: clip;
 }

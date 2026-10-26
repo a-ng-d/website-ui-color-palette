@@ -8,34 +8,61 @@ import Button from '@unoff-dist/components/actions/button/Button.js'
 import { isExternal } from '@/config/site'
 
 interface Props {
-  href: string
+  href?: string
+  /** Renders a <button data-cc="…"> instead of a link (cookie consent actions). */
+  action?: string
   label: string
   size?: 'default' | 'large'
   current?: boolean
 }
 
-const { href, label, size = 'large', current = false } = Astro.props
+const {
+  href = '',
+  action,
+  label,
+  size = 'large',
+  current = false,
+} = Astro.props
 const external = isExternal(href)
 ---
 
-<a
-  class="tertiary-link"
-  href={href}
-  target={external && !href.startsWith('mailto:') ? '_blank' : undefined}
-  rel={external ? 'noopener' : undefined}
-  aria-current={current ? 'page' : undefined}
->
-  <Button
-    type="tertiary"
-    size={size}
-    label={label}
-  />
-</a>
+{action ? (
+  <button
+    type="button"
+    class="tertiary-link"
+    data-cc={action}
+  >
+    <Button
+      type="tertiary"
+      size={size}
+      label={label}
+    />
+  </button>
+) : (
+  <a
+    class="tertiary-link"
+    href={href}
+    target={external && !href.startsWith('mailto:') ? '_blank' : undefined}
+    rel={external ? 'noopener' : undefined}
+    aria-current={current ? 'page' : undefined}
+  >
+    <Button
+      type="tertiary"
+      size={size}
+      label={label}
+    />
+  </a>
+)}
 
 <style>
   .tertiary-link {
     display: inline-flex;
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 0;
     color: inherit;
+    font: inherit;
     text-decoration: none;
   }
 
