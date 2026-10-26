@@ -3,7 +3,20 @@ title: 3 ways AI now builds, audits, and deploys your color systems
 description: Your AI agent can now create palettes, audit contrast, and ship color systems to Figma, Penpot, or your codebase — here are the 3 workflows to try today.
 cover: ../../assets/blog/3-ways-ai-now-builds-audits-and-deploys-your-color-systems.png
 coverAlt: UI Color Palette connected to AI agents through the MCP server, skills and the Claude plugin
-tags: [ai, mcp, claude]
+pubDate: 2026-10-24
+tags: [ai, mcp, claude, design-tokens]
+category: AI
+faq:
+  - question: What is the UI Color Palette MCP server?
+    answer: It is a Model Context Protocol server, at https://mcp.ui-color-palette.com/mcp, that exposes the UI Color Palette engine to MCP-compatible AI assistants such as Claude, Cursor or Windsurf. Your agent can generate, preview, audit and publish color palettes without opening a design tool.
+  - question: Do I need an account to use the MCP server?
+    answer: Not for the palette tools. Generating palettes, harmonies, color systems and code needs no authentication. Browsing, publishing and sharing community palettes requires you to sign in.
+  - question: Which code formats can my AI agent generate from a palette?
+    answer: The generate_code tool exports CSS, SCSS, Less, Tailwind v3 and v4, SwiftUI, UIKit, Jetpack Compose, Android resources, CSV, W3C Design Tokens (DTCG), Style Dictionary v3 and universal JSON.
+  - question: Can an AI agent audit the contrast of my palette?
+    answer: Yes. Every shade returned by the MCP server carries its contrast score, and the audit skill of the Claude plugin checks shade and text pairs against WCAG 2.1 and APCA.
+  - question: What does the Claude plugin add on top of the MCP server?
+    answer: The Claude Code plugin bundles a default agent, skills for each step (source colors, scale, color system, contrast audit, code export, palette management) and preconfigured MCP servers for Figma, Penpot, GitHub and GitLab. Install it from the Yelbolt marketplace.
 ---
 
 Color palettes are foundational — but building, auditing, and deploying them is still painfully manual. What if your AI agent could handle the entire pipeline?
@@ -14,7 +27,7 @@ It comes in three pieces:
 
 - **The MCP server** — the universal entry point for any agent
 - **Skills on skills.sh** — ready-to-use skills that teach your agent to reason about color, contrast, and tokens
-- **The Claude plugin** — agents, skills, and preconfigured MCP servers bundled together, on the Yelbolt marketplace
+- **[The Claude plugin](/claude)** — agents, skills, and preconfigured MCP servers bundled together, on the Yelbolt marketplace
 
 Here are the three workflows you can run today.
 
@@ -26,7 +39,7 @@ Start visual, then go agentic:
 
 - **Create your palette** in the UI Color Palette plugin — pick brand colors, scale them into accessible shades, audit contrast with WCAG 2.1 & APCA
 - **Switch to your AI agent** — define your taxonomy conversationally (surface, primary, error, warning, success) and build light/dark modes
-- **Push to your tool** — as Figma variables and styles, or as Penpot design tokens that sync natively with themes
+- **Push to your tool** — as [Figma variables and styles](/figma), or as [Penpot design tokens](/penpot) that sync natively with themes
 
 Visual editing for precision, agentic deployment for speed: an afternoon of manual work becomes a few minutes.
 
@@ -64,7 +77,7 @@ Compose your setup à la carte:
 - 🧩 **Claude plugin** — the all-in-one option: [install it from the Yelbolt marketplace →](https://uicp.ylb.lt/run-claude-plugin)
 - 📖 **Reference** — [read the MCP documentation →](https://uicp.ylb.lt/docs-mcp)
 
-There's more to explore: palette import from Coolors and Realtime Colors, colorblindness simulations, cloud publishing, community browsing.
+There's more to explore: palette import from Coolors and Realtime Colors, colorblindness simulations, cloud publishing, community browsing. [See everything UI Color Palette can do →](/capabilities)
 
 And tell us what you think — this is a first release, and your feedback drives what we build next: [share it here →](https://uicp.ylb.lt/feedback).
 

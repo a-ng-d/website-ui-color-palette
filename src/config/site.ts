@@ -22,7 +22,24 @@ export const site = {
   email: 'hello@ui-color-palette.com',
   author: {
     name: 'Aurélien Grimaud',
+    /** Profiles of the author, for `sameAs` in the structured data. */
+    sameAs: ['https://github.com/a-ng-d'],
   },
+  /**
+   * Official profiles of the product, for the Organization `sameAs`. Canonical
+   * destinations of the uicp.ylb.lt short links in `links`, not the short links
+   * themselves (engines need the final URL).
+   */
+  profiles: [
+    'https://www.linkedin.com/company/ui-color-palette',
+    'https://www.figma.com/community/plugin/1063959496693642315',
+    'https://penpot.app/penpothub/plugins/ui-color-palette',
+    'https://www.framer.com/marketplace/plugins/ui-color-palette-one-wcag-color-palette-manager-for-apps-websites/',
+    'https://github.com/a-ng-d/ui-ui-color-palette',
+  ],
+  /** X (Twitter) handle with the @, for twitter:site and twitter:creator. */
+  // TODO(content): set the handle once confirmed; the tags are omitted while null.
+  twitterHandle: null as string | null,
   publisher: {
     name: 'Yelbolt',
     url: 'https://yelbolt.co/',
@@ -80,6 +97,7 @@ export const links = {
 export const mainNav: NavLink[] = [
   { label: 'Capabilities', href: '/capabilities' },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'Blog', href: '/blog' },
 ]
 
 // TODO(content): confirm entries and descriptions of the Resources menu.
@@ -128,6 +146,7 @@ export const footerNav = {
     { label: 'API Reference', href: links.docsApi, badge: 'New' },
   ],
   resources: [
+    { label: 'Blog', href: '/blog' },
     { label: 'Read the docs', href: links.docs },
     { label: 'Contact support', href: links.support },
   ],

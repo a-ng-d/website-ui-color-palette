@@ -22,12 +22,11 @@ const blog = defineCollection({
       author: z.string().default('Aurélien Grimaud'),
       /** Author profile (LinkedIn, site…): feeds `sameAs` in the structured data. */
       authorUrl: z.url().optional(),
-      // TODO(content): make pubDate required once the real dates are known.
-      pubDate: z.coerce.date().optional(),
+      pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
       /** Used for meta keywords, article:tag and the JSON-LD `keywords`. */
       tags: z.array(z.string()).default([]),
-      /** Broad topic, for article:section and JSON-LD `articleSection`. */
+      /** Broad topic (Guides, Product, AI, News): article:section, JSON-LD `articleSection`, related posts. */
       category: z.string().optional(),
       draft: z.boolean().default(false),
       /** Overrides for search engines and social cards; each falls back to the field above. */
