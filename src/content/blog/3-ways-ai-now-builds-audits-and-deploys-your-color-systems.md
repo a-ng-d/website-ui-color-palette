@@ -6,17 +6,19 @@ coverAlt: UI Color Palette connected to AI agents through the MCP server, skills
 pubDate: 2026-10-24
 tags: [ai, mcp, claude, design-tokens]
 category: AI
+seo:
+  title: 3 ways AI builds, audits and ships color systems
 faq:
   - question: What is the UI Color Palette MCP server?
     answer: It is a Model Context Protocol server, at https://mcp.ui-color-palette.com/mcp, that exposes the UI Color Palette engine to MCP-compatible AI assistants such as Claude, Cursor or Windsurf. Your agent can generate, preview, audit and publish color palettes without opening a design tool.
   - question: Do I need an account to use the MCP server?
-    answer: Not for the palette tools. Generating palettes, harmonies, color systems and code needs no authentication. Browsing, publishing and sharing community palettes requires you to sign in.
+    answer: Not for the palette tools. Generating palettes, harmonies, color systems and code needs no authentication, and neither does browsing published palettes. Listing your own palettes, publishing, updating, sharing and deleting them requires you to sign in.
   - question: Which code formats can my AI agent generate from a palette?
-    answer: The generate_code tool exports CSS, SCSS, Less, Tailwind v3 and v4, SwiftUI, UIKit, Jetpack Compose, Android resources, CSV, W3C Design Tokens (DTCG), Style Dictionary v3 and universal JSON.
+    answer: The generate_code tool exports CSS, SCSS, Less, Tailwind v3 and v4, SwiftUI, UIKit, Jetpack Compose, Android resources, CSV, W3C Design Tokens (DTCG), Style Dictionary v3, native tokens JSON and universal JSON.
   - question: Can an AI agent audit the contrast of my palette?
     answer: Yes. Every shade returned by the MCP server carries its contrast score, and the audit skill of the Claude plugin checks shade and text pairs against WCAG 2.1 and APCA.
   - question: What does the Claude plugin add on top of the MCP server?
-    answer: The Claude Code plugin bundles a default agent, skills for each step (source colors, scale, color system, contrast audit, code export, palette management) and preconfigured MCP servers for Figma, Penpot, GitHub and GitLab. Install it from the Yelbolt marketplace.
+    answer: The Claude Code plugin bundles a default agent, skills for each step (source colors, scale, color system, contrast audit, code export, palette management) and preconfigured MCP servers for Figma, Penpot, Sketch, Framer, GitHub and GitLab. Install it from the Yelbolt marketplace.
 ---
 
 Color palettes are foundational — but building, auditing, and deploying them is still painfully manual. What if your AI agent could handle the entire pipeline?

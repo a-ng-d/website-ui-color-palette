@@ -1,10 +1,12 @@
 ---
-import { getCollection, render } from 'astro:content'
+import { render } from 'astro:content'
 import { Image, getImage } from 'astro:assets'
 
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import ArticleHero from '@/components/blog/ArticleHero.astro'
+import LatestPosts from '@/components/home/LatestPosts.astro'
 import Reinsurance from '@/components/home/Reinsurance.astro'
+import { blogPage, getPosts, postPath, relatedPosts } from '@/data/blog'
 import {
   blogPosting,
   breadcrumbs,
@@ -14,11 +16,14 @@ import {
 import { site } from '@/config/site'
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft)
-  return posts.map((post) => ({ params: { id: post.id }, props: { post } }))
+  const posts = await getPosts()
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post, related: relatedPosts(post, posts) },
+  }))
 }
 
-const { post } = Astro.props
+const { post, related } = Astro.props
 const { Content, remarkPluginFrontmatter } = await render(post)
 const {
   title,
@@ -40,7 +45,7 @@ const og = await getImage({
   width: 1200,
   format: 'png',
 })
-const path = `/blog/${post.id}`
+const path = postPath(post)
 ---
 
 <BaseLayout
@@ -74,6 +79,7 @@ const path = `/blog/${post.id}`
     }),
     breadcrumbs([
       { name: 'Home', path: '/' },
+      { name: 'Blog', path: blogPage.path },
       { name: title, path },
     ]),
     ...(faq.length ? [faqPage(faq)] : []),
@@ -105,6 +111,13 @@ const path = `/blog/${post.id}`
       </div>
     </div>
   </article>
+
+  <LatestPosts
+    posts={related}
+    tag="Blog"
+    title="More from the UI Color Palette blog"
+    meta
+  />
 
   <Reinsurance />
 </BaseLayout>

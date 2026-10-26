@@ -16,6 +16,7 @@ export type IconId =
   | 'coins'
   | 'download'
   | 'glasses'
+  | 'newspaper'
   | 'package-open'
   | 'paintbrush'
   | 'refresh-ccw-dot'
@@ -58,7 +59,7 @@ export interface NextStep {
   href: string
 }
 
-/** The three link cards that close every platform page. */
+/** The link cards that close every platform page. */
 export const nextSteps: NextStep[] = [
   {
     icon: 'glasses',
@@ -77,6 +78,12 @@ export const nextSteps: NextStep[] = [
     title: 'Switch platform',
     label: 'See the downloads',
     href: '/download',
+  },
+  {
+    icon: 'newspaper',
+    title: 'Learn the workflows',
+    label: 'Read the blog',
+    href: '/blog',
   },
 ]
 

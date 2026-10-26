@@ -12,7 +12,11 @@ import NextSteps from '@/components/platform/NextSteps.astro'
 import PlatformHero from '@/components/platform/PlatformHero.astro'
 import PlatformSurfaces from '@/components/platform/PlatformSurfaces.astro'
 import type { PlatformPage } from '@/data/platform-pages'
-import { organization, platformApplication } from '@/data/structured-data'
+import {
+  organization,
+  pageBreadcrumbs,
+  platformApplication,
+} from '@/data/structured-data'
 
 interface Props {
   page: PlatformPage
@@ -34,6 +38,7 @@ const jsonLd = [
       ...page.why.cards.map((card) => card.title),
     ],
   }),
+  pageBreadcrumbs(page.hero.title, page.path),
 ]
 ---
 

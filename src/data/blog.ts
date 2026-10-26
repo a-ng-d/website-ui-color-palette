@@ -7,7 +7,7 @@ export const blogPage = {
   seo: {
     title: 'UI Color Palette Blog — Accessible Color Workflows',
     description:
-      'Guides, product news and AI workflows from the UI Color Palette team: build, audit and ship accessible color palettes in Figma, Penpot, Sketch and Framer.',
+      'Product news and AI workflows from the UI Color Palette team: build, audit and ship accessible color palettes in Figma, Penpot, Sketch, Framer and Claude.',
   },
   hero: {
     title: 'The UI Color Palette blog',

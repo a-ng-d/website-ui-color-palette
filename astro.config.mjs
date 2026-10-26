@@ -6,6 +6,7 @@ import preact from '@astrojs/preact'
 import devFunctions from './netlify/dev-functions.mjs'
 import { satteri } from '@astrojs/markdown-satteri'
 import blogPlugin, { externalLinks } from './src/plugins/blog-markdown.mjs'
+import { lastmodFor } from './src/plugins/sitemap-lastmod.mjs'
 
 // @unoff/ui only exposes its barrel file in `exports`, which pulls the CSS of
 // every component. An alias lets us import one component (and its CSS) at a time.
@@ -39,7 +40,16 @@ export default defineConfig({
       mdastPlugins: [blogPlugin],
       hastPlugins: [externalLinks],
     }) },
-  integrations: [preact({ compat: true }), sitemap(), devFunctions()],
+  integrations: [
+    preact({ compat: true }),
+    sitemap({
+      serialize: (item) => ({
+        ...item,
+        lastmod: lastmodFor(item.url)?.toISOString(),
+      }),
+    }),
+    devFunctions(),
+  ],
   vite: {
     // @unoff/ui imports its CSS from JS: let Vite bundle it during SSR.
     environments: {

@@ -4,7 +4,11 @@ import PlatformHero from '@/components/platform/PlatformHero.astro'
 import DownloadCards from '@/components/download/DownloadCards.astro'
 import Reinsurance from '@/components/home/Reinsurance.astro'
 import { downloadPage, downloads } from '@/data/downloads'
-import { organization, softwareApplication } from '@/data/structured-data'
+import {
+  organization,
+  pageBreadcrumbs,
+  softwareApplication,
+} from '@/data/structured-data'
 ---
 
 <BaseLayout
@@ -24,6 +28,7 @@ import { organization, softwareApplication } from '@/data/structured-data'
         url: card.cta.href,
       })),
     },
+    pageBreadcrumbs('Download', downloadPage.path),
   ]}
 >
   <PlatformHero hero={downloadPage.hero} />

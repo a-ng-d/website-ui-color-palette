@@ -63,7 +63,8 @@ const dateFormat = new Intl.DateTimeFormat('en', { dateStyle: 'long' })
     position: relative;
     flex-direction: column;
     --card-radius: var(--space-inset-600);
-    height: 400px;
+    /* Fixed height so the cover shrinks to fit; the blog index sets a taller one. */
+    height: var(--post-card-height, 400px);
     overflow: clip;
   }
 
@@ -91,7 +92,7 @@ const dateFormat = new Intl.DateTimeFormat('en', { dateStyle: 'long' })
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-gap-300);
+    gap: var(--space-gap-400);
   }
 
   .post__link {

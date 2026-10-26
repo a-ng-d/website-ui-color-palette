@@ -1,0 +1,31 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import PlatformHero from '@/components/platform/PlatformHero.astro'
+import NextSteps from '@/components/platform/NextSteps.astro'
+import Platforms from '@/components/home/Platforms.astro'
+import { nextSteps } from '@/data/platform-pages'
+
+const steps = nextSteps.filter((step) =>
+  ['/capabilities', '/blog', '/pricing'].includes(step.href)
+)
+---
+
+<BaseLayout
+  title="Page not found — UI Color Palette"
+  description="This page doesn't exist or has moved. Explore the capabilities of UI Color Palette, pick your platform, or read the latest articles on the blog."
+  noindex
+>
+  <PlatformHero
+    hero={{
+      title: 'Page not found',
+      tagline:
+        "This page doesn't exist or has moved. Here are the best places to pick up from.",
+      cta: { label: 'Back to home', href: '/' },
+    }}
+  />
+  <NextSteps
+    steps={steps}
+    title="Where to go next"
+  />
+  <Platforms />
+</BaseLayout>

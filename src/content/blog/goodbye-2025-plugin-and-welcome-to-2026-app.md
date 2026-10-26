@@ -7,7 +7,7 @@ pubDate: 2026-10-24
 tags: [news, product, figma, penpot]
 category: News
 seo:
-  title: '2025 recap: from Figma plugin to cross-platform app'
+  title: '2025 recap: Figma plugin to cross-platform app'
 faq:
   - question: Which platforms does UI Color Palette run on?
     answer: UI Color Palette runs as a plugin in Figma, Penpot, Sketch and Framer. It is also available as a Claude plugin and through an MCP server that any MCP-compatible AI assistant can use.
@@ -55,7 +55,7 @@ A classic tool reimagined for creating color harmonies: complementary, triadic, 
 
 ![UI Color Palette interface in English, French, Brazilian Portuguese and Mandarin Chinese](../../assets/blog/goodbye-2025-plugin-and-welcome-to-2026-app/languages.png)
 
-Color is universal — now the interface is too. UI Color Palette is available in four languages:
+Color is universal — now the interface is too. At the end of 2025, UI Color Palette was available in four languages (it now supports seven):
 
 - 🇬🇧 English
 - 🇫🇷 French

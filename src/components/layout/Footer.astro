@@ -30,7 +30,7 @@ const ext = (href: string) =>
         class="footer__card surface-card"
         aria-label={column.title}
       >
-        <h2 class="t-paragraph-primary-title">{column.title}</h2>
+        <p class="t-paragraph-primary-title">{column.title}</p>
         <ul class="footer__list">
           {column.items.map((item) => (
             <li>
@@ -50,12 +50,12 @@ const ext = (href: string) =>
       class="footer__card footer__card--wide surface-card"
       aria-labelledby="footer-support"
     >
-      <h2
+      <p
         class="t-paragraph-primary-title"
         id="footer-support"
       >
         Support us
-      </h2>
+      </p>
       <div class="footer__buttons">
         <Button
           href={links.linkedin}
