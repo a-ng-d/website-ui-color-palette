@@ -4,6 +4,9 @@
 
 [build.environment]
   NODE_VERSION = "24"
+  # Non-secret config whose values legitimately appear in the repo (code, docs,
+  # .env.example). POLAR_ACCESS_TOKEN stays scanned: it is the only real secret.
+  SECRETS_SCAN_OMIT_KEYS = "POLAR_SERVER,POLAR_SUCCESS_URL,PUBLIC_DEMO_PALETTE_URL"
 
 # Hashed build assets never change: cache them for a year.
 [[headers]]
