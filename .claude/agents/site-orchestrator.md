@@ -82,5 +82,8 @@ the Figma source, the specs or the skills answer.
 - Never contradict the corpo skill's non-negotiables (cards, @unoff/ui variables only,
   real `<a href>`, content in HTML at build time, light + dark, one h1, reduced motion
   and no-JS complete).
+- Write no superfluous code comments: only a non-obvious why (constraint, workaround,
+  keep-in-sync link, documented exception), per `CLAUDE.md` "Code comments". Brief every
+  agent that writes code with this rule.
 - Don't spawn a reviewer whose rule doesn't match: each spawn starts cold and costs.
 - Don't commit unless asked.

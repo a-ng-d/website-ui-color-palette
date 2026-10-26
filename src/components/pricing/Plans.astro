@@ -119,10 +119,8 @@ const arrow = (plan: (typeof plans)[number]) => plan.id === 'pro'
       ? 'dark'
       : 'light'
 
-  // ---- Localized prices -------------------------------------------------
-  // The HTML carries the USD prices. /api/prices returns every currency of
-  // each Polar product; we pick the visitor's currency from their locale
-  // (same rules as the plugin) and quietly keep the USD prices on any failure.
+  // The HTML carries USD prices; /api/prices returns every Polar currency. We pick the visitor's
+  // currency from their locale (same rules as the plugin) and keep USD on any failure.
   const CURRENCIES: Record<string, string> = {
     GB: 'gbp',
     CH: 'chf',
@@ -169,14 +167,13 @@ const arrow = (plan: (typeof plans)[number]) => plan.id === 'pro'
           '[data-price]'
         )) {
           const base = data.prices?.[title.dataset.price ?? '']?.[currency]
-          if (!base) continue // currency unknown for this product: keep USD
+          if (!base) continue
 
           // /ultimate = N × /pro. Doubling a x.99 price gives x.98: keep the
           // x.99 look, as in the USD prices.
           let cents = base * (Number(title.dataset.multiplier) || 1)
           if (cents % 100 === 98) cents += 1
 
-          // Per-month price of a yearly plan, rounded down like the USD one.
           const months = Number(title.dataset.months) || 1
           title.textContent = format(Math.floor(cents / months))
 
@@ -231,7 +228,6 @@ const arrow = (plan: (typeof plans)[number]) => plan.id === 'pro'
     gap: var(--space-gap-200);
   }
 
-  /* ---- Cards ---- */
   .plans__cards {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -300,7 +296,6 @@ const arrow = (plan: (typeof plans)[number]) => plan.id === 'pro'
     height: var(--control-icon-600);
   }
 
-  /* "Most popular": inverse pill pinned to the top right of the card. */
   .plan__badge {
     display: inline-flex;
     position: absolute;

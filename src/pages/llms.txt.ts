@@ -4,10 +4,7 @@ import { getCollection } from 'astro:content'
 import { footerNav, links, site } from '@/config/site'
 import { homeFaq } from '@/data/faq'
 
-/**
- * llms.txt (https://llmstxt.org): a plain Markdown map of the site for LLMs.
- * Generated at build time so it never drifts from the pages.
- */
+/** llms.txt (https://llmstxt.org): Markdown map of the site for LLMs, generated at build time. */
 export const GET: APIRoute = async () => {
   const url = (path: string) => new URL(path, site.url).href
   const posts = await getCollection('blog', ({ data }) => !data.draft)

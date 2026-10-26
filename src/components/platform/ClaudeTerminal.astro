@@ -10,19 +10,27 @@ interface Line {
 }
 
 const lines: Line[] = [
-  { kind: 'banner', text: 'Claude Code v1.0.0 - AI-Powered Development Assistant' },
+  {
+    kind: 'banner',
+    text: 'Claude Code v1.0.0 - AI-Powered Development Assistant',
+  },
   { kind: 'banner', text: 'Type /help for available commands' },
-  { kind: 'command', text: '/plugin marketplace add yelbolt/claude-marketplace' },
+  {
+    kind: 'command',
+    text: '/plugin marketplace add yelbolt/claude-marketplace',
+  },
   { kind: 'progress', text: 'Fetching plugin from marketplace...' },
   {
     kind: 'success',
     text: "Plugin 'yelbolt/claude-marketplace' installed successfully!",
   },
   { kind: 'command', text: '/plugin install ui-color-palette@yelbolt' },
-  { kind: 'progress', text: 'Installing ui-color-palette from yelbolt marketplace.' },
+  {
+    kind: 'progress',
+    text: 'Installing ui-color-palette from yelbolt marketplace.',
+  },
 ]
 
-// Typing rhythm: commands type character by character, outputs print at once.
 const TYPE_MS = 28
 const PAUSE_MS = 500
 let at = 400
@@ -46,7 +54,11 @@ const timed = lines.map((line, i) => {
     <span
       class="terminal__dots"
       aria-hidden="true"
-    ><span></span><span></span><span></span></span>
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
     <span>Claude Code terminal</span>
   </figcaption>
   <pre class="terminal__body"><code>{timed.map((line) => (
@@ -128,7 +140,6 @@ const timed = lines.map((line, i) => {
     height: 1.2em;
   }
 
-  /* Motion: lines wait for the reveal, commands type, the caret blinks. */
   :global(.motion) .terminal__line {
     animation: terminal-line 1ms var(--start) both paused;
   }

@@ -1,9 +1,5 @@
 ---
-/**
- * Text link made of the @unoff/ui <Button type="tertiary"> wrapped in an <a>.
- * The component is rendered at build time (no JS shipped); the <a> carries
- * the navigation so the link is crawlable and works without JavaScript.
- */
+/** @unoff/ui tertiary Button wrapped in an <a>: build-time render, crawlable, works without JS. */
 import Button from '@unoff-dist/components/actions/button/Button.js'
 import { isExternal } from '@/config/site'
 
@@ -66,7 +62,6 @@ const external = isExternal(href)
     text-decoration: none;
   }
 
-  /* Hovering the link shows the tertiary hover state of the inner button. */
   .tertiary-link:hover :global(.text-button--tertiary),
   .tertiary-link:focus-visible :global(.text-button--tertiary) {
     --button-base-text-decoration: var(--button-tertiary-text-decoration-hover);

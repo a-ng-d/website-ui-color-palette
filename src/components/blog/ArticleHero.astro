@@ -1,8 +1,4 @@
 ---
-/**
- * Hero of a blog article: the 16 × 2 shade grid of the other inner pages,
- * with the article title (the page's h1) and its author.
- */
 import { Image } from 'astro:assets'
 import wave from '@/assets/decor/graphs-pricing.svg'
 import avatar from '@/assets/brand/author-aurelien-grimaud.png'
@@ -28,7 +24,9 @@ const dateFormat = new Intl.DateTimeFormat('en', { dateStyle: 'long' })
     wave={{ src: wave, inset: '0 -2.58% -11.05% -2.58%' }}
     cols={16}
     rows={2}
-    areas={[{ name: 'hero', colStart: 3, colSpan: 12, rowStart: 1, rowSpan: 2 }]}
+    areas={[
+      { name: 'hero', colStart: 3, colSpan: 12, rowStart: 1, rowSpan: 2 },
+    ]}
   >
     <div
       class="article-hero__content"
@@ -51,19 +49,17 @@ const dateFormat = new Intl.DateTimeFormat('en', { dateStyle: 'long' })
         />
         <span>
           <span class="article-hero__name">{author}</span>
-          {
-            (published || readingMinutes) && (
-              <span class="article-hero__date">
-                {published && (
-                  <time datetime={published.toISOString()}>
-                    {dateFormat.format(published)}
-                  </time>
-                )}
-                {published && readingMinutes && ' · '}
-                {readingMinutes && `${readingMinutes} min read`}
-              </span>
-            )
-          }
+          {(published || readingMinutes) && (
+            <span class="article-hero__date">
+              {published && (
+                <time datetime={published.toISOString()}>
+                  {dateFormat.format(published)}
+                </time>
+              )}
+              {published && readingMinutes && ' · '}
+              {readingMinutes && `${readingMinutes} min read`}
+            </span>
+          )}
         </span>
       </p>
     </div>

@@ -68,7 +68,6 @@
   border-color: transparent;
 }
 
-/* "Continue without accepting": text link in the banner footer. */
 #cc-main .consent-link {
   appearance: none;
   background: none;
@@ -82,14 +81,12 @@
   text-underline-offset: 0.2em;
 }
 
-/* Titles use the display font, like the site's headings. */
 #cc-main .cm__title,
 #cc-main .pm__title,
 #cc-main .pm__section-title {
   font-family: var(--font-display);
 }
 
-/* Same border as the site's cards, on both modals. */
 #cc-main .cm,
 #cc-main .pm {
   border: var(--stroke-width-thin) solid var(--site-border-strong);

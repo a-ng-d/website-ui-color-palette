@@ -58,7 +58,6 @@ if (root.classList.contains('motion')) {
           )
         entering.forEach((entry, index) => {
           const el = entry.target as HTMLElement
-          // Phase shift: an irregular but repeatable rhythm within one view.
           const step = Math.min(index, 8)
           el.style.setProperty(
             '--reveal-delay',

@@ -19,11 +19,7 @@ import { compareColumns, compareRows } from '@/data/pricing'
     </h2>
   </div>
 
-  <!--
-    Four cards side by side that scroll horizontally on small screens; the
-    feature names stay pinned on the left. Rows share a fixed height so the
-    columns line up. Each cell names its feature for assistive technologies.
-  -->
+  <!-- Cards scroll horizontally on small screens with feature names pinned left; rows share a fixed height. -->
   <div
     class="compare__cards"
     role="region"
@@ -85,7 +81,6 @@ import { compareColumns, compareRows } from '@/data/pricing'
     display: flex;
     flex-direction: column;
     gap: var(--space-gap-400);
-    /* Dotted pattern from the Figma “Section Card”. */
     background-image: radial-gradient(
       circle,
       var(--site-border-soft) 1.5px,

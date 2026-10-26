@@ -1,14 +1,8 @@
 ---
 /**
- * Frame of a capability demo: an illustration grid with a slice of the web
- * app in its centre (`.demo-kit`: copies of the @unoff/ui components built
- * from their tokens, styles/demo-kit.css), magnified, and the fake cursor
- * that plays the loop.
- *
- * The stage is decorative (`aria-hidden`, `inert`): the card's title and text
- * carry the meaning. Without JS or with reduced motion it is a still picture;
- * scripts/demos plays it and, on a fine pointer, lets the visitor drive it.
- * Without `name` it renders the empty grid (demo not built yet).
+ * Frame of a capability demo: a slice of the web app (`.demo-kit`, styles/demo-kit.css), magnified,
+ * with a fake cursor. Decorative (`aria-hidden`, `inert`); a still picture without JS or with
+ * reduced motion. Without `name` it renders the empty grid.
  */
 import MousePointerIcon from '@lucide/astro/icons/mouse-pointer-2'
 import '@/styles/demo-kit.css'
@@ -74,7 +68,7 @@ const { name, width = 280 } = Astro.props
     zoom: 1;
     box-shadow: var(--elevation-400-menu-panel);
     border: var(--stroke-width-thin) solid var(--k-panel-border);
-    border-radius: var(--global-radius); /* the plugin window, per theme */
+    border-radius: var(--global-radius);
     background-color: var(--global-background-color-default);
     /* Own stacking context: the reveal cover passes over the whole panel,
        fake cursor included. */
@@ -83,11 +77,9 @@ const { name, width = 280 } = Astro.props
     width: var(--panel-width);
     max-width: 100%;
     user-select: none;
-    /* Text, chips, buttons… come from the @unoff/ui tokens (demo-kit.css). */
     --k-panel-padding: var(--space-inset-400);
   }
 
-  /* Magnify when the stage has room (thresholds ≈ panel × zoom). */
   @container (min-width: 380px) {
     .demo-stage__panel:not([data-wide]) {
       zoom: 1.25;
@@ -112,7 +104,6 @@ const { name, width = 280 } = Astro.props
     }
   }
 
-  /* ---- Fake cursor (positioned by engine.ts in % of the panel) ---- */
   .demo-stage__cursor {
     position: absolute;
     top: 115%;
@@ -155,7 +146,6 @@ const { name, width = 280 } = Astro.props
     scale: 0.86;
   }
 
-  /* A soft ring where the cursor presses. */
   .demo-stage__cursor::after {
     position: absolute;
     top: 4px;
@@ -178,7 +168,6 @@ const { name, width = 280 } = Astro.props
     opacity: 0.8;
   }
 
-  /* The visitor drives: the real pointer replaces the fake one. */
   .demo-stage:not([inert]) {
     cursor: default;
   }

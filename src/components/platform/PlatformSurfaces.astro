@@ -1,10 +1,5 @@
 ---
-/**
- * The editors or strengths of a platform plugin: a rotated title card and a
- * live embed of the plugin on top, one card each below (Figma “Summary”).
- * A page without an embed fills the `media` slot instead (/claude terminal).
- * Desktop 3 columns; tablet 2 columns with the media last; mobile 1 column.
- */
+/** Title card and live plugin embed on top, one card per editor below; the `media` slot replaces the embed. */
 import IconTile from '@/components/ui/IconTile.astro'
 import type { PlatformPage } from '@/data/platform-pages'
 
@@ -76,7 +71,6 @@ const { surfaces } = Astro.props
     gap: var(--space-gap-200);
   }
 
-  /* Title card: soft border, tilted to break the grid, text at the top. */
   .surfaces__intro {
     display: flex;
     grid-row: 1 / span 2;
@@ -90,7 +84,6 @@ const { surfaces } = Astro.props
     padding: var(--space-inset-800);
   }
 
-  /* Editor card: air on top, info at the bottom. */
   .surfaces__card {
     display: flex;
     grid-row: 3;
@@ -106,7 +99,9 @@ const { surfaces } = Astro.props
     grid-row: 1 / span 2;
     grid-column: 2 / span 2;
     border-radius: var(--site-radius-card);
-    background-color: var(--site-surface-muted); /* no white flash while loading */
+    background-color: var(
+      --site-surface-muted
+    ); /* no white flash while loading */
     overflow: clip;
   }
 
@@ -135,7 +130,6 @@ const { surfaces } = Astro.props
     height: auto;
   }
 
-  /* Tablet: title + first editor, two editors, then the embed on a full row. */
   @media (max-width: 1023.98px) {
     .surfaces__grid {
       grid-template-rows: none;
@@ -150,7 +144,6 @@ const { surfaces } = Astro.props
       grid-column: auto;
     }
 
-    /* A wide card (pages with two) keeps the whole row. */
     .surfaces__card {
       grid-column: span min(var(--span, 1), 2);
     }

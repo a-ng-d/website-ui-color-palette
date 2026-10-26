@@ -1,18 +1,8 @@
 /*
- * Demo kit: copies of the web app's @unoff/ui components, for the
- * capability demos, built only from the library's tokens
- * (generated/unoff-tokens.css, scoped to `.demo-kit`). Icons are Lucide
- * (the site's set), with the `k-icon` class.
- *
- * Why copies: same values as the app, static HTML (nothing focusable, no
- * React), and every state can be shown on demand:
- *   - `data-state="hover|pressed|focus|selected|inactive|checked|disabled"`
- *     set by the markup or a demo script;
- *   - `[data-pressed]`, set by the fake cursor while it presses;
- *   - the real `:hover`, when the visitor drives a demo.
- *
- * Pattern (as in @unoff/ui): each component resolves its state tokens into
- * a few base variables, and the structure only reads the base variables.
+ * Demo kit: static copies of the web app's @unoff/ui components for the
+ * capability demos, built from the library tokens (generated/unoff-tokens.css,
+ * scoped to `.demo-kit`). States are forced with `data-state="..."`,
+ * `[data-pressed]` (fake cursor) or the real `:hover`.
  */
 @import './generated/unoff-tokens.css';
 
@@ -27,7 +17,6 @@
   letter-spacing: var(--text-default-letter-spacing);
 }
 
-/* ---- Text styles (texts.css) ---- */
 .k-text--small {
   font: var(--text-small);
   letter-spacing: var(--text-small-letter-spacing);
@@ -66,7 +55,6 @@
   white-space: nowrap;
 }
 
-/* ---- Icon (Lucide SVG, sized like the library's 16px glyphs) ---- */
 .k-icon {
   flex: none;
   stroke-width: 1.75;
@@ -75,7 +63,6 @@
   color: var(--k-ic, currentColor);
 }
 
-/* ---- Chip ---- */
 .k-chip {
   --k-bg: var(--chip-background-color-default);
   --k-bd: var(--chip-border-color-default);
@@ -122,7 +109,6 @@
   --k-tx: var(--chip-text-color-on-background);
 }
 
-/* ---- Color chip ---- */
 .k-color-chip {
   flex: none;
   outline: var(--color-chip-border-width) solid var(--color-chip-border-color);
@@ -137,7 +123,6 @@
   border-radius: 50%;
 }
 
-/* ---- Text button (primary, secondary, tertiary) ---- */
 .k-button {
   --k-bg: var(--k-bg-default);
   --k-bd: var(--k-bd-default);
@@ -249,7 +234,6 @@
   font-size: var(--button-tertiary-text-font-size);
 }
 
-/* ---- Icon button ---- */
 .k-icon-button {
   --k-bg-default: var(--icon-button-default-background-color-default);
   --k-bg-hover: var(--icon-button-default-background-color-hover);
@@ -296,7 +280,6 @@
   --k-bg-hover: var(--icon-button-default-background-color-onselected-hover);
 }
 
-/* Shared states of the buttons. */
 :is(.k-button, .k-icon-button):is(:hover, [data-state~='hover']) {
   --k-bg: var(--k-bg-hover);
   --k-bd: var(--k-bd-hover);
@@ -321,7 +304,6 @@
   --k-tx: var(--k-tx-disabled);
 }
 
-/* ---- Input (short text) ---- */
 .k-input {
   --k-bg: var(--input-background-color-default);
   --k-bd: var(--input-border-color-default);
@@ -373,7 +355,6 @@
   color: var(--input-text-placeholder-color-default);
 }
 
-/* Long text (textarea): wraps, two lines at least. */
 .k-input--multiline {
   align-items: flex-start;
   padding: var(--input-textarea-padding-top) var(--input-textarea-padding-right)
@@ -386,7 +367,6 @@
   white-space: normal;
 }
 
-/* A caret while the field has the focus. */
 .k-input[data-state~='focus']::after {
   animation: k-caret 1s steps(1) infinite;
   margin-left: 1px;
@@ -402,7 +382,6 @@
   }
 }
 
-/* ---- Dropdown (button) ---- */
 .k-dropdown {
   --k-bg: var(--dropdown-background-color-default);
   --k-bd: var(--dropdown-border-color-default);
@@ -451,7 +430,6 @@
   --k-ic: var(--dropdown-caret-color-focus);
 }
 
-/* ---- Slider (SimpleSlider / MultipleSlider) and its knobs ---- */
 .k-slider {
   position: relative;
   cursor: ew-resize;
@@ -517,7 +495,6 @@
   z-index: 2;
 }
 
-/* ---- Bar and section title ---- */
 .k-bar {
   display: flex;
   justify-content: space-between;
@@ -560,7 +537,6 @@
   color: var(--text-color-secondary);
 }
 
-/* ---- Semantic message (SemanticMessage > Message) ---- */
 .k-message {
   --k-bg: var(--semantic-message-background-color-default);
   --k-bd: transparent;
@@ -604,7 +580,6 @@
   --k-bw: var(--semantic-message-border-width-error);
 }
 
-/* The Message inside: icon + text, with its own side padding and gap. */
 .k-message__body {
   display: flex;
   flex: 1 1 auto;
@@ -615,7 +590,6 @@
   min-width: 0;
 }
 
-/* One icon per type in the markup; the one of the current type shows. */
 .k-message .k-icon {
   color: var(--message-icon-color-default);
 }

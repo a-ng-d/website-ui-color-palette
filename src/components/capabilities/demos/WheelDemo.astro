@@ -90,7 +90,6 @@ const code = (hue: number) => colourAt(hue).slice(1).toUpperCase()
     gap: var(--space-gap-200);
   }
 
-  /* The wheel: hues around, fading to white in the centre. */
   .wheel {
     position: relative;
     cursor: grab;
@@ -143,7 +142,6 @@ const code = (hue: number) => colourAt(hue).slice(1).toUpperCase()
     font-variant-numeric: tabular-nums;
   }
 
-  /* ---- Source colours: one column per colour of the harmony ---- */
   .sources {
     display: flex;
     gap: 2px;
@@ -175,7 +173,6 @@ const code = (hue: number) => colourAt(hue).slice(1).toUpperCase()
     text-align: center;
   }
 
-  /* Colours beyond the harmony collapse. */
   .sources[data-count='2'] .column:nth-child(n + 3),
   .sources[data-count='3'] .column:nth-child(n + 4) {
     flex-grow: 0;
@@ -189,7 +186,6 @@ const code = (hue: number) => colourAt(hue).slice(1).toUpperCase()
     opacity: 0;
   }
 
-  /* Narrow stages (phones): no room for a code under each column. */
   @container (max-width: 379.98px) {
     .column__hex {
       visibility: hidden;

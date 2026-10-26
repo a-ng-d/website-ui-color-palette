@@ -1,12 +1,7 @@
 ---
 /**
- * The “Slots” motif from Figma: a frame of rounded shade tiles with the brand
- * gradient glowing through the gaps, and content tiles placed inside the frame.
- * The glow keeps the Figma wave (used as a mask: gradient where the wave is,
- * empty elsewhere); inside it, coloured light points travel in a straight
- * line (see .shade-grid__light in styles/motion.css).
- *
- * Only the outer ring of tiles is drawn; each named slot fills an inner area.
+ * Frame of rounded shade tiles with the brand gradient glowing through the gaps (Figma wave used
+ * as a mask); light points travel inside it (see .shade-grid__light in styles/motion.css).
  */
 interface Area {
   name: string
@@ -60,7 +55,6 @@ for (let row = 1; row <= rows; row++) {
   >
     <div class="shade-grid__light"></div>
   </div>
-  <!-- Beam under the cursor (fine pointers only, see the script below). -->
   <div
     class="shade-grid__spot"
     aria-hidden="true"
@@ -84,7 +78,6 @@ for (let row = 1; row <= rows; row++) {
 </div>
 
 <script>
-  // Pointer spotlight: the beam follows the cursor over the grid.
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)')
 
   for (const grid of document.querySelectorAll<HTMLElement>('.shade-grid')) {
@@ -97,7 +90,6 @@ for (let row = 1; row <= rows; row++) {
 
     grid.addEventListener('pointerenter', (event) => {
       if (!finePointer.matches) return
-      // Start the beam under the cursor instead of sliding in from a corner.
       grid.style.transition = 'none'
       place(event)
       void grid.offsetWidth
@@ -126,7 +118,6 @@ for (let row = 1; row <= rows; row++) {
     overflow: clip;
   }
 
-  /* The wave holds a faint static gradient; light points travel inside it. */
   .shade-grid__glow {
     position: absolute;
     mask-size: 100% 100%;
@@ -139,13 +130,12 @@ for (let row = 1; row <= rows; row++) {
 
   .shade-grid__glow::before {
     position: absolute;
-    opacity: 0.3; /* dims the static gradient so the moving lights stand out */
+    opacity: 0.3;
     inset: 0;
     background-color: var(--site-surface-muted);
     content: '';
   }
 
-  /* Beam: the brand gradient, revealed only around the cursor. */
   .shade-grid__spot {
     position: absolute;
     opacity: 0;

@@ -17,8 +17,6 @@ import {
 import { choiceLoop } from './choices'
 import { shadesOf, steps, taper } from './palette'
 
-// ---- Best-in-class presets: same colour, scaled like each system ----
-
 const PRESET_HUE = 262
 const PRESET_CHROMA = 0.15
 
@@ -78,8 +76,6 @@ export const presetCells = () =>
     )
   )
 
-// ---- Simulations that empathize ----
-
 export const VISIONS = [
   { id: 'normal', label: 'Normal', simulate: (rgb: Rgb) => rgb },
   { id: 'red-weak', label: 'Red-weak', simulate: protanomaly },
@@ -106,8 +102,6 @@ export const visionRows = () => {
   }))
 }
 
-// ---- Colors in outer Spaces: 8 hues at the “same” lightness ----
-
 export const SPACES = [
   { id: 'hsl', label: 'HSL', colour: (h: number) => hsl(h, 0.75, 0.55) },
   { id: 'lch', label: 'LCH', colour: (h: number) => lch(66, 48, h) },
@@ -129,8 +123,6 @@ export const spaceCells = () =>
       })
     )
   )
-
-// ---- Ultra Handoff: the same shades, in each platform's language ----
 
 export const handoffFiles = () => {
   const [a, b] = shadesOf({ name: 'primary', hue: 264, chroma: 0.16 })

@@ -35,6 +35,9 @@ to this site. Read the reference file that matches the task before writing code.
 6. **One `<h1>` per page**, a unique `title` and `description`, and the JSON-LD that
    describes the page (see new-page.md).
 7. **Reduced motion and no-JS are first-class**: the page must be complete and still.
+8. **Comments only for a non-obvious why.** A constraint, a workaround, a keep-in-sync link,
+   a documented exception — never narration, restating code, banners or change history. The
+   full rule is in the repo `CLAUDE.md` ("Code comments").
 
 ## Workflow for a page or section
 

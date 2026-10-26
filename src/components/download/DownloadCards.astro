@@ -1,9 +1,4 @@
 ---
-/**
- * Install cards of the Download page (Figma “Summary” → Card/Section):
- * a tinted illustration with the platform tile, then title, text and the
- * install link. 3 columns, Sketch spans two; 2 columns < 1024; 1 column < 640.
- */
 import ExternalLinkIcon from '@lucide/astro/icons/external-link'
 import Button from '@/components/ui/Button.astro'
 import { downloads } from '@/data/downloads'
@@ -72,10 +67,10 @@ import { downloads } from '@/data/downloads'
   .download-card__illustration {
     display: flex;
     flex: 1 1 auto;
-    align-items: center;
     justify-content: center;
-    min-height: 264px;
+    align-items: center;
     background-color: var(--site-surface-muted);
+    min-height: 264px;
   }
 
   .download-card__icon {

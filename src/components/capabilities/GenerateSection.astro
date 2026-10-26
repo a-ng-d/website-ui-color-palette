@@ -1,8 +1,4 @@
 ---
-/**
- * “Generate it”: sticky intro on the left, capability cards stacking on the
- * right while they scroll (the ExtraTools pattern, mirrored).
- */
 import type { CapabilityGroup } from '@/data/capabilities'
 import FeatureCard from './FeatureCard.astro'
 
@@ -59,7 +55,6 @@ const titleId = `${group.id}-title`
     background-color: var(--site-surface);
   }
 
-  /* The title stays in view while the cards beside it scroll. */
   .stack__intro-content {
     display: flex;
     position: sticky;

@@ -1,8 +1,4 @@
 ---
-/**
- * A capability: title and text, with its demo below (Generate, Master,
- * Deploy) or above (Superpowers). A static content card, not a link.
- */
 import type { Capability } from '@/data/capabilities'
 import Demo from './Demo.astro'
 
@@ -55,7 +51,6 @@ const { card, mediaFirst = false, class: className } = Astro.props
     padding: 0 var(--space-inset-800) var(--space-inset-800);
   }
 
-  /* Superpowers: the demo on top, the text at the bottom. */
   .feature--media-first {
     flex-direction: column-reverse;
   }

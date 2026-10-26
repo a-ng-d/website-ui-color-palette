@@ -20,14 +20,21 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props
 const { Content, remarkPluginFrontmatter } = await render(post)
-const { title, description, cover, coverAlt, author, authorUrl, tags, category } =
-  post.data
+const {
+  title,
+  description,
+  cover,
+  coverAlt,
+  author,
+  authorUrl,
+  tags,
+  category,
+} = post.data
 const { seo, faq } = post.data
 const { videos = [], readingMinutes } = remarkPluginFrontmatter
 const published = post.data.pubDate
 const modified = post.data.updatedDate
 
-// 1200 px wide cover for social previews and the structured data.
 const og = await getImage({
   src: seo.ogImage ?? cover,
   width: 1200,
@@ -104,21 +111,18 @@ const path = `/blog/${post.id}`
 
 <style>
   .article {
-    /* Figma: the article card sits 4px under the hero, not a full section away. */
     padding: var(--space-inset-100, 4px) var(--layout-gutter) 0;
   }
 
-  /* A static container, deliberately NOT .surface-card: that class joins the
-     reveal system (opacity 0 until 12% is visible, scale, overflow: clip), which
-     a page-length card never satisfies and would clip embeds and focus rings.
-     Border and radius come from the shared .surface-frame.
-     Not the interactive @unoff/ui .card either (scale on press, swallows clicks). */
+  /* Static container, deliberately NOT .surface-card (reveal system: opacity 0 until 12% visible,
+     overflow: clip, which a page-length card never satisfies) nor the interactive @unoff/ui .card
+     (scale on press, swallows clicks). Border and radius come from .surface-frame. */
   .article__card {
-    background-color: var(--site-surface);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--space-gap-800);
+    background-color: var(--site-surface);
     padding: var(--space-inset-800);
     width: 100%;
   }
@@ -144,7 +148,6 @@ const path = `/blog/${post.id}`
     object-fit: cover;
   }
 
-  /* ---- Rendered Markdown ---- */
   .article__body :global(.embed) {
     margin-inline: 0;
   }
@@ -155,8 +158,8 @@ const path = `/blog/${post.id}`
     border: var(--stroke-width-thin) solid var(--site-border-strong);
     border-radius: var(--space-inset-600);
     background: var(--site-surface-muted);
-    width: 100%;
     aspect-ratio: 16 / 9;
+    width: 100%;
   }
 
   .article__body :global(figcaption) {

@@ -31,7 +31,6 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
       />
     </a>
 
-    <!-- Small screens: theme switch sits just left of the Menu button. -->
     <div class="header__actions">
       <button
         class="header__theme header__theme--compact icon-button icon-button--default"
@@ -84,7 +83,6 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
           </span>
         </summary>
 
-        <!-- Full-width panel of link cards (@unoff/ui .card on <a>). -->
         <ul class="header__panel">
           {resourcesNav.map((item) => (
             <li>
@@ -132,7 +130,6 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
 </header>
 
 <script>
-  // Progressive enhancement: without JS, every link stays visible.
   const header = document.querySelector<HTMLElement>('[data-header]')
   const toggle = header?.querySelector<HTMLButtonElement>('[data-menu-toggle]')
   const themeToggles = header
@@ -221,7 +218,7 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
     background-color: var(--site-surface);
     padding: var(--space-inset-100) var(--space-inset-200)
       var(--space-inset-100) var(--space-inset-400);
-    min-height: var(--control-size-1600); /* 64px */
+    min-height: var(--control-size-1600);
   }
 
   .header__logo {
@@ -314,7 +311,6 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
     height: var(--icon-button-base-icon-width);
   }
 
-  /* Show the mode the button switches to. */
   .header__theme :global(.header__theme-light) {
     display: none;
   }
@@ -356,7 +352,6 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
   @media (max-width: 799.98px) {
     .header__bar {
       border-radius: var(--site-radius-card);
-      /* Breathing room on the right, matching the logo side. */
       padding-right: var(--space-inset-400);
       /* The first row (logo + actions) owns the bar height, so opening the
          menu (second row) does not move it. */
@@ -373,12 +368,10 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
       );
     }
 
-    /* The theme switch lives next to Menu on small screens. */
     .header__theme--inline {
       display: none;
     }
 
-    /* With JS: links collapse behind the Menu button. */
     .header[data-enhanced] .header__links {
       display: none;
     }

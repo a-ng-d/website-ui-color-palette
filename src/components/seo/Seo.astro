@@ -1,8 +1,4 @@
 ---
-/**
- * Every SEO tag of a page lives here: title, description, canonical,
- * Open Graph, Twitter Card and JSON-LD. Pages pass what differs from the defaults.
- */
 import { site } from '@/config/site'
 
 export interface Props {
@@ -133,12 +129,13 @@ const imageUrl = new URL(image, site.url).href
     content={section}
   />
 )}
-{type === 'article' && tags.map((tag) => (
-  <meta
-    property="article:tag"
-    content={tag}
-  />
-))}
+{type === 'article' &&
+  tags.map((tag) => (
+    <meta
+      property="article:tag"
+      content={tag}
+    />
+  ))}
 
 <meta
   name="twitter:card"

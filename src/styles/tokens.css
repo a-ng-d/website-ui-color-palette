@@ -16,7 +16,6 @@
 @import './generated/unoff-spinner.css';
 
 :root {
-  /* ---- Typography (Figma “Website/*” text styles) ---- */
   --font-display:
     'Martian Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, monospace;
   --font-text:
@@ -59,7 +58,6 @@
   --text-weight-text: 500;
   --text-weight-display: 700;
 
-  /* ---- Layout ---- */
   --layout-gutter: var(--space-inset-200); /* 8px around every card */
   --layout-section-gap: var(--scale-pos-xxxlarge); /* 80px between sections */
   --layout-content-max: 960px;
@@ -130,7 +128,6 @@
 
   /* Website density: the library is sized for plugin panels. */
 
-  /* Button (large) — 48px tall, 16px label, as in the Figma website kit */
   --button-base-gap: var(--space-gap-400);
   --button-base-text-font-weight: var(--type-weight-500);
   --button-base-text-letter-spacing: var(--text-body-tracking);
@@ -143,7 +140,6 @@
   --button-large-text-font-size: var(--text-body-size);
   --button-tertiary-text-font-size: var(--text-body-size);
 
-  /* Card — bordered surfaces of the website, no inner padding */
   --card-radius: var(--site-radius-card);
   --card-width: auto; /* the grid sizes cards, not the 200px plugin default */
   --card-gap: 0;
@@ -158,7 +154,6 @@
   --card-border-offset-hover: var(--stroke-offset-thin);
   --card-border-width-hover: var(--stroke-width-thin);
 
-  /* Chip — “New” badges */
   --chip-height: var(--control-size-600);
   --chip-padding-left: var(--space-inset-300);
   --chip-padding-right: var(--space-inset-300);

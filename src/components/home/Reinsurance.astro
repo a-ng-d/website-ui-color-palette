@@ -9,7 +9,6 @@ import Tag from '@/components/ui/Tag.astro'
 import Chip from '@unoff-dist/components/tags/chip/Chip.js'
 import { platforms } from '@/data/platforms'
 
-// Palette previews, split in two reels as in the design.
 const palettes = Object.values(
   import.meta.glob<{ default: ImageMetadata }>('@/assets/palettes/*.png', {
     eager: true,
@@ -18,7 +17,6 @@ const palettes = Object.values(
 
 const reels = [palettes.slice(0, 8), palettes.slice(8)]
 
-// “Add to …” order from the design: Claude first.
 const addTo = [...platforms].sort(
   (a, b) => Number(!!b.isNew) - Number(!!a.isNew)
 )
@@ -164,7 +162,6 @@ const addTo = [...platforms].sort(
     width: 100%;
   }
 
-  /* 2 × 3 grid: the new platform spans the first row, each button fills its cell. */
   .pitch__links {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

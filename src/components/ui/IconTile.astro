@@ -1,8 +1,5 @@
 ---
-/**
- * The dark rounded tile holding a Lucide icon at the top of a card's info
- * (Figma “Card/Section” → Icon). Decorative: the card title carries the meaning.
- */
+/** Dark rounded tile holding a Lucide icon. Decorative: the card title carries the meaning. */
 import Apple from '@lucide/astro/icons/apple'
 import BadgeDollarSign from '@lucide/astro/icons/badge-dollar-sign'
 import CodeXml from '@lucide/astro/icons/code-xml'
@@ -39,7 +36,9 @@ const icons = {
 const Icon = icons[Astro.props.icon]
 ---
 
-<span class="icon-tile"><Icon aria-hidden="true" /></span>
+<span class="icon-tile">
+  <Icon aria-hidden="true" />
+</span>
 
 <style>
   .icon-tile {

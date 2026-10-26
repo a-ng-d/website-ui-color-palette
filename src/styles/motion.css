@@ -1,18 +1,11 @@
 /*
- * Entrance and ambient motion.
- *
- * Sequence for every card (matched by its existing class, see REVEAL):
- *   1. the card scales in while the @unoff/ui spinner turns in its centre;
- *   2. a cover in the card's own colour slides down with a bright edge,
- *      unveiling the content from top to bottom (ease-in-out).
- * The content itself never moves or blurs: it is painted from the start,
- * only covered, so it stays readable for crawlers and screen readers.
- *
- * - Hidden states only exist under `html.motion`, set before paint by
- *   BaseLayout when JS runs and the visitor accepts motion.
- * - scripts/reveal.ts sets `data-revealed` (once) and `data-inview` (loops).
- * - `scale`/`translate` are used instead of `transform`, so they never fight
- *   the @unoff/ui `.card` hover or the rotated title cards.
+ * Entrance and ambient motion (see REVEAL below).
+ * Per card: it scales in while the @unoff/ui spinner turns, then a cover in the
+ * card's colour slides down with a bright edge. The content is always painted
+ * (only covered), so crawlers and screen readers still read it.
+ * - Hidden states only exist under `html.motion`, set before paint by BaseLayout.
+ * - reveal.ts sets `data-revealed` (once) and `data-inview` (loops).
+ * - `scale`/`translate` instead of `transform`: no fight with the card hover.
  */
 :root {
   --reveal-stagger: 90ms;
@@ -74,7 +67,6 @@
   }
 }
 
-/* Positioning context for the spinner and the cover. */
 .motion
   :is(
     .surface-card,
@@ -90,7 +82,6 @@
   position: relative;
 }
 
-/* ---- Spinner (@unoff/ui icon) ---- */
 .motion
   :is(
     .card,
@@ -168,7 +159,6 @@
   z-index: 2;
   /* 1px inside, so the @unoff/ui card outline (drawn inward) stays visible. */
   inset: var(--stroke-width-thin);
-  /* The scan line, switched on by the unveil keyframes. */
   box-shadow: none;
   /* Straight top edge: it is the scan line; the bottom follows the card. */
   border-radius: 0 0 var(--site-radius-card) var(--site-radius-card);
@@ -318,7 +308,6 @@
   }
 }
 
-/* ---- Shards around logos sparkle; hovering the card makes them burst ---- */
 .motion .shards {
   animation: sparkle 2.8s var(--easing-standard) infinite;
   animation-delay: var(--sparkle-delay, 0s);
@@ -341,7 +330,6 @@
   animation-duration: 1.1s;
 }
 
-/* ---- Pause ambient loops off screen ---- */
 .motion .card:not([data-inview]) .shards,
 .motion .shade-grid:not([data-inview]) .shade-grid__glow,
 .motion .shade-grid:not([data-inview]) .shade-grid__light {
@@ -361,7 +349,6 @@
   initial-value: 0px;
 }
 
-/* The beam trails the cursor slightly. */
 .motion .shade-grid {
   transition:
     --spot-x 420ms var(--easing-decelerate),
@@ -372,7 +359,6 @@
   transition: opacity 500ms var(--easing-standard);
 }
 
-/* While the beam is on, the autonomous wave steps back. */
 .motion .shade-grid[data-revealed][data-spot] .shade-grid__glow {
   opacity: 0.35;
 }

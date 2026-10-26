@@ -32,7 +32,6 @@ export type Props = SeoProps
           ? 'yelbolt-uicp-dark'
           : 'yelbolt-uicp-light'
       } catch {}
-      // Entrance motion: only with JS and when the visitor accepts motion.
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
         document.documentElement.classList.add('motion')
         // Safety net: if the reveal script never runs, show everything.

@@ -8,7 +8,6 @@ interface Props {
   categories: FaqCategory[]
 }
 
-// A category without questions has no tab.
 const categories = Astro.props.categories.filter((c) => c.items.length)
 ---
 
@@ -78,7 +77,6 @@ const categories = Astro.props.categories.filter((c) => c.items.length)
     max-width: var(--layout-content-max);
   }
 
-  /* ---- Accordion (same as the home FAQ) ---- */
   .pricing-faq__item {
     border-bottom: var(--stroke-width-thin) solid var(--site-border-strong);
     padding-block: var(--space-inset-400);

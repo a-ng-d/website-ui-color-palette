@@ -15,13 +15,6 @@
  *
  * Runs before `dev` and `build` (package.json); re-run after updating
  * @unoff/ui or using a new token: `npm run tokens`.
- *
- * Later (optimisation, not urgent): @unoff/ui binds its theme tokens to
- * `:root[data-theme=…]`, so this script rescopes them. If the library adds an
- * opt-in selector next to the existing one (`:root[data-theme=x],
- * [data-theme-scope][data-theme=x]`, no change for current apps), the platform
- * part can become plain imports + `data-theme-scope data-theme data-mode` on
- * the demo panel. Do not drop `:root` in the library: specificity side effects.
  */
 import { readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs'
 
@@ -119,7 +112,7 @@ const themeTokens = (theme, fontFamily) =>
 /** Keep what is mentioned, then what kept tokens refer to (until stable). */
 const keepFrom = (defined, seeds) => {
   const kept = new Set([...seeds].filter((name) => defined.has(name)))
-  for (let grew = true; grew; ) {
+  for (let grew = true; grew;) {
     grew = false
     for (const name of [...kept])
       for (const ref of refsOf(defined.get(name).value))
@@ -152,8 +145,6 @@ const write = (name, css) => {
   writeFileSync(out, header + css)
   return out.replace(root + '/', '')
 }
-
-// ---- Yelbolt: the default look of every demo (.demo-kit). ----
 
 const yelbolt = themeTokens('yelbolt', 'var(--font-text)')
 const yelboltDefined = new Map(
@@ -206,7 +197,6 @@ for (const [platform, { font, fontsource }] of Object.entries(PLATFORMS)) {
   )
   const kept = keepFrom(defined, mentioned)
 
-  // Colours: what the kept tokens and the kit refer to, in both modes.
   const seeds = new Set([
     ...mentioned,
     '--global-border-color',

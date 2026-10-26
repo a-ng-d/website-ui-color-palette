@@ -41,10 +41,7 @@ const {
         >
           <summary class="faq__question">
             <h3 class="t-accent">{item.question}</h3>
-            <!--
-              @unoff/ui icon button styles on a <span>: a real <button> inside
-              <summary> would swallow the click and the item would not open.
-            -->
+            <!-- A real <button> inside <summary> would swallow the click. -->
             <span
               class="faq__toggle icon-button icon-button--default"
               aria-hidden="true"
@@ -73,13 +70,12 @@ const {
   .faq__intro {
     display: flex;
     flex-direction: column;
-    align-self: stretch; /* full height of the row, like the title cards */
+    align-self: stretch;
     border: var(--stroke-width-thin) solid var(--site-border-soft);
     border-radius: var(--site-radius-card);
     background-color: var(--site-surface);
   }
 
-  /* The text stays in view while the cards beside it scroll. */
   .faq__intro-content {
     display: flex;
     position: sticky;

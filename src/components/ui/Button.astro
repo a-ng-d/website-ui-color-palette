@@ -1,14 +1,8 @@
 ---
 /**
- * Website button built on the @unoff/ui Button styles (`.text-button`).
- *
- * It mirrors the markup of the @unoff/ui <Button> (label, left icon slot,
- * type, size) but renders a single real <a href> for links:
- * - <Button> renders a <button> that navigates in JS (not crawlable);
- * - <Button isLink> nests an <a target="_blank"> inside a <button>
- *   (invalid HTML, two tab stops, internal links open a new tab).
- *
- * Link states (hover, active) are mirrored in `styles/unoff-links.css`.
+ * Website button on the @unoff/ui Button styles: a real <a href> (crawlable, one tab stop),
+ * unlike <Button> (JS navigation) and <Button isLink> (<a> nested in <button>).
+ * Link states are mirrored in `styles/unoff-links.css`.
  */
 import type { HTMLAttributes } from 'astro/types'
 import { isExternal } from '@/config/site'

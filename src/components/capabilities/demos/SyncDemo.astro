@@ -12,7 +12,6 @@ const items = syncItems()
   width={440}
 >
   <div class="layout">
-    <!-- The plugin side -->
     <div class="plugin">
       <div class="plugin__head">
         <span class="k-text--medium k-text--truncated">{SYNC_PALETTE}</span>
@@ -29,7 +28,6 @@ const items = syncItems()
       </div>
     </div>
 
-    <!-- The design tool's library -->
     <div
       class="library"
       data-library
@@ -74,7 +72,6 @@ const items = syncItems()
     gap: var(--space-gap-400);
   }
 
-  /* ---- Plugin side ---- */
   .plugin {
     display: flex;
     flex-direction: column;
@@ -105,7 +102,6 @@ const items = syncItems()
     gap: var(--space-gap-200);
   }
 
-  /* ---- Library side ---- */
   .library {
     display: flex;
     flex-direction: column;
@@ -162,7 +158,6 @@ const items = syncItems()
     transition-delay: 0ms;
   }
 
-  /* Narrow stages (phones): the library goes under the plugin. */
   @container (max-width: 459.98px) {
     .layout {
       grid-template-columns: minmax(0, 1fr);

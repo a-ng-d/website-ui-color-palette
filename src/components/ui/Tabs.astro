@@ -1,23 +1,8 @@
 ---
 /**
- * Pill tabs from the Figma “Tabs” component, with no JavaScript.
- *
- * The tabs are a native radio group (`<fieldset>` + radios + labels) and the
- * content that depends on the selected tab is plain HTML: mark every panel
- * (or any element) with `data-tab="<item id>"` inside the default slot. CSS
- * (`:has(:checked)`) hides the ones of the other tabs, so every tab is in the
- * page for crawlers, and everything stays visible if `:has()` is missing.
- *
- *   <Tabs name="plans" label="Billing period" items={[{ id: 'a', label: 'A' }]}>
- *     <div data-tab="a">…</div>
- *     <div data-tab="b">…</div>
- *   </Tabs>
- *
- * Labels wear the @unoff/ui tertiary button classes (hover and focus states
- * are mirrored for <label> in styles/unoff-links.css).
- *
- * The wrapper uses `display: contents`: the tab list and the slot take part
- * in the layout of the parent.
+ * Pill tabs as a native radio group, no JS. Mark panels with `data-tab="<item id>"`:
+ * CSS (`:has(:checked)`) hides those of the other tabs, all stay visible without `:has()`.
+ * Label hover/focus states are mirrored in styles/unoff-links.css. Wrapper is `display: contents`.
  */
 interface Item {
   id: string
@@ -36,7 +21,6 @@ interface Props {
 
 const { name, label, items, active = items[0]?.id } = Astro.props
 
-// One rule per tab: hide the elements of the other tabs.
 const css = items
   .map(
     (item) =>
@@ -96,14 +80,13 @@ const css = items
     min-inline-size: 0;
   }
 
-  /* Type, padding and hover come from the @unoff/ui tertiary button. */
   .tabs__list label {
     position: relative;
     justify-content: center;
     border: var(--stroke-width-thin) solid transparent;
     border-radius: var(--site-radius-pill);
     padding: var(--space-inset-100) var(--space-inset-400);
-    min-height: 48px; /* Figma tab button */
+    min-height: 48px;
     white-space: nowrap;
   }
 
@@ -112,7 +95,6 @@ const css = items
     background-color: var(--site-surface-muted);
   }
 
-  /* The little indicator under the selected tab. */
   .tabs__list input:checked + label::after {
     position: absolute;
     bottom: 3px;

@@ -1,5 +1,4 @@
 ---
-/** Outlined pill label from the Figma “Tag” component. */
 interface Props {
   size?: 'small' | 'large'
   as?: 'span' | 'p'
@@ -31,7 +30,7 @@ const { size = 'small', as: Tag = 'span' } = Astro.props
   .tag--small {
     padding: var(--space-inset-100) var(--space-inset-400)
       var(--space-inset-100) var(--space-inset-300);
-    min-height: var(--control-size-1000); /* 40px */
+    min-height: var(--control-size-1000);
     font-size: var(--text-body-size);
     line-height: var(--text-body-leading);
   }

@@ -4,13 +4,11 @@ import DemoStage from '../DemoStage.astro'
 import { EXTRACTED, IMAGE_NAME } from '@/scripts/demos/image'
 
 const [wine, tapestry, japonica, peach, jaguar] = EXTRACTED.map((c) => c.hex)
-// The picture: a dusk sky, a sun and hills, painted with the extracted colours.
 const picture = [
   `--sun:${peach}`,
   `--hills:${jaguar}`,
   `background:linear-gradient(${wine} 8%, ${tapestry} 42%, ${japonica} 70%)`,
 ].join(';')
-// Hovering a row lights its sample point.
 const hoverCss = EXTRACTED.map(
   (_, i) =>
     `[data-zone]:has([data-row="${i}"]:hover) [data-point="${i}"]{scale:1.6}`
@@ -87,8 +85,6 @@ const hoverCss = EXTRACTED.map(
     gap: var(--space-gap-400);
   }
 
-  /* ---- Drop zone and the dropped file ---- */
-  /* The dropped picture fills the zone. */
   .drop {
     display: grid;
     place-items: stretch;
@@ -135,7 +131,6 @@ const hoverCss = EXTRACTED.map(
     overflow: hidden;
   }
 
-  /* Sun and hills. */
   .file__picture::before,
   .file__picture::after {
     position: absolute;
@@ -196,7 +191,6 @@ const hoverCss = EXTRACTED.map(
     height: 10px;
   }
 
-  /* ---- Extracted colours ---- */
   .colours {
     display: flex;
     flex-direction: column;
@@ -225,7 +219,6 @@ const hoverCss = EXTRACTED.map(
     min-width: 0;
   }
 
-  /* ---- States ---- */
   .zone:not([data-state='empty']) .drop__hint {
     opacity: 0;
   }
@@ -235,7 +228,6 @@ const hoverCss = EXTRACTED.map(
     transition-duration: 300ms, 300ms, 300ms, 300ms;
   }
 
-  /* Carried in by the cursor, tilted, from outside the zone. */
   .zone:is([data-state='empty'], [data-state='carry']) .file {
     translate: -40% -55%;
     rotate: -8deg;

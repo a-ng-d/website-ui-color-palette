@@ -1,8 +1,4 @@
 ---
-/**
- * A capability group as a mosaic: a rotated title card in the first cell,
- * then the capability cards (Master, Deploy, Superpowers in Figma).
- */
 import type { CapabilityGroup } from '@/data/capabilities'
 import FeatureCard from './FeatureCard.astro'
 
@@ -74,7 +70,6 @@ const lastAlone = tabletColumns === 2 && singles % 2 === 1
     gap: var(--space-gap-200);
   }
 
-  /* Title card: soft border, text at the bottom, tilted to break the grid. */
   .mosaic__intro {
     display: flex;
     flex-direction: column;

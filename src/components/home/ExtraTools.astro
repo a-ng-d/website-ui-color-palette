@@ -227,13 +227,12 @@ const tools: Tool[] = [
     grid-row: 1;
     grid-column: 2;
     flex-direction: column;
-    align-self: stretch; /* full height of the row, like the title cards */
+    align-self: stretch;
     border: var(--stroke-width-thin) solid var(--site-border-soft);
     border-radius: var(--site-radius-card);
     background-color: var(--site-surface);
   }
 
-  /* The text stays in view while the cards beside it scroll. */
   .extra__intro-content {
     display: flex;
     position: sticky;

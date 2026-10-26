@@ -53,6 +53,9 @@ built output of the pages they affect. Skip what the orchestrator marks irreleva
    order, `alt` on images (empty for decoration), visible focus, `aria-*` only when needed.
 8. **Weight** — no barrel import of @unoff/ui, no un-stubbed icon stylesheet; when the
    page is built, compare `gzip -9c dist/_astro/*.css | wc -c` with the ~30 KB reference.
+9. **Comments** — flag added comments that narrate, restate the code, announce a section
+   or record history; the repo `CLAUDE.md` ("Code comments") keeps only a non-obvious why
+   (constraint, workaround, keep-in-sync link, documented exception).
 
 When the change is visual and a preview is useful, run `npm run build` and screenshot the
 page at 1280 and 390, light and dark, with headless Chromium on a free port (never stop

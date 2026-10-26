@@ -36,6 +36,32 @@ the same rules:
 - Product claims come from `../specs-ui-color-palette/` and `../docs-ui-color-palette/`,
   never from memory.
 
+## Code comments
+
+Comments are rare. Code, names and tokens carry the "what"; a comment exists only for a
+**why** the reader cannot recover from the code. Reading noise is a defect.
+
+Keep (short, one to three lines):
+
+- a non-obvious constraint, browser quirk or workaround, with the reason;
+- an invariant or **keep-in-sync** link between two files (e.g. the REVEAL selector list
+  in `motion.css` and `reveal.ts`);
+- a module header that states a file's role when it is not evident from its name;
+- a documented exception to a rule (a hex value, a `!important`, an a11y trade-off);
+- JSDoc on shared helpers and public props, when the signature does not say enough.
+
+Do not write:
+
+- comments that restate the next line or the selector (`/* Header */`, `// loop over items`);
+- narration of a change or its history ("now centred", "fixed", "added for the Menu toggle");
+- section banners and decorative separators, except one per long CSS file where it aids
+  navigation;
+- commented-out code (git has it);
+- a comment on every block "for consistency".
+
+When editing code, leave the existing comments that still hold true, update those your
+change made false, and add none by default.
+
 ## Where things live
 
 - Pages `src/pages/`, components `src/components/`, copy and links `src/data/`,

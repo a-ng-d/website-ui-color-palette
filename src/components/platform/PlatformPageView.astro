@@ -19,7 +19,6 @@ interface Props {
 }
 
 const { page } = Astro.props
-// Demo cards pair up on 2 columns; text-only cards sit on one row with the title.
 const textOnly = page.why.cards.every((card) => !card.demo)
 
 const jsonLd = [

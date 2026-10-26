@@ -71,11 +71,7 @@ import { site } from '@/config/site'
       class="demo"
       slot="demo"
     >
-      <!--
-        The src is set by the script below, with the current colour mode
-        (?embed=1&theme=…). The app is a JS app, so without JS the link below
-        is the useful fallback.
-      -->
+      <!-- src is set by the script below (current colour mode); without JS the link below is the fallback. -->
       <iframe
         class="demo__frame"
         data-src={site.demoPaletteUrl}
@@ -109,7 +105,6 @@ import { site } from '@/config/site'
     url.searchParams.set('theme', currentTheme())
     frame.src = url.href
 
-    // Follow the site's light/dark toggle without reloading the embed.
     new MutationObserver(() => {
       frame.contentWindow?.postMessage(
         { type: 'UICP_SET_THEME', theme: currentTheme() },
@@ -156,7 +151,6 @@ import { site } from '@/config/site'
     gap: var(--space-gap-200);
   }
 
-  /* Fill the whole Demo slot of the grid (the slot is a centred flex column). */
   .demo {
     display: flex;
     flex: 1 1 auto;
