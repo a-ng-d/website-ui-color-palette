@@ -73,12 +73,12 @@ export interface Plan {
   badge?: string
 }
 
-/** Polar products, same ids as the plugin (`plan.storePro*Id`). */
+/** Polar products, production ids of the Polar organization. */
 export const polarProducts: Record<BillingPeriod, string> = {
-  week: '20d1df96-8052-47de-bf62-36b412c35885',
-  month: '5f0502a5-9708-459d-b002-495e2860c23a',
-  year: '66a55061-29ff-4c52-8ce0-0661ab12890e',
-  lifetime: 'ae8ecdd5-badd-42d1-98fc-91f6ffdc77a6',
+  week: '17eb1281-cf21-4d58-9144-76a1426ec73c',
+  month: '1c4ad049-f424-4ec4-ac66-0997050e0060',
+  year: '87a83311-cba6-424f-a72f-84a1785a1079',
+  lifetime: '9ed0e164-8972-4f60-88cf-91b805991e87',
 }
 
 /**
