@@ -83,7 +83,7 @@ const path = `/blog/${post.id}`
     class="section article"
     aria-label="Article"
   >
-    <div class="article__card">
+    <div class="article__card surface-card">
       <figure class="article__cover">
         <Image
           src={cover}
@@ -108,12 +108,10 @@ const path = `/blog/${post.id}`
     padding: var(--space-inset-100, 4px) var(--layout-gutter) 0;
   }
 
-  /* A static container, not the interactive @unoff/ui .card (scale on press, swallows clicks). */
+  /* .surface-card: the static content card (not the interactive .card, which
+     scales on press and swallows clicks on inner links). */
   .article__card {
     display: flex;
-    border: var(--stroke-width-thin) solid var(--site-border-strong);
-    border-radius: var(--site-radius-card);
-    background-color: var(--site-surface);
     flex-direction: column;
     align-items: center;
     gap: var(--space-gap-800);

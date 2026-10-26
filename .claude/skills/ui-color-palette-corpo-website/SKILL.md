@@ -64,3 +64,11 @@ src/components/layout/    Header (nav, Resources cards, theme toggle), Footer
 postcss.config.mjs        drops @unoff/ui rules for other themes/modes (KEEP_MODES)
 astro.config.mjs          Preact compat, @unoff-dist alias, icon stylesheet stub
 ```
+
+## Agents (`.claude/agents/`)
+
+`site-orchestrator` is the entry point (`claude --agent site-orchestrator`). It builds
+site changes itself and calls, only when needed: `blog-writer` (articles),
+`seo-reviewer` (any article or content change — blog = SEO, content = SEO),
+`fact-checker` (product claims vs specs) and `style-guardian` (any markup, CSS or motion
+change: @unoff/ui tokens and components, layout patterns, motion, dark mode).
