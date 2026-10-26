@@ -9,7 +9,9 @@ import ShadeGrid from '@/components/ui/ShadeGrid.astro'
 import type { PlatformPage } from '@/data/platform-pages'
 
 interface Props {
-  hero: PlatformPage['hero']
+  /** The install link is optional: the Download page has none in its hero. */
+  hero: Omit<PlatformPage['hero'], 'cta'> &
+    Partial<Pick<PlatformPage['hero'], 'cta'>>
 }
 
 const { hero } = Astro.props
@@ -41,12 +43,14 @@ const { hero } = Astro.props
         </h1>
         <p class="t-tagline">{hero.tagline}</p>
       </div>
-      <Button
-        href={hero.cta.href}
-        variant="primary"
-      >
-        {hero.cta.label}
-      </Button>
+      {hero.cta && (
+        <Button
+          href={hero.cta.href}
+          variant="primary"
+        >
+          {hero.cta.label}
+        </Button>
+      )}
     </div>
   </ShadeGrid>
 </section>

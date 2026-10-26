@@ -17,6 +17,11 @@
 @import './generated/unoff-tokens.css';
 
 .demo-kit {
+  /* Panel and outlined-chip border. Yelbolt keeps its secondary border; the
+     platform themes (generated/unoff-tokens-<platform>.css) use their
+     `--global-border-color`, like the panel surface uses
+     `--global-background-color-default` in every theme. */
+  --k-panel-border: var(--color-border-secondary-default);
   color: var(--text-color-primary);
   font: var(--text-default);
   letter-spacing: var(--text-default-letter-spacing);

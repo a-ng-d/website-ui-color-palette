@@ -37,8 +37,17 @@ import { organization, softwareApplication, faqPage } from '@/data/structured-da
 - `Seo.astro` builds the canonical (`/pricing`, `/` for home), Open Graph and Twitter tags.
 - Add a JSON-LD builder to `structured-data.ts` when the page needs a new type
   (e.g. `Offer`/`Product` for pricing, `BlogPosting` for articles, `BreadcrumbList`).
-- Blog posts: Markdown in `src/content/blog/` with `title`, `description`, `cover`,
-  `coverAlt`, `pubDate`.
+- Blog posts: one Markdown file in `src/content/blog/` (file name = URL, never rename).
+  Front-matter (schema in `src/content.config.ts`): `title`, `description`, `cover`,
+  `coverAlt`, `author`, `authorUrl`, `pubDate`, `updatedDate`, `tags`, `category`,
+  `draft`, `seo: { title, description, ogImage, canonical, noindex }`, `faq: [{question, answer}]`.
+  Body: plain Markdown; a line holding only a YouTube / Vimeo / Loom / .mp4 link becomes a
+  lazy responsive embed (link text = caption/title) — see `src/plugins/blog-markdown.mjs`.
+  The page emits BlogPosting + BreadcrumbList (+ VideoObject per embed, FAQPage if `faq`),
+  article:* / keywords metas, reading time. Astro 7 uses Sätteri: plugins are `mdastPlugins`
+  on `satteri()`, not remark.
+  Writing the article itself (voice, SEO/GEO, specs, Screen Studio assets): see the
+  `ui-color-palette-blog-writing` skill.
 
 ## 4. Site-wide files to update
 

@@ -74,6 +74,17 @@ is never focusable, and can show any state on demand.
   demo components and scripts, plus what they refer to (~300, ~3 KB gzip). Runs on
   `predev`/`prebuild`; run `npm run tokens` after using a new token or updating
   @unoff/ui. Never edit the generated files.
+- **Platform themes** (platform pages): the same generator writes
+  `generated/unoff-tokens-<figma|penpot|sketch|framer>.css`: the platform's
+  component tokens under `[data-platform=<p>] .demo-kit`, plus the colours of
+  its light mode (dark mode under `[data-mode=yelbolt-uicp-dark]`), `--global-*`
+  included, and its font (Inter / Work Sans, self-hosted). The page imports its
+  file and `MosaicSection platform="<p>"` sets `data-platform`; nothing else
+  changes. So a demo stays theme-agnostic: read component tokens, `--text-*`,
+  `--global-background-color-default` for surfaces and the kit alias
+  `--k-panel-border` for borders — never a Yelbolt `--color-*` semantic
+  variable (it would not follow the platform). Platform densities differ
+  (Figma's small text is 12px): check the 3 platform demos on each page.
 - **Icons: Lucide only** (the site's set), as `<XIcon class="k-icon" />` (16px, colour
   from the component). The app's icon set is not shipped: the generator only writes
   the spinner glyph (`generated/unoff-spinner.css`, `--icon-spinner`) for the reveal

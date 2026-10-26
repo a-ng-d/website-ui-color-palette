@@ -2,7 +2,8 @@
 /**
  * A whole platform page (/figma, /penpot, /sketch, /framer, /claude) from its
  * data in `data/platform-pages.ts`. The `media` slot replaces the plugin embed
- * for pages that have none.
+ * for pages that have none. The demos wear the platform's UI: the page file
+ * imports `styles/generated/unoff-tokens-<platform>.css`.
  */
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import MosaicSection from '@/components/capabilities/MosaicSection.astro'
@@ -52,6 +53,7 @@ const jsonLd = [
   <MosaicSection
     group={page.why}
     columns={textOnly ? 4 : 2}
+    platform={textOnly ? undefined : page.platform.toLowerCase()}
   />
   <NextSteps />
   <Reinsurance />

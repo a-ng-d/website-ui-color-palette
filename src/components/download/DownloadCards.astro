@@ -1,0 +1,119 @@
+---
+/**
+ * Install cards of the Download page (Figma “Summary” → Card/Section):
+ * a tinted illustration with the platform tile, then title, text and the
+ * install link. 3 columns, Sketch spans two; 2 columns < 1024; 1 column < 640.
+ */
+import ExternalLinkIcon from '@lucide/astro/icons/external-link'
+import Button from '@/components/ui/Button.astro'
+import { downloads } from '@/data/downloads'
+---
+
+<section
+  class="section download-cards"
+  aria-labelledby="download-cards-title"
+>
+  <h2
+    class="visually-hidden"
+    id="download-cards-title"
+  >
+    Install UI Color Palette on your platform
+  </h2>
+  <ul class="download-cards__grid">
+    {downloads.map((card) => (
+      <li
+        class:list={[
+          'download-card surface-card',
+          { 'download-card--wide': card.wide },
+        ]}
+      >
+        <div
+          class="download-card__illustration"
+          aria-hidden="true"
+        >
+          <card.icon class="download-card__icon" />
+        </div>
+        <div class="download-card__info">
+          <h3 class="t-paragraph-primary-title">{card.title}</h3>
+          <p class="t-accent">{card.text}</p>
+          <Button
+            href={card.cta.href}
+            variant={card.variant ?? 'secondary'}
+          >
+            <ExternalLinkIcon slot="icon" />
+            {card.cta.label}
+          </Button>
+        </div>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .download-cards__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: minmax(624px, auto);
+    gap: var(--space-gap-200);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .download-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .download-card--wide {
+    grid-column: span 2;
+  }
+
+  .download-card__illustration {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: center;
+    min-height: 264px;
+    background-color: var(--site-surface-muted);
+  }
+
+  .download-card__icon {
+    width: 96px;
+    height: 96px;
+    color: var(--button-primary-background-color-default);
+  }
+
+  .download-card__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+  }
+
+  @media (max-width: 1023.98px) {
+    .download-cards__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .download-card--wide {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 639.98px) {
+    .download-cards__grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-auto-rows: minmax(512px, auto);
+    }
+
+    .download-card__illustration {
+      min-height: 232px;
+    }
+
+    .download-card__info {
+      padding: var(--space-inset-800) var(--space-inset-800);
+    }
+  }
+</style>

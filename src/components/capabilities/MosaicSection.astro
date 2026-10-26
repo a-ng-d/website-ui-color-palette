@@ -14,9 +14,20 @@ interface Props {
   tabletColumns?: 1 | 2
   /** Demos above the text (Superpowers). */
   mediaFirst?: boolean
+  /**
+   * Platform whose UI the demos wear (`data-platform`); the page imports
+   * the matching generated/unoff-tokens-<platform>.css.
+   */
+  platform?: string
 }
 
-const { group, columns = 3, tabletColumns = 2, mediaFirst } = Astro.props
+const {
+  group,
+  columns = 3,
+  tabletColumns = 2,
+  mediaFirst,
+  platform,
+} = Astro.props
 const titleId = `${group.id}-title`
 // On two tablet columns, an odd count of single cards leaves the last one
 // alone: it takes the whole row.
@@ -28,6 +39,7 @@ const lastAlone = tabletColumns === 2 && singles % 2 === 1
   id={group.id}
   class="section mosaic"
   aria-labelledby={titleId}
+  data-platform={platform}
   style={`--columns:${columns};--tablet-columns:${tabletColumns}`}
 >
   <div class="mosaic__grid">

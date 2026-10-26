@@ -64,6 +64,7 @@ export const links = {
   tlGuide: 'https://tlguide.com/reviews/ui-color-palette',
   mcpEndpoint: 'https://mcp.ui-color-palette.com/mcp',
   runFigmaPlugin: 'https://uicp.ylb.lt/run-figma-plugin',
+  runFigmaTeamPlugin: 'https://uicp.ylb.lt/run-figma-team-plugin',
   runPenpotPlugin: 'https://uicp.ylb.lt/run-penpot-plugin',
   runSketchPlugin: 'https://uicp.ylb.lt/run-sketch-plugin',
   runFramerPlugin: 'https://uicp.ylb.lt/run-framer-plugin',

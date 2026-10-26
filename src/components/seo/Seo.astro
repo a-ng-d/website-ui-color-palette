@@ -17,6 +17,12 @@ export interface Props {
   jsonLd?: Record<string, unknown>[]
   publishedTime?: Date
   modifiedTime?: Date
+  /** Article only. */
+  author?: string
+  section?: string
+  tags?: string[]
+  /** Overrides the computed canonical (content first published elsewhere). */
+  canonicalUrl?: string
 }
 
 const {
@@ -29,6 +35,10 @@ const {
   jsonLd = [],
   publishedTime,
   modifiedTime,
+  author,
+  section,
+  tags = [],
+  canonicalUrl,
 } = Astro.props
 
 // URLs have no trailing slash and no .html (see trailingSlash/build.format).
@@ -36,7 +46,7 @@ const canonicalPath = Astro.url.pathname
   .replace(/\.html$/, '')
   .replace(/\/index$/, '/')
   .replace(/(.)\/$/, '$1')
-const canonical = new URL(canonicalPath, site.url).href
+const canonical = canonicalUrl ?? new URL(canonicalPath, site.url).href
 const imageUrl = new URL(image, site.url).href
 ---
 
@@ -49,6 +59,12 @@ const imageUrl = new URL(image, site.url).href
   rel="canonical"
   href={canonical}
 />
+{tags.length > 0 && (
+  <meta
+    name="keywords"
+    content={tags.join(', ')}
+  />
+)}
 <meta
   name="robots"
   content={
@@ -104,6 +120,25 @@ const imageUrl = new URL(image, site.url).href
     content={modifiedTime.toISOString()}
   />
 )}
+
+{author && (
+  <meta
+    property="article:author"
+    content={author}
+  />
+)}
+{section && (
+  <meta
+    property="article:section"
+    content={section}
+  />
+)}
+{type === 'article' && tags.map((tag) => (
+  <meta
+    property="article:tag"
+    content={tag}
+  />
+))}
 
 <meta
   name="twitter:card"

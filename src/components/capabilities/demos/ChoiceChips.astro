@@ -30,9 +30,9 @@ const { items, active = items[0]?.id } = Astro.props
      disabled: outlined, with the secondary text and border tokens. */
   .choices {
     --chip-background-color-inactive: transparent;
-    --chip-border-color-inactive: var(--color-border-secondary-default);
+    --chip-border-color-inactive: var(--k-panel-border);
     --chip-border-width-inactive: var(--stroke-width-thin);
-    --chip-text-color-inactive: var(--color-text-secondary-default);
+    --chip-text-color-inactive: var(--text-color-secondary);
     display: flex;
     flex-wrap: nowrap;
     gap: var(--space-gap-100);

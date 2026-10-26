@@ -60,7 +60,10 @@ const formats = tokenFormats()
     grid-area: 1 / 1;
     flex-direction: column;
     margin: 0;
-    font-size: var(--text-small-font-size);
+    /* The site's snippet look, not the platform's: a fixed size (the Yelbolt
+       small text) so the lines fit whatever theme wears the panel (Figma's
+       small text is 12px). */
+    font-size: var(--font-size-xsmall);
     line-height: var(--text-small-line-height);
     font-family: var(--font-display);
     letter-spacing: 0;
@@ -99,6 +102,35 @@ const formats = tokenFormats()
 
   .code__copy :global(.k-icon) {
     color: var(--snippet-text);
+  }
+
+  /* Platform pages: the export as the app shows it, in a multiline field,
+     with an icon button to copy (Input and IconButton tokens of the theme). */
+  :global([data-platform]) .code {
+    outline: var(--input-border-width-default) solid
+      var(--input-border-color-default);
+    outline-offset: var(--input-border-offset-default);
+    border: 0;
+    border-radius: var(--input-radius);
+    background-color: var(--input-background-color-default);
+    padding: var(--input-textarea-padding-top)
+      var(--input-textarea-padding-right) var(--input-textarea-padding-bottom)
+      var(--input-textarea-padding-left);
+    color: var(--input-text-color-default);
+  }
+
+  /* Colours and radius of the theme's IconButton, compact, beside the short
+     closing line (the field's tighter padding lifts the values under the
+     top corner). */
+  :global([data-platform]) .code__copy {
+    top: auto;
+    bottom: 6px;
+    border-radius: var(--icon-button-base-radius);
+    background-color: var(--icon-button-default-background-color-default);
+  }
+
+  :global([data-platform]) .code__copy :global(.k-icon) {
+    color: var(--icon-button-default-icon-color-default);
   }
 
   /* The app's notification after a copy (SemanticMessage), as a toast. */

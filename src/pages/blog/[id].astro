@@ -1,0 +1,230 @@
+---
+import { getCollection, render } from 'astro:content'
+import { Image, getImage } from 'astro:assets'
+
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import ArticleHero from '@/components/blog/ArticleHero.astro'
+import Reinsurance from '@/components/home/Reinsurance.astro'
+import {
+  blogPosting,
+  breadcrumbs,
+  faqPage,
+  organization,
+} from '@/data/structured-data'
+import { site } from '@/config/site'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft)
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }))
+}
+
+const { post } = Astro.props
+const { Content, remarkPluginFrontmatter } = await render(post)
+const { title, description, cover, coverAlt, author, authorUrl, tags, category } =
+  post.data
+const { seo, faq } = post.data
+const { videos = [], readingMinutes } = remarkPluginFrontmatter
+const published = post.data.pubDate
+const modified = post.data.updatedDate
+
+// 1200 px wide cover for social previews and the structured data.
+const og = await getImage({
+  src: seo.ogImage ?? cover,
+  width: 1200,
+  format: 'png',
+})
+const path = `/blog/${post.id}`
+---
+
+<BaseLayout
+  title={`${seo.title ?? title} — ${site.name}`}
+  description={seo.description ?? description}
+  type="article"
+  noindex={seo.noindex}
+  canonicalUrl={seo.canonical}
+  author={author}
+  section={category}
+  tags={tags}
+  image={og.src}
+  imageAlt={coverAlt}
+  publishedTime={published}
+  modifiedTime={modified}
+  jsonLd={[
+    organization(),
+    blogPosting({
+      path,
+      title,
+      description: seo.description ?? description,
+      image: new URL(og.src, site.url).href,
+      author,
+      authorUrl,
+      tags,
+      category,
+      published,
+      modified,
+      readingMinutes,
+      videos,
+    }),
+    breadcrumbs([
+      { name: 'Home', path: '/' },
+      { name: title, path },
+    ]),
+    ...(faq.length ? [faqPage(faq)] : []),
+  ]}
+>
+  <ArticleHero
+    title={title}
+    author={author}
+    published={published}
+    readingMinutes={readingMinutes}
+  />
+
+  <article
+    class="section article"
+    aria-label="Article"
+  >
+    <div class="article__card">
+      <figure class="article__cover">
+        <Image
+          src={cover}
+          alt={coverAlt}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 1024px) 960px, 100vw"
+          loading="eager"
+        />
+      </figure>
+      <div class="article__body">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  <Reinsurance />
+</BaseLayout>
+
+<style>
+  .article {
+    /* Figma: the article card sits 4px under the hero, not a full section away. */
+    padding: var(--space-inset-100, 4px) var(--layout-gutter) 0;
+  }
+
+  /* A static container, not the interactive @unoff/ui .card (scale on press, swallows clicks). */
+  .article__card {
+    display: flex;
+    border: var(--stroke-width-thin) solid var(--site-border-strong);
+    border-radius: var(--site-radius-card);
+    background-color: var(--site-surface);
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-gap-800);
+    padding: var(--space-inset-800);
+    width: 100%;
+  }
+
+  .article__cover,
+  .article__body {
+    width: 100%;
+    max-width: 960px;
+  }
+
+  .article__cover {
+    margin: 0;
+    border: var(--stroke-width-thin) solid var(--site-border-strong);
+    border-radius: var(--space-inset-600);
+    aspect-ratio: 3 / 2;
+    overflow: clip;
+  }
+
+  .article__cover :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---- Rendered Markdown ---- */
+  .article__body :global(.embed) {
+    margin-inline: 0;
+  }
+
+  .article__body :global(.embed iframe),
+  .article__body :global(.embed video) {
+    display: block;
+    border: var(--stroke-width-thin) solid var(--site-border-strong);
+    border-radius: var(--space-inset-600);
+    background: var(--site-surface-muted);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .article__body :global(figcaption) {
+    margin-top: var(--space-gap-300);
+    font-size: var(--text-body-size, 16px);
+    text-align: center;
+  }
+
+  .article__body {
+    font-size: var(--text-accent-size);
+    line-height: 1.34;
+    letter-spacing: var(--text-accent-tracking);
+  }
+
+  .article__body > :global(* + *) {
+    margin-top: var(--space-gap-600);
+  }
+
+  .article__body :global(h2),
+  .article__body :global(h3) {
+    font-weight: var(--text-weight-display);
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  .article__body :global(h2) {
+    margin-top: var(--space-gap-1000, 48px);
+    font-size: var(--text-paragraph-primary-title-size);
+    line-height: var(--text-paragraph-primary-title-leading);
+    letter-spacing: var(--text-paragraph-primary-title-tracking);
+  }
+
+  .article__body :global(h3) {
+    font-size: var(--text-paragraph-secondary-title-size);
+    line-height: var(--text-paragraph-secondary-title-leading);
+    letter-spacing: var(--text-paragraph-secondary-title-tracking);
+  }
+
+  .article__body :global(ul) {
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+
+  .article__body :global(li + li) {
+    margin-top: var(--space-gap-300);
+  }
+
+  .article__body :global(a) {
+    text-underline-offset: 0.2em;
+  }
+
+  .article__body :global(code) {
+    border-radius: var(--site-radius-pill);
+    background: var(--site-surface-muted);
+    padding: 0.1em 0.4em;
+    font-size: 0.8em;
+    overflow-wrap: anywhere;
+  }
+
+  .article__body :global(img) {
+    display: block;
+    border: var(--stroke-width-thin) solid var(--site-border-strong);
+    border-radius: var(--space-inset-600);
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 639.98px) {
+    .article__card {
+      padding: var(--space-inset-400);
+    }
+  }
+</style>

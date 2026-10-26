@@ -1,0 +1,32 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import PlatformHero from '@/components/platform/PlatformHero.astro'
+import DownloadCards from '@/components/download/DownloadCards.astro'
+import Reinsurance from '@/components/home/Reinsurance.astro'
+import { downloadPage, downloads } from '@/data/downloads'
+import { organization, softwareApplication } from '@/data/structured-data'
+---
+
+<BaseLayout
+  title={downloadPage.seo.title}
+  description={downloadPage.seo.description}
+  jsonLd={[
+    organization(),
+    softwareApplication(),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Install UI Color Palette',
+      itemListElement: downloads.map((card, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: card.title,
+        url: card.cta.href,
+      })),
+    },
+  ]}
+>
+  <PlatformHero hero={downloadPage.hero} />
+  <DownloadCards />
+  <Reinsurance />
+</BaseLayout>

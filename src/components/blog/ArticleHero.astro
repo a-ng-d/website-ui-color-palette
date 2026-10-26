@@ -1,0 +1,130 @@
+---
+/**
+ * Hero of a blog article: the 16 × 2 shade grid of the other inner pages,
+ * with the article title (the page's h1) and its author.
+ */
+import { Image } from 'astro:assets'
+import wave from '@/assets/decor/graphs-pricing.svg'
+import avatar from '@/assets/brand/author-aurelien-grimaud.png'
+import ShadeGrid from '@/components/ui/ShadeGrid.astro'
+
+interface Props {
+  title: string
+  author: string
+  published?: Date
+  readingMinutes?: number
+}
+
+const { title, author, published, readingMinutes } = Astro.props
+const dateFormat = new Intl.DateTimeFormat('en', { dateStyle: 'long' })
+---
+
+<section
+  class="article-hero"
+  aria-labelledby="article-title"
+>
+  <ShadeGrid
+    class="article-hero__grid"
+    wave={{ src: wave, inset: '0 -2.58% -11.05% -2.58%' }}
+    cols={16}
+    rows={2}
+    areas={[{ name: 'hero', colStart: 3, colSpan: 12, rowStart: 1, rowSpan: 2 }]}
+  >
+    <div
+      class="article-hero__content"
+      slot="hero"
+    >
+      <h1
+        class="t-section-title"
+        id="article-title"
+      >
+        {title}
+      </h1>
+      <p class="article-hero__author t-tagline">
+        <Image
+          class="article-hero__avatar"
+          src={avatar}
+          alt=""
+          width={96}
+          height={96}
+          loading="eager"
+        />
+        <span>
+          <span class="article-hero__name">{author}</span>
+          {
+            (published || readingMinutes) && (
+              <span class="article-hero__date">
+                {published && (
+                  <time datetime={published.toISOString()}>
+                    {dateFormat.format(published)}
+                  </time>
+                )}
+                {published && readingMinutes && ' · '}
+                {readingMinutes && `${readingMinutes} min read`}
+              </span>
+            )
+          }
+        </span>
+      </p>
+    </div>
+  </ShadeGrid>
+</section>
+
+<style>
+  .article-hero {
+    padding: var(--space-inset-200) var(--layout-gutter) 0;
+  }
+
+  .article-hero :global(.article-hero__grid) {
+    --shade-row-min: 144px;
+  }
+
+  .article-hero__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+    width: 100%;
+    max-width: calc(var(--layout-content-max) + 2 * var(--space-inset-800));
+    text-align: center;
+  }
+
+  .article-hero__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-gap-400);
+    text-align: left;
+  }
+
+  .article-hero__author > span {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-hero__date {
+    opacity: 0.7;
+    font-size: var(--text-body-size, 16px);
+  }
+
+  .article-hero :global(.article-hero__avatar) {
+    flex: none;
+    border: var(--stroke-width-thin) solid var(--site-border-strong);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 639.98px) {
+    .article-hero__content {
+      padding: var(--space-inset-600) var(--space-inset-400);
+    }
+
+    .article-hero :global(.article-hero__avatar) {
+      width: 32px;
+      height: 32px;
+    }
+  }
+</style>

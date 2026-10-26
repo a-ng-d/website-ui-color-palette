@@ -126,3 +126,89 @@ export const faqPage = (items: FaqItem[]) => ({
     acceptedAnswer: { '@type': 'Answer', text: stripHtml(item.answer) },
   })),
 })
+
+export interface ArticleVideo {
+  provider: string
+  id?: string
+  src: string
+  title: string
+}
+
+/** A video embedded in an article (eligible for video rich results). */
+export const videoObject = (
+  video: ArticleVideo,
+  post: { description: string; image: string; published?: Date }
+) => ({
+  '@type': 'VideoObject',
+  name: video.title,
+  description: post.description,
+  thumbnailUrl:
+    video.provider === 'YouTube'
+      ? `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`
+      : post.image,
+  embedUrl: video.src,
+  ...(post.published ? { uploadDate: post.published.toISOString() } : {}),
+})
+
+/** A blog article. `image` is the absolute URL of the optimised cover. */
+export const blogPosting = (post: {
+  path: string
+  title: string
+  description: string
+  image: string
+  author: string
+  authorUrl?: string
+  tags: string[]
+  category?: string
+  published?: Date
+  modified?: Date
+  readingMinutes?: number
+  videos?: ArticleVideo[]
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  '@id': `${absolute(post.path)}#article`,
+  mainEntityOfPage: absolute(post.path),
+  headline: post.title,
+  description: post.description,
+  image: post.image,
+  keywords: post.tags.join(', '),
+  ...(post.category ? { articleSection: post.category } : {}),
+  inLanguage: site.locale,
+  ...(post.readingMinutes
+    ? { timeRequired: `PT${post.readingMinutes}M` }
+    : {}),
+  ...(post.published ? { datePublished: post.published.toISOString() } : {}),
+  ...(post.modified || post.published
+    ? { dateModified: (post.modified ?? post.published)!.toISOString() }
+    : {}),
+  author: {
+    '@type': 'Person',
+    name: post.author,
+    ...(post.authorUrl ? { url: post.authorUrl, sameAs: [post.authorUrl] } : {}),
+  },
+  publisher: { '@id': organizationId },
+  isPartOf: { '@id': websiteId },
+  ...(post.videos?.length
+    ? {
+        video: post.videos.map((video) =>
+          videoObject(video, {
+            description: post.description,
+            image: post.image,
+            published: post.published,
+          })
+        ),
+      }
+    : {}),
+})
+
+export const breadcrumbs = (items: { name: string; path: string }[]) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.name,
+    item: absolute(item.path),
+  })),
+})
