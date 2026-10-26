@@ -1,0 +1,78 @@
+---
+/**
+ * A capability: title and text, with its demo below (Generate, Master,
+ * Deploy) or above (Superpowers). A static content card, not a link.
+ */
+import type { Capability } from '@/data/capabilities'
+import Demo from './Demo.astro'
+
+interface Props {
+  card: Capability
+  /** Demo above the text instead of below. */
+  mediaFirst?: boolean
+  class?: string
+}
+
+const { card, mediaFirst = false, class: className } = Astro.props
+---
+
+<article
+  class:list={[
+    'feature surface-card',
+    mediaFirst && 'feature--media-first',
+    className,
+  ]}
+  style={card.span ? `--span:${card.span}` : undefined}
+>
+  <div class="feature__info">
+    <h3 class="t-paragraph-secondary-title">{card.title}</h3>
+    <p class="t-accent">{card.text}</p>
+  </div>
+  <div class="feature__media">
+    <Demo id={card.demo} />
+  </div>
+</article>
+
+<style>
+  .feature {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .feature__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+  }
+
+  .feature__media {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: 0 var(--space-inset-800) var(--space-inset-800);
+  }
+
+  /* Superpowers: the demo on top, the text at the bottom. */
+  .feature--media-first {
+    flex-direction: column-reverse;
+  }
+
+  .feature--media-first .feature__media {
+    padding: var(--space-inset-800) var(--space-inset-800) 0;
+  }
+
+  @media (max-width: 639.98px) {
+    .feature__info {
+      padding: var(--space-inset-600);
+    }
+
+    .feature__media {
+      padding: 0 var(--space-inset-600) var(--space-inset-600);
+    }
+
+    .feature--media-first .feature__media {
+      padding: var(--space-inset-600) var(--space-inset-600) 0;
+    }
+  }
+</style>

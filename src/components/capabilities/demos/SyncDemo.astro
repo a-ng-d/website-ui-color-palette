@@ -1,0 +1,179 @@
+---
+import DemoStage from '../DemoStage.astro'
+import CheckIcon from '@lucide/astro/icons/check'
+import ChoiceChips from './ChoiceChips.astro'
+import { SYNC_PALETTE, SYNC_TARGETS, syncItems } from '@/scripts/demos/sync'
+
+const items = syncItems()
+---
+
+<DemoStage
+  name="sync"
+  width={440}
+>
+  <div class="layout">
+    <!-- The plugin side -->
+    <div class="plugin">
+      <div class="plugin__head">
+        <span class="k-text--medium k-text--truncated">{SYNC_PALETTE}</span>
+        <span class="k-chip">Published</span>
+      </div>
+      <div class="plugin__shades">
+        {items.map((item) => (
+          <span style={`background-color:${item.hex}`} />
+        ))}
+      </div>
+      <div class="action">
+        <span class="k-text--small k-text--secondary">Sync with local</span>
+        <ChoiceChips items={SYNC_TARGETS} />
+      </div>
+    </div>
+
+    <!-- The design tool's library -->
+    <div
+      class="library"
+      data-library
+      data-target="variables"
+      data-filled
+    >
+      {SYNC_TARGETS.map((target) => (
+        <span
+          class="k-text--small k-text--secondary"
+          data-title={target.id}
+        >
+          {target.title}
+        </span>
+      ))}
+      <ul class="library__items">
+        {items.map((item, i) => (
+          <li
+            class="item"
+            style={`--i:${i}`}
+          >
+            <span
+              class="k-color-chip"
+              style={`--k-colour:${item.hex}`}
+            />
+            <span class="k-text--truncated">
+              <span data-for="variables">primary/{item.stop}</span>
+              <span data-for="styles">Primary / {item.stop}</span>
+              <span data-for="tokens">primary.{item.stop}</span>
+            </span>
+            <CheckIcon class="k-icon item__check" />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</DemoStage>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--space-gap-400);
+  }
+
+  /* ---- Plugin side ---- */
+  .plugin {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+  }
+
+  .plugin__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-gap-200);
+  }
+
+  .plugin__shades {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 2px;
+  }
+
+  .plugin__shades > span {
+    border-radius: var(--radius-small);
+    aspect-ratio: 1;
+  }
+
+  .action {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-200);
+  }
+
+  /* ---- Library side ---- */
+  .library {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-200);
+    border-left: var(--stroke-width-thin) solid
+      var(--color-border-secondary-default);
+    padding-left: var(--space-inset-400);
+  }
+
+  .library:not([data-target='variables']) [data-title='variables'],
+  .library:not([data-target='styles']) [data-title='styles'],
+  .library:not([data-target='tokens']) [data-title='tokens'],
+  .library:not([data-target='variables']) [data-for='variables'],
+  .library:not([data-target='styles']) [data-for='styles'],
+  .library:not([data-target='tokens']) [data-for='tokens'] {
+    display: none;
+  }
+
+  .library__items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-100);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 14px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-gap-200);
+    transition:
+      opacity 240ms var(--easing-standard),
+      translate 240ms var(--easing-decelerate);
+    transition-delay: calc(var(--i) * 160ms);
+  }
+
+  .item :global(.item__check) {
+    transition: scale 260ms var(--easing-emphasized);
+    transition-delay: calc(var(--i) * 160ms + 140ms);
+    color: var(--color-icon-success-default);
+  }
+
+  .library:not([data-filled]) .item {
+    translate: -6px 0;
+    opacity: 0;
+    transition-delay: 0ms;
+    transition-duration: 160ms;
+  }
+
+  .library:not([data-filled]) .item :global(.item__check) {
+    scale: 0;
+    transition-delay: 0ms;
+  }
+
+  /* Narrow stages (phones): the library goes under the plugin. */
+  @container (max-width: 459.98px) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .library {
+      border-top: var(--stroke-width-thin) solid
+        var(--color-border-secondary-default);
+      border-left: 0;
+      padding-top: var(--space-inset-300);
+      padding-left: 0;
+    }
+  }
+</style>

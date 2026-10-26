@@ -1,0 +1,98 @@
+---
+import DemoStage from '../DemoStage.astro'
+import Bar from '../kit/Bar.astro'
+import Dropdown from '../kit/Dropdown.astro'
+import Slider from '../kit/Slider.astro'
+import {
+  FINE_TUNE_CHROMA,
+  FINE_TUNE_HUE,
+  FINE_TUNE_STOPS,
+  chromaTrack,
+  hueTrack,
+  lightnessTrack,
+  shadeAt,
+} from '@/scripts/demos/fine-tune'
+import { gradientOf } from '@/scripts/demos/palette'
+---
+
+<DemoStage
+  name="fine-tune"
+  width={300}
+>
+  <Bar
+    title="Color scale"
+    indicator={FINE_TUNE_STOPS.length}
+  >
+    <Dropdown label="Custom, 10-60" />
+  </Bar>
+
+  <div class="field">
+    <span class="k-text--small k-text--secondary">Lightness</span>
+    <Slider
+      data-scale
+      track={gradientOf(lightnessTrack())}
+      knobs={FINE_TUNE_STOPS.map((stop) => ({
+        at: stop.position,
+        label: stop.label,
+      }))}
+    />
+  </div>
+
+  <div class="swatches">
+    {FINE_TUNE_STOPS.map((stop) => (
+      <span class="swatch">
+        <span
+          class="swatch__color"
+          data-swatch
+          style={`background-color:${shadeAt(stop.position, FINE_TUNE_CHROMA, FINE_TUNE_HUE)}`}
+        />
+        <span class="k-text--small k-text--secondary">{stop.label}</span>
+      </span>
+    ))}
+  </div>
+
+  <div class="field">
+    <span class="k-text--small k-text--secondary">Chroma</span>
+    <Slider
+      data-chroma
+      track={gradientOf(chromaTrack())}
+      knobs={[{ at: FINE_TUNE_CHROMA, label: 'C' }]}
+    />
+  </div>
+
+  <div class="field">
+    <span class="k-text--small k-text--secondary">Hue</span>
+    <Slider
+      data-hue
+      track={gradientOf(hueTrack())}
+      knobs={[{ at: FINE_TUNE_HUE, label: 'H' }]}
+    />
+  </div>
+</DemoStage>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-200);
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 2px;
+  }
+
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-gap-100);
+  }
+
+  .swatch__color {
+    border-radius: var(--radius-small);
+    aspect-ratio: 1;
+    width: 100%;
+  }
+</style>

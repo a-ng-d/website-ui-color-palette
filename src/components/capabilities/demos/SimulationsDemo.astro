@@ -1,0 +1,76 @@
+---
+import DemoStage from '../DemoStage.astro'
+import ChoiceChips from './ChoiceChips.astro'
+import { VISIONS, visionRows } from '@/scripts/demos/superpowers'
+
+const rows = visionRows()
+const items = VISIONS.map(({ id, label }) => ({ id, label }))
+---
+
+<DemoStage
+  name="simulations"
+  width={300}
+>
+  <ChoiceChips items={items} />
+  <div
+    class="scale"
+    data-active={items[0].id}
+  >
+    {rows.map((row, r) => (
+      <div class="row">
+        <span class="row__name k-text--truncated">{row.name}</span>
+        {row.cells.map((cell, c) => (
+          <span
+            class="cell"
+            style={[
+              ...items.map(({ id }) => `--${id}:${cell[id]}`),
+              `--i:${r + c}`,
+            ].join(';')}
+          />
+        ))}
+      </div>
+    ))}
+  </div>
+</DemoStage>
+
+<style>
+  .scale {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 60px repeat(7, minmax(0, 1fr));
+    align-items: center;
+    gap: 2px;
+  }
+
+  .row__name {
+    padding-right: var(--space-gap-200);
+    color: var(--text-color-secondary);
+    font: var(--text-small);
+  }
+
+  .cell {
+    --colour: var(--normal);
+    transition: background-color 380ms var(--easing-standard);
+    transition-delay: calc(var(--i) * 35ms);
+    border-radius: var(--radius-small);
+    background-color: var(--colour);
+    aspect-ratio: 1;
+  }
+
+  .scale[data-active='red-weak'] .cell {
+    --colour: var(--red-weak);
+  }
+
+  .scale[data-active='blue-weak'] .cell {
+    --colour: var(--blue-weak);
+  }
+
+  .scale[data-active='mono'] .cell {
+    --colour: var(--mono);
+  }
+</style>

@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import CapabilitiesHero from '@/components/capabilities/CapabilitiesHero.astro'
+import GenerateSection from '@/components/capabilities/GenerateSection.astro'
+import MosaicSection from '@/components/capabilities/MosaicSection.astro'
+import AudienceSection from '@/components/capabilities/AudienceSection.astro'
+import Reinsurance from '@/components/home/Reinsurance.astro'
+import {
+  capabilityGroups,
+  deploy,
+  generate,
+  master,
+  superpowers,
+} from '@/data/capabilities'
+import { organization, softwareApplication } from '@/data/structured-data'
+
+const featureList = capabilityGroups.flatMap((group) =>
+  group.cards.map((card) => card.title)
+)
+---
+
+<BaseLayout
+  title="Capabilities — Generate, Master & Deploy Color"
+  description="Explore everything UI Color Palette can do: AI generation, image extraction, contrast mastering, color modes, and token & Tailwind export."
+  jsonLd={[organization(), { ...softwareApplication(), featureList }]}
+>
+  <CapabilitiesHero />
+  <GenerateSection group={generate} />
+  <MosaicSection
+    group={master}
+    columns={2}
+    tabletColumns={1}
+  />
+  <MosaicSection group={deploy} />
+  <MosaicSection
+    group={superpowers}
+    mediaFirst
+  />
+  <AudienceSection />
+  <Reinsurance />
+</BaseLayout>

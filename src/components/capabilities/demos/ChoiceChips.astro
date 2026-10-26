@@ -1,0 +1,44 @@
+---
+/**
+ * A row of chips acting as a single choice (mode, format, harmony…): copies
+ * of the @unoff/ui Chip (demo-kit.css). A chip without `data-on` takes the
+ * inactive tokens. Driven by scripts/demos/choices.ts.
+ */
+interface Props {
+  items: ReadonlyArray<{ id: string; label: string }>
+  /** Chip selected in the still picture (defaults to the first). */
+  active?: string
+}
+
+const { items, active = items[0]?.id } = Astro.props
+---
+
+<div class="choices">
+  {items.map((item) => (
+    <span
+      class="k-chip"
+      data-choice={item.id}
+      data-on={item.id === active ? '' : undefined}
+    >
+      {item.label}
+    </span>
+  ))}
+</div>
+
+<style>
+  /* One row: wrapping shifts the panel. Off chips read as “off”, not
+     disabled: outlined, with the secondary text and border tokens. */
+  .choices {
+    --chip-background-color-inactive: transparent;
+    --chip-border-color-inactive: var(--color-border-secondary-default);
+    --chip-border-width-inactive: var(--stroke-width-thin);
+    --chip-text-color-inactive: var(--color-text-secondary-default);
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--space-gap-100);
+  }
+
+  .choices > :global(.k-chip) {
+    cursor: pointer;
+  }
+</style>

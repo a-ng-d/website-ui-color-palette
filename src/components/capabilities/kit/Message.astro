@@ -1,0 +1,46 @@
+---
+/**
+ * Copy of the @unoff/ui SemanticMessage. One Lucide icon per type is in the
+ * markup and CSS shows the current one, so a demo can switch `data-type`.
+ */
+import CheckIcon from '@lucide/astro/icons/check'
+import CircleAlertIcon from '@lucide/astro/icons/circle-alert'
+import InfoIcon from '@lucide/astro/icons/info'
+import TriangleAlertIcon from '@lucide/astro/icons/triangle-alert'
+
+interface Props {
+  type?: 'neutral' | 'info' | 'success' | 'warning' | 'error'
+  class?: string
+  [key: `data-${string}`]: unknown
+}
+
+const { type = 'info', class: className, ...rest } = Astro.props
+---
+
+<div
+  class:list={['k-message', className]}
+  data-type={type}
+  {...rest}
+>
+  <div class="k-message__body">
+    <InfoIcon
+      class="k-icon"
+      data-for="info"
+    />
+    <CheckIcon
+      class="k-icon"
+      data-for="success"
+    />
+    <TriangleAlertIcon
+      class="k-icon"
+      data-for="warning"
+    />
+    <CircleAlertIcon
+      class="k-icon"
+      data-for="error"
+    />
+    <span>
+      <slot />
+    </span>
+  </div>
+</div>

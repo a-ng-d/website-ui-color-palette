@@ -1,0 +1,21 @@
+---
+/** Copy of the app's panel header: @unoff/ui Bar + SectionTitle. */
+interface Props {
+  title: string
+  indicator?: string | number
+}
+
+const { title, indicator } = Astro.props
+---
+
+<div class="k-bar">
+  <span class="k-section-title">
+    <span class="k-text--truncated">{title}</span>
+    {indicator !== undefined && (
+      <span class="k-section-title__indicator">({indicator})</span>
+    )}
+  </span>
+  <span class="k-bar__actions">
+    <slot />
+  </span>
+</div>

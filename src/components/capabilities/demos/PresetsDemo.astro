@@ -1,0 +1,102 @@
+---
+import DemoStage from '../DemoStage.astro'
+import ChoiceChips from './ChoiceChips.astro'
+import { PRESETS, presetCells } from '@/scripts/demos/superpowers'
+
+const cells = presetCells()
+---
+
+<DemoStage name="presets">
+  <ChoiceChips items={PRESETS} />
+  <div
+    class="scale"
+    data-active={PRESETS[0].id}
+  >
+    {cells.map((cell, i) => (
+      <span
+        class="cell"
+        style={[
+          ...PRESETS.map(
+            ({ id }) => `--${id}:${cell[id]?.colour ?? 'transparent'}`
+          ),
+          `--i:${i}`,
+        ].join(';')}
+        data-missing={
+          PRESETS.filter(({ id }) => !cell[id])
+            .map(({ id }) => id)
+            .join(' ') || undefined
+        }
+      >
+        <span class="cell__swatch" />
+        {PRESETS.map(({ id }) => (
+          <span
+            class="cell__label"
+            data-for={id}
+          >
+            {cell[id]?.label}
+          </span>
+        ))}
+      </span>
+    ))}
+  </div>
+</DemoStage>
+
+<style>
+  .scale {
+    display: flex;
+    gap: 2px;
+  }
+
+  .cell {
+    --colour: var(--material);
+    display: grid;
+    grid-template-rows: 44px auto;
+    flex: 1 1 0;
+    gap: var(--space-gap-100);
+    transition:
+      flex-grow 420ms var(--easing-emphasized),
+      opacity 300ms var(--easing-standard);
+    min-width: 0;
+  }
+
+  .scale[data-active='tailwind'] .cell {
+    --colour: var(--tailwind);
+  }
+
+  .scale[data-active='ant'] .cell {
+    --colour: var(--ant);
+  }
+
+  .cell__swatch {
+    transition: background-color 400ms var(--easing-standard);
+    transition-delay: calc(var(--i) * 30ms);
+    border-radius: var(--radius-small);
+    background-color: var(--colour);
+  }
+
+  .cell__label {
+    grid-row: 2;
+    grid-column: 1;
+    transition: opacity 200ms var(--easing-standard);
+    overflow: hidden;
+    color: var(--text-color-secondary);
+    font: var(--text-small);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
+  .scale:not([data-active='material']) [data-for='material'],
+  .scale:not([data-active='tailwind']) [data-for='tailwind'],
+  .scale:not([data-active='ant']) [data-for='ant'] {
+    opacity: 0;
+  }
+
+  /* A system with fewer stops: the extra cells fold away. */
+  .scale[data-active='material'] .cell[data-missing~='material'],
+  .scale[data-active='tailwind'] .cell[data-missing~='tailwind'],
+  .scale[data-active='ant'] .cell[data-missing~='ant'] {
+    flex-grow: 0;
+    opacity: 0;
+    margin-left: -2px;
+  }
+</style>

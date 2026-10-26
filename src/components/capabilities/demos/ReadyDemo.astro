@@ -1,0 +1,94 @@
+---
+import DemoStage from '../DemoStage.astro'
+import Bar from '../kit/Bar.astro'
+import ShuffleIcon from '@lucide/astro/icons/shuffle'
+import Button from '../kit/Button.astro'
+import { readyRows } from '@/scripts/demos/ready'
+
+const rows = readyRows()
+---
+
+<DemoStage name="ready">
+  <Bar
+    title="Palette"
+    indicator="5 × 6"
+  >
+    <Button
+      variant="secondary"
+      icon={ShuffleIcon}
+      label="Reroll"
+      data-reroll
+    />
+  </Bar>
+
+  <div
+    class="grid"
+    data-roll="0"
+  >
+    {rows.map((row, r) => (
+      <div class="row">
+        <span class="row__name k-text--small k-text--secondary k-text--truncated">
+          {row.name}
+        </span>
+        {row.cells.map((rolls, c) => (
+          <span
+            class="cell"
+            style={[
+              ...rolls.map((colour, i) => `--roll-${i}:${colour}`),
+              `--i:${r + c}`,
+            ].join(';')}
+          />
+        ))}
+      </div>
+    ))}
+  </div>
+</DemoStage>
+
+<style>
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 60px repeat(6, minmax(0, 1fr));
+    align-items: center;
+    gap: 2px;
+  }
+
+  .cell {
+    --cell: var(--roll-0);
+    transition:
+      background-color 420ms var(--easing-standard),
+      scale 420ms var(--easing-emphasized),
+      opacity 300ms var(--easing-standard);
+    transition-delay: calc(var(--i) * 40ms);
+    border-radius: var(--radius-small);
+    background-color: var(--cell);
+    aspect-ratio: 1.4;
+  }
+
+  /* One rule per roll (ROLLS in scripts/demos/ready.ts). */
+  .grid[data-roll='1'] .cell {
+    --cell: var(--roll-1);
+  }
+
+  .grid[data-roll='2'] .cell {
+    --cell: var(--roll-2);
+  }
+
+  /* First play: the shades cascade in. */
+  .grid[data-empty] .cell {
+    scale: 0.4;
+    opacity: 0;
+    transition-delay: 0ms;
+    transition-duration: 0ms;
+  }
+
+  /* Names never touch the shades: ellipsis and a gap before the cells. */
+  .row__name {
+    padding-right: var(--space-gap-200);
+  }
+</style>

@@ -1,0 +1,22 @@
+---
+/** Copy of the @unoff/ui Dropdown button (label + caret). */
+import ChevronDownIcon from '@lucide/astro/icons/chevron-down'
+
+interface Props {
+  label: string
+  state?: string
+  class?: string
+  [key: `data-${string}`]: unknown
+}
+
+const { label, state, class: className, ...rest } = Astro.props
+---
+
+<span
+  class:list={['k-dropdown', className]}
+  data-state={state}
+  {...rest}
+>
+  <span data-label>{label}</span>
+  <ChevronDownIcon class="k-icon" />
+</span>

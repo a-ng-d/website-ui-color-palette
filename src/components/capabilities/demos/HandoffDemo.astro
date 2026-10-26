@@ -1,0 +1,102 @@
+---
+import DemoStage from '../DemoStage.astro'
+import CodeIcon from '@lucide/astro/icons/code'
+import ChoiceChips from './ChoiceChips.astro'
+import { handoffFiles } from '@/scripts/demos/superpowers'
+
+const files = handoffFiles()
+---
+
+<DemoStage name="handoff">
+  <ChoiceChips items={files} />
+  <div
+    class="file"
+    data-active={files[0].id}
+  >
+    <div class="file__tabs">
+      <CodeIcon class="k-icon file__icon" />
+      {files.map((file) => (
+        <span
+          class="file__name"
+          data-for={file.id}
+        >
+          {file.file}
+        </span>
+      ))}
+    </div>
+    <div class="file__body">
+      {files.map((file) => (
+        <div
+          class="file__lines"
+          data-for={file.id}
+        >
+          {file.lines.map((line, i) => (
+            <code style={`--i:${i}`}>{line}</code>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</DemoStage>
+
+<style>
+  .file {
+    border: var(--stroke-width-thin) solid var(--snippet-border);
+    border-radius: var(--radius-large);
+    background-color: var(--snippet-background);
+    overflow: hidden;
+    color: var(--snippet-text);
+  }
+
+  .file__tabs {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-gap-100);
+    border-bottom: var(--stroke-width-thin) solid var(--snippet-border);
+    padding: var(--space-inset-100) var(--space-inset-300);
+    color: var(--snippet-tag-text);
+    font: var(--text-small);
+  }
+
+  .file__tabs :global(.file__icon) {
+    color: var(--snippet-tag-text);
+  }
+
+  .file__name {
+    grid-row: 1;
+    grid-column: 2;
+    transition: opacity 200ms var(--easing-standard);
+  }
+
+  .file__body {
+    display: grid;
+    padding: var(--space-inset-300);
+  }
+
+  .file__lines {
+    display: flex;
+    grid-area: 1 / 1;
+    flex-direction: column;
+    font: var(--text-small);
+    font-family: var(--font-display);
+    letter-spacing: 0;
+  }
+
+  .file__lines code {
+    transition: opacity 200ms var(--easing-standard);
+    transition-delay: calc(var(--i) * 70ms);
+    font: inherit;
+    white-space: pre;
+  }
+
+  .file:not([data-active='swiftui']) [data-for='swiftui'],
+  .file:not([data-active='swiftui']) [data-for='swiftui'] code,
+  .file:not([data-active='compose']) [data-for='compose'],
+  .file:not([data-active='compose']) [data-for='compose'] code,
+  .file:not([data-active='css']) [data-for='css'],
+  .file:not([data-active='css']) [data-for='css'] code {
+    opacity: 0;
+    transition-delay: 0ms;
+  }
+</style>

@@ -16,6 +16,9 @@ const REVEAL = [
   '.posts__intro',
   '.extra__intro',
   '.faq__intro',
+  '.stack__intro',
+  '.mosaic__intro',
+  '.audience__intro',
 ].join(',')
 
 const LOOPS = '.shade-grid, .card'

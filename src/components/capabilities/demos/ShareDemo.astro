@@ -1,0 +1,171 @@
+---
+import DemoStage from '../DemoStage.astro'
+import Bar from '../kit/Bar.astro'
+import Button from '../kit/Button.astro'
+import SearchIcon from '@lucide/astro/icons/search'
+import Input from '../kit/Input.astro'
+import { SHARED } from '@/scripts/demos/share'
+import { shadesOf } from '@/scripts/demos/palette'
+---
+
+<DemoStage name="share">
+  <Bar title="Community">
+    <span class="k-chip">Shared</span>
+  </Bar>
+
+  <span class="search">
+    <SearchIcon class="k-icon" />
+    <Input
+      data-search
+      placeholder="Search palettes…"
+    />
+  </span>
+
+  <ul
+    class="shared"
+    data-shared
+    data-added=""
+  >
+    {SHARED.map((item) => (
+      <li
+        class="item"
+        data-item={item.id}
+      >
+        <span class="item__strip">
+          {shadesOf({ name: item.id, hue: item.hue, chroma: 0.15 }).map(
+            (hex) => (
+              <span style={`background-color:${hex}`} />
+            )
+          )}
+        </span>
+        <span class="item__text">
+          <span class="k-text--medium k-text--truncated">{item.name}</span>
+          <span class="k-text--small k-text--secondary k-text--truncated">
+            {item.meta}
+          </span>
+        </span>
+        <span class="item__action">
+          <span
+            data-add
+            class="item__add"
+          >
+            <Button
+              variant="secondary"
+              label="Add"
+            />
+          </span>
+          <span class="item__added">
+            <span class="k-chip">Added</span>
+          </span>
+        </span>
+      </li>
+    ))}
+  </ul>
+</DemoStage>
+
+<style>
+  /* Search field with its icon inside (Input with icon). */
+  .search {
+    display: flex;
+    position: relative;
+    align-items: center;
+  }
+
+  .search > :global(.k-icon) {
+    position: absolute;
+    left: var(--input-padding-default-left);
+    z-index: 1;
+    color: var(--color-icon-secondary-default);
+  }
+
+  .search > :global(.k-input) {
+    padding-left: var(--input-padding-with-icon-left);
+  }
+
+  /* A fixed-height scroller: the panel keeps its size whatever the number
+     of results; the bottom fades to show the list goes on. */
+  .shared {
+    display: flex;
+    flex-direction: column;
+    mask-image: linear-gradient(black 70%, transparent);
+    margin: 0;
+    padding: 0;
+    height: 112px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    list-style: none;
+  }
+
+  .shared::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Rows collapse when the search does not match them. */
+  .item {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-gap-200);
+    transition:
+      opacity 220ms var(--easing-standard),
+      max-height 320ms var(--easing-emphasized),
+      padding 320ms var(--easing-emphasized);
+    border-bottom: var(--stroke-width-thin) solid
+      var(--color-border-secondary-default);
+    padding: var(--space-inset-100) 0;
+    max-height: var(--row);
+    overflow: hidden;
+  }
+
+  .item[data-hidden] {
+    opacity: 0;
+    border-bottom-width: 0;
+    padding: 0;
+    max-height: 0;
+  }
+
+  .item__strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-radius: var(--radius-small);
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+
+  .item__text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .item__action {
+    display: grid;
+    place-items: center end;
+  }
+
+  .item__action > span {
+    grid-area: 1 / 1;
+    transition:
+      opacity 200ms var(--easing-standard),
+      scale 260ms var(--easing-emphasized);
+  }
+
+  .item__add {
+    cursor: pointer;
+  }
+
+  .shared[data-added='spectrum'] [data-item='spectrum'] .item__add,
+  .shared[data-added='fluent'] [data-item='fluent'] .item__add,
+  .shared[data-added='material'] [data-item='material'] .item__add {
+    scale: 0.6;
+    opacity: 0;
+  }
+
+  .shared:not([data-added='spectrum']) [data-item='spectrum'] .item__added,
+  .shared:not([data-added='fluent']) [data-item='fluent'] .item__added,
+  .shared:not([data-added='material']) [data-item='material'] .item__added {
+    scale: 0.6;
+    opacity: 0;
+  }
+</style>

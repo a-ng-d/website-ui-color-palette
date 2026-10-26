@@ -1,0 +1,37 @@
+---
+/**
+ * Copy of the @unoff/ui SimpleSlider / MultipleSlider: a track and one or
+ * more knobs (`[data-knob]`, positioned in % by the demo scripts).
+ */
+interface Knob {
+  /** Position on the track, 0–100. */
+  at: number
+  label: string
+}
+
+interface Props {
+  knobs: Knob[]
+  /** CSS background of the track (gradient of the values). */
+  track?: string
+  class?: string
+  [key: `data-${string}`]: unknown
+}
+
+const { knobs, track, class: className, ...rest } = Astro.props
+---
+
+<div
+  class:list={['k-slider', className]}
+  style={track ? `--k-track:${track}` : undefined}
+  {...rest}
+>
+  {knobs.map((knob, i) => (
+    <span
+      class="k-knob"
+      data-knob={i}
+      style={`left:${knob.at}%`}
+    >
+      {knob.label}
+    </span>
+  ))}
+</div>

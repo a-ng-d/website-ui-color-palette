@@ -33,6 +33,12 @@ Already used for specific needs:
   spotlight. Also the light points in `.shade-grid__light`.
 - Platform logo tiles: brand colours of each platform (`tile` in `src/data/platforms.ts`).
 - Terminal snippets: `--snippet-*`, defined from UICP primitives (`--uicp-2/4/5/7/8`).
+- Capability demos: the palette *content* (shades, previews, tracks) is computed from
+  OKLCH in `src/scripts/demos/` and set as inline styles — it is data, like a palette
+  image, and does not follow the site mode. The demo chrome is the demo kit: @unoff/ui
+  **component tokens** extracted to `generated/unoff-tokens.css` (scoped `.demo-kit`,
+  see components.md); icons are Lucide. Inside `.demo-kit` those tokens hold the
+  library's own values: the site density overrides below do not apply there.
 
 ## Typography
 
@@ -83,5 +89,7 @@ Everything flips through the semantic variables. Checks for new work:
 
 - `postcss.config.mjs` removes @unoff/ui rules for other themes and modes. Before using a
   new mode, add it to `KEEP_MODES`.
+- The app's icon set is not shipped: tokens.css imports only the spinner glyph
+  (`generated/unoff-spinner.css`, written by `scripts/unoff-tokens.mjs`).
 - `astro.config.mjs` stubs the @unoff/ui icon stylesheet (~69 KB gzip). Using `<Icon>` or a
   Button `icon` prop requires removing that alias.

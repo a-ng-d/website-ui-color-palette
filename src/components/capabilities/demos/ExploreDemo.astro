@@ -1,0 +1,132 @@
+---
+import DemoStage from '../DemoStage.astro'
+import Bar from '../kit/Bar.astro'
+import CheckIcon from '@lucide/astro/icons/check'
+import PlusIcon from '@lucide/astro/icons/plus'
+import SearchIcon from '@lucide/astro/icons/search'
+import IconButton from '../kit/IconButton.astro'
+import { COMMUNITY } from '@/scripts/demos/explore'
+
+// The list twice: the loop scrolls into the copy, then jumps back unseen.
+const rows = [...COMMUNITY, ...COMMUNITY]
+---
+
+<DemoStage name="explore">
+  <Bar
+    title="Community"
+    indicator="1M+"
+  >
+    <IconButton icon={SearchIcon} />
+  </Bar>
+
+  <div class="viewport">
+    <ul
+      class="list"
+      data-list
+    >
+      {rows.map((palette, i) => (
+        <li
+          class="item"
+          data-row={i}
+        >
+          <span class="item__strip">
+            {palette.colours.map((colour) => (
+              <span style={`background-color:${colour}`} />
+            ))}
+          </span>
+          <span class="item__text">
+            <span class="k-text--medium k-text--truncated">{palette.name}</span>
+            <span class="k-text--small k-text--secondary k-text--truncated">
+              {palette.author} · {palette.views} views
+            </span>
+          </span>
+          <span
+            class="item__import k-icon-button"
+            data-import
+          >
+            <PlusIcon class="k-icon item__plus" />
+            <CheckIcon class="k-icon item__check" />
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</DemoStage>
+
+<style>
+  /* Three palettes in view; the list slides by one row at a time. */
+  .viewport {
+    --row: 52px;
+    mask-image: linear-gradient(black 75%, transparent);
+    height: calc(3 * var(--row));
+    overflow: hidden;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    translate: 0 calc(var(--k, 0) * -1 * var(--row));
+    transition: translate 600ms var(--easing-emphasized);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .list[data-jump] {
+    transition: none;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-gap-200);
+    border-bottom: var(--stroke-width-thin) solid
+      var(--color-border-secondary-default);
+    height: var(--row);
+  }
+
+  .item__strip {
+    display: flex;
+    border-radius: var(--radius-small);
+    height: 32px;
+    overflow: hidden;
+  }
+
+  .item__strip > span {
+    flex: 1 1 0;
+  }
+
+  .item__text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .item__import {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .item__import :global(.k-icon) {
+    transition:
+      scale 260ms var(--easing-emphasized),
+      opacity 200ms var(--easing-standard);
+  }
+
+  .item__import :global(.item__check) {
+    position: absolute;
+  }
+
+  .item:not([data-imported]) :global(.item__check),
+  .item[data-imported] :global(.item__plus) {
+    scale: 0.4;
+    opacity: 0;
+  }
+
+  /* Imported: the icon button takes its “selected” tokens. */
+  .item[data-imported] .item__import {
+    --k-bg-default: var(--icon-button-default-background-color-onselected);
+    --k-bg-hover: var(--icon-button-default-background-color-onselected-hover);
+  }
+</style>

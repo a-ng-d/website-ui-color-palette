@@ -1,0 +1,107 @@
+---
+import DemoStage from '../DemoStage.astro'
+import ChoiceChips from './ChoiceChips.astro'
+import { SPACES, spaceCells } from '@/scripts/demos/superpowers'
+
+const cells = spaceCells()
+const items = SPACES.map(({ id, label }) => ({ id, label }))
+---
+
+<DemoStage name="spaces">
+  <ChoiceChips items={items} />
+  <div
+    class="hues"
+    data-active={items[0].id}
+  >
+    <span class="hues__caption">8 hues, same lightness?</span>
+    <div class="hues__grid">
+      {cells.map((cell, i) => (
+        <span
+          class="hue"
+          style={[
+            ...items.map(
+              ({ id }) =>
+                `--${id}:${cell[id].colour};--${id}-l:${cell[id].lightness.toFixed(1)}%`
+            ),
+            `--i:${i}`,
+          ].join(';')}
+        >
+          <span class="hue__swatch" />
+          <span class="hue__meter">
+            <span class="hue__bar" />
+          </span>
+        </span>
+      ))}
+    </div>
+    <span class="hues__caption hues__caption--end">Perceived lightness</span>
+  </div>
+</DemoStage>
+
+<style>
+  .hues {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-100);
+  }
+
+  .hues__caption {
+    color: var(--text-color-secondary);
+    font: var(--text-small);
+  }
+
+  .hues__caption--end {
+    text-align: right;
+  }
+
+  .hues__grid {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 2px;
+  }
+
+  .hue {
+    --colour: var(--hsl);
+    --l: var(--hsl-l);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hues[data-active='lch'] .hue {
+    --colour: var(--lch);
+    --l: var(--lch-l);
+  }
+
+  .hues[data-active='oklch'] .hue {
+    --colour: var(--oklch);
+    --l: var(--oklch-l);
+  }
+
+  .hue__swatch {
+    transition: background-color 400ms var(--easing-standard);
+    transition-delay: calc(var(--i) * 35ms);
+    border-radius: var(--radius-small);
+    background-color: var(--colour);
+    aspect-ratio: 1;
+  }
+
+  /* How light each swatch really looks (OKLab L): even only in OKLCH. */
+  .hue__meter {
+    display: flex;
+    align-items: flex-end;
+    border-radius: var(--radius-small);
+    background-color: var(--color-background-secondary-default);
+    height: 44px;
+    overflow: hidden;
+  }
+
+  .hue__bar {
+    transition:
+      height 500ms var(--easing-emphasized),
+      background-color 400ms var(--easing-standard);
+    transition-delay: calc(var(--i) * 35ms);
+    background-color: var(--colour);
+    width: 100%;
+    height: var(--l);
+  }
+</style>

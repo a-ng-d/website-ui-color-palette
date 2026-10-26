@@ -1,0 +1,119 @@
+---
+/** “Built for productmates”: a tall title card, then one card per audience. */
+import CheckIcon from '@lucide/astro/icons/check'
+import { audiences } from '@/data/capabilities'
+---
+
+<section
+  id="who"
+  class="section audience"
+  aria-labelledby="who-title"
+>
+  <div class="audience__grid">
+    <div class="audience__intro">
+      <h2
+        class="t-section-title"
+        id="who-title"
+      >
+        {audiences.title}
+      </h2>
+      <p class="t-accent">{audiences.intro}</p>
+    </div>
+
+    {audiences.items.map((item) => (
+      <article class="persona surface-card">
+        <div class="persona__head">
+          <h3 class="t-paragraph-primary-title">{item.title}</h3>
+          <p class="t-accent">{item.text}</p>
+        </div>
+        <ul class="persona__points">
+          {item.points.map((point) => (
+            <li>
+              <CheckIcon
+                class="persona__check"
+                aria-hidden="true"
+              />
+              <span>
+                <strong>{point.lead}</strong> — {point.text}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .audience__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: minmax(504px, auto);
+    gap: var(--space-gap-200);
+  }
+
+  /* Tall title card: text at the top, straight (see design-intent.md). */
+  .audience__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    border: var(--stroke-width-thin) solid var(--site-border-soft);
+    border-radius: var(--site-radius-card);
+    background-color: var(--site-surface);
+    padding: var(--space-inset-800);
+  }
+
+  .persona {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-800);
+    padding: var(--space-inset-800);
+  }
+
+  .persona__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+  }
+
+  .persona__points {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .persona__points li {
+    display: grid;
+    grid-template-columns: var(--control-icon-600) minmax(0, 1fr);
+    gap: var(--space-gap-200);
+  }
+
+  .persona__points strong {
+    font-weight: var(--text-weight-display);
+  }
+
+  .persona__points :global(.persona__check) {
+    width: var(--control-icon-600);
+    height: var(--control-icon-600);
+  }
+
+  @media (max-width: 1023.98px) {
+    .audience__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: auto;
+    }
+
+    .audience__intro {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 639.98px) {
+    .audience__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

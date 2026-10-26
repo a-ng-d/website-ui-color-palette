@@ -1,0 +1,195 @@
+---
+/**
+ * Frame of a capability demo: an illustration grid with a slice of the web
+ * app in its centre (`.demo-kit`: copies of the @unoff/ui components built
+ * from their tokens, styles/demo-kit.css), magnified, and the fake cursor
+ * that plays the loop.
+ *
+ * The stage is decorative (`aria-hidden`, `inert`): the card's title and text
+ * carry the meaning. Without JS or with reduced motion it is a still picture;
+ * scripts/demos plays it and, on a fine pointer, lets the visitor drive it.
+ * Without `name` it renders the empty grid (demo not built yet).
+ */
+import MousePointerIcon from '@lucide/astro/icons/mouse-pointer-2'
+import '@/styles/demo-kit.css'
+
+interface Props {
+  /** Key of the demo in scripts/demos/index.ts. */
+  name?: string
+  /** Width of the panel before magnification (px). */
+  width?: number
+}
+
+const { name, width = 280 } = Astro.props
+---
+
+<figure
+  class="demo-stage thumbnail illustration-grid"
+  data-demo={name}
+  aria-hidden="true"
+  inert
+>
+  {name && (
+    <div
+      class="demo-stage__panel demo-kit"
+      data-demo-panel
+      data-wide={width > 300 ? '' : undefined}
+      style={`--panel-width:${width}px`}
+    >
+      <slot />
+      <span
+        class="demo-stage__cursor"
+        data-demo-cursor
+      >
+        <MousePointerIcon />
+      </span>
+    </div>
+  )}
+</figure>
+
+<script>
+  import '@/scripts/demos'
+</script>
+
+<style>
+  .demo-stage {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+    align-items: center;
+    container-type: inline-size;
+    margin: 0;
+    padding: var(--space-inset-600) var(--space-inset-400);
+    min-height: 240px;
+    overflow: clip;
+  }
+
+  /* A slice of the plugin UI, magnified so its controls read at card size.
+     `zoom` (not `scale`) so the stage makes room for it. */
+  .demo-stage__panel {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    zoom: 1;
+    box-shadow: var(--elevation-400-menu-panel);
+    border: var(--stroke-width-thin) solid var(--color-border-secondary-default);
+    border-radius: var(--radius-xxlarge);
+    background-color: var(--color-background-primary-default);
+    /* Own stacking context: the reveal cover passes over the whole panel,
+       fake cursor included. */
+    isolation: isolate;
+    padding: var(--space-inset-400);
+    width: var(--panel-width);
+    max-width: 100%;
+    user-select: none;
+    /* Text, chips, buttons… come from the @unoff/ui tokens (demo-kit.css). */
+    --k-panel-padding: var(--space-inset-400);
+  }
+
+  /* Magnify when the stage has room (thresholds ≈ panel × zoom). */
+  @container (min-width: 380px) {
+    .demo-stage__panel:not([data-wide]) {
+      zoom: 1.25;
+    }
+  }
+
+  @container (min-width: 480px) {
+    .demo-stage__panel:not([data-wide]) {
+      zoom: 1.5;
+    }
+  }
+
+  @container (min-width: 440px) {
+    .demo-stage__panel[data-wide] {
+      zoom: 1.25;
+    }
+  }
+
+  @container (min-width: 540px) {
+    .demo-stage__panel[data-wide] {
+      zoom: 1.5;
+    }
+  }
+
+  /* ---- Fake cursor (positioned by engine.ts in % of the panel) ---- */
+  .demo-stage__cursor {
+    position: absolute;
+    top: 115%;
+    left: 50%;
+    transform-origin: 4px 4px;
+    opacity: 0;
+    z-index: 10;
+    transition:
+      left 700ms var(--easing-emphasized),
+      top 700ms var(--easing-emphasized),
+      opacity 300ms var(--easing-standard),
+      scale 120ms var(--easing-standard);
+    /* Tip a little below the target's centre: it grabs the knob without
+       hiding its label. */
+    margin: 3px 0 0 -3px;
+    width: 22px;
+    height: 22px;
+    pointer-events: none;
+    color: var(--color-text-primary-default);
+  }
+
+  .demo-stage__cursor :global(svg) {
+    fill: var(--color-background-primary-default);
+    stroke-width: 1.5;
+    width: 100%;
+    height: 100%;
+  }
+
+  .demo-stage__cursor[data-visible] {
+    opacity: 1;
+  }
+
+  .demo-stage__cursor[data-follow] {
+    transition:
+      opacity 300ms var(--easing-standard),
+      scale 120ms var(--easing-standard);
+  }
+
+  .demo-stage__cursor[data-press] {
+    scale: 0.86;
+  }
+
+  /* A soft ring where the cursor presses. */
+  .demo-stage__cursor::after {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    translate: -50% -50%;
+    scale: 0.4;
+    opacity: 0;
+    transition:
+      scale 260ms var(--easing-decelerate),
+      opacity 260ms var(--easing-standard);
+    border: 2px solid var(--color-border-brand-strong);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    content: '';
+  }
+
+  .demo-stage__cursor[data-press]::after {
+    scale: 1;
+    opacity: 0.8;
+  }
+
+  /* The visitor drives: the real pointer replaces the fake one. */
+  .demo-stage:not([inert]) {
+    cursor: default;
+  }
+
+  /* What the fake cursor presses sinks a little (no :active without a
+     real pointer). */
+  .demo-stage__panel :global([data-pressed]) {
+    scale: 0.94;
+  }
+
+  .demo-stage__panel :global([data-press-target]) {
+    transition: scale 120ms var(--easing-standard);
+  }
+</style>

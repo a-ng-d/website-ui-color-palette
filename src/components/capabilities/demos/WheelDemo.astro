@@ -1,0 +1,198 @@
+---
+import DemoStage from '../DemoStage.astro'
+import ChoiceChips from './ChoiceChips.astro'
+import {
+  HARMONIES,
+  WHEEL_START,
+  colourAt,
+  handleAt,
+  wheelGradient,
+} from '@/scripts/demos/wheel'
+
+const start = HARMONIES[WHEEL_START.harmony].offsets
+const hueOf = (i: number) => WHEEL_START.hue + (start[i] ?? 0)
+const code = (hue: number) => colourAt(hue).slice(1).toUpperCase()
+---
+
+<DemoStage
+  name="wheel"
+  width={340}
+>
+  <ChoiceChips
+    items={HARMONIES}
+    active={HARMONIES[WHEEL_START.harmony].id}
+  />
+
+  <div class="body">
+    <div class="picker">
+      <div
+        class="wheel"
+        data-wheel
+        style={`background:${wheelGradient()}`}
+      >
+        {[0, 1, 2, 3].map((i) => {
+          const { left, top } = handleAt(hueOf(i))
+          return (
+            <span
+              class:list={['handle', i === 0 && 'handle--base']}
+              data-handle={i}
+              style={`left:${left}%;top:${top}%;background-color:${colourAt(hueOf(i))}`}
+            />
+          )
+        })}
+      </div>
+      <span class="base">
+        Base{' '}
+        <span
+          class="base__hex"
+          data-base
+        >
+          {code(hueOf(0))}
+        </span>
+      </span>
+    </div>
+
+    <div
+      class="sources"
+      data-count={start.length}
+    >
+      {[0, 1, 2, 3].map((i) => (
+        <span
+          class="column"
+          data-column={i}
+          style={`--colour:${colourAt(hueOf(i))}`}
+        >
+          <span class="column__swatch" />
+          <span
+            class="column__hex"
+            data-hex
+          >
+            {code(hueOf(i))}
+          </span>
+        </span>
+      ))}
+    </div>
+  </div>
+</DemoStage>
+
+<style>
+  .body {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-gap-400);
+  }
+
+  .picker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-gap-200);
+  }
+
+  /* The wheel: hues around, fading to white in the centre. */
+  .wheel {
+    position: relative;
+    cursor: grab;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    width: 100%;
+  }
+
+  .wheel::before {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      var(--color-background-primary-default) 18%,
+      transparent 62%
+    );
+    content: '';
+  }
+
+  .handle {
+    position: absolute;
+    translate: -50% -50%;
+    z-index: 1;
+    transition:
+      opacity 300ms var(--easing-standard),
+      scale 300ms var(--easing-emphasized);
+    box-shadow:
+      0 0 0 2px var(--color-background-primary-default),
+      var(--elevation-300-tooltip);
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+  }
+
+  .handle--base {
+    z-index: 2;
+    width: 20px;
+    height: 20px;
+  }
+
+  .base {
+    color: var(--text-color-secondary);
+    font: var(--text-small);
+  }
+
+  .base__hex {
+    color: var(--color-text-primary-default);
+    font-weight: var(--text-font-weight-bold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- Source colours: one column per colour of the harmony ---- */
+  .sources {
+    display: flex;
+    gap: 2px;
+    height: 132px;
+  }
+
+  .column {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: var(--space-gap-100);
+    transition:
+      flex-grow 420ms var(--easing-emphasized),
+      opacity 300ms var(--easing-standard);
+    min-width: 0;
+  }
+
+  .column__swatch {
+    flex: 1 1 auto;
+    border-radius: var(--radius-small);
+    background-color: var(--colour);
+  }
+
+  .column__hex {
+    overflow: hidden;
+    color: var(--text-color-secondary);
+    font: var(--text-small);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
+  /* Colours beyond the harmony collapse. */
+  .sources[data-count='2'] .column:nth-child(n + 3),
+  .sources[data-count='3'] .column:nth-child(n + 4) {
+    flex-grow: 0;
+    opacity: 0;
+    margin-left: -2px;
+  }
+
+  .body:has(.sources[data-count='2']) .handle:nth-child(n + 3),
+  .body:has(.sources[data-count='3']) .handle:nth-child(n + 4) {
+    scale: 0;
+    opacity: 0;
+  }
+
+  /* Narrow stages (phones): no room for a code under each column. */
+  @container (max-width: 379.98px) {
+    .column__hex {
+      visibility: hidden;
+    }
+  }
+</style>

@@ -57,6 +57,80 @@ Tune row height per instance with `--shade-row-min` on the class passed in.
   (`justify-content: flex-end`), optional `transform: rotate(1deg)`.
 - Sticky intro container: see layout-patterns.md.
 
+## Capability demos (`/capabilities`)
+
+Illustrations of capability cards are **live mini use cases that copy the web app**:
+one interactive element, one visible response, magnified. The UI is **not** rendered
+with @unoff/ui components: it is a **copycat built from the library's own tokens and
+icons** (the demo kit), so it matches the app exactly, ships no React or component CSS,
+is never focusable, and can show any state on demand.
+
+### The demo kit (`src/styles/demo-kit.css`, `components/capabilities/kit/`)
+
+- **Tokens**: `scripts/unoff-tokens.mjs` extracts the Yelbolt component tokens of the
+  @unoff/ui stylesheets (`--button-*`, `--chip-*`, `--knob-*`, `--semantic-message-*`,
+  `--message-*`, `--text-*`…) into `src/styles/generated/unoff-tokens.css`, scoped to
+  `.demo-kit` (the demo panel). It keeps **only the tokens mentioned** in the kit, the
+  demo components and scripts, plus what they refer to (~300, ~3 KB gzip). Runs on
+  `predev`/`prebuild`; run `npm run tokens` after using a new token or updating
+  @unoff/ui. Never edit the generated files.
+- **Icons: Lucide only** (the site's set), as `<XIcon class="k-icon" />` (16px, colour
+  from the component). The app's icon set is not shipped: the generator only writes
+  the spinner glyph (`generated/unoff-spinner.css`, `--icon-spinner`) for the reveal
+  motion. Spinners inside demos are Lucide `loader-circle`.
+- **No icon inside a chip.** Chips carry a short label only.
+- **Components** (classes in demo-kit.css, markup helpers in `kit/`): `k-chip`,
+  `k-color-chip`, `k-button` (primary/secondary/tertiary, `icon` = a Lucide component,
+  `caret`), `k-icon-button`, `k-input` (static text, `data-placeholder`, `multiline`
+  for a two-line textarea, caret when focused), `k-dropdown`, `k-slider` + `k-knob`,
+  `k-bar` + `k-section-title` (panel header), `k-message` (SemanticMessage wrapping a
+  Message: the semantic padding outside, the Message's side padding and gap inside
+  `.k-message__body`; one icon per type, CSS shows the current one), and text styles
+  `k-text--small|large|label|medium|bold|secondary|tertiary|truncated`.
+- **Pattern** (as in @unoff/ui): each component resolves its state tokens into base
+  variables (`--k-bg`, `--k-bd`, `--k-bw`, `--k-bo`, `--k-tx`, `--k-ic`); the structure
+  only reads those. States: `data-state="hover|pressed|focus|selected|inactive|checked|
+  disabled"`, the cursor's `[data-pressed]`, and the real `:hover` when the visitor drives.
+- **Exactness**: values come from tokens only. A demo may override a *token* on a wrapper
+  for readability (the choice chips use outlined inactive tokens, otherwise they look
+  disabled), never a raw value. Typography in demos: kit text styles, no px sizes.
+- **Don't copy the app's Lego layout tokens** (ColorItem, SimpleItem, Section paddings):
+  they belong to how the app assembles panels; demo rows use simple flex/grid with
+  `--space-gap-*`.
+- **Gotcha**: never `calc()` with spacing tokens: `--space-none` is a unitless `0`, and
+  `calc(0 + 16px)` is invalid, so the whole declaration drops. Nest elements instead
+  (as `k-message` does), or use longhands.
+- Labels next to colour cells (row names) are `k-text--truncated` with a gap before
+  the cells, in a column wide enough for the usual names (ellipsis is a safeguard).
+- New component to copy: read its stylesheet in `node_modules/@unoff/ui/dist/assets`
+  (token names and structure), add the class to demo-kit.css with its tokens, add its
+  stylesheet to `SOURCES` in the generator if new, then `npm run tokens`.
+
+### Demo structure
+
+- `capabilities/Demo.astro` maps a `DemoId` (`src/data/capabilities.ts`) to a demo
+  component in `capabilities/demos/`.
+- `capabilities/DemoStage.astro`: `figure.thumbnail.illustration-grid` with
+  `data-demo`, `aria-hidden`, `inert`; the panel `[data-demo-panel].demo-kit` (app
+  surface, `zoom` 1 → 1.25 → 1.5 by container query, own stacking context so the reveal
+  cover passes over it) and the fake cursor `[data-demo-cursor]`. `width` prop: panel px
+  before zoom (default 280; > 300 uses later zoom thresholds). Wide panels reflow on
+  narrow stages with `@container (max-width: …)` rules in the demo (Sync, Wheel).
+- Panels copy the app's screens: `kit/Bar.astro` header (section title, count,
+  actions) then the body (`Section` padding), like `src/ui/contexts/*` in the app repo.
+- A demo = a component + `src/scripts/demos/<name>.ts` exporting the **model** (pure
+  functions, also imported by the component to render the first frame) and a
+  `DemoFactory` registered in `scripts/demos/index.ts`. Scripts hook on `data-*`
+  attributes only (`[data-knob]`, `[data-choice]`, `[data-option]`…).
+- **Choice demos** (“pick an option, see the result”): `demos/ChoiceChips.astro` (kit
+  chips with `data-choice`, `data-on`); put the result under a `[data-active]` element
+  and switch it in CSS; the loop is `choiceLoop({ step })` from `scripts/demos/choices.ts`.
+  Richer flows use `choiceChips(root)` for the chips only (ai, wheel, tokens). Chip rows
+  stay **on one row**: keep labels short, check the fit at 1280 and 390.
+- Shared models: `scripts/demos/palette.ts` (`shadesOf`, `steps`, `taper`, `gradientOf`);
+  colour science in `color.ts` (OKLCH, HSL, CIE LCH, WCAG, APCA, OKLab perceived
+  lightness, deuteranopia, protanomaly, tritanomaly, achromatopsia) — real numbers.
+
 ## Header and footer
 
 - Header: logo, `mainNav` as TertiaryLinks, Resources `<details>` opening a full-width

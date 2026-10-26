@@ -1,0 +1,135 @@
+---
+import LoaderIcon from '@lucide/astro/icons/loader'
+import SparklesIcon from '@lucide/astro/icons/sparkles'
+import DemoStage from '../DemoStage.astro'
+import Button from '../kit/Button.astro'
+import Input from '../kit/Input.astro'
+import ChoiceChips from './ChoiceChips.astro'
+import { MOODS, PROMPTS } from '@/scripts/demos/ai'
+---
+
+<DemoStage name="ai">
+  <ChoiceChips
+    items={MOODS.map((mood) => ({ id: mood, label: mood }))}
+    active={PROMPTS[0].mood}
+  />
+
+  <div class="ask">
+    <Input
+      data-prompt
+      multiline
+      value={PROMPTS[0].prompt}
+      placeholder="Describe a mood…"
+    />
+    <Button
+      variant="primary"
+      icon={SparklesIcon}
+      label="Generate"
+      data-generate
+    />
+  </div>
+
+  <div
+    class="results"
+    data-results
+    data-prompt="0"
+    data-state="ready"
+  >
+    <LoaderIcon class="results__spinner k-icon" />
+    {PROMPTS.map((prompt, p) => (
+      <ul
+        class="results__list"
+        data-list={p}
+      >
+        {prompt.colours.map((colour, i) => (
+          <li
+            class="colour"
+            style={`--i:${i}`}
+          >
+            <span
+              class="k-color-chip k-color-chip--round"
+              style={`--k-colour:${colour.hex}`}
+            />
+            <span>{colour.name}</span>
+            <span class="k-text--small k-text--secondary">{colour.hex}</span>
+          </li>
+        ))}
+      </ul>
+    ))}
+  </div>
+</DemoStage>
+
+<style>
+  /* The prompt takes the whole width, on two lines; Generate under it. */
+  .ask {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-gap-200);
+  }
+
+  .ask > :global(.k-input) {
+    align-self: stretch;
+  }
+
+  /* ---- Results: empty, thinking (spinner), ready (rows cascade in) ---- */
+  .results {
+    display: grid;
+    position: relative;
+    min-height: 168px;
+  }
+
+  .results__list {
+    display: flex;
+    grid-area: 1 / 1;
+    flex-direction: column;
+    gap: var(--space-inset-300);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .results:not([data-prompt='0']) [data-list='0'],
+  .results:not([data-prompt='1']) [data-list='1'] {
+    display: none;
+  }
+
+  .colour {
+    display: grid;
+    grid-template-columns: 14px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-gap-200);
+    transition:
+      opacity 300ms var(--easing-standard),
+      translate 300ms var(--easing-decelerate);
+    transition-delay: calc(var(--i) * 90ms);
+  }
+
+  .results:not([data-state='ready']) .colour {
+    translate: 0 6px;
+    opacity: 0;
+    transition-delay: 0ms;
+    transition-duration: 0ms;
+  }
+
+  .results :global(.results__spinner) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    opacity: 0;
+    width: var(--scale-pos-small);
+    height: var(--scale-pos-small);
+  }
+
+  .results[data-state='thinking'] :global(.results__spinner) {
+    opacity: 1;
+    animation: demo-spin 800ms linear infinite;
+  }
+
+  @keyframes demo-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+</style>

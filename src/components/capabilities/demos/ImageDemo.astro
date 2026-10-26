@@ -1,0 +1,272 @@
+---
+import ImageIcon from '@lucide/astro/icons/image'
+import DemoStage from '../DemoStage.astro'
+import { EXTRACTED, IMAGE_NAME } from '@/scripts/demos/image'
+
+const [wine, tapestry, japonica, peach, jaguar] = EXTRACTED.map((c) => c.hex)
+// The picture: a dusk sky, a sun and hills, painted with the extracted colours.
+const picture = [
+  `--sun:${peach}`,
+  `--hills:${jaguar}`,
+  `background:linear-gradient(${wine} 8%, ${tapestry} 42%, ${japonica} 70%)`,
+].join(';')
+// Hovering a row lights its sample point.
+const hoverCss = EXTRACTED.map(
+  (_, i) =>
+    `[data-zone]:has([data-row="${i}"]:hover) [data-point="${i}"]{scale:1.6}`
+).join('')
+---
+
+<DemoStage
+  name="image"
+  width={320}
+>
+  <div
+    class="zone"
+    data-zone
+    data-state="done"
+  >
+    <div class="drop">
+      <span class="drop__hint k-text--small k-text--secondary">
+        <ImageIcon class="k-icon" />
+        Drop an image
+      </span>
+      <figure
+        class="file"
+        data-file
+      >
+        <span
+          class="file__picture"
+          style={picture}
+        >
+          <span class="file__scan"></span>
+          {EXTRACTED.map((colour, i) => (
+            <span
+              class="point"
+              data-point={i}
+              style={`left:${colour.x}%;top:${colour.y}%;background-color:${colour.hex};--i:${i}`}
+            />
+          ))}
+        </span>
+        <span class="file__name k-text--small k-text--secondary k-text--truncated">
+          {IMAGE_NAME}
+        </span>
+      </figure>
+    </div>
+
+    <ul class="colours">
+      {EXTRACTED.map((colour, i) => (
+        <li
+          class="colour"
+          data-row={i}
+          style={`--i:${i}`}
+        >
+          <span
+            class="k-color-chip k-color-chip--round"
+            style={`--k-colour:${colour.hex}`}
+          />
+          <span class="colour__text">
+            <span class="k-text--truncated">{colour.name}</span>
+            <span class="k-text--small k-text--secondary">{colour.hex}</span>
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</DemoStage>
+
+<style
+  is:inline
+  set:html={hoverCss}
+></style>
+
+<style>
+  .zone {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-gap-400);
+  }
+
+  /* ---- Drop zone and the dropped file ---- */
+  /* The dropped picture fills the zone. */
+  .drop {
+    display: grid;
+    place-items: stretch;
+    border: var(--stroke-width-thin) dashed
+      var(--color-border-secondary-default);
+    border-radius: var(--radius-xlarge);
+    padding: var(--space-inset-100);
+    min-height: 132px;
+  }
+
+  .drop > * {
+    grid-area: 1 / 1;
+  }
+
+  .drop__hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    place-self: center;
+    gap: var(--space-gap-100);
+    transition: opacity 300ms var(--easing-standard);
+  }
+
+  .file {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-100);
+    transition:
+      translate 700ms var(--easing-emphasized),
+      rotate 700ms var(--easing-emphasized),
+      scale 400ms var(--easing-standard),
+      opacity 300ms var(--easing-standard);
+    margin: 0;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .file__picture {
+    display: block;
+    position: relative;
+    flex: 1 1 auto;
+    border-radius: var(--radius-medium);
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* Sun and hills. */
+  .file__picture::before,
+  .file__picture::after {
+    position: absolute;
+    content: '';
+  }
+
+  .file__picture::before {
+    top: 48%;
+    left: 52%;
+    border-radius: 50%;
+    background-color: var(--sun);
+    aspect-ratio: 1;
+    width: 26%;
+  }
+
+  .file__picture::after {
+    clip-path: polygon(
+      0 40%,
+      22% 8%,
+      40% 34%,
+      62% 0,
+      84% 30%,
+      100% 18%,
+      100% 100%,
+      0 100%
+    );
+    inset: 62% -10% 0;
+    background-color: var(--hills);
+  }
+
+  .file__name {
+    display: block;
+  }
+
+  .file__scan {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 2;
+    box-shadow: 0 0 10px 2px var(--color-icon-brand-default);
+    background-color: var(--color-icon-brand-default);
+    height: 2px;
+  }
+
+  .point {
+    position: absolute;
+    translate: -50% -50%;
+    z-index: 3;
+    transition:
+      scale 300ms var(--easing-emphasized),
+      opacity 200ms var(--easing-standard);
+    transition-delay: calc(var(--i) * 140ms);
+    box-shadow: 0 0 0 2px var(--color-background-primary-default);
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+  }
+
+  /* ---- Extracted colours ---- */
+  .colours {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-gap-200);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .colour {
+    display: grid;
+    grid-template-columns: 14px minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-gap-200);
+    transition:
+      opacity 300ms var(--easing-standard),
+      translate 300ms var(--easing-decelerate);
+    transition-delay: calc(var(--i) * 140ms + 80ms);
+    cursor: default;
+  }
+
+  .colour__text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* ---- States ---- */
+  .zone:not([data-state='empty']) .drop__hint {
+    opacity: 0;
+  }
+
+  .zone[data-state='empty'] .file {
+    opacity: 0;
+    transition-duration: 300ms, 300ms, 300ms, 300ms;
+  }
+
+  /* Carried in by the cursor, tilted, from outside the zone. */
+  .zone:is([data-state='empty'], [data-state='carry']) .file {
+    translate: -40% -55%;
+    rotate: -8deg;
+    scale: 0.7;
+  }
+
+  .zone[data-state='scan'] .file__scan {
+    opacity: 1;
+    animation: demo-scan 800ms var(--easing-standard) both;
+  }
+
+  @keyframes demo-scan {
+    from {
+      top: 0;
+    }
+
+    to {
+      top: 100%;
+    }
+  }
+
+  .zone:not([data-state='done']) .point {
+    scale: 0;
+    opacity: 0;
+    transition-delay: 0ms;
+  }
+
+  .zone:not([data-state='done']) .colour {
+    translate: -6px 0;
+    opacity: 0;
+    transition-delay: 0ms;
+    transition-duration: 200ms;
+  }
+</style>

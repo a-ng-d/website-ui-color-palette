@@ -1,0 +1,55 @@
+---
+// Same wave as the Pricing hero (Figma “Graph” of the 16 × 2 Jumbotron).
+import wave from '@/assets/decor/graphs-pricing.svg'
+import ShadeGrid from '@/components/ui/ShadeGrid.astro'
+---
+
+<section
+  class="capabilities-hero"
+  aria-labelledby="capabilities-title"
+>
+  <ShadeGrid
+    class="capabilities-hero__grid"
+    wave={{ src: wave, inset: '0 -2.58% -11.05% -2.58%' }}
+    cols={16}
+    rows={2}
+    areas={[
+      { name: 'hero', colStart: 3, colSpan: 12, rowStart: 1, rowSpan: 2 },
+    ]}
+  >
+    <div
+      class="capabilities-hero__content"
+      slot="hero"
+    >
+      <h1
+        class="t-section-title"
+        id="capabilities-title"
+      >
+        Everything UI Color Palette can do
+      </h1>
+      <p class="t-tagline">Shared across Figma, Penpot, Sketch, and Framer.</p>
+    </div>
+  </ShadeGrid>
+</section>
+
+<style>
+  .capabilities-hero {
+    padding: var(--space-inset-200) var(--layout-gutter) 0;
+  }
+
+  .capabilities-hero :global(.capabilities-hero__grid) {
+    --shade-row-min: 144px;
+  }
+
+  .capabilities-hero__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+    width: 100%;
+    max-width: calc(var(--layout-content-max) + 2 * var(--space-inset-800));
+    text-align: center;
+  }
+</style>

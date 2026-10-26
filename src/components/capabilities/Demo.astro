@@ -1,0 +1,52 @@
+---
+/**
+ * The animated illustration of a capability card, by id
+ * (see components.md → Capability demos).
+ */
+import type { DemoId } from '@/data/capabilities'
+import AiDemo from './demos/AiDemo.astro'
+import ContrastDemo from './demos/ContrastDemo.astro'
+import ExploreDemo from './demos/ExploreDemo.astro'
+import FineTuneDemo from './demos/FineTuneDemo.astro'
+import HandoffDemo from './demos/HandoffDemo.astro'
+import ImageDemo from './demos/ImageDemo.astro'
+import ModesDemo from './demos/ModesDemo.astro'
+import PresetsDemo from './demos/PresetsDemo.astro'
+import PublishDemo from './demos/PublishDemo.astro'
+import ReadabilityDemo from './demos/ReadabilityDemo.astro'
+import ReadyDemo from './demos/ReadyDemo.astro'
+import ShareDemo from './demos/ShareDemo.astro'
+import SimulationsDemo from './demos/SimulationsDemo.astro'
+import SpacesDemo from './demos/SpacesDemo.astro'
+import SyncDemo from './demos/SyncDemo.astro'
+import TokensDemo from './demos/TokensDemo.astro'
+import WheelDemo from './demos/WheelDemo.astro'
+
+interface Props {
+  id: DemoId
+}
+
+const demos: Record<DemoId, typeof ContrastDemo> = {
+  ready: ReadyDemo,
+  ai: AiDemo,
+  image: ImageDemo,
+  wheel: WheelDemo,
+  explore: ExploreDemo,
+  contrast: ContrastDemo,
+  modes: ModesDemo,
+  'fine-tune': FineTuneDemo,
+  sync: SyncDemo,
+  tokens: TokensDemo,
+  publish: PublishDemo,
+  share: ShareDemo,
+  presets: PresetsDemo,
+  simulations: SimulationsDemo,
+  handoff: HandoffDemo,
+  spaces: SpacesDemo,
+  readability: ReadabilityDemo,
+}
+
+const Component = demos[Astro.props.id]
+---
+
+<Component />

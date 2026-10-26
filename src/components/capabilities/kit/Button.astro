@@ -1,0 +1,35 @@
+---
+/** Copy of the @unoff/ui text button (primary, secondary, tertiary). */
+import ChevronDownIcon from '@lucide/astro/icons/chevron-down'
+
+interface Props {
+  label: string
+  variant?: 'primary' | 'secondary' | 'tertiary'
+  /** A Lucide icon component, shown before the label. */
+  icon?: typeof ChevronDownIcon
+  caret?: boolean
+  state?: string
+  class?: string
+  [key: `data-${string}`]: unknown
+}
+
+const {
+  label,
+  variant = 'primary',
+  icon: Icon,
+  caret,
+  state,
+  class: className,
+  ...rest
+} = Astro.props
+---
+
+<span
+  class:list={['k-button', `k-button--${variant}`, className]}
+  data-state={state}
+  {...rest}
+>
+  {Icon && <Icon class="k-icon" />}
+  <span>{label}</span>
+  {caret && <ChevronDownIcon class="k-icon" />}
+</span>

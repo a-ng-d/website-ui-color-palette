@@ -1,0 +1,74 @@
+---
+import DemoStage from '../DemoStage.astro'
+import Message from '../kit/Message.astro'
+import Slider from '../kit/Slider.astro'
+import {
+  CONTRAST_FOREGROUND,
+  CONTRAST_START,
+  GRADES,
+  contrastAt,
+  contrastTrack,
+} from '@/scripts/demos/contrast'
+import { hex } from '@/scripts/demos/color'
+import { gradientOf } from '@/scripts/demos/palette'
+
+const state = contrastAt(CONTRAST_START)
+const grade = GRADES[state.grade]
+---
+
+<DemoStage name="contrast">
+  <div
+    class="preview"
+    data-preview
+    style={`background-color:${state.background};color:${hex(CONTRAST_FOREGROUND)}`}
+  >
+    <span class="preview__glyph">Aa</span>
+    <span class="k-text--large">
+      The quick brown fox jumps over the lazy dog.
+    </span>
+  </div>
+
+  <Message
+    type={grade.type}
+    data-grade-message
+  >
+    <span data-grade-text>{grade.text}</span>
+  </Message>
+
+  <span class="scores k-text--small k-text--secondary">
+    WCAG 2.1 <b data-ratio>{state.ratio}</b> · APCA <b data-lc>{state.lc}</b>
+  </span>
+
+  <Slider
+    data-track
+    track={gradientOf(contrastTrack())}
+    knobs={[{ at: CONTRAST_START, label: `${CONTRAST_START}` }]}
+  />
+</DemoStage>
+
+<style>
+  .preview {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-100);
+    transition: background-color 120ms linear;
+    border-radius: var(--radius-xlarge);
+    padding: var(--space-inset-400);
+  }
+
+  .preview__glyph {
+    font-weight: var(--text-weight-display);
+    font-size: 28px;
+    line-height: 32px;
+    font-family: var(--font-display);
+  }
+
+  .scores {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .scores b {
+    color: var(--text-color-primary);
+    font-weight: var(--text-font-weight-medium);
+  }
+</style>

@@ -1,0 +1,223 @@
+---
+import DemoStage from '../DemoStage.astro'
+import Button from '../kit/Button.astro'
+import CheckIcon from '@lucide/astro/icons/check'
+import LoaderIcon from '@lucide/astro/icons/loader'
+import Share2Icon from '@lucide/astro/icons/share-2'
+import { platforms } from '@/data/platforms'
+import { shadesOf } from '@/scripts/demos/palette'
+
+const tools = platforms.filter((platform) => platform.id !== 'claude')
+const shades = shadesOf({ name: 'primary', hue: 264, chroma: 0.16 })
+---
+
+<DemoStage name="publish">
+  <div
+    class="palette"
+    data-palette
+    data-state="published"
+  >
+    <span class="palette__shades">
+      {shades.map((hex) => (
+        <span style={`background-color:${hex}`} />
+      ))}
+    </span>
+    <span class="palette__text">
+      <span class="k-text--medium k-text--truncated">
+        UICP Color Primitives
+      </span>
+      <span class="palette__status">
+        <span data-status="local">
+          <span
+            class="k-chip"
+            data-state="inactive"
+          >
+            Local
+          </span>
+        </span>
+        <span data-status="published">
+          <span class="k-chip">Published</span>
+        </span>
+      </span>
+    </span>
+    <span
+      class="palette__action"
+      data-publish
+    >
+      <Button
+        variant="primary"
+        icon={Share2Icon}
+        label="Publish"
+      />
+      <LoaderIcon class="k-icon palette__spinner" />
+    </span>
+  </div>
+
+  <ul
+    class="tools"
+    data-tools
+    data-pulled
+  >
+    {tools.map((tool, i) => (
+      <li
+        class="tool"
+        style={`--i:${i}`}
+      >
+        <span
+          class="tool__tile"
+          style={`--tile:${tool.tile}`}
+        >
+          <img
+            src={tool.logo.src}
+            alt=""
+            width="20"
+            height="20"
+          />
+          <span class="tool__badge">
+            <CheckIcon class="k-icon" />
+          </span>
+        </span>
+        <span class="k-text--small k-text--secondary">{tool.name}</span>
+      </li>
+    ))}
+  </ul>
+</DemoStage>
+
+<style>
+  .palette {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-gap-200);
+  }
+
+  .palette__shades {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-radius: var(--radius-medium);
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+
+  .palette__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-gap-100);
+    min-width: 0;
+  }
+
+  .palette__status {
+    display: grid;
+  }
+
+  .palette__status > span {
+    grid-area: 1 / 1;
+    transition: opacity 200ms var(--easing-standard);
+  }
+
+  .palette:not([data-state='local']) [data-status='local'],
+  .palette[data-state='local'] [data-status='published'] {
+    opacity: 0;
+  }
+
+  .palette__action {
+    display: grid;
+    place-items: center;
+  }
+
+  .palette__action > :global(*) {
+    grid-area: 1 / 1;
+  }
+
+  .palette__action :global(.palette__spinner) {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .palette[data-state='uploading'] .palette__action :global(.k-button) {
+    opacity: 0.3;
+  }
+
+  .palette[data-state='uploading'] :global(.palette__spinner) {
+    opacity: 1;
+    animation: demo-spin 800ms linear infinite;
+  }
+
+  @keyframes demo-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  /* ---- Every tool pulls the published palette ---- */
+  .tools {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-gap-200);
+    margin: 0;
+    border-top: var(--stroke-width-thin) solid
+      var(--color-border-secondary-default);
+    padding: var(--space-inset-300) 0 0;
+    list-style: none;
+  }
+
+  .tool {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-gap-100);
+    transition: opacity 300ms var(--easing-standard);
+    transition-delay: calc(var(--i) * 280ms);
+  }
+
+  .tool__tile {
+    display: grid;
+    position: relative;
+    place-items: center;
+    border: var(--stroke-width-thin) solid rgb(0 0 0 / 0.1);
+    border-radius: var(--radius-large);
+    background-color: var(--tile);
+    width: 36px;
+    height: 36px;
+  }
+
+  .tool__tile img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+  }
+
+  .tool__badge {
+    display: grid;
+    position: absolute;
+    right: -5px;
+    bottom: -5px;
+    place-items: center;
+    transition: scale 300ms var(--easing-emphasized);
+    transition-delay: calc(var(--i) * 280ms + 120ms);
+    box-shadow: 0 0 0 2px var(--color-background-primary-default);
+    border-radius: 50%;
+    background-color: var(--color-background-success-default);
+    width: 14px;
+    height: 14px;
+    color: var(--color-text-on-brand-default, black);
+  }
+
+  .tool__badge :global(.k-icon) {
+    stroke-width: 3;
+    width: 10px;
+    height: 10px;
+    color: var(--color-icon-inverse-default);
+  }
+
+  .tools:not([data-pulled]) .tool {
+    opacity: 0.4;
+    transition-delay: 0ms;
+  }
+
+  .tools:not([data-pulled]) .tool__badge {
+    scale: 0;
+    transition-delay: 0ms;
+  }
+</style>

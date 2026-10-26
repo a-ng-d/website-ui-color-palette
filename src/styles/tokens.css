@@ -12,8 +12,8 @@
 @import '@unoff-assets/card.css';
 @import '@unoff-assets/Thumbnail.css';
 @import '@unoff-assets/Button.css';
-/* Yelbolt icon set (~5 KB gzip), used for the @unoff/ui spinner. */
-@import '@unoff-assets/styles/icons/styles/yelbolt.css';
+/* The @unoff/ui spinner glyph alone (reveal motion); icons are Lucide. */
+@import './generated/unoff-spinner.css';
 
 :root {
   /* ---- Typography (Figma “Website/*” text styles) ---- */

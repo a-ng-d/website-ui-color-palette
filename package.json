@@ -5,7 +5,10 @@
   "type": "module",
   "description": "Static website for UI Color Palette (ui-color-palette.com), built with Astro.",
   "scripts": {
+    "tokens": "node scripts/unoff-tokens.mjs",
+    "predev": "npm run tokens",
     "dev": "astro dev",
+    "prebuild": "npm run tokens",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",

@@ -18,6 +18,9 @@ column), `479.98px` (small phones). Mobile first is not required; keep desktop r
 | **Title card + list of cards** | `LatestPosts` | 2 cols, rotated title card left, posts right (400px cards, cover + body) |
 | **Gallery + pitch in a shade grid** | `Reinsurance` | 2 cols: auto-scrolling palette reels / `ShadeGrid` 8 × 6 with pitch and a 2-col button grid |
 | **Footer mosaic** | `Footer` | 4 cols × 2 rows, wide cards span 2 |
+| **Sticky intro left + stacked cards** | `capabilities/GenerateSection` | `600fr 656fr`, intro left, `FeatureCard`s sticky and stacking, **all as tall as the tallest** (`grid-auto-rows: 1fr`) so a card always covers the one beneath; 1 col < 1024 |
+| **Capability mosaic** | `capabilities/MosaicSection` | `columns` 2/3 (`tabletColumns` 1/2), rotated title card first, `FeatureCard`s (`span` from data, `mediaFirst` for demo-on-top), rows ≥ 504px |
+| **Tall title card + persona cards** | `capabilities/AudienceSection` | 3 cols, straight tall title card, check-list cards |
 
 ## Sticky intro container
 

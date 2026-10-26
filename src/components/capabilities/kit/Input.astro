@@ -1,0 +1,30 @@
+---
+/** Copy of the @unoff/ui text input (static text, never focusable). */
+interface Props {
+  value?: string
+  placeholder?: string
+  state?: string
+  /** Long text (textarea): wraps on two lines at least. */
+  multiline?: boolean
+  class?: string
+  [key: `data-${string}`]: unknown
+}
+
+const {
+  value = '',
+  placeholder,
+  state,
+  multiline,
+  class: className,
+  ...rest
+} = Astro.props
+---
+
+<span
+  class:list={['k-input', multiline && 'k-input--multiline', className]}
+  data-placeholder={placeholder}
+  data-state={state}
+  {...rest}
+>
+  {value}
+</span>

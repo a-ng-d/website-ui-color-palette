@@ -14,10 +14,12 @@ Source: `src/styles/motion.css`, `src/scripts/reveal.ts`, spotlight script in
 
 Matched by class — keep the list identical in `motion.css` (REVEAL comment and selectors)
 and `reveal.ts` (`REVEAL`): `.card, .surface-card, .shade-grid__area, .platforms__intro,
-.posts__intro, .extra__intro, .faq__intro`.
+.posts__intro, .extra__intro, .faq__intro, .stack__intro, .mosaic__intro,
+.audience__intro`.
 
 1. **Scale in** (0.94 → 1, opacity) — `card-in`, `--reveal-scale-duration`.
-2. **Spinner**: `::before`, @unoff/ui `var(--icon-spinner)` mask, coloured with
+2. **Spinner**: `::before`, @unoff/ui `var(--icon-spinner)` mask (the glyph alone, from
+   `generated/unoff-spinner.css`), coloured with
    `--color-icon-primary-default`, lives for `--reveal-wipe-delay`.
 3. **Unveil**: `::after` cover in the card's own background (`background-color: inherit`)
    with faint scanlines slides down (`translate 0 → 100%`, ease-in-out); a soft CRT-like
@@ -55,6 +57,29 @@ covered (crawlers, screen readers and LCP are unaffected by the reveal).
 
 `.shards` = SVG mask coloured with `--color-icon-brand-default`; `sparkle` loop with a
 per-item `--sparkle-delay`; faster on card hover.
+
+## Capability demos (`src/scripts/demos/engine.ts`)
+
+- Loops are JS (rAF), so the numbers they show stay coherent with the colours. Each demo
+  exposes `frame(t, dt)`: `t` is the loop time while autoplaying, `null` while the visitor
+  drives. Values follow targets through `approach()` (exponential smoothing), so returning
+  from a drag to the loop glides instead of jumping.
+- Timelines are `keyframes([[ms, value], …], t)` with an ease-in-out; hold a value
+  ~1–1.5s on each meaningful state (e.g. AAA, AA, Fail) so it can be read.
+- Discrete flows (click → menu → result) use `stepAt(t, marks)` (index of the current
+  step in a looping list of step starts), `latch(apply)` (apply a state only when it
+  changes, so CSS transitions run once) and `typed(text, elapsed)` (typewriter).
+- Whatever the cursor targets gets `data-press-target` (scale transition) and, while
+  pressed, `data-pressed` (sinks to 0.94): the fake click is visible on the control.
+- The fake cursor glides between targets (CSS transition on `left/top`, `data-follow`
+  disables it while dragging) and presses (`data-press`: scale + ring). Positions are %
+  of the panel from `getBoundingClientRect` ratios, immune to `zoom` and reveal `scale`.
+- Plays only when on screen and the tab is visible; **never autoplays under reduced
+  motion**. On a fine pointer, hovering the stage pauses the loop and hands the controls
+  to the visitor (the engine removes `inert`, sets `tabindex=-1` inside; the stage stays
+  `aria-hidden`). Touch devices only see the loop.
+- Without JS / reduced motion the server-rendered first frame is the picture: choose a
+  start state that tells the story on its own.
 
 ## Performance and pausing
 

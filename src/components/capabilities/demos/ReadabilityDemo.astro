@@ -1,0 +1,66 @@
+---
+import DemoStage from '../DemoStage.astro'
+import Message from '../kit/Message.astro'
+import Slider from '../kit/Slider.astro'
+import { SIZE, readabilityPair } from '@/scripts/demos/readability'
+
+const pair = readabilityPair()
+const readable = SIZE.start >= pair.minimum
+const toPercent = (size: number) =>
+  ((size - SIZE.min) / (SIZE.max - SIZE.min)) * 100
+---
+
+<DemoStage name="readability">
+  <div
+    class="preview"
+    style={`background-color:${pair.background};color:${pair.foreground}`}
+  >
+    <span
+      class="preview__text"
+      data-text
+      style={`font-size:${SIZE.start}px`}
+    >
+      Readable?
+    </span>
+  </div>
+
+  <Message
+    type={readable ? 'success' : 'error'}
+    data-status
+  >
+    <span class="when-success">Readable · {pair.minimum}px and up</span>
+    <span class="when-error">Too small · {pair.minimum}px minimum</span>
+  </Message>
+
+  <span class="k-text--small k-text--secondary">
+    WCAG {pair.wcag} · APCA {pair.lc}
+  </span>
+
+  <Slider
+    data-track
+    knobs={[{ at: toPercent(SIZE.start), label: `${SIZE.start}px` }]}
+  />
+</DemoStage>
+
+<style>
+  .preview {
+    display: grid;
+    place-items: center start;
+    border-radius: var(--radius-xlarge);
+    padding: 0 var(--space-inset-400);
+    height: 72px;
+    overflow: hidden;
+  }
+
+  .preview__text {
+    font-weight: var(--text-font-weight-medium);
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  /* The message text follows the type the script sets. */
+  :global(.k-message[data-type='success'] .when-error),
+  :global(.k-message[data-type='error'] .when-success) {
+    display: none;
+  }
+</style>

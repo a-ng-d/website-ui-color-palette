@@ -1,0 +1,94 @@
+---
+import DemoStage from '../DemoStage.astro'
+import ChoiceChips from './ChoiceChips.astro'
+import { MODES, modeCanvas, modeRows } from '@/scripts/demos/modes'
+
+const rows = modeRows()
+const canvas = modeCanvas()
+const canvasVars = MODES.map(
+  ({ id }) =>
+    `--surface-${id}:${canvas[id].surface};--ink-${id}:${canvas[id].ink}`
+).join(';')
+---
+
+<DemoStage name="modes">
+  <ChoiceChips items={MODES} />
+
+  <div
+    class="canvas"
+    data-active={MODES[0].id}
+    style={canvasVars}
+  >
+    {rows.map((row, r) => (
+      <div class="row">
+        <span class="row__name k-text--truncated">{row.name}</span>
+        <span class="row__cells">
+          {row.cells.map((cell, c) => (
+            <span
+              class="cell"
+              style={`--light:${cell.light};--dark:${cell.dark};--deuteranopia:${cell.deuteranopia};--i:${r + c}`}
+            />
+          ))}
+        </span>
+      </div>
+    ))}
+  </div>
+</DemoStage>
+
+<style>
+  /* ---- The palette, on a canvas that follows the mode ---- */
+  .canvas {
+    --surface: var(--surface-light);
+    --ink: var(--ink-light);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-100);
+    transition:
+      background-color 420ms var(--easing-standard),
+      color 420ms var(--easing-standard);
+    border-radius: var(--radius-xlarge);
+    background-color: var(--surface);
+    padding: var(--space-inset-300);
+    color: var(--ink);
+  }
+
+  .canvas[data-active='dark'] {
+    --surface: var(--surface-dark);
+    --ink: var(--ink-dark);
+  }
+
+  .canvas[data-active='dark'] .cell {
+    --cell: var(--dark);
+  }
+
+  .canvas[data-active='deuteranopia'] .cell {
+    --cell: var(--deuteranopia);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-gap-200);
+  }
+
+  .row__name {
+    font: var(--text-small);
+  }
+
+  .row__cells {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 2px;
+  }
+
+  /* --cell is set on the cell itself: --light/--dark/… live there. */
+  .cell {
+    --cell: var(--light);
+    transition: background-color 360ms var(--easing-standard);
+    transition-delay: calc(var(--i) * 45ms);
+    border-radius: var(--radius-small);
+    background-color: var(--cell);
+    aspect-ratio: 1;
+  }
+</style>

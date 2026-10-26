@@ -1,0 +1,21 @@
+---
+/** Copy of the @unoff/ui icon button, with a Lucide icon. */
+import type SearchIcon from '@lucide/astro/icons/search'
+
+interface Props {
+  icon: typeof SearchIcon
+  state?: string
+  class?: string
+  [key: `data-${string}`]: unknown
+}
+
+const { icon: Icon, state, class: className, ...rest } = Astro.props
+---
+
+<span
+  class:list={['k-icon-button', className]}
+  data-state={state}
+  {...rest}
+>
+  <Icon class="k-icon" />
+</span>

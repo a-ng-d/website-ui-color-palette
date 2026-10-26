@@ -1,0 +1,123 @@
+---
+import DemoStage from '../DemoStage.astro'
+import CopyIcon from '@lucide/astro/icons/copy'
+import Message from '../kit/Message.astro'
+import ChoiceChips from './ChoiceChips.astro'
+import { tokenFormats } from '@/scripts/demos/tokens'
+
+const formats = tokenFormats()
+---
+
+<DemoStage name="tokens">
+  <ChoiceChips items={formats} />
+
+  <div
+    class="code"
+    data-code
+    data-active={formats[0].id}
+  >
+    <span
+      class="code__copy"
+      data-copy
+    >
+      <CopyIcon class="k-icon" />
+    </span>
+    {formats.map((format) => (
+      <div
+        class="code__lines"
+        data-lines={format.id}
+      >
+        {format.lines.map((line, i) => (
+          <code style={`--i:${i}`}>{line}</code>
+        ))}
+      </div>
+    ))}
+  </div>
+  <Message
+    type="success"
+    class="toast"
+  >
+    Copied to clipboard
+  </Message>
+</DemoStage>
+
+<style>
+  /* A terminal-like block, as the MCP and skills snippets of the site. */
+  .code {
+    display: grid;
+    position: relative;
+    border: var(--stroke-width-thin) solid var(--snippet-border);
+    border-radius: var(--radius-large);
+    background-color: var(--snippet-background);
+    padding: var(--space-inset-300) var(--space-inset-300);
+    min-height: 100px;
+    overflow: hidden;
+    color: var(--snippet-text);
+  }
+
+  .code__lines {
+    display: flex;
+    grid-area: 1 / 1;
+    flex-direction: column;
+    margin: 0;
+    font-size: var(--text-small-font-size);
+    line-height: var(--text-small-line-height);
+    font-family: var(--font-display);
+    letter-spacing: 0;
+  }
+
+  .code code {
+    transition: opacity 200ms var(--easing-standard);
+    transition-delay: calc(var(--i) * 60ms);
+    font: inherit;
+    white-space: pre;
+  }
+
+  .code:not([data-active='tailwind']) [data-lines='tailwind'] code,
+  .code:not([data-active='dtcg']) [data-lines='dtcg'] code,
+  .code:not([data-active='style-dictionary'])
+    [data-lines='style-dictionary']
+    code {
+    opacity: 0;
+    transition-delay: 0ms;
+  }
+
+  .code__copy {
+    display: grid;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    place-items: center;
+    z-index: 1;
+    cursor: pointer;
+    border-radius: var(--radius-medium);
+    background-color: var(--snippet-tag-background);
+    width: 24px;
+    height: 24px;
+    color: var(--snippet-text);
+  }
+
+  .code__copy :global(.k-icon) {
+    color: var(--snippet-text);
+  }
+
+  /* The app's notification after a copy (SemanticMessage), as a toast. */
+  :global(.toast) {
+    position: absolute;
+    bottom: var(--space-inset-200);
+    left: 50%;
+    translate: -50% 8px;
+    opacity: 0;
+    z-index: 3;
+    transition:
+      opacity var(--motion-duration-base) var(--motion-easing-standard),
+      translate var(--motion-duration-base) var(--motion-easing-standard);
+    box-shadow: var(--elevation-400-menu-panel);
+    white-space: nowrap;
+  }
+
+  :global([data-demo-panel]:has([data-copied]) .toast) {
+    translate: -50% 0;
+    opacity: 1;
+  }
+</style>
