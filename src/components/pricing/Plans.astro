@@ -129,11 +129,9 @@ const arrow = (plan: (typeof plans)[number]) => plan.id === 'pro'
     IN: 'inr',
     SG: 'sgd',
     JP: 'jpy',
-    CN: 'cny',
-    TW: 'twd',
     KR: 'krw',
-    TR: 'try',
     ID: 'idr',
+    TH: 'thb',
     VN: 'vnd',
     AR: 'ars',
     ...Object.fromEntries(
@@ -143,13 +141,45 @@ const arrow = (plan: (typeof plans)[number]) => plan.id === 'pro'
     ),
   }
 
+  // A browser set to plain "en"/"en-US" says nothing about where the visitor
+  // lives: the time zone does. Use the first language that names a region
+  // other than the US, then the time zone, then the primary language.
   const locale = navigator.languages?.[0] ?? navigator.language ?? 'en-US'
-  let currency = 'usd'
+  const regionOf = (tag: string) => {
+    try {
+      return new Intl.Locale(tag).maximize().region?.toUpperCase() ?? ''
+    } catch {
+      return ''
+    }
+  }
+  const TIME_ZONES: Record<string, string> = {
+    'Europe/Paris': 'FR',
+    'Europe/Berlin': 'DE',
+    'Europe/Madrid': 'ES',
+    'Europe/Rome': 'IT',
+    'Europe/Amsterdam': 'NL',
+    'Europe/Brussels': 'BE',
+    'Europe/Lisbon': 'PT',
+    'Europe/Vienna': 'AT',
+    'Europe/Dublin': 'IE',
+    'Europe/Helsinki': 'FI',
+    'Europe/Athens': 'GR',
+    'Europe/Luxembourg': 'LU',
+    'Europe/London': 'GB',
+    'Europe/Zurich': 'CH',
+  }
+  let timeZone = ''
   try {
-    const region =
-      new Intl.Locale(locale).maximize().region?.toUpperCase() ?? ''
-    currency = CURRENCIES[region] ?? 'usd'
+    timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
   } catch {}
+  const regions = (navigator.languages ?? [locale])
+    .map(regionOf)
+    .filter((region) => region && region !== 'US')
+  const region =
+    regions.find((r) => CURRENCIES[r]) ??
+    TIME_ZONES[timeZone] ??
+    regionOf(locale)
+  const currency = CURRENCIES[region] ?? 'usd'
 
   fetch('/api/prices')
     .then((response) => (response.ok ? response.json() : null))

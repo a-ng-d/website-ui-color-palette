@@ -383,6 +383,10 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
       padding-bottom: var(--space-inset-200);
       width: 100%;
       text-align: center;
+      /* Taller than the screen once Resources is open: scroll inside the menu. */
+      max-height: calc(100dvh - 7rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
     }
 
     .header__links :global(.text-button--primary) {
@@ -391,8 +395,9 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
 
     .header__panel {
       position: static;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1fr);
       margin-top: var(--space-offset-200);
+      text-align: left;
     }
 
     .resource {
