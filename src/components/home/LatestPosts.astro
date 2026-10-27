@@ -144,10 +144,14 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     outline: none;
   }
 
+  .post__link:focus-visible {
+    box-shadow: none;
+  }
+
   .post:has(.post__link:focus-visible) {
-    outline: var(--stroke-width-thick) solid
-      var(--color-border-selected-default);
-    outline-offset: var(--stroke-offset-positive-thick);
+    outline: var(--site-focus-outline);
+    outline-offset: var(--site-focus-offset);
+    box-shadow: var(--site-focus-halo);
   }
 
   .post__more {

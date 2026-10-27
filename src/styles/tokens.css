@@ -79,6 +79,15 @@
   --site-radius-inner: var(--radius-xlarge); /* 8px */
   --site-radius-pill: var(--radius-full);
 
+  /* Keyboard focus: a crisp ring plus a soft halo around it (global.css,
+     unoff-links.css). One look for every focusable element. */
+  --site-focus-color: var(--color-border-selected-default);
+  --site-focus-outline: var(--stroke-width-thick) solid var(--site-focus-color);
+  --site-focus-offset: var(--stroke-offset-positive-thick);
+  --site-focus-halo: 0 0 0
+    calc(var(--stroke-offset-positive-thick) + var(--stroke-width-thick) + 4px)
+    color-mix(in srgb, var(--site-focus-color) 28%, transparent);
+
   /* Brand gradient (Figma “UICP GRD”: Red, Yellow, Green, Blue, Indigo).
      The loop version repeats it twice so a 200% strip can slide seamlessly. */
   --brand-gradient: linear-gradient(

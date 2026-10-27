@@ -67,8 +67,9 @@ button {
 }
 
 :focus-visible {
-  outline: var(--stroke-width-thick) solid var(--color-border-selected-default);
-  outline-offset: var(--stroke-offset-positive-thick);
+  outline: var(--site-focus-outline);
+  outline-offset: var(--site-focus-offset);
+  box-shadow: var(--site-focus-halo);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -3,6 +3,10 @@
  * Pill tabs as a native radio group, no JS. Mark panels with `data-tab="<item id>"`:
  * CSS (`:has(:checked)`) hides those of the other tabs, all stay visible without `:has()`.
  * Label hover/focus states are mirrored in styles/unoff-links.css. Wrapper is `display: contents`.
+ *
+ * A radio group is a single tab stop (arrows switch). With JS, each label
+ * becomes a focusable toggle button so every tab, active or not, is reached
+ * with Tab; the radios stay the source of truth for the CSS.
  */
 interface Item {
   id: string
@@ -61,6 +65,37 @@ const css = items
   set:html={css}
 ></style>
 
+<script>
+  for (const group of document.querySelectorAll<HTMLElement>('[data-tabs]')) {
+    const pairs = [
+      ...group.querySelectorAll<HTMLInputElement>('.tabs__list input'),
+    ].map((input) => ({
+      input,
+      label: input.nextElementSibling as HTMLLabelElement,
+    }))
+
+    const sync = () => {
+      for (const { input, label } of pairs)
+        label.setAttribute('aria-pressed', String(input.checked))
+    }
+
+    for (const { input, label } of pairs) {
+      // The label takes over: hide the radio from Tab and assistive tech.
+      input.tabIndex = -1
+      input.setAttribute('aria-hidden', 'true')
+      label.tabIndex = 0
+      label.setAttribute('role', 'button')
+      label.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return
+        e.preventDefault()
+        input.click()
+      })
+      input.addEventListener('change', sync)
+    }
+    sync()
+  }
+</script>
+
 <style>
   .tabs {
     display: contents;
@@ -108,8 +143,9 @@ const css = items
   }
 
   .tabs__list input:focus-visible + label {
-    outline: 2px solid var(--site-ink);
-    outline-offset: 2px;
+    outline: var(--site-focus-outline);
+    outline-offset: var(--site-focus-offset);
+    box-shadow: var(--site-focus-halo);
   }
 
   @media (max-width: 479.98px) {

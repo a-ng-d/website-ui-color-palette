@@ -155,22 +155,54 @@
     .mosaic__intro,
     .audience__intro
   )::after {
+  --scan-glow: 56px; /* height of the halo above the scan line */
   position: absolute;
   z-index: 2;
-  /* 1px inside, so the @unoff/ui card outline (drawn inward) stays visible. */
-  inset: var(--stroke-width-thin);
-  box-shadow: none;
-  /* Straight top edge: it is the scan line; the bottom follows the card. */
-  border-radius: 0 0 var(--site-radius-card) var(--site-radius-card);
-  /* Faint horizontal scanlines: the cover reads as a TV screen. */
-  background-image: repeating-linear-gradient(
+  mask-image: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--color-text-primary-default) 7%, transparent) 0 1px,
-    transparent 1px 4px
+    transparent calc(var(--scan) - var(--scan-glow)),
+    #000 var(--scan)
   );
+  /* The cover never moves: it fills the card's inner shape, with the same
+     corners, and a mask uncovers it from the top as --scan runs 0% → 100%.
+     The scan line and its halo are painted inside it, so they never spill
+     onto the border or past the rounded corners. */
+  inset: 0;
+  border-radius: inherit;
+  background-image:
+    /* A soft, blooming scan band (like a CRT refresh). */
+    linear-gradient(
+      to bottom,
+      transparent calc(var(--scan) - var(--scan-glow)),
+      color-mix(in srgb, var(--color-icon-brand-default) 45%, transparent)
+        calc(var(--scan) - 16px),
+      var(--color-icon-brand-default) calc(var(--scan) - 3px),
+      var(--color-border-brand-strong) var(--scan),
+      transparent var(--scan)
+    ),
+    /* Faint horizontal scanlines: the cover reads as a TV screen. */
+    repeating-linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--color-text-primary-default) 7%, transparent) 0
+          1px,
+        transparent 1px 4px
+      );
   background-color: inherit; /* the card's own surface */
   pointer-events: none;
   content: '';
+}
+
+/* @unoff/ui cards have no CSS border: their outline is drawn 1px inward.
+   Stay inside it, on a matching radius. */
+.motion .card::after {
+  inset: var(--stroke-width-thin);
+  border-radius: calc(var(--card-radius) - var(--stroke-width-thin));
+}
+
+@property --scan {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
 }
 
 .motion
@@ -192,27 +224,16 @@
 
 @keyframes unveil {
   0% {
-    top: var(--stroke-width-thin);
+    --scan: 0%;
     opacity: 1;
-    box-shadow: none;
   }
 
-  /* A soft, blooming scan band (like a CRT refresh) lights up as the cover
-     starts to move: a blurred core plus two wider halos. */
-  6%,
   88% {
     opacity: 1;
-    box-shadow:
-      0 -2px 6px 1px var(--color-border-brand-strong),
-      0 -8px 18px 0 var(--color-icon-brand-default),
-      0 -20px 40px -4px
-        color-mix(in srgb, var(--color-icon-brand-default) 55%, transparent);
   }
 
-  /* The cover shrinks from the top, its bottom stays put: it never slides
-     over the card's bottom border. */
   100% {
-    top: calc(100% - var(--stroke-width-thin));
+    --scan: 100%;
     opacity: 0;
   }
 }

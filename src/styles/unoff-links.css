@@ -34,8 +34,7 @@
   --button-base-border-color: var(--button-secondary-border-color-pressed);
 }
 
-:is(a, summary, label).text-button--tertiary:hover,
-:is(a, summary, label).text-button--tertiary:focus-visible {
+:is(a, summary, label).text-button--tertiary:hover {
   --button-base-text-decoration: var(--button-tertiary-text-decoration-hover);
 }
 
@@ -64,4 +63,21 @@ summary:focus-visible .icon-button {
   --icon-button-base-background-color: var(
     --icon-button-default-background-color-hover
   );
+}
+
+/*
+ * Keyboard focus: one ring + halo site-wide (same as `:focus-visible` in
+ * global.css). @unoff/ui draws button and card borders with `outline` and
+ * only styles `:enabled:focus`, so links, summaries and labels would lose the
+ * ring or get a different one.
+ * Tertiary buttons also keep their hover underline.
+ */
+:is(.text-button, .icon-button, .card):focus-visible {
+  outline: var(--site-focus-outline);
+  outline-offset: var(--site-focus-offset);
+  box-shadow: var(--site-focus-halo);
+}
+
+.text-button.text-button--tertiary:focus-visible {
+  --button-base-text-decoration: var(--button-tertiary-text-decoration-hover);
 }
