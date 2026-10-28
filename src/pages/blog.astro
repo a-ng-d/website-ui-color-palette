@@ -1,0 +1,86 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import PostCard from '@/components/blog/PostCard.astro'
+import PlatformHero from '@/components/platform/PlatformHero.astro'
+import Reinsurance from '@/components/home/Reinsurance.astro'
+import { blogPage, getPosts, postPath } from '@/data/blog'
+import {
+  blogCollection,
+  organization,
+  pageBreadcrumbs,
+} from '@/data/structured-data'
+
+const posts = await getPosts()
+---
+
+<BaseLayout
+  title={blogPage.seo.title}
+  description={blogPage.seo.description}
+  jsonLd={[
+    organization(),
+    blogCollection({
+      path: blogPage.path,
+      title: blogPage.hero.title,
+      description: blogPage.seo.description,
+      posts: posts.map((post) => ({
+        path: postPath(post),
+        title: post.data.title,
+        published: post.data.pubDate,
+      })),
+    }),
+    pageBreadcrumbs('Blog', blogPage.path),
+  ]}
+>
+  <PlatformHero hero={blogPage.hero} />
+
+  <section
+    class="section blog-list"
+    aria-labelledby="blog-list-title"
+  >
+    <h2
+      class="visually-hidden"
+      id="blog-list-title"
+    >
+      All articles
+    </h2>
+    <ul class="blog-list__grid">
+      {posts.map((post) => (
+        <li>
+          <PostCard
+            post={post}
+            meta
+            sizes="(min-width: 640px) 50vw, 100vw"
+          />
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <Reinsurance />
+</BaseLayout>
+
+<style>
+  .blog-list__grid {
+    --post-card-height: 560px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-gap-200);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .blog-list__grid > li {
+    display: flex;
+  }
+
+  .blog-list__grid :global(.post) {
+    flex: 1 1 auto;
+  }
+
+  @media (max-width: 639.98px) {
+    .blog-list__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

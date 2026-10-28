@@ -12,7 +12,11 @@ import {
   master,
   superpowers,
 } from '@/data/capabilities'
-import { organization, softwareApplication } from '@/data/structured-data'
+import {
+  organization,
+  pageBreadcrumbs,
+  softwareApplication,
+} from '@/data/structured-data'
 
 const featureList = capabilityGroups.flatMap((group) =>
   group.cards.map((card) => card.title)
@@ -22,7 +26,11 @@ const featureList = capabilityGroups.flatMap((group) =>
 <BaseLayout
   title="Capabilities — Generate, Master & Deploy Color"
   description="Explore everything UI Color Palette can do: AI generation, image extraction, contrast mastering, color modes, and token & Tailwind export."
-  jsonLd={[organization(), { ...softwareApplication(), featureList }]}
+  jsonLd={[
+    organization(),
+    { ...softwareApplication(), featureList },
+    pageBreadcrumbs('Capabilities', '/capabilities'),
+  ]}
 >
   <CapabilitiesHero />
   <GenerateSection group={generate} />

@@ -1,0 +1,139 @@
+---
+import { Image } from 'astro:assets'
+
+import Tag from '@/components/ui/Tag.astro'
+import { postPath, type Post } from '@/data/blog'
+
+interface Props {
+  post: Post
+  /** Date and category above the title. */
+  meta?: boolean
+  sizes?: string
+}
+
+const {
+  post,
+  meta = false,
+  sizes = '(min-width: 1024px) 50vw, 100vw',
+} = Astro.props
+const dateFormat = new Intl.DateTimeFormat('en', { dateStyle: 'long' })
+---
+
+<article class="post card">
+  <div class="post__cover">
+    <Image
+      src={post.data.cover}
+      alt={post.data.coverAlt}
+      widths={[480, 800, 1200]}
+      sizes={sizes}
+      loading="lazy"
+    />
+  </div>
+  <div class="post__body">
+    {meta && (
+      <div class="post__meta">
+        {post.data.category && <Tag>{post.data.category}</Tag>}
+        <time datetime={post.data.pubDate.toISOString()}>
+          {dateFormat.format(post.data.pubDate)}
+        </time>
+      </div>
+    )}
+    <h3 class="t-paragraph-secondary-title">
+      <a
+        class="post__link"
+        href={postPath(post)}
+      >
+        {post.data.title}
+      </a>
+    </h3>
+    <p class="post__excerpt">{post.data.description}</p>
+    <span
+      class="post__more text-button text-button--secondary text-button--large"
+      aria-hidden="true"
+    >
+      <span class="text-button__label">Read more</span>
+    </span>
+  </div>
+</article>
+
+<style>
+  .post {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    --card-radius: var(--space-inset-600);
+    /* Fixed height: the cover shrinks to fit. */
+    height: var(--post-card-height, 400px);
+    overflow: clip;
+  }
+
+  .post__cover {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .post__cover :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .post__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-gap-200);
+    border-top: var(--stroke-width-thin) solid var(--site-border-strong);
+    padding: var(--space-inset-800);
+  }
+
+  .post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-gap-400);
+  }
+
+  .post__link {
+    text-decoration: none;
+  }
+
+  /* The whole card is clickable through the title link. */
+  .post__link::after {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    content: '';
+  }
+
+  .post__link:focus-visible {
+    outline: none;
+  }
+
+  .post:has(.post__link:focus-visible) {
+    outline: var(--stroke-width-thick) solid
+      var(--color-border-selected-default);
+    outline-offset: var(--stroke-offset-positive-thick);
+  }
+
+  .post__more {
+    cursor: pointer;
+  }
+
+  .post:hover .post__more {
+    --button-base-background-color: var(
+      --button-secondary-background-color-hover
+    );
+    --button-base-border-color: var(--button-secondary-border-color-hover);
+  }
+
+  @media (max-width: 1023.98px) {
+    .post {
+      height: auto;
+    }
+
+    .post__cover {
+      aspect-ratio: 16 / 9;
+    }
+  }
+</style>

@@ -23,7 +23,7 @@ column), `479.98px` (small phones). Mobile first is not required; keep desktop r
 | **Tall title card + persona cards** | `capabilities/AudienceSection` | 3 cols, straight tall title card, check-list cards |
 | **Platform hero** | `platform/PlatformHero` | `ShadeGrid` 16 × 2 (as Pricing/Capabilities) + install `Button` |
 | **Title card + live embed + editor cards** | `platform/PlatformSurfaces` | 3 cols: rotated title (col 1, rows 1–2), plugin iframe (cols 2–3, rows 1–2), `IconTile` cards on row 3; 2 cols < 1024 with the embed last on a full row; 1 col < 640 |
-| **Next steps link cards** | `platform/NextSteps` | 3 whole-card `<a class="card">` (capabilities, pricing, downloads); 1 col < 1024 |
+| **Next steps link cards** | `platform/NextSteps` | one column per whole-card `<a class="card">` (`steps` prop; default: capabilities, pricing, downloads, blog); 1 col < 1024. Also on the 404 |
 
 Platform pages (`/figma`, `/penpot`, `/sketch`, `/framer`, `/claude`) are data-driven:
 a `PlatformPage` in `src/data/platform-pages.ts`, rendered by

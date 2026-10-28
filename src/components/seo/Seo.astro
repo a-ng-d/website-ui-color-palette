@@ -51,10 +51,12 @@ const imageUrl = new URL(image, site.url).href
   name="description"
   content={description}
 />
-<link
-  rel="canonical"
-  href={canonical}
-/>
+{!noindex && (
+  <link
+    rel="canonical"
+    href={canonical}
+  />
+)}
 {tags.length > 0 && (
   <meta
     name="keywords"
@@ -141,6 +143,18 @@ const imageUrl = new URL(image, site.url).href
   name="twitter:card"
   content="summary_large_image"
 />
+{site.twitterHandle && (
+  <meta
+    name="twitter:site"
+    content={site.twitterHandle}
+  />
+)}
+{site.twitterHandle && (
+  <meta
+    name="twitter:creator"
+    content={site.twitterHandle}
+  />
+)}
 <meta
   name="twitter:title"
   content={title}

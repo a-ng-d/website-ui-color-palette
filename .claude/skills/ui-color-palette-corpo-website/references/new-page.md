@@ -53,7 +53,21 @@ import { organization, softwareApplication, faqPage } from '@/data/structured-da
 
 - `src/config/site.ts` if the page adds nav or links.
 - `src/pages/llms.txt.ts` if the page should be listed for LLMs.
-- The sitemap is automatic. Robots allow all crawlers (GEO is a goal).
+- `src/pages/llms-full.txt.ts` if the page has indexable content: it carries the full text
+  for LLMs, `llms.txt` only the one-line entry.
+- The sitemap is automatic and `lastmod` comes from `src/plugins/sitemap-lastmod.mjs`
+  (git date of the page's content files, `updatedDate ?? pubDate` for posts). A new page
+  that reads its content from a new file must be added to that plugin's mapping.
+  Robots allow all crawlers (GEO is a goal).
+- Every non-home page emits a `BreadcrumbList` (`pageBreadcrumbs` in
+  `src/data/structured-data.ts`). Nested pages (`/capabilities/<slug>`, `/compare/<x>`,
+  `/glossary/<term>`) include their parent in the trail.
+- A new page is linked from at least 2 existing pages (no orphans).
+- Product, author and organization profile URLs live in `site.profiles` and
+  `site.author.sameAs` (`src/config/site.ts`). Add only verified, live URLs; never invent
+  a profile. `site.twitterHandle` stays `null` until an X account exists.
+- The wider SEO/GEO program (phases, backlog, rules) is specified in `docs/seo/`; read
+  `docs/seo/README.md` before creating capability, comparison or glossary pages.
 
 ## 5. Verify (all of it, every page)
 

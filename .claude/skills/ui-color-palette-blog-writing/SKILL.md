@@ -118,6 +118,11 @@ Read the two published posts before drafting; match them.
 The page already emits `BlogPosting`, breadcrumb, `VideoObject` per embed, `FAQPage`,
 Open Graph, Twitter and `article:*` tags from the front-matter. Your job is to fill it well.
 
+- **`pubDate`** is required and must be the real publication date, never the git commit
+  date or "today" by default. Ask when unsure. `updatedDate` only when facts change.
+  The sitemap `lastmod`, RSS and `BlogPosting` read them.
+- **Cluster**: link the article to its pillar page and to 1–2 sibling posts as planned in
+  `docs/seo/03-blog-clusters.md`; one primary query per article, no duplicates.
 - **`title`** (the h1, also the `<title>`): the primary question's wording, ≤ 60 characters
   ideally; put the keyword early. Use `seo.title` if the `<title>` should differ from the h1.
 - **`description`**: 120–160 characters, says what the reader gets, includes the keyword

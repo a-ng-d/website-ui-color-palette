@@ -28,7 +28,7 @@ export const downloadPage = {
       'Add UI Color Palette to Figma, Penpot, Sketch or Framer in one click and start building accessible, WCAG & APCA-ready color palettes.',
   },
   hero: {
-    title: 'Download',
+    title: 'Download UI Color Palette for Figma, Penpot, Sketch and Framer',
     tagline:
       'Get UI Color Palette on your favorite platform and start building accessible color palettes.',
   },

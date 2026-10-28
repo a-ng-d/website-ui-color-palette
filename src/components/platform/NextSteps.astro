@@ -1,6 +1,14 @@
 ---
 import IconTile from '@/components/ui/IconTile.astro'
-import { nextSteps } from '@/data/platform-pages'
+import { nextSteps, type NextStep } from '@/data/platform-pages'
+
+interface Props {
+  steps?: NextStep[]
+  title?: string
+}
+
+const { steps = nextSteps, title = 'Keep exploring UI Color Palette' } =
+  Astro.props
 ---
 
 <section
@@ -11,10 +19,13 @@ import { nextSteps } from '@/data/platform-pages'
     class="visually-hidden"
     id="next-steps-title"
   >
-    Keep exploring UI Color Palette
+    {title}
   </h2>
-  <ul class="next-steps__grid">
-    {nextSteps.map((step) => (
+  <ul
+    class="next-steps__grid"
+    style={`--next-steps-columns:${steps.length}`}
+  >
+    {steps.map((step) => (
       <li class="next-steps__item">
         <a
           class="next-steps__card card"
@@ -34,7 +45,7 @@ import { nextSteps } from '@/data/platform-pages'
 <style>
   .next-steps__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--next-steps-columns), minmax(0, 1fr));
     grid-auto-rows: minmax(416px, auto);
     gap: var(--space-gap-200);
     margin: 0;

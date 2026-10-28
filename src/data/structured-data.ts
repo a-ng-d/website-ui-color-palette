@@ -17,6 +17,16 @@ const stripHtml = (html: string) => html.replace(/<[^>]+>/g, '')
 export const organizationId = `${site.url}/#organization`
 export const websiteId = `${site.url}/#website`
 export const softwareId = `${site.url}/#software`
+export const authorId = `${site.url}/#aurelien-grimaud`
+
+/** The founder and blog author, referenced by `@id`. */
+const founder = {
+  '@type': 'Person',
+  '@id': authorId,
+  name: site.author.name,
+  sameAs: [...site.author.sameAs],
+  worksFor: { '@id': organizationId },
+}
 
 export const organization = () => ({
   '@context': 'https://schema.org',
@@ -26,7 +36,8 @@ export const organization = () => ({
   url: site.url,
   logo: absolute('/favicon.png'),
   email: site.email,
-  founder: { '@type': 'Person', name: site.author.name },
+  sameAs: [...site.profiles],
+  founder,
   parentOrganization: {
     '@type': 'Organization',
     name: site.publisher.name,
@@ -175,17 +186,18 @@ export const blogPosting = (post: {
   keywords: post.tags.join(', '),
   ...(post.category ? { articleSection: post.category } : {}),
   inLanguage: site.locale,
-  ...(post.readingMinutes
-    ? { timeRequired: `PT${post.readingMinutes}M` }
-    : {}),
+  ...(post.readingMinutes ? { timeRequired: `PT${post.readingMinutes}M` } : {}),
   ...(post.published ? { datePublished: post.published.toISOString() } : {}),
   ...(post.modified || post.published
     ? { dateModified: (post.modified ?? post.published)!.toISOString() }
     : {}),
   author: {
     '@type': 'Person',
+    ...(post.author === site.author.name ? { '@id': authorId } : {}),
     name: post.author,
-    ...(post.authorUrl ? { url: post.authorUrl, sameAs: [post.authorUrl] } : {}),
+    ...(post.authorUrl
+      ? { url: post.authorUrl, sameAs: [post.authorUrl] }
+      : {}),
   },
   publisher: { '@id': organizationId },
   isPartOf: { '@id': websiteId },
@@ -202,6 +214,34 @@ export const blogPosting = (post: {
     : {}),
 })
 
+/** The blog index: a collection page listing every article. */
+export const blogCollection = (blog: {
+  path: string
+  title: string
+  description: string
+  posts: { path: string; title: string; published: Date }[]
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': `${absolute(blog.path)}#collection`,
+  url: absolute(blog.path),
+  name: blog.title,
+  description: blog.description,
+  inLanguage: site.locale,
+  isPartOf: { '@id': websiteId },
+  publisher: { '@id': organizationId },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: blog.posts.length,
+    itemListElement: blog.posts.map((post, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: absolute(post.path),
+      name: post.title,
+    })),
+  },
+})
+
 export const breadcrumbs = (items: { name: string; path: string }[]) => ({
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -212,3 +252,10 @@ export const breadcrumbs = (items: { name: string; path: string }[]) => ({
     item: absolute(item.path),
   })),
 })
+
+/** Home > page: the breadcrumb of a top-level page. */
+export const pageBreadcrumbs = (name: string, path: string) =>
+  breadcrumbs([
+    { name: 'Home', path: '/' },
+    { name, path },
+  ])

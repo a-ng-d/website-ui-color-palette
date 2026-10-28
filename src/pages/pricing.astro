@@ -6,16 +6,22 @@ import Compare from '@/components/pricing/Compare.astro'
 import PricingFaq from '@/components/pricing/PricingFaq.astro'
 import Reinsurance from '@/components/home/Reinsurance.astro'
 import { pricingFaq } from '@/data/faq'
-import { faqPage, organization, pricingOffers } from '@/data/structured-data'
+import {
+  faqPage,
+  organization,
+  pageBreadcrumbs,
+  pricingOffers,
+} from '@/data/structured-data'
 ---
 
 <BaseLayout
   title="Pricing — UI Color Palette Plans"
-  description="Simple, honest pricing for solo makers and teams. Start free on /basic, unlock unlimited color on /pro at $2.99/week, or scale with /ultimate."
+  description="Simple, honest pricing for solo makers and teams. Start free on /basic, go unlimited on /pro, or scale with /ultimate. Compare every plan."
   jsonLd={[
     organization(),
     pricingOffers(),
     faqPage(pricingFaq.flatMap((category) => category.items)),
+    pageBreadcrumbs('Pricing', '/pricing'),
   ]}
 >
   <PricingHero />
