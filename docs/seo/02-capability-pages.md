@@ -20,9 +20,26 @@ The site has 11 URLs, and none of them answers a search-intent query. People sea
 /glossary/<term>                   Lot D
 ```
 
+## Production order (from the 2026-10-28 baseline)
+
+Phase 1b ([01-indexation-recovery.md](01-indexation-recovery.md)) ships first. Then the order below follows real demand from [baseline.md](baseline.md):
+
+| Order | Page | Evidence |
+|---|---|---|
+| 1 | Lot C `/claude` (enrich), and Lot A #14 `mcp-color-palette` merged into it | claude color palette at position 8.4 with 5 clicks; claude ai color palette, claude color palette skills, claude code color palette; docs `/claude` has 2.4k impressions |
+| 2 | Lot A #3 `oklch-lch-color-spaces`, plus glossary terms `oklch`, `oklab`, `lch`, `hsluv` | oklab color palette at 4.2, hsluv vs oklch at 9, lch color / lch color space around 58 |
+| 3 | Lot A #4 `color-blindness-simulation`, plus glossary term `color-blindness-types` | achromatomaly at 9.5 with 1 click |
+| 4 | Lot A #1 `wcag-apca-contrast` | wcag color palette at 6, accessibility color palette at 23 |
+| 5 | Lot A #2 `color-palette-generator` | ui color palette generator at 61, color palette manager at 10; also supports the brand query "ui color palette" at 34 |
+| 6 | Lot C `/figma`, then `/framer` | figma color palette plugin at 35, framer color palette at 10 |
+| 7 | Lot A #6 `tailwind-color-palette` and #7 `swiftui-compose-colors` | tailwind ui colors at 58, xcode color palette at 42 |
+| 8 | Rest of Lot A, Lot D, Lot B | No measured demand yet. Search Console will tell. |
+
+**Site `/claude` vs docs `/claude`.** The site page targets the product query ("claude color palette", "color palette mcp"), and the docs page targets setup ("install", "skills", "agents"). They cross-link and never share a title query. See [01-indexation-recovery.md](01-indexation-recovery.md), step 7.
+
 ## Lot A — capability pages
 
-Order of production follows estimated impact. Re-order it after the Phase 0 GSC analysis.
+The table keeps the original numbering. The production order is the one above.
 
 | # | Slug | Primary query / secondary queries | Source spec(s) | Notes |
 |---|---|---|---|---|
@@ -174,3 +191,4 @@ Add to each one:
 | Date | Change |
 | ---- | ------ |
 | 2026-10-26 | Created |
+| 2026-10-28 | Production order set from the Search Console baseline; `mcp-color-palette` merged into `/claude` |

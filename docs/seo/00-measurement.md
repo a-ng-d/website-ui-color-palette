@@ -8,6 +8,15 @@
 
 There is no recorded baseline, so the SEO/GEO program cannot prove impact or prioritize. The page backlog in Phase 2 and the article backlog in Phase 3 are ordered by estimated search intent. They should be re-ordered from real Search Console data before production starts. Nothing measures whether AI answer engines cite the product either.
 
+## Status (2026-10-28)
+
+- The first export is done, and the figures are in [baseline.md](baseline.md). It came from the **domain property**, which mixes the site, the docs and the app subdomains.
+- Next steps:
+  - add URL-prefix properties `https://ui-color-palette.com/` and `https://docs.ui-color-palette.com/` so each host is reported separately;
+  - set up Bing;
+  - run the AI-citation panel;
+  - add UTM parameters to the CTAs.
+
 ## Steps
 
 1. **Export Google Search Console data**, covering the last 16 months, at query × page level. Save it as `docs/seo/data/gsc-baseline-YYYY-MM.csv`; it is private, so do not commit raw data if the repo is public. Then extract:

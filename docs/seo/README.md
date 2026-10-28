@@ -1,7 +1,7 @@
 # SEO / GEO program — ui-color-palette.com
 
 - **Status**: Accepted (Phase 1 in progress, Phases 0, 2–5 Draft)
-- **Package(s) concerned**: `website-ui-color-palette`
+- **Package(s) concerned**: `website-ui-color-palette`, and `docs-ui-color-palette`, which drives ~65% of organic clicks (see [baseline.md](baseline.md))
 - **Owner workflow**: `site-orchestrator` → `blog-writer` / `seo-reviewer` / `fact-checker` / `style-guardian`
 
 ## Goal
@@ -22,6 +22,8 @@ Target at 3 months: **~70 useful URLs** and a measurable lift in impressions, cl
 | --- | --- | --- |
 | 0 — Measurement & baseline | [00-measurement.md](00-measurement.md) | Draft |
 | 1 — Technical foundations | Implemented on branch `seo/phase-1` (see below) | In progress |
+| 1b — Indexation recovery (site, docs, app subdomains) — **priority 1** | [01-indexation-recovery.md](01-indexation-recovery.md) | Draft |
+| Baseline figures | [baseline.md](baseline.md) | 2026-10-28 |
 | 2 — Capability, comparison, platform and glossary pages | [02-capability-pages.md](02-capability-pages.md) | Draft |
 | 3 — Blog topic clusters | [03-blog-clusters.md](03-blog-clusters.md) | Draft |
 | 4 — Off-site authority & AI-source presence | [04-off-site-authority.md](04-off-site-authority.md) | Draft |
@@ -75,7 +77,8 @@ Target at 3 months: **~70 useful URLs** and a measurable lift in impressions, cl
 | Weeks | Deliverables |
 | --- | --- |
 | 1 | Phase 0 and Phase 1 |
-| 2 | `CapabilityPageView` template and the first 3 Lot A pages |
+| 1–2 | Phase 1b: docs redirects, sitemap cleanup, noindex on app subdomains |
+| 2 | `/claude` enrichment, `CapabilityPageView` template and the first 3 Lot A pages |
 | 3–6 | Rest of Lot A (~3 pages/week), Lot C (platform pages), blog starts at 2 posts/week |
 | 6–8 | Lot D (glossary) and Lot B (comparisons) |
 | Ongoing | Blog at 2/week, Phase 4, monthly loop (Phase 5) |
