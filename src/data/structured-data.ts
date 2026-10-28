@@ -89,6 +89,7 @@ export const platformApplication = (page: {
   operatingSystem: string
   installUrl: string
   featureList: string[]
+  offerName?: string
 }) => ({
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -103,7 +104,7 @@ export const platformApplication = (page: {
   featureList: page.featureList,
   isPartOf: { '@id': softwareId },
   publisher: { '@id': organizationId },
-  offers: freeOffer,
+  offers: page.offerName ? { ...freeOffer, name: page.offerName } : freeOffer,
 })
 
 /** `about`: the `@id` of the entity the page describes. */

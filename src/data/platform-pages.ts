@@ -56,6 +56,8 @@ export interface PlatformPage {
   path: string
   /** Short platform name, for the JSON-LD. */
   platform: string
+  /** JSON-LD offer name when the platform has no /basic plan. */
+  offerName?: string
   seo: { title: string; description: string }
   docs: string
   hero: {
@@ -311,6 +313,7 @@ export const claudePage: PlatformPage = {
   path: '/claude',
   docs: `${links.docs}/claude`,
   platform: 'Claude',
+  offerName: 'Free',
   seo: {
     title: 'Claude Color Palette Plugin & MCP Server — UI Color Palette',
     description:

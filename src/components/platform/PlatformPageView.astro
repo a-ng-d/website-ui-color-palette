@@ -53,6 +53,7 @@ const jsonLd = [
     description: page.seo.description,
     operatingSystem: page.platform,
     installUrl: page.hero.cta.href,
+    offerName: page.offerName,
     featureList: [
       ...page.surfaces.cards.map((card) => card.title),
       ...page.why.cards.map((card) => card.title),
