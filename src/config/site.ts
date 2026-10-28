@@ -28,22 +28,16 @@ export const site = {
       'https://www.linkedin.com/in/augrimaud',
     ],
   },
-  /**
-   * Official profiles of the product, for the Organization `sameAs`. Canonical
-   * destinations of the uicp.ylb.lt short links in `links`, not the short links
-   * themselves (engines need the final URL).
-   */
+  /** Official product profiles (Organization `sameAs`). Final URLs, never short links. */
   profiles: [
     'https://www.linkedin.com/company/ui-color-palette',
     'https://www.figma.com/community/plugin/1063959496693642315',
     'https://penpot.app/penpothub/plugins/ui-color-palette',
     'https://www.framer.com/marketplace/plugins/ui-color-palette-one-wcag-color-palette-manager-for-apps-websites/',
     'https://github.com/a-ng-d/ui-ui-color-palette',
-    // TODO(content): add the Product Hunt page once it is live. Only add
-    // verified, live URLs here: they feed Organization `sameAs`.
+    // TODO(content): add the Product Hunt page once live.
   ],
-  /** X (Twitter) handle with the @, for twitter:site and twitter:creator. */
-  // TODO(content): set the handle once confirmed; the tags are omitted while null.
+  /** X handle with the @. Twitter tags are omitted while null. */
   twitterHandle: null as string | null,
   publisher: {
     name: 'Yelbolt',

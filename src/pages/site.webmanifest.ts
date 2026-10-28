@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro'
 
 import { site } from '@/config/site'
 
-/** Web app manifest: name and icon when the site is pinned or installed. */
+/** Web app manifest. */
 export const GET: APIRoute = () =>
   new Response(
     JSON.stringify({

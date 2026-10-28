@@ -15,10 +15,7 @@ import {
 } from '@/data/platform-pages'
 import { compareColumns, compareRows, plans } from '@/data/pricing'
 
-/**
- * llms-full.txt: the text of the site's pages in one Markdown file, so an LLM
- * can read everything without crawling. Built from the same data as the pages.
- */
+/** Full text of the site in one Markdown file, built from the page data. */
 export const GET: APIRoute = async () => {
   const url = (path: string) => new URL(path, site.url).href
   const stripHtml = (html: string) => html.replace(/<[^>]+>/g, '')

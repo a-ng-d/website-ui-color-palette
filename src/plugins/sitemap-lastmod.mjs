@@ -1,13 +1,8 @@
 /**
- * `lastmod` of each sitemap URL, for @astrojs/sitemap's `serialize`.
- *
- * - Articles: `updatedDate ?? pubDate` from the front-matter.
- * - /blog: the most recent article.
- * - Other pages: the last commit touching the files that hold their content
- *   (page, data, page components). Site-wide chrome (header, footer, styles)
- *   is left out on purpose: it would date every page at once.
- * When nothing is known (no git history in a shallow clone), lastmod is omitted
- * rather than faked.
+ * `lastmod` of each sitemap URL.
+ * Articles: `updatedDate ?? pubDate`. /blog: newest article. Other pages: last
+ * commit of their content files; site-wide chrome is excluded so it does not
+ * re-date every page. Without git history, lastmod is omitted, never faked.
  */
 import { execFileSync } from 'node:child_process'
 import { readdirSync, readFileSync } from 'node:fs'
@@ -45,11 +40,15 @@ for (const platform of ['figma', 'penpot', 'sketch', 'framer', 'claude'])
 
 const gitDate = (paths) => {
   try {
-    const out = execFileSync('git', ['log', '-1', '--format=%cI', '--', ...paths], {
-      cwd: root,
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'ignore'],
-    }).trim()
+    const out = execFileSync(
+      'git',
+      ['log', '-1', '--format=%cI', '--', ...paths],
+      {
+        cwd: root,
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'ignore'],
+      }
+    ).trim()
     return out ? new Date(out) : undefined
   } catch {
     return undefined
@@ -58,7 +57,9 @@ const gitDate = (paths) => {
 
 const frontMatterDate = (source, key) => {
   const block = source.match(/^---\n([\s\S]*?)\n---/)?.[1] ?? ''
-  const value = block.match(new RegExp(`^${key}:\\s*['"]?([^'"\\n]+)`, 'm'))?.[1]
+  const value = block.match(
+    new RegExp(`^${key}:\\s*['"]?([^'"\\n]+)`, 'm')
+  )?.[1]
   const date = value ? new Date(value) : undefined
   return date && !Number.isNaN(date.getTime()) ? date : undefined
 }
@@ -77,9 +78,7 @@ const postDates = new Map(
 )
 
 const latest = (dates) =>
-  dates
-    .filter(Boolean)
-    .sort((a, b) => b.getTime() - a.getTime())[0]
+  dates.filter(Boolean).sort((a, b) => b.getTime() - a.getTime())[0]
 
 /** @param {string} url absolute URL of a sitemap entry */
 export const lastmodFor = (url) => {

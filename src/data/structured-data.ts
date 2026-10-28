@@ -19,7 +19,7 @@ export const websiteId = `${site.url}/#website`
 export const softwareId = `${site.url}/#software`
 export const authorId = `${site.url}/#aurelien-grimaud`
 
-/** The founder, also the author of the blog. Referenced by `@id` elsewhere. */
+/** The founder and blog author, referenced by `@id`. */
 const founder = {
   '@type': 'Person',
   '@id': authorId,
@@ -186,9 +186,7 @@ export const blogPosting = (post: {
   keywords: post.tags.join(', '),
   ...(post.category ? { articleSection: post.category } : {}),
   inLanguage: site.locale,
-  ...(post.readingMinutes
-    ? { timeRequired: `PT${post.readingMinutes}M` }
-    : {}),
+  ...(post.readingMinutes ? { timeRequired: `PT${post.readingMinutes}M` } : {}),
   ...(post.published ? { datePublished: post.published.toISOString() } : {}),
   ...(post.modified || post.published
     ? { dateModified: (post.modified ?? post.published)!.toISOString() }
@@ -197,7 +195,9 @@ export const blogPosting = (post: {
     '@type': 'Person',
     ...(post.author === site.author.name ? { '@id': authorId } : {}),
     name: post.author,
-    ...(post.authorUrl ? { url: post.authorUrl, sameAs: [post.authorUrl] } : {}),
+    ...(post.authorUrl
+      ? { url: post.authorUrl, sameAs: [post.authorUrl] }
+      : {}),
   },
   publisher: { '@id': organizationId },
   isPartOf: { '@id': websiteId },

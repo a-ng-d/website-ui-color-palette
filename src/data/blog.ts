@@ -18,7 +18,7 @@ export const blogPage = {
 
 export const postPath = (post: Post) => `/blog/${post.id}`
 
-/** Published articles, newest first (ties keep a stable order). */
+/** Published articles, newest first. */
 export const getPosts = async () =>
   (await getCollection('blog', ({ data }) => !data.draft)).sort(
     (a, b) =>
@@ -26,10 +26,7 @@ export const getPosts = async () =>
       a.id.localeCompare(b.id)
   )
 
-/**
- * Articles to read next: same category first, then shared tags, then the most
- * recent ones, so the block is never empty while another article exists.
- */
+/** Related articles: same category, then shared tags, then newest. */
 export const relatedPosts = (post: Post, posts: Post[], limit = 2) => {
   const score = (other: Post) =>
     (other.data.category && other.data.category === post.data.category

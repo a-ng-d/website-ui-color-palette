@@ -6,7 +6,7 @@ import { postPath, type Post } from '@/data/blog'
 
 interface Props {
   post: Post
-  /** Date and category above the title (blog index, related posts). */
+  /** Date and category above the title. */
   meta?: boolean
   sizes?: string
 }
@@ -47,7 +47,6 @@ const dateFormat = new Intl.DateTimeFormat('en', { dateStyle: 'long' })
       </a>
     </h3>
     <p class="post__excerpt">{post.data.description}</p>
-    <!-- Looks like a secondary button; the title link makes the whole card clickable. -->
     <span
       class="post__more text-button text-button--secondary text-button--large"
       aria-hidden="true"
@@ -63,7 +62,7 @@ const dateFormat = new Intl.DateTimeFormat('en', { dateStyle: 'long' })
     position: relative;
     flex-direction: column;
     --card-radius: var(--space-inset-600);
-    /* Fixed height so the cover shrinks to fit; the blog index sets a taller one. */
+    /* Fixed height: the cover shrinks to fit. */
     height: var(--post-card-height, 400px);
     overflow: clip;
   }

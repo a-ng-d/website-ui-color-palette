@@ -26,7 +26,7 @@ const blog = defineCollection({
       updatedDate: z.coerce.date().optional(),
       /** Used for meta keywords, article:tag and the JSON-LD `keywords`. */
       tags: z.array(z.string()).default([]),
-      /** Broad topic (Guides, Product, AI, News): article:section, JSON-LD `articleSection`, related posts. */
+      /** Guides, Product, AI or News. */
       category: z.string().optional(),
       draft: z.boolean().default(false),
       /** Overrides for search engines and social cards; each falls back to the field above. */
