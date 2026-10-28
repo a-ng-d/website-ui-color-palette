@@ -1,6 +1,6 @@
 # Phase 2 — Capability, comparison, platform and glossary pages
 
-- **Status**: In progress (steps 1 to 4 done on branch `seo/phase-2`)
+- **Status**: In progress — steps 1 to 4 done (branch `seo/phase-2`); steps 5 to 8 to do. See [Progress](#progress).
 - **Package(s) concerned**: `website-ui-color-palette`
 - **Related spec**: [README.md](README.md), [03-blog-clusters.md](03-blog-clusters.md), [00-measurement.md](00-measurement.md)
 
@@ -36,6 +36,49 @@ Phase 1b ([01-indexation-recovery.md](01-indexation-recovery.md)) ships first. T
 | 8 | Rest of Lot A, Lot D, Lot B | No measured demand yet. Search Console will tell. |
 
 **Site `/claude` vs docs `/claude`.** The site page targets the product query ("claude color palette", "color palette mcp"), and the docs page targets setup ("install", "skills", "agents"). They cross-link and never share a title query. See [01-indexation-recovery.md](01-indexation-recovery.md), step 7.
+
+## Progress
+
+Last update: 2026-10-28.
+
+| Order | Status | Live pages |
+|---|---|---|
+| 1 | Done | `/claude` (setup steps, design-tool matrix, MCP tools table, FAQ) |
+| 2 | Done | `/capabilities/oklch-lch-color-spaces`, `/glossary`, `/glossary/oklch`, `/glossary/lch`, `/glossary/oklab`, `/glossary/hsluv` |
+| 3 | Done | `/capabilities/color-blindness-simulation`, `/glossary/color-blindness-types` |
+| 4 | Done | `/capabilities/wcag-apca-contrast`, `/glossary/apca`, `/glossary/wcag-contrast-ratio` |
+| 5 | To do | `color-palette-generator` |
+| 6 | To do | `/figma`, then `/framer` (Lot C, same blocks as `/claude`) |
+| 7 | To do | `tailwind-color-palette`, `swiftui-compose-colors` |
+| 8 | To do | Lot A: `export-design-tokens`, `ai-color-palette-generator`, `image-to-color-palette`, `color-wheel-harmony`, `light-dark-themes`, `design-system-presets`, `semantic-color-system`. Lot C: `/penpot`, `/sketch`. Lot D: `cielab`, `color-scale`, `design-token`, `semantic-color`, `color-harmony`. Lot B: the 5 comparison pages and the `/compare` hub |
+
+Lot A pages left: 10 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C: 4 of 5. Lot D: 5 of 12 (the hub is live). Lot B: all 6.
+
+### What is in place for the next pages
+
+- **Capability page**: a `CapabilityPage` in `src/data/capability-pages.ts`, rendered by `CapabilityPageView` at `/capabilities/<slug>`. A new page is data only; each planned page has a matching demo in `src/components/capabilities/demos/`.
+- **Glossary term**: a `GlossaryTerm` in `src/data/glossary.ts` (optional `question` h1, `visual`, `table`, `capability`). Visuals: `HueRamp`, `VisionRamp`, `ContrastRamp`.
+- **Platform page**: optional `setup`, `tables`, `faq` and `nextSteps` on `PlatformPage` (used by `/claude` only so far).
+- **Wiring is automatic**: `/capabilities` "Capabilities in depth" row, `/glossary` hub, `llms.txt` / `llms-full.txt`, sitemap `lastmod`, breadcrumbs and JSON-LD come from the data.
+- **Reviews per step**: `seo-reviewer`, `fact-checker` and `style-guardian`, then the fixes, before merge.
+
+### Follow-ups
+
+- **`/capabilities` "Capabilities in depth" row**: a compact card variant is needed past about 8 pages (around step 7).
+- **Cluster articles** ([03-blog-clusters.md](03-blog-clusters.md)): when an article ships, link it from its pillar page (related cards, FAQ "Full comparison") and respect the ownership rules recorded there.
+- **Lighthouse**: run on mobile on one capability page after deploy (SEO = 100, green Core Web Vitals) — not done yet.
+- **Sitemap `lastmod`**: check that the new URLs carry a date after deploy (it comes from the git history of the data files).
+- **Docs glossary**: link each docs entry to its site term page (OKLCH, LCH, OKLab, HSLuv, the 8 color blindness types, APCA, WCAG 2.1), as Lot D requires.
+- **Docs**: `general/introduction/free-and-pro.md` lists hue/chroma distribution curves as `/pro`, but `hue-chroma-distribution.md` is a Draft spec.
+
+### Acceptance criteria, where they stand
+
+- Lot A pages: one h1 with the primary query, a 40–60 word lead, FAQPage + BreadcrumbList + WebPage JSON-LD, ≥3 links out and ≥2 in, fact-checked — met for the 3 live pages.
+- `/capabilities` links to every Lot A page — met (through the "Capabilities in depth" row).
+- Platform pages: capability matrix, setup guide, FAQ with FAQPage, ≥3 Lot A links — met for `/claude`; `/figma`, `/penpot`, `/sketch`, `/framer` to do.
+- Glossary terms: definition of 60 words or fewer first, `DefinedTerm` linked to the `/glossary` `DefinedTermSet` — met for the 7 live terms.
+- Sitemap, `llms.txt`, `llms-full.txt` — met for every new page (`lastmod` to check after deploy).
+- Comparison pages and Lighthouse — not started.
 
 ## Lot A — capability pages
 
