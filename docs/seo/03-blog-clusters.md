@@ -22,7 +22,7 @@ Cadence: **2 articles per week for 12 weeks** (~24 articles), with a first wave 
 | 1 | APCA vs WCAG 2: what changes for UI colors | Guide | apca vs wcag | wcag-apca-contrast | `preview.md`, public WCAG/APCA references |
 | 2 | How to build an accessible color scale, step by step | Guide | accessible color scale | wcag-apca-contrast | `scale.md`, docs `create-a-color-palette.md` |
 | 3 | Contrast targets for text, buttons and borders | Problem → solution | contrast ratio for buttons | wcag-apca-contrast | `preview.md` |
-| 4 | Designing for color blindness: the 8 vision types | Guide | designing for color blindness | color-blindness-simulation | `themes.md` |
+| 4 | Designing for color blindness: a UI palette checklist | Guide | designing for color blindness | color-blindness-simulation | `themes.md` |
 | **Color spaces** | | | | `oklch-lch-color-spaces` | |
 | 5 | Why OKLCH beats HSL for UI palettes | Problem → solution | oklch vs hsl | oklch-lch-color-spaces | docs `what-is-the-lch-model.md` |
 | 6 | LCH vs OKLCH: which one for your design system? | Guide | lch vs oklch | oklch-lch-color-spaces | `settings.md`, docs glossary |
@@ -38,6 +38,8 @@ Cadence: **2 articles per week for 12 weeks** (~24 articles), with a first wave 
 | **AI** | | | | `ai-color-palette-generator` / `mcp-color-palette` | |
 | 14 | Generate a UI palette from a prompt (12 presets explained) | Feature spotlight | ai color palette generator | ai-color-palette-generator | `ai-generation.md` |
 | 15 | Turn an image or moodboard into a UI palette | Guide | color palette from image | image-to-color-palette | `image-extraction.md` |
+
+Pillar FAQs give the short answer (2–3 sentences) to the comparison queries; the cluster article gives the long one. When an article ships, its pillar FAQ answer links to it ("Full comparison: …") and the pillar's related cards list it. For the color-blindness cluster: the capability page owns the tool query, `/glossary/color-blindness-types` owns the definitions (incl. "achromatomaly"), and article 4 owns "how to design for color blindness" (rules, patterns, testing) and links to both. For the contrast cluster: `/capabilities/wcag-apca-contrast` owns the tool and "accessible color palette", `/glossary/wcag-contrast-ratio` owns the thresholds and "4.5:1", `/glossary/apca` owns the Lc levels, article 1 owns "apca vs wcag" (long answer), and article 3 owns "contrast ratio for buttons": it links to the glossary for the values instead of restating the thresholds table, and button or state guidance (hover, disabled, borders) stays in the article. For the color-spaces cluster: article 6 takes the design-system decision angle (token pipeline, CSS support), not the definition already on `/glossary/lch` and `/glossary/oklch`.
 
 Candidates for wave 2:
 - color harmony rules for UI

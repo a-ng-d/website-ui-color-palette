@@ -15,7 +15,7 @@ const REVEAL = [
   '.platforms__intro',
   '.posts__intro',
   '.extra__intro',
-  '.faq__intro',
+  '.intro-card__intro',
   '.stack__intro',
   '.mosaic__intro',
   '.audience__intro',

@@ -76,7 +76,7 @@ The docs drive about 65% of organic clicks (see [baseline.md](baseline.md)). New
    - **Docs `/claude`** is the setup reference ("install", "skills", "agents", "4-phase workflow").
    - Each links to the other with a descriptive anchor. Titles must not share the same primary query.
    - **Done (2026-10-28):**
-     - The site `/claude` title is now "Claude Color Palette Plugin — UI Color Palette".
+     - The site `/claude` title is now "Claude Color Palette Plugin & MCP Server — UI Color Palette" ("& MCP Server" added in Phase 2, step 1, when `mcp-color-palette` was merged in).
      - Every platform page links to its docs space, through a "Set it up" card that replaces the `/download` card.
      - Docs `/claude` links back to the site.
      - The docs `/claude` title is deliberately unchanged: it brings 54 clicks and ranks 8.7. Revisit only if Search Console shows the two pages alternating on the same query.

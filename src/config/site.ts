@@ -35,7 +35,6 @@ export const site = {
     'https://penpot.app/penpothub/plugins/ui-color-palette',
     'https://www.framer.com/marketplace/plugins/ui-color-palette-one-wcag-color-palette-manager-for-apps-websites/',
     'https://github.com/a-ng-d/ui-ui-color-palette',
-    // TODO(content): add the Product Hunt page once live.
   ],
   /** X handle with the @. Twitter tags are omitted while null. */
   twitterHandle: null as string | null,
@@ -43,7 +42,6 @@ export const site = {
     name: 'Yelbolt',
     url: 'https://yelbolt.co/',
   },
-  /** Google Analytics 4 measurement ID. */
   googleAnalyticsId: 'G-MEC0CFX9P1',
   /** Tawk.to live chat widget: `<propertyId>/<widgetId>`. */
   tawkWidget: '680b8b6e6b4e0c1911f5d5ad/1ipmhha73',
@@ -98,7 +96,6 @@ export const mainNav: NavLink[] = [
   { label: 'Blog', href: '/blog' },
 ]
 
-// TODO(content): confirm entries and descriptions of the Resources menu.
 export const resourcesNav: NavLink[] = [
   {
     label: 'Read the docs',
@@ -145,6 +142,7 @@ export const footerNav = {
   ],
   resources: [
     { label: 'Blog', href: '/blog' },
+    { label: 'Color glossary', href: '/glossary' },
     { label: 'Read the docs', href: links.docs },
     { label: 'Contact support', href: links.support },
   ],

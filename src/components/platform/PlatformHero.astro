@@ -5,9 +5,11 @@ import ShadeGrid from '@/components/ui/ShadeGrid.astro'
 import type { PlatformPage } from '@/data/platform-pages'
 
 interface Props {
-  /** The install link is optional. */
-  hero: Omit<PlatformPage['hero'], 'cta'> &
-    Partial<Pick<PlatformPage['hero'], 'cta'>>
+  hero: {
+    title: string
+    tagline?: string
+    cta?: PlatformPage['hero']['cta']
+  }
 }
 
 const { hero } = Astro.props
@@ -37,7 +39,7 @@ const { hero } = Astro.props
         >
           {hero.title}
         </h1>
-        <p class="t-tagline">{hero.tagline}</p>
+        {hero.tagline && <p class="t-tagline">{hero.tagline}</p>}
       </div>
       {hero.cta && (
         <Button

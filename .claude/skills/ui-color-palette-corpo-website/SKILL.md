@@ -36,8 +36,10 @@ to this site. Read the reference file that matches the task before writing code.
    describes the page (see new-page.md).
 7. **Reduced motion and no-JS are first-class**: the page must be complete and still.
 8. **Comments only for a non-obvious why.** A constraint, a workaround, a keep-in-sync link,
-   a documented exception — never narration, restating code, banners or change history. The
-   full rule is in the repo `CLAUDE.md` ("Code comments").
+   a documented exception. Default is no comment. Never narration, restating code, JSDoc
+   that paraphrases a name, banners, change history or `TODO`/`FIXME` markers (open work
+   goes in an issue or `docs/`). Apply the delete test of the repo `CLAUDE.md`
+   ("Code comments"), which holds the full rule.
 
 ## Workflow for a page or section
 

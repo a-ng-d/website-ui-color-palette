@@ -5,14 +5,19 @@ import { getPosts, postPath } from '@/data/blog'
 import { audiences, capabilityGroups } from '@/data/capabilities'
 import { downloadPage, downloads } from '@/data/downloads'
 import { homeFaq, pricingFaq, type FaqItem } from '@/data/faq'
+import type { Steps, Table, TableValue } from '@/data/blocks'
 import {
-  claudePage,
-  figmaPage,
-  framerPage,
-  penpotPage,
-  sketchPage,
-  type PlatformPage,
-} from '@/data/platform-pages'
+  capabilityPages,
+  capabilityPath,
+  type CapabilityPage,
+} from '@/data/capability-pages'
+import {
+  glossary,
+  glossaryTerms,
+  termPath,
+  termQuestion,
+} from '@/data/glossary'
+import { platformPages, type PlatformPage } from '@/data/platform-pages'
 import { compareColumns, compareRows, plans } from '@/data/pricing'
 
 /** Full text of the site in one Markdown file, built from the page data. */
@@ -34,6 +39,43 @@ export const GET: APIRoute = async () => {
       '',
     ])
 
+  const tableCell = (value: TableValue) =>
+    value === true ? 'yes' : value === false ? 'no' : value
+
+  const stepsLines = (steps: Steps) => [
+    `### ${steps.title}`,
+    '',
+    steps.intro,
+    '',
+    ...steps.steps.map(
+      (step, index) =>
+        `${index + 1}. **${step.title}**: ${step.text}${step.code ? ` \`${step.code}\`` : ''}`
+    ),
+    '',
+    ...(steps.docs ? [`${steps.docs.label}: ${steps.docs.href}`, ''] : []),
+  ]
+
+  const tableLines = (table: Table) => [
+    `### ${table.title}`,
+    '',
+    table.intro,
+    '',
+    ...(table.code ? ['```', table.code, '```', ''] : []),
+    `| ${[table.rowHeader, ...table.columns].join(' | ')} |`,
+    `|${' --- |'.repeat(table.columns.length + 1)}`,
+    ...table.rows.map(
+      (row) => `| ${[row.label, ...row.values.map(tableCell)].join(' | ')} |`
+    ),
+    '',
+    ...(table.note ? [table.note, ''] : []),
+  ]
+
+  const faqLines = (title: string, items: FaqItem[]) => [
+    `### ${title}: FAQ`,
+    '',
+    ...faq(items).map((line) => (line.startsWith('### ') ? `#${line}` : line)),
+  ]
+
   const platformSection = (page: PlatformPage) => [
     `## ${page.hero.title}`,
     '',
@@ -51,8 +93,23 @@ export const GET: APIRoute = async () => {
     '',
     ...page.why.cards.map((card) => `- **${card.title}**: ${card.text}`),
     '',
+    ...(page.setup ? stepsLines(page.setup) : []),
+    ...(page.tables ?? []).flatMap(tableLines),
+    ...(page.faq ? faqLines(page.hero.title, page.faq.items) : []),
     `Install: ${page.hero.cta.href}`,
     '',
+  ]
+
+  const capabilitySection = (page: CapabilityPage) => [
+    `## ${page.hero.title}`,
+    '',
+    `URL: ${url(capabilityPath(page))}`,
+    '',
+    page.overview.lead,
+    '',
+    ...stepsLines(page.how),
+    ...page.tables.flatMap(tableLines),
+    ...faqLines(page.name, page.faq.items),
   ]
 
   const cell = (value: string | boolean) =>
@@ -89,9 +146,8 @@ export const GET: APIRoute = async () => {
       ...item.points.map((point) => `  - ${point.lead}: ${point.text}`),
     ]),
     '',
-    ...[figmaPage, penpotPage, sketchPage, framerPage, claudePage].flatMap(
-      platformSection
-    ),
+    ...capabilityPages.flatMap(capabilitySection),
+    ...platformPages.flatMap(platformSection),
     '## Download',
     '',
     `URL: ${url(downloadPage.path)}`,
@@ -127,6 +183,22 @@ export const GET: APIRoute = async () => {
       ...faq(category.items).map((line) =>
         line.startsWith('### ') ? `#${line}` : line
       ),
+    ]),
+    `## ${glossary.title}`,
+    '',
+    `URL: ${url('/glossary')}`,
+    '',
+    ...glossaryTerms.flatMap((term) => [
+      `### ${termQuestion(term)}`,
+      '',
+      `URL: ${url(termPath(term))}`,
+      '',
+      term.definition,
+      '',
+      ...[...term.why, ...term.inProduct]
+        .map(stripHtml)
+        .flatMap((p) => [p, '']),
+      ...(term.table ? tableLines(term.table) : []),
     ]),
     '## FAQ',
     '',

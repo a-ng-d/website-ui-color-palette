@@ -1,0 +1,112 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import HueRamp from '@/components/glossary/HueRamp.astro'
+import VisionRamp from '@/components/glossary/VisionRamp.astro'
+import ContrastRamp from '@/components/glossary/ContrastRamp.astro'
+import Reinsurance from '@/components/home/Reinsurance.astro'
+import NextSteps from '@/components/platform/NextSteps.astro'
+import PlatformHero from '@/components/platform/PlatformHero.astro'
+import IntroCardSection from '@/components/ui/IntroCardSection.astro'
+import TableSection from '@/components/ui/TableSection.astro'
+import TextCardsSection from '@/components/ui/TextCardsSection.astro'
+import type { NextStep } from '@/data/blocks'
+import {
+  glossaryTerms,
+  termPath,
+  termQuestion,
+  type GlossaryTerm,
+} from '@/data/glossary'
+import {
+  breadcrumbs,
+  definedTerm,
+  glossaryPath,
+  organization,
+  termId,
+  webPage,
+} from '@/data/structured-data'
+
+interface Props {
+  term: GlossaryTerm
+}
+
+const { term } = Astro.props
+const path = termPath(term)
+const title = termQuestion(term)
+
+const related: NextStep[] = [
+  ...term.related
+    .map((slug) => glossaryTerms.find((other) => other.slug === slug))
+    .filter((other) => other !== undefined)
+    .map((other) => ({
+      icon: 'book-open' as const,
+      title: termQuestion(other),
+      label: 'Read the definition',
+      href: termPath(other),
+    })),
+  {
+    icon: 'glasses',
+    title: 'Build a palette with it',
+    label: `See ${term.capability.name}`,
+    href: term.capability.href,
+  },
+]
+
+const jsonLd = [
+  organization(),
+  webPage({
+    path,
+    name: term.seo.title,
+    description: term.seo.description,
+    about: termId(path),
+  }),
+  definedTerm({ path, name: term.term, description: term.definition }),
+  breadcrumbs([
+    { name: 'Home', path: '/' },
+    { name: 'Glossary', path: glossaryPath },
+    { name: term.term, path },
+  ]),
+]
+---
+
+<BaseLayout
+  title={term.seo.title}
+  description={term.seo.description}
+  jsonLd={jsonLd}
+>
+  <PlatformHero hero={{ title }} />
+  <IntroCardSection
+    id="definition"
+    title={`${term.term}, in short`}
+    intro={term.definition}
+  >
+    {term.visual === 'contrast' ? (
+      <ContrastRamp />
+    ) : term.visual === 'vision' ? (
+      <VisionRamp />
+    ) : (
+      <HueRamp space={term.visual} />
+    )}
+  </IntroCardSection>
+  <TextCardsSection
+    cards={[
+      { title: 'Why it matters for UI color', paragraphs: term.why },
+      {
+        title: 'How UI Color Palette uses it',
+        paragraphs: term.inProduct,
+        actions: [
+          {
+            label: `See ${term.capability.name}`,
+            href: term.capability.href,
+          },
+          { label: 'See every term in the glossary', href: glossaryPath },
+        ],
+      },
+    ]}
+  />
+  {term.table && <TableSection table={term.table} />}
+  <NextSteps
+    steps={related}
+    title={`Related to ${term.term}`}
+  />
+  <Reinsurance />
+</BaseLayout>

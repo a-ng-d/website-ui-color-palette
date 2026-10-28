@@ -12,6 +12,7 @@ import PlusIcon from '@lucide/astro/icons/plus'
 import LockOpenIcon from '@lucide/astro/icons/lock-open'
 import ContrastIcon from '@lucide/astro/icons/contrast'
 import LibraryIcon from '@lucide/astro/icons/library'
+import EyeIcon from '@lucide/astro/icons/eye'
 import FilePlusIcon from '@lucide/astro/icons/file-plus'
 import SquareCodeIcon from '@lucide/astro/icons/square-code'
 import HeadsetIcon from '@lucide/astro/icons/headset'
@@ -67,7 +68,6 @@ export interface Plan {
   tag: string
   /** Same content whatever the billing period. */
   fixed?: PlanVariant
-  /** Content per billing period. */
   variants?: Record<BillingPeriod, PlanVariant>
   features: PlanFeature[]
   badge?: string
@@ -115,10 +115,11 @@ export const plans: Plan[] = [
       cta: { label: 'Try it out', href: site.appUrl, variant: 'secondary' },
     },
     features: [
-      { icon: PaletteIcon, label: '3 palettes per document' },
+      { icon: PaletteIcon, label: '2 palettes per document' },
       { icon: PaintbrushIcon, label: '5 source colors per palette' },
       { icon: CombineIcon, label: '6 custom stops per palette' },
       { icon: BlendIcon, label: '2 color modes' },
+      { icon: LibraryIcon, label: 'Sync with local libraries' },
       { icon: BracesIcon, label: 'CSS export' },
       { icon: UsersIcon, label: 'Community support' },
     ],
@@ -165,7 +166,7 @@ export const plans: Plan[] = [
         label: 'Unlimited palettes, colors, stops, and modes',
       },
       { icon: ContrastIcon, label: 'Advanced accessibility tools' },
-      { icon: LibraryIcon, label: 'Sync with local libraries' },
+      { icon: EyeIcon, label: 'Every vision simulation' },
       { icon: FilePlusIcon, label: 'Generated documentation' },
       {
         icon: SquareCodeIcon,
@@ -222,7 +223,7 @@ export const compareColumns = ['/basic', '/pro', '/ultimate'] as const
 export const compareRows: CompareRow[] = [
   {
     feature: 'Palette per document',
-    values: ['3 palettes', 'Unlimited', 'Unlimited'],
+    values: ['2 palettes', 'Unlimited', 'Unlimited'],
   },
   {
     feature: 'Source colors per palette',
@@ -236,7 +237,10 @@ export const compareRows: CompareRow[] = [
     feature: 'Color modes',
     values: ['2 color modes', 'Unlimited', 'Unlimited'],
   },
-  { feature: 'Lightness presets', values: ['Custom', 'All', 'All'] },
+  {
+    feature: 'Lightness presets',
+    values: ['Custom, Material, Tailwind', 'All', 'All'],
+  },
   { feature: 'Color import', values: [true, true, true] },
   { feature: 'Color combinations', values: [true, true, true] },
   { feature: 'Scale adjustments', values: [true, true, true] },
@@ -244,9 +248,9 @@ export const compareRows: CompareRow[] = [
   { feature: 'Custom foreground colors', values: [true, true, true] },
   { feature: 'Accessibility scores', values: [true, true, true] },
   { feature: 'Accessibility report', values: [false, true, true] },
-  { feature: 'Vision simulations', values: [true, true, true] },
+  { feature: 'Vision simulations', values: ['Protanomaly', 'All 8', 'All 8'] },
   { feature: 'Code generation', values: ['CSS', true, true] },
-  { feature: 'Sync with local libraries', values: [false, true, true] },
+  { feature: 'Sync with local libraries', values: [true, true, true] },
   { feature: 'Documentation generation', values: [false, true, true] },
   { feature: 'Publication', values: [true, true, true] },
   { feature: 'Support', values: ['Community', 'Chat', 'Dedicated'] },

@@ -1,0 +1,73 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Demo from '@/components/capabilities/Demo.astro'
+import Faq from '@/components/home/Faq.astro'
+import Reinsurance from '@/components/home/Reinsurance.astro'
+import NextSteps from '@/components/platform/NextSteps.astro'
+import PlatformHero from '@/components/platform/PlatformHero.astro'
+import IntroCardSection from '@/components/ui/IntroCardSection.astro'
+import StepsSection from '@/components/ui/StepsSection.astro'
+import TableSection from '@/components/ui/TableSection.astro'
+import { capabilityPath, type CapabilityPage } from '@/data/capability-pages'
+import {
+  breadcrumbs,
+  faqPage,
+  organization,
+  softwareId,
+  webPage,
+} from '@/data/structured-data'
+
+interface Props {
+  page: CapabilityPage
+}
+
+const { page } = Astro.props
+const path = capabilityPath(page)
+
+const jsonLd = [
+  organization(),
+  webPage({
+    path,
+    name: page.seo.title,
+    description: page.seo.description,
+    about: softwareId,
+  }),
+  breadcrumbs([
+    { name: 'Home', path: '/' },
+    { name: 'Capabilities', path: '/capabilities' },
+    { name: page.name, path },
+  ]),
+  faqPage(page.faq.items),
+]
+---
+
+<BaseLayout
+  title={page.seo.title}
+  description={page.seo.description}
+  jsonLd={jsonLd}
+>
+  <PlatformHero hero={page.hero} />
+  <IntroCardSection
+    id="overview"
+    title={page.overview.title}
+    intro={page.overview.lead}
+  >
+    <Demo id={page.overview.demo} />
+  </IntroCardSection>
+  <StepsSection
+    id="how-it-works"
+    steps={page.how}
+  />
+  {page.tables.map((table) => (
+    <TableSection table={table} />
+  ))}
+  <Faq
+    items={page.faq.items}
+    intro={page.faq.intro}
+  />
+  <NextSteps
+    steps={page.related}
+    title={`Related to ${page.name}`}
+  />
+  <Reinsurance />
+</BaseLayout>

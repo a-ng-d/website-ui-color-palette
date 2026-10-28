@@ -1,0 +1,71 @@
+---
+import Button from '@/components/ui/Button.astro'
+import StackSection from '@/components/ui/StackSection.astro'
+import type { Steps } from '@/data/blocks'
+
+interface Props {
+  id: string
+  steps: Steps
+}
+
+const { id, steps } = Astro.props
+---
+
+<StackSection
+  id={id}
+  title={steps.title}
+  intro={steps.intro}
+  ordered
+  cardMinHeight="360px"
+>
+  {steps.docs && (
+    <div
+      class="setup__docs"
+      slot="intro"
+    >
+      <Button
+        variant="secondary"
+        href={steps.docs.href}
+      >
+        {steps.docs.label}
+      </Button>
+    </div>
+  )}
+
+  {steps.steps.map((step, index) => (
+    <li class="setup__step surface-card">
+      <span
+        class="setup__index t-main-title"
+        aria-hidden="true"
+      >
+        {String(index + 1).padStart(2, '0')}
+      </span>
+      <div class="setup__body">
+        <h3 class="t-paragraph-secondary-title">{step.title}</h3>
+        <p class="t-accent">{step.text}</p>
+        {step.code && <code class="code-snippet">{step.code}</code>}
+      </div>
+    </li>
+  ))}
+</StackSection>
+
+<style>
+  .setup__docs {
+    display: flex;
+  }
+
+  .setup__step {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-gap-800);
+    padding: var(--space-inset-800);
+  }
+
+  .setup__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    min-width: 0;
+  }
+</style>

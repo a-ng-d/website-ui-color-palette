@@ -76,6 +76,8 @@ export const softwareApplication = (offers: object | object[] = freeOffer) => ({
   offers,
 })
 
+export const platformSoftwareId = (path: string) => `${absolute(path)}#software`
+
 /**
  * A platform edition of the plugin (/figma, /penpot…), part of the main
  * application so engines tie the pages together.
@@ -87,10 +89,11 @@ export const platformApplication = (page: {
   operatingSystem: string
   installUrl: string
   featureList: string[]
+  offerName?: string
 }) => ({
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  '@id': `${absolute(page.path)}#software`,
+  '@id': platformSoftwareId(page.path),
   name: page.name,
   url: absolute(page.path),
   description: page.description,
@@ -101,10 +104,27 @@ export const platformApplication = (page: {
   featureList: page.featureList,
   isPartOf: { '@id': softwareId },
   publisher: { '@id': organizationId },
-  offers: freeOffer,
+  offers: page.offerName ? { ...freeOffer, name: page.offerName } : freeOffer,
 })
 
-/** The plans of the Pricing page, as offers of the application. */
+/** `about`: the `@id` of the entity the page describes. */
+export const webPage = (page: {
+  path: string
+  name: string
+  description: string
+  about?: string
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${absolute(page.path)}#webpage`,
+  url: absolute(page.path),
+  name: page.name,
+  description: page.description,
+  inLanguage: site.locale,
+  isPartOf: { '@id': websiteId },
+  ...(page.about ? { about: { '@id': page.about } } : {}),
+})
+
 export const pricingOffers = () => {
   const offer = (plan: Plan, period: string, variant: PlanVariant) => ({
     '@type': 'Offer',
@@ -214,7 +234,6 @@ export const blogPosting = (post: {
     : {}),
 })
 
-/** The blog index: a collection page listing every article. */
 export const blogCollection = (blog: {
   path: string
   title: string
@@ -240,6 +259,45 @@ export const blogCollection = (blog: {
       name: post.title,
     })),
   },
+})
+
+export const glossaryPath = '/glossary'
+const termSetId = absolute(`${glossaryPath}#terms`)
+export const termId = (path: string) => `${absolute(path)}#term`
+
+export const definedTermSet = (set: {
+  name: string
+  description: string
+  terms: { path: string; name: string; description: string }[]
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  '@id': termSetId,
+  url: absolute(glossaryPath),
+  name: set.name,
+  description: set.description,
+  inLanguage: site.locale,
+  hasDefinedTerm: set.terms.map((term) => ({
+    '@type': 'DefinedTerm',
+    '@id': termId(term.path),
+    url: absolute(term.path),
+    name: term.name,
+    description: term.description,
+  })),
+})
+
+export const definedTerm = (term: {
+  path: string
+  name: string
+  description: string
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTerm',
+  '@id': termId(term.path),
+  url: absolute(term.path),
+  name: term.name,
+  description: term.description,
+  inDefinedTermSet: { '@id': termSetId },
 })
 
 export const breadcrumbs = (items: { name: string; path: string }[]) => ({

@@ -9,6 +9,9 @@ variables are applied to native elements.
 | Need | Use | Not |
 | --- | --- | --- |
 | Action button or button-styled link | `ui/Button.astro` (`variant` primary/secondary/tertiary/alternative, `size`, `block`, `iconOnly`, slot `icon` for a left icon) | @unoff/ui `<Button>`: renders a `<button>` that navigates in JS |
+| Call to action on its own or after a block of text ("Read the guide in the docs", "See every term") | `ui/Button.astro` `variant="secondary"`; with two CTAs side by side, the first `primary` and the second `secondary` (natural width, wrapping; column on mobile) | an underlined text link |
+| "Read more" on a whole-card link | a non-interactive `<span class="text-button text-button--secondary text-button--large" aria-hidden="true">` + hover on the card (`PostCard`, `/glossary`) | a second link inside the card |
+| Link inside a sentence (FAQ answer, paragraph) | plain `<a>`, underlined | a button |
 | Text link (header nav, footer lists, menu) | `ui/TertiaryLink.astro` (@unoff/ui `<Button type="tertiary">` inside an `<a>`) — team choice | — |
 | Badge "New" | @unoff/ui `<Chip>` from `@unoff-dist/components/tags/chip/Chip.js` | — |
 | Outlined pill label ("News", "Try for free", hero news) | `ui/Tag.astro` (`size` small/large) | Chip (too small) |

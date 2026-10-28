@@ -24,7 +24,7 @@ Target at 3 months: **~70 useful URLs** and a measurable lift in impressions, cl
 | 1 — Technical foundations | Implemented on branch `seo/phase-1` (see below) | In progress |
 | 1b — Indexation recovery (site, docs, app subdomains) — **priority 1** | [01-indexation-recovery.md](01-indexation-recovery.md) | Draft |
 | Baseline figures | [baseline.md](baseline.md) | 2026-10-28 |
-| 2 — Capability, comparison, platform and glossary pages | [02-capability-pages.md](02-capability-pages.md) | Draft |
+| 2 — Capability, comparison, platform and glossary pages | [02-capability-pages.md](02-capability-pages.md) | In progress (steps 1–4 done, 5–8 to do) |
 | 3 — Blog topic clusters | [03-blog-clusters.md](03-blog-clusters.md) | Draft |
 | 4 — Off-site authority & AI-source presence | [04-off-site-authority.md](04-off-site-authority.md) | Draft |
 | 5 — Monthly optimization loop | [05-optimization-loop.md](05-optimization-loop.md) | Draft |

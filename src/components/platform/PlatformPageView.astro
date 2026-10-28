@@ -1,21 +1,27 @@
 ---
 /**
- * A whole platform page (/figma, /penpot, /sketch, /framer, /claude) from its
- * data in `data/platform-pages.ts`. The `media` slot replaces the plugin embed
- * for pages that have none. The demos wear the platform's UI: the page file
- * imports `styles/generated/unoff-tokens-<platform>.css`.
+ * The `media` slot replaces the plugin embed for pages that have none. The
+ * demos wear the platform's UI: the page file imports
+ * `styles/generated/unoff-tokens-<platform>.css`.
  */
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import MosaicSection from '@/components/capabilities/MosaicSection.astro'
+import Faq from '@/components/home/Faq.astro'
 import Reinsurance from '@/components/home/Reinsurance.astro'
 import NextSteps from '@/components/platform/NextSteps.astro'
 import PlatformHero from '@/components/platform/PlatformHero.astro'
 import PlatformSurfaces from '@/components/platform/PlatformSurfaces.astro'
+import StepsSection from '@/components/ui/StepsSection.astro'
+import TableSection from '@/components/ui/TableSection.astro'
+import { site } from '@/config/site'
 import { nextSteps, type PlatformPage } from '@/data/platform-pages'
 import {
+  faqPage,
   organization,
   pageBreadcrumbs,
   platformApplication,
+  platformSoftwareId,
+  webPage,
 } from '@/data/structured-data'
 
 interface Props {
@@ -23,32 +29,44 @@ interface Props {
 }
 
 const { page } = Astro.props
+// The h1 may carry the search query; the product keeps its own name.
+const name = `${site.name} for ${page.platform}`
 const textOnly = page.why.cards.every((card) => !card.demo)
-const steps = nextSteps.map((step) =>
-  step.href === '/download'
-    ? {
-        icon: 'wrench' as const,
-        title: 'Set it up',
-        label: 'Read the docs',
-        href: page.docs,
-      }
-    : step
-)
+const steps =
+  page.nextSteps ??
+  nextSteps.map((step) =>
+    step.href === '/download'
+      ? {
+          icon: 'wrench' as const,
+          title: 'Set it up',
+          label: 'Read the docs',
+          href: page.docs,
+        }
+      : step
+  )
 
 const jsonLd = [
   organization(),
   platformApplication({
     path: page.path,
-    name: page.hero.title,
+    name,
     description: page.seo.description,
     operatingSystem: page.platform,
     installUrl: page.hero.cta.href,
+    offerName: page.offerName,
     featureList: [
       ...page.surfaces.cards.map((card) => card.title),
       ...page.why.cards.map((card) => card.title),
     ],
   }),
-  pageBreadcrumbs(page.hero.title, page.path),
+  webPage({
+    path: page.path,
+    name: page.seo.title,
+    description: page.seo.description,
+    about: platformSoftwareId(page.path),
+  }),
+  pageBreadcrumbs(name, page.path),
+  ...(page.faq ? [faqPage(page.faq.items)] : []),
 ]
 ---
 
@@ -69,6 +87,21 @@ const jsonLd = [
     columns={textOnly ? 4 : 2}
     platform={textOnly ? undefined : page.platform.toLowerCase()}
   />
+  {page.setup && (
+    <StepsSection
+      id="setup"
+      steps={page.setup}
+    />
+  )}
+  {page.tables?.map((table) => (
+    <TableSection table={table} />
+  ))}
+  {page.faq && (
+    <Faq
+      items={page.faq.items}
+      intro={page.faq.intro}
+    />
+  )}
   <NextSteps steps={steps} />
   <Reinsurance />
 </BaseLayout>

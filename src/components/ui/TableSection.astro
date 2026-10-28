@@ -1,0 +1,132 @@
+---
+import CheckIcon from '@lucide/astro/icons/check'
+import MinusIcon from '@lucide/astro/icons/minus'
+import IntroCardSection from '@/components/ui/IntroCardSection.astro'
+import type { Table } from '@/data/blocks'
+
+interface Props {
+  table: Table
+}
+
+const { table } = Astro.props
+---
+
+<IntroCardSection
+  id={table.id}
+  title={table.title}
+  intro={table.intro}
+  code={table.code}
+  wide
+>
+  <!-- Focusable so keyboard users can scroll a table wider than the screen. -->
+  <div
+    class="matrix__scroll"
+    tabindex="0"
+    role="region"
+    aria-label={table.caption}
+  >
+    <table class="matrix">
+      <caption class="visually-hidden">{table.caption}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{table.rowHeader}</th>
+          {table.columns.map((column) => (
+            <th scope="col">{column}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {table.rows.map((row) => (
+          <tr>
+            <th scope="row">
+              {row.href ? <a href={row.href}>{row.label}</a> : row.label}
+            </th>
+            {row.values.map((value) => (
+              <td>
+                {value === true ? (
+                  <>
+                    <CheckIcon class="matrix__icon" />
+                    <span class="visually-hidden">Yes</span>
+                  </>
+                ) : value === false ? (
+                  <>
+                    <MinusIcon class="matrix__icon matrix__icon--off" />
+                    <span class="visually-hidden">No</span>
+                  </>
+                ) : (
+                  value
+                )}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  {table.note && <p class="matrix__note t-accent">{table.note}</p>}
+</IntroCardSection>
+
+<style>
+  /* Positioned so the absolute .visually-hidden labels stay inside the scroll box. */
+  .matrix__scroll {
+    position: relative;
+    overflow-x: auto;
+  }
+
+  .matrix__scroll:focus-visible {
+    outline: var(--site-focus-outline);
+    outline-offset: var(--site-focus-offset);
+  }
+
+  /* Body size and a min width: seven columns don't fit at the accent size, and
+     below 40rem the table scrolls in its box instead of breaking words. */
+  .matrix {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    min-width: 40rem;
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+  }
+
+  .matrix th,
+  .matrix td {
+    vertical-align: top;
+    padding: var(--space-inset-400) var(--space-inset-600);
+    text-align: left;
+  }
+
+  .matrix thead th {
+    border-bottom: var(--stroke-width-thin) solid var(--site-border-strong);
+    font-weight: var(--text-weight-display);
+  }
+
+  .matrix tbody tr:nth-child(odd) > * {
+    background-color: var(--site-surface-muted);
+  }
+
+  .matrix tbody tr > :first-child {
+    border-radius: var(--site-radius-inner) 0 0 var(--site-radius-inner);
+  }
+
+  .matrix tbody tr > :last-child {
+    border-radius: 0 var(--site-radius-inner) var(--site-radius-inner) 0;
+  }
+
+  .matrix tbody th {
+    font-weight: var(--text-weight-text);
+  }
+
+  .matrix tbody th a {
+    text-decoration: underline;
+  }
+
+  .matrix__icon {
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  .matrix__icon--off {
+    color: var(--color-icon-tertiary-default);
+  }
+</style>
