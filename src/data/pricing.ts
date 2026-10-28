@@ -67,7 +67,6 @@ export interface Plan {
   tag: string
   /** Same content whatever the billing period. */
   fixed?: PlanVariant
-  /** Content per billing period. */
   variants?: Record<BillingPeriod, PlanVariant>
   features: PlanFeature[]
   badge?: string

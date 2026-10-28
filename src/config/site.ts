@@ -42,7 +42,6 @@ export const site = {
     name: 'Yelbolt',
     url: 'https://yelbolt.co/',
   },
-  /** Google Analytics 4 measurement ID. */
   googleAnalyticsId: 'G-MEC0CFX9P1',
   /** Tawk.to live chat widget: `<propertyId>/<widgetId>`. */
   tawkWidget: '680b8b6e6b4e0c1911f5d5ad/1ipmhha73',

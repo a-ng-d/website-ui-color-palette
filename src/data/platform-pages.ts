@@ -1,9 +1,3 @@
-/**
- * Copy of the platform landing pages (/figma, /penpot, /sketch, /framer,
- * /claude). Every page shares the same frame:
- * a hero with the install link, the editors or strengths of the plugin next to
- * a live preview, a "Why it matters" mosaic, and the next steps.
- */
 import type { CapabilityGroup } from '@/data/capabilities'
 import { htmlLink, type FaqItem } from '@/data/faq'
 import { links } from '@/config/site'
@@ -128,7 +122,6 @@ const pluginEmbed = (platform: string, editor: string) => {
   return url.href
 }
 
-/** "Why it matters" of the design-tool plugins: three live demos. */
 const designToolWhy: CapabilityGroup = {
   id: 'why-it-matters',
   title: 'Why it matters',

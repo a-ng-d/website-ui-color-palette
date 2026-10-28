@@ -5,7 +5,6 @@ import ShadeGrid from '@/components/ui/ShadeGrid.astro'
 import type { PlatformPage } from '@/data/platform-pages'
 
 interface Props {
-  /** The install link is optional. */
   hero: Omit<PlatformPage['hero'], 'cta'> &
     Partial<Pick<PlatformPage['hero'], 'cta'>>
 }

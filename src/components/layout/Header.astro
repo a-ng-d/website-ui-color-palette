@@ -146,7 +146,6 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
     toggle.addEventListener('click', () => {
       const open = toggle.getAttribute('aria-expanded') !== 'true'
       toggle.setAttribute('aria-expanded', String(open))
-      // Back to the first level when the menu closes.
       if (!open) dropdowns.forEach((d) => (d.open = false))
     })
   }
@@ -385,7 +384,6 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
       align-items: flex-start;
       padding-bottom: var(--space-inset-200);
       width: 100%;
-      /* Taller than the screen: scroll inside the menu. */
       max-height: calc(100dvh - 7rem);
       overflow-y: auto;
       overscroll-behavior: contain;
@@ -400,7 +398,6 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
       align-self: stretch;
     }
 
-    /* Label on the left, chevron pushed to the right edge. */
     .header__dropdown-toggle {
       justify-content: space-between;
       width: 100%;
@@ -427,7 +424,6 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
       transform: rotate(90deg);
     }
 
-    /* No container on mobile: the cards alone, one per row. */
     .header__panel {
       position: static;
       grid-template-columns: minmax(0, 1fr);

@@ -19,22 +19,18 @@ import { tokens } from './tokens'
 import { wheel } from './wheel'
 
 const demos: Record<string, DemoFactory> = {
-  // Generate it
   ready,
   ai,
   image,
   wheel,
   explore,
-  // Master it
   contrast,
   modes,
   'fine-tune': fineTune,
-  // Deploy it
   sync,
   tokens,
   publish,
   share,
-  // More superpowers
   presets,
   simulations,
   handoff,

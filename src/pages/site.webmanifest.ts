@@ -2,7 +2,6 @@ import type { APIRoute } from 'astro'
 
 import { site } from '@/config/site'
 
-/** Web app manifest. */
 export const GET: APIRoute = () =>
   new Response(
     JSON.stringify({
