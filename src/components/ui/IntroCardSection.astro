@@ -4,15 +4,16 @@ interface Props {
   title: string
   intro: string
   code?: string
+  wide?: boolean
 }
 
-const { id, title, intro, code } = Astro.props
+const { id, title, intro, code, wide = false } = Astro.props
 const titleId = `${id}-title`
 ---
 
 <section
   id={id}
-  class="section intro-card"
+  class:list={['section intro-card', wide && 'intro-card--wide']}
   aria-labelledby={titleId}
 >
   <div class="intro-card__layout">
@@ -67,6 +68,14 @@ const titleId = `${id}-title`
     gap: var(--space-gap-400);
     padding: var(--space-inset-800);
     min-width: 0;
+  }
+
+  .intro-card--wide .intro-card__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .intro-card--wide .intro-card__intro-content {
+    position: static;
   }
 
   @media (max-width: 1023.98px) {

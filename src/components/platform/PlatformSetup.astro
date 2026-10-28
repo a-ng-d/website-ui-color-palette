@@ -1,5 +1,5 @@
 ---
-import IntroCardSection from '@/components/ui/IntroCardSection.astro'
+import StackSection from '@/components/ui/StackSection.astro'
 import type { PlatformSetup } from '@/data/platform-pages'
 
 interface Props {
@@ -10,62 +10,54 @@ interface Props {
 const { setup, docs } = Astro.props
 ---
 
-<IntroCardSection
+<StackSection
   id="setup"
   title={setup.title}
   intro={setup.intro}
+  ordered
+  cardMinHeight="360px"
 >
-  <ol class="setup__steps">
-    {setup.steps.map((step, index) => (
-      <li class="setup__step">
-        <span
-          class="setup__index t-paragraph-secondary-title"
-          aria-hidden="true"
-        >
-          {String(index + 1).padStart(2, '0')}
-        </span>
-        <div class="setup__body">
-          <h3 class="t-paragraph-primary-title">{step.title}</h3>
-          <p class="t-accent">{step.text}</p>
-          {step.code && <code class="code-snippet">{step.code}</code>}
-        </div>
-      </li>
-    ))}
-  </ol>
-  <p class="setup__docs t-accent">
+  <p
+    class="setup__docs t-accent"
+    slot="intro"
+  >
     <a href={docs}>Read the full setup guide in the docs</a>
   </p>
-</IntroCardSection>
+
+  {setup.steps.map((step, index) => (
+    <li class="setup__step surface-card">
+      <span
+        class="setup__index t-main-title"
+        aria-hidden="true"
+      >
+        {String(index + 1).padStart(2, '0')}
+      </span>
+      <div class="setup__body">
+        <h3 class="t-paragraph-secondary-title">{step.title}</h3>
+        <p class="t-accent">{step.text}</p>
+        {step.code && <code class="code-snippet">{step.code}</code>}
+      </div>
+    </li>
+  ))}
+</StackSection>
 
 <style>
-  .setup__steps {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  .setup__docs a {
+    text-decoration: underline;
   }
 
   .setup__step {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: var(--space-gap-400);
-    border-bottom: var(--stroke-width-thin) solid var(--site-border-strong);
-    padding-block: var(--space-inset-600);
-  }
-
-  .setup__step:first-child {
-    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-gap-800);
+    padding: var(--space-inset-800);
   }
 
   .setup__body {
     display: flex;
     flex-direction: column;
-    gap: var(--space-gap-200);
+    gap: var(--space-gap-400);
     min-width: 0;
-  }
-
-  .setup__docs a {
-    text-decoration: underline;
   }
 </style>

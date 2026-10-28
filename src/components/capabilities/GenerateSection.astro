@@ -1,4 +1,5 @@
 ---
+import StackSection from '@/components/ui/StackSection.astro'
 import type { CapabilityGroup } from '@/data/capabilities'
 import FeatureCard from './FeatureCard.astro'
 
@@ -7,94 +8,14 @@ interface Props {
 }
 
 const { group } = Astro.props
-const titleId = `${group.id}-title`
 ---
 
-<section
+<StackSection
   id={group.id}
-  class="section stack"
-  aria-labelledby={titleId}
+  title={group.title}
+  intro={group.intro}
 >
-  <div class="stack__layout">
-    <div class="stack__intro">
-      <div class="stack__intro-content">
-        <h2
-          class="t-section-title"
-          id={titleId}
-        >
-          {group.title}
-        </h2>
-        <p class="t-accent">{group.intro}</p>
-      </div>
-    </div>
-
-    <div class="stack__cards">
-      {group.cards.map((card) => (
-        <FeatureCard
-          card={card}
-          class="stack__card"
-        />
-      ))}
-    </div>
-  </div>
-</section>
-
-<style>
-  .stack__layout {
-    display: grid;
-    grid-template-columns: minmax(0, 600fr) minmax(0, 656fr);
-    gap: var(--space-gap-200);
-  }
-
-  .stack__intro {
-    display: flex;
-    flex-direction: column;
-    align-self: stretch; /* full height, so the reveal covers a real card */
-    border: var(--stroke-width-thin) solid var(--site-border-soft);
-    border-radius: var(--site-radius-card);
-    background-color: var(--site-surface);
-  }
-
-  .stack__intro-content {
-    display: flex;
-    position: sticky;
-    top: var(--layout-header-height);
-    flex-direction: column;
-    gap: var(--space-gap-400);
-    padding: var(--space-inset-800);
-  }
-
-  /* Every stacked card has the height of the tallest: a card always covers
-     the one beneath, which never shows under it. */
-  .stack__cards {
-    display: grid;
-    grid-auto-rows: 1fr;
-    gap: var(--layout-section-gap);
-  }
-
-  .stack__cards :global(.stack__card) {
-    position: sticky;
-    top: calc(var(--layout-header-height) + var(--space-inset-400));
-    min-height: 540px;
-  }
-
-  @media (max-width: 1023.98px) {
-    .stack__layout {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .stack__intro-content {
-      position: static;
-    }
-
-    .stack__cards {
-      grid-auto-rows: auto;
-      gap: var(--space-gap-200);
-    }
-
-    .stack__cards :global(.stack__card) {
-      position: static;
-      min-height: 0;
-    }
-  }
-</style>
+  {group.cards.map((card) => (
+    <FeatureCard card={card} />
+  ))}
+</StackSection>

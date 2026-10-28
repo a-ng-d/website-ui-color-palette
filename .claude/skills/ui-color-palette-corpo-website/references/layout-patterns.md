@@ -14,11 +14,11 @@ column), `479.98px` (small phones). Mobile first is not required; keep desktop r
 | **Three feature cards + centred CTA** | `Summary` | 3 cols, cards min 520px, icon tile + title + accent text at the bottom; 1 col < 1024 |
 | **Mosaic with a title card** | `Platforms` | 3 × 2, title card fixed at col 2 row 1 (rotated), link cards auto-placed; 2 cols < 1024 (title spans), 1 col < 640 |
 | **Stacked sticky cards + sticky intro** | `ExtraTools` | `1fr 0.5fr`, intro on the right; cards sticky, stacking; 1 col < 1024 |
-| **Sticky intro + content card** | `Faq` | `0.5fr 1fr`, intro on the left |
+| **Sticky intro + content card** | `ui/IntroCardSection` (used by `Faq`, `platform/PlatformTable`) | `0.5fr 1fr`, intro on the left; `wide`: intro card on top, content card full width (tables) |
 | **Title card + list of cards** | `LatestPosts` | 2 cols, rotated title card left, posts right (400px cards, cover + body) |
 | **Gallery + pitch in a shade grid** | `Reinsurance` | 2 cols: auto-scrolling palette reels / `ShadeGrid` 8 × 6 with pitch and a 2-col button grid |
 | **Footer mosaic** | `Footer` | 4 cols × 2 rows, wide cards span 2 |
-| **Sticky intro left + stacked cards** | `capabilities/GenerateSection` | `600fr 656fr`, intro left, `FeatureCard`s sticky and stacking, **all as tall as the tallest** (`grid-auto-rows: 1fr`) so a card always covers the one beneath; 1 col < 1024 |
+| **Sticky intro left + stacked cards** | `ui/StackSection` (used by `capabilities/GenerateSection`, `platform/PlatformSetup`) | `600fr 656fr`, intro left, cards sticky and stacking, **all as tall as the tallest** (`grid-auto-rows: 1fr`) so a card always covers the one beneath; `ordered` renders an `<ol>` (one step = one card), `cardMinHeight` sets the floor (540px default); 1 col < 1024 |
 | **Capability mosaic** | `capabilities/MosaicSection` | `columns` 2/3 (`tabletColumns` 1/2), rotated title card first, `FeatureCard`s (`span` from data, `mediaFirst` for demo-on-top), rows ≥ 504px |
 | **Tall title card + persona cards** | `capabilities/AudienceSection` | 3 cols, straight tall title card, check-list cards |
 | **Platform hero** | `platform/PlatformHero` | `ShadeGrid` 16 × 2 (as Pricing/Capabilities) + install `Button` |
