@@ -12,6 +12,7 @@ import PlusIcon from '@lucide/astro/icons/plus'
 import LockOpenIcon from '@lucide/astro/icons/lock-open'
 import ContrastIcon from '@lucide/astro/icons/contrast'
 import LibraryIcon from '@lucide/astro/icons/library'
+import EyeIcon from '@lucide/astro/icons/eye'
 import FilePlusIcon from '@lucide/astro/icons/file-plus'
 import SquareCodeIcon from '@lucide/astro/icons/square-code'
 import HeadsetIcon from '@lucide/astro/icons/headset'
@@ -118,6 +119,7 @@ export const plans: Plan[] = [
       { icon: PaintbrushIcon, label: '5 source colors per palette' },
       { icon: CombineIcon, label: '6 custom stops per palette' },
       { icon: BlendIcon, label: '2 color modes' },
+      { icon: LibraryIcon, label: 'Sync with local libraries' },
       { icon: BracesIcon, label: 'CSS export' },
       { icon: UsersIcon, label: 'Community support' },
     ],
@@ -164,7 +166,7 @@ export const plans: Plan[] = [
         label: 'Unlimited palettes, colors, stops, and modes',
       },
       { icon: ContrastIcon, label: 'Advanced accessibility tools' },
-      { icon: LibraryIcon, label: 'Sync with local libraries' },
+      { icon: EyeIcon, label: 'Every vision simulation' },
       { icon: FilePlusIcon, label: 'Generated documentation' },
       {
         icon: SquareCodeIcon,
@@ -246,9 +248,9 @@ export const compareRows: CompareRow[] = [
   { feature: 'Custom foreground colors', values: [true, true, true] },
   { feature: 'Accessibility scores', values: [true, true, true] },
   { feature: 'Accessibility report', values: [false, true, true] },
-  { feature: 'Vision simulations', values: [true, true, true] },
+  { feature: 'Vision simulations', values: ['Protanomaly', 'All 8', 'All 8'] },
   { feature: 'Code generation', values: ['CSS', true, true] },
-  { feature: 'Sync with local libraries', values: [false, true, true] },
+  { feature: 'Sync with local libraries', values: [true, true, true] },
   { feature: 'Documentation generation', values: [false, true, true] },
   { feature: 'Publication', values: [true, true, true] },
   { feature: 'Support', values: ['Community', 'Chat', 'Dedicated'] },
