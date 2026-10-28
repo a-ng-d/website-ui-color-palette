@@ -74,6 +74,11 @@ The docs drive about 65% of organic clicks (see [baseline.md](baseline.md)). New
    - **Site `/claude`** is the product page for "claude color palette", "claude ai color palette" and "color palette mcp" (what it is, what you get, install CTA). Details are in [02-capability-pages.md](02-capability-pages.md), Lot C.
    - **Docs `/claude`** is the setup reference ("install", "skills", "agents", "4-phase workflow").
    - Each links to the other with a descriptive anchor. Titles must not share the same primary query.
+   - **Done (2026-10-28):**
+     - The site `/claude` title is now "Claude Color Palette Plugin — UI Color Palette".
+     - Every platform page links to its docs space, through a "Set it up" card that replaces the `/download` card.
+     - Docs `/claude` links back to the site.
+     - The docs `/claude` title is deliberately unchanged: it brings 54 clicks and ranks 8.7. Revisit only if Search Console shows the two pages alternating on the same query.
 8. **Quick CTR win on the docs.** Rewrite the title and description of `/guides/export-a-color-palette-to-code` (541 impressions, position 9.2, CTR 0.55%) to name the formats people search for: CSS, Tailwind, design tokens, SwiftUI, Compose.
 9. **Re-check after 2–4 weeks.**
    - In Search Console, click "Validate fix" on each reason.

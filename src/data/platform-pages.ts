@@ -36,6 +36,7 @@ export interface PlatformPage {
   /** Short platform name, for the JSON-LD. */
   platform: string
   seo: { title: string; description: string }
+  docs: string
   hero: {
     title: string
     tagline: string
@@ -123,6 +124,7 @@ const designToolWhy: CapabilityGroup = {
 
 export const figmaPage: PlatformPage = {
   path: '/figma',
+  docs: `${links.docs}/figma`,
   platform: 'Figma',
   seo: {
     title: 'UI Color Palette for Figma — Accessible Color Scales',
@@ -165,6 +167,7 @@ export const figmaPage: PlatformPage = {
 
 export const penpotPage: PlatformPage = {
   path: '/penpot',
+  docs: `${links.docs}/penpot`,
   platform: 'Penpot',
   seo: {
     title: 'UI Color Palette for Penpot — Open-Source Color',
@@ -203,6 +206,7 @@ export const penpotPage: PlatformPage = {
 
 export const sketchPage: PlatformPage = {
   path: '/sketch',
+  docs: `${links.docs}/sketch`,
   platform: 'Sketch',
   seo: {
     title: 'UI Color Palette for Sketch — Native Mac Color',
@@ -241,6 +245,7 @@ export const sketchPage: PlatformPage = {
 
 export const framerPage: PlatformPage = {
   path: '/framer',
+  docs: `${links.docs}/framer`,
   platform: 'Framer',
   seo: {
     title: 'UI Color Palette for Framer — Ship Accessible Color',
@@ -281,11 +286,12 @@ export const framerPage: PlatformPage = {
 
 export const claudePage: PlatformPage = {
   path: '/claude',
+  docs: `${links.docs}/claude`,
   platform: 'Claude',
   seo: {
-    title: 'UI Color Palette for Claude — A Color Studio in Claude',
+    title: 'Claude Color Palette Plugin — UI Color Palette',
     description:
-      'Design accessible color palettes right inside Claude, with agents, skills, and pre-connected design & code integrations for GitHub and GitLab.',
+      'Design accessible color palettes right inside Claude Code, with agents, skills, and pre-connected design & code integrations for GitHub and GitLab.',
   },
   hero: {
     title: 'UI Color Palette for Claude',

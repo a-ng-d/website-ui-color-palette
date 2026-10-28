@@ -11,7 +11,7 @@ import Reinsurance from '@/components/home/Reinsurance.astro'
 import NextSteps from '@/components/platform/NextSteps.astro'
 import PlatformHero from '@/components/platform/PlatformHero.astro'
 import PlatformSurfaces from '@/components/platform/PlatformSurfaces.astro'
-import type { PlatformPage } from '@/data/platform-pages'
+import { nextSteps, type PlatformPage } from '@/data/platform-pages'
 import {
   organization,
   pageBreadcrumbs,
@@ -24,6 +24,16 @@ interface Props {
 
 const { page } = Astro.props
 const textOnly = page.why.cards.every((card) => !card.demo)
+const steps = nextSteps.map((step) =>
+  step.href === '/download'
+    ? {
+        icon: 'wrench' as const,
+        title: 'Set it up',
+        label: 'Read the docs',
+        href: page.docs,
+      }
+    : step
+)
 
 const jsonLd = [
   organization(),
@@ -59,6 +69,6 @@ const jsonLd = [
     columns={textOnly ? 4 : 2}
     platform={textOnly ? undefined : page.platform.toLowerCase()}
   />
-  <NextSteps />
+  <NextSteps steps={steps} />
   <Reinsurance />
 </BaseLayout>
