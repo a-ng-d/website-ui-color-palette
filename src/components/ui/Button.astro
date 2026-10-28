@@ -14,7 +14,7 @@ interface Props extends Omit<HTMLAttributes<'a'>, 'href' | 'type'> {
   variant?: Variant
   /** @unoff/ui size: `default` for inline text links, `large` for actions. */
   size?: 'default' | 'large'
-  /** Stretch to fill the parent (used in the hero). */
+  /** Stretch to fill the parent. */
   block?: boolean
   /** Square button with only an icon; `label` becomes its accessible name. */
   iconOnly?: boolean
@@ -75,7 +75,7 @@ const hasIcon = Astro.slots.has('icon')
     cursor: pointer;
   }
 
-  /* `flex-basis: 0` shares a row evenly; in a column (hero, mobile) it hits
+  /* `flex-basis: 0` shares a row evenly; in a column it hits
      the height instead, so keep the @unoff/ui height as a floor. */
   .site-button--block {
     flex: 1 1 0;

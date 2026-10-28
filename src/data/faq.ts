@@ -63,8 +63,7 @@ const mail = a(`mailto:${site.email}`, site.email)
 const polar = '<strong>Polar</strong>'
 
 /**
- * FAQ of the Pricing page, in three categories (tabs in the Figma design):
- * Subscription, License and Figma (Figma nodes 8:29274, 8:29275, 8:29276).
+ * FAQ of the Pricing page, one tab per category.
  * A category without items is not shown.
  */
 export const pricingFaq: FaqCategory[] = [

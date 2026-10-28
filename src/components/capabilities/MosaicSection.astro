@@ -4,11 +4,11 @@ import FeatureCard from './FeatureCard.astro'
 
 interface Props {
   group: CapabilityGroup
-  /** Columns on desktop (2 for Master, 4 for /claude, 3 otherwise). */
+  /** Columns on desktop. */
   columns?: 2 | 3 | 4
   /** Columns from 640 to 1024px. */
   tabletColumns?: 1 | 2
-  /** Demos above the text (Superpowers). */
+  /** Demos above the text. */
   mediaFirst?: boolean
   /**
    * Platform whose UI the demos wear (`data-platform`); the page imports

@@ -153,7 +153,7 @@ button {
   transform: none;
 }
 
-/* Grid behind logos (92 × 124 cells centred, as in the Figma illustrations). */
+/* Grid behind logos (92 × 124 cells, centred). */
 .illustration-grid {
   --illustration-grid-color: var(--color-border-tertiary-default);
   background-image:

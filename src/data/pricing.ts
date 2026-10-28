@@ -1,5 +1,5 @@
 /**
- * Pricing page content (Figma node 3:3959). Single source of truth for the
+ * Pricing page content. Single source of truth for the
  * plan cards, the comparison table and the schema.org offers.
  */
 import PaletteIcon from '@lucide/astro/icons/palette'
@@ -65,9 +65,9 @@ export interface Plan {
   id: 'basic' | 'pro' | 'ultimate'
   /** Tag shown on the card and in the table header. */
   tag: string
-  /** Same content whatever the billing period (the /basic plan). */
+  /** Same content whatever the billing period. */
   fixed?: PlanVariant
-  /** Content per billing period (the paid plans). */
+  /** Content per billing period. */
   variants?: Record<BillingPeriod, PlanVariant>
   features: PlanFeature[]
   badge?: string

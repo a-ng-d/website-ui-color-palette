@@ -21,9 +21,9 @@ export interface Platform {
   /** Playful call to action shown under the name on the home grid. */
   pun: string
   logo: ImageMetadata
-  /** Brand tile colour behind the logo, taken from the Figma design. */
+  /** Brand tile colour behind the logo. */
   tile: string
-  /** Tilt of the logo tile in degrees, as in the design. */
+  /** Tilt of the logo tile in degrees. */
   tilt: number
   shards: ImageMetadata
   /** Position of the decorative rays around the tile (CSS inset). */

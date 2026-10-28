@@ -1,9 +1,9 @@
 /**
- * Copy of the Capabilities page (/capabilities), grouped as in Figma
- * (node 3:20329). Also used for the `featureList` of the JSON-LD.
+ * Copy of the Capabilities page (/capabilities), by group. Also used for the
+ * `featureList` of the JSON-LD.
  *
  * `demo` names the animated illustration of a card (components/capabilities/
- * Demo.astro); cards without one show the empty illustration grid for now.
+ * Demo.astro); cards without one show the empty illustration grid.
  */
 export type DemoId =
   | 'ready'
@@ -27,7 +27,7 @@ export type DemoId =
 export interface Capability {
   title: string
   text: string
-  /** Text-only card when omitted (/claude "Why it matters"). */
+  /** Text-only card when omitted. */
   demo?: DemoId
   /** Columns spanned in the mosaic (desktop). */
   span?: number
