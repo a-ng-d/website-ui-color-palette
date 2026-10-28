@@ -11,7 +11,12 @@ import {
   capabilityPath,
   type CapabilityPage,
 } from '@/data/capability-pages'
-import { glossary, glossaryTerms, termPath } from '@/data/glossary'
+import {
+  glossary,
+  glossaryTerms,
+  termPath,
+  termQuestion,
+} from '@/data/glossary'
 import { platformPages, type PlatformPage } from '@/data/platform-pages'
 import { compareColumns, compareRows, plans } from '@/data/pricing'
 
@@ -184,7 +189,7 @@ export const GET: APIRoute = async () => {
     `URL: ${url('/glossary')}`,
     '',
     ...glossaryTerms.flatMap((term) => [
-      `### ${term.term}`,
+      `### ${termQuestion(term)}`,
       '',
       `URL: ${url(termPath(term))}`,
       '',
@@ -193,6 +198,7 @@ export const GET: APIRoute = async () => {
       ...[...term.why, ...term.inProduct]
         .map(stripHtml)
         .flatMap((p) => [p, '']),
+      ...(term.table ? tableLines(term.table) : []),
     ]),
     '## FAQ',
     '',

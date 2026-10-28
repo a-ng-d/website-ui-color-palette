@@ -1,13 +1,20 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import HueRamp from '@/components/glossary/HueRamp.astro'
+import VisionRamp from '@/components/glossary/VisionRamp.astro'
 import Reinsurance from '@/components/home/Reinsurance.astro'
 import NextSteps from '@/components/platform/NextSteps.astro'
 import PlatformHero from '@/components/platform/PlatformHero.astro'
 import IntroCardSection from '@/components/ui/IntroCardSection.astro'
+import TableSection from '@/components/ui/TableSection.astro'
 import TextCardsSection from '@/components/ui/TextCardsSection.astro'
 import type { NextStep } from '@/data/blocks'
-import { glossaryTerms, termPath, type GlossaryTerm } from '@/data/glossary'
+import {
+  glossaryTerms,
+  termPath,
+  termQuestion,
+  type GlossaryTerm,
+} from '@/data/glossary'
 import {
   breadcrumbs,
   definedTerm,
@@ -23,7 +30,7 @@ interface Props {
 
 const { term } = Astro.props
 const path = termPath(term)
-const title = `What is ${term.term}?`
+const title = termQuestion(term)
 
 const related: NextStep[] = [
   ...term.related
@@ -31,15 +38,15 @@ const related: NextStep[] = [
     .filter((other) => other !== undefined)
     .map((other) => ({
       icon: 'book-open' as const,
-      title: `What is ${other.term}?`,
+      title: termQuestion(other),
       label: 'Read the definition',
       href: termPath(other),
     })),
   {
     icon: 'glasses',
     title: 'Build a palette with it',
-    label: 'See OKLCH & LCH color spaces',
-    href: '/capabilities/oklch-lch-color-spaces',
+    label: `See ${term.capability.name}`,
+    href: term.capability.href,
   },
 ]
 
@@ -71,7 +78,11 @@ const jsonLd = [
     title={`${term.term}, in short`}
     intro={term.definition}
   >
-    <HueRamp space={term.ramp} />
+    {term.visual === 'vision' ? (
+      <VisionRamp />
+    ) : (
+      <HueRamp space={term.visual} />
+    )}
   </IntroCardSection>
   <TextCardsSection
     cards={[
@@ -81,14 +92,15 @@ const jsonLd = [
         paragraphs: term.inProduct,
         actions: [
           {
-            label: 'See OKLCH & LCH color spaces',
-            href: '/capabilities/oklch-lch-color-spaces',
+            label: `See ${term.capability.name}`,
+            href: term.capability.href,
           },
           { label: 'See every term in the glossary', href: glossaryPath },
         ],
       },
     ]}
   />
+  {term.table && <TableSection table={term.table} />}
   <NextSteps
     steps={related}
     title={`Related to ${term.term}`}

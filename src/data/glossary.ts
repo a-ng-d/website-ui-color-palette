@@ -1,3 +1,4 @@
+import type { Table } from '@/data/blocks'
 import { htmlLink } from '@/data/faq'
 
 export type RampSpace = 'oklch' | 'lch' | 'oklab' | 'hsluv'
@@ -5,11 +6,15 @@ export type RampSpace = 'oklch' | 'lch' | 'oklab' | 'hsluv'
 export interface GlossaryTerm {
   slug: string
   term: string
+  /** The h1, when "What is <term>?" does not read well. */
+  question?: string
   seo: { title: string; description: string }
   definition: string
   why: string[]
   inProduct: string[]
-  ramp: RampSpace
+  visual: RampSpace | 'vision'
+  table?: Table
+  capability: { name: string; href: string }
   related: string[]
 }
 
@@ -18,13 +23,20 @@ export const glossary = {
   tagline:
     'The color spaces and terms behind accessible palettes, explained for designers and developers.',
   seo: {
-    title: 'Color Glossary: OKLCH, LCH, OKLab, HSLuv — UI Color Palette',
+    title: 'Color Glossary for UI Design — UI Color Palette',
     description:
-      'Short, precise definitions of the color spaces and terms behind accessible UI palettes: OKLCH, LCH, OKLab and HSLuv, with visual examples.',
+      'Short, precise definitions of the color spaces and terms behind accessible UI palettes, from OKLCH and HSLuv to the types of color blindness.',
   },
 }
 
 export const termPath = (term: GlossaryTerm) => `/glossary/${term.slug}`
+export const termQuestion = (term: GlossaryTerm) =>
+  term.question ?? `What is ${term.term}?`
+
+const colorSpaces = {
+  name: 'OKLCH & LCH color spaces',
+  href: '/capabilities/oklch-lch-color-spaces',
+}
 
 const code = (text: string) => `<code>${text}</code>`
 const okLabPost = htmlLink(
@@ -55,7 +67,8 @@ export const glossaryTerms: GlossaryTerm[] = [
       `OKLCH is the default color space of every new palette in UI Color Palette, on every plan, in Figma, Penpot, Sketch and Framer, and through the MCP server. Switching to another space keeps your scale and your source colors.`,
       `CSS, SCSS and Less exports can write ${code('oklch()')} values; with Claude or the MCP server, ${code('generate_code')} takes OKLCH too.`,
     ],
-    ramp: 'oklch',
+    visual: 'oklch',
+    capability: colorSpaces,
     related: ['oklab', 'lch', 'hsluv'],
   },
   {
@@ -76,7 +89,8 @@ export const glossaryTerms: GlossaryTerm[] = [
       'A palette in UI Color Palette can be computed in LCH on every plan, in Figma, Penpot, Sketch and Framer, and through the MCP server. You can switch it back to OKLCH, the default, at any time.',
       `CSS, SCSS and Less exports can write lch() values.`,
     ],
-    ramp: 'lch',
+    visual: 'lch',
+    capability: colorSpaces,
     related: ['oklch', 'oklab', 'hsluv'],
   },
   {
@@ -97,7 +111,8 @@ export const glossaryTerms: GlossaryTerm[] = [
       'A palette in UI Color Palette can be computed in OKLab on the /pro plan in every design-tool plugin, and through the MCP server.',
       `Switching between them keeps your scale and your source colors.`,
     ],
-    ramp: 'oklab',
+    visual: 'oklab',
+    capability: colorSpaces,
     related: ['oklch', 'lch', 'hsluv'],
   },
   {
@@ -117,7 +132,101 @@ export const glossaryTerms: GlossaryTerm[] = [
     inProduct: [
       'A palette in UI Color Palette can be computed in HSLuv on the /pro plan in every design-tool plugin, and through the MCP server. It works well with the contrast-ratio scale, which sets each stop from a target contrast.',
     ],
-    ramp: 'hsluv',
+    visual: 'hsluv',
+    capability: colorSpaces,
     related: ['oklch', 'lch', 'oklab'],
+  },
+  {
+    slug: 'color-blindness-types',
+    term: 'Color blindness types',
+    question: 'What are the types of color blindness?',
+    seo: {
+      title: 'Types of Color Blindness: The 8 Explained — UI Color Palette',
+      description:
+        'Protanopia, deuteranopia, tritanopia, achromatomaly and more: the 8 types of color blindness, how each one sees color, and how to design palettes for them.',
+    },
+    definition:
+      'Color blindness, or color vision deficiency, comes in 8 main types, grouped by the cone cells affected: red (protan), green (deutan), blue (tritan), or all of them (achromat). Each group has a partial form, ending in -anomaly, and a complete form, ending in -opia or -opsia.',
+    why: [
+      'Red-green deficiencies (protan and deutan) are by far the most common: they affect about 1 man in 12 and 1 woman in 200 of Northern European descent. Tritan types and total color blindness are rare.',
+      `A red error and a green success can look alike to many of these users. Color alone should not carry meaning — WCAG makes it a rule (${htmlLink('https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html', 'Use of Color, 1.4.1')}) — so pair it with text, icons or a clear difference in lightness.`,
+    ],
+    inProduct: [
+      'UI Color Palette simulates the 8 types on any color mode of a palette, in Figma, Penpot, Sketch and Framer, and through the MCP server. Protanomaly is part of the free /basic plan; the other 7 types need /pro.',
+      'The contrast between your foreground colors and every shade is simulated too, so the WCAG 2.1 and APCA scores reflect each type of vision.',
+    ],
+    visual: 'vision',
+    table: {
+      id: 'types',
+      title: 'The 8 types, one by one',
+      intro:
+        'Grouped by the cones they affect: red, green, blue, then all of them. Each group has a partial and a complete form.',
+      caption: 'The 8 types of color vision deficiency',
+      rowHeader: 'Type',
+      columns: ['Cones affected', 'How colors look'],
+      rows: [
+        {
+          label: 'Protanomaly',
+          values: [
+            'Red, weak',
+            'Reds look duller and darker; red and green are harder to tell apart.',
+          ],
+        },
+        {
+          label: 'Protanopia',
+          values: [
+            'Red, missing',
+            'Reds look dark, close to brown; red and green are confused.',
+          ],
+        },
+        {
+          label: 'Deuteranomaly',
+          values: [
+            'Green, weak',
+            'The most common type: reds and greens drift toward each other.',
+          ],
+        },
+        {
+          label: 'Deuteranopia',
+          values: [
+            'Green, missing',
+            'Red and green are confused, but reds keep their lightness.',
+          ],
+        },
+        {
+          label: 'Tritanomaly',
+          values: [
+            'Blue, weak',
+            'Blue and green get harder to tell apart, and purples are hard to recognize.',
+          ],
+        },
+        {
+          label: 'Tritanopia',
+          values: [
+            'Blue, missing',
+            'Blue, yellow and green are confused. A rare type.',
+          ],
+        },
+        {
+          label: 'Achromatomaly',
+          values: [
+            'All, weak',
+            'Colors look washed out, close to greys. A rare type.',
+          ],
+        },
+        {
+          label: 'Achromatopsia',
+          values: [
+            'All, missing',
+            'No color at all, only lightness, often with sensitivity to bright light.',
+          ],
+        },
+      ],
+    },
+    capability: {
+      name: 'Color blindness simulation',
+      href: '/capabilities/color-blindness-simulation',
+    },
+    related: ['oklch'],
   },
 ]

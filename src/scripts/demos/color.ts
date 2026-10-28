@@ -195,3 +195,62 @@ export const hsluv = (h: number, s: number, l: number): Rgb => {
     clamp01(fromLinear(a * x + b * y + d * z))
   ) as Rgb
 }
+
+export type VisionType =
+  | 'protanomaly'
+  | 'protanopia'
+  | 'deuteranomaly'
+  | 'deuteranopia'
+  | 'tritanomaly'
+  | 'tritanopia'
+  | 'achromatomaly'
+  | 'achromatopsia'
+
+const VISION_MATRICES: Record<VisionType, number[][]> = {
+  protanomaly: [
+    [0.817, 0.183, 0],
+    [0.333, 0.667, 0],
+    [0, 0.125, 0.875],
+  ],
+  protanopia: [
+    [0.567, 0.433, 0],
+    [0.558, 0.442, 0],
+    [0, 0.242, 0.758],
+  ],
+  deuteranomaly: [
+    [0.8, 0.2, 0],
+    [0.258, 0.742, 0],
+    [0, 0.142, 0.858],
+  ],
+  deuteranopia: [
+    [0.625, 0.375, 0],
+    [0.7, 0.3, 0],
+    [0, 0.3, 0.7],
+  ],
+  tritanomaly: [
+    [0.967, 0.033, 0],
+    [0, 0.733, 0.267],
+    [0, 0.183, 0.817],
+  ],
+  tritanopia: [
+    [0.95, 0.05, 0],
+    [0, 0.433, 0.567],
+    [0, 0.475, 0.525],
+  ],
+  achromatomaly: [
+    [0.618, 0.32, 0.062],
+    [0.163, 0.775, 0.062],
+    [0.163, 0.32, 0.516],
+  ],
+  achromatopsia: [
+    [0.299, 0.587, 0.114],
+    [0.299, 0.587, 0.114],
+    [0.299, 0.587, 0.114],
+  ],
+}
+
+/** A colour as UI Color Palette simulates it for one type of color vision deficiency. */
+export const simulateVision = ([r, g, b]: Rgb, type: VisionType): Rgb =>
+  VISION_MATRICES[type].map(([x, y, z]) =>
+    clamp01(x * r + y * g + z * b)
+  ) as Rgb

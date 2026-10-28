@@ -1,0 +1,99 @@
+---
+import {
+  hex,
+  oklch,
+  simulateVision,
+  type VisionType,
+} from '@/scripts/demos/color'
+
+const HUES = [20, 65, 110, 155, 200, 245, 290, 335]
+const TYPES: { type: VisionType; label: string }[] = [
+  { type: 'protanomaly', label: 'Protanomaly' },
+  { type: 'protanopia', label: 'Protanopia' },
+  { type: 'deuteranomaly', label: 'Deuteranomaly' },
+  { type: 'deuteranopia', label: 'Deuteranopia' },
+  { type: 'tritanomaly', label: 'Tritanomaly' },
+  { type: 'tritanopia', label: 'Tritanopia' },
+  { type: 'achromatomaly', label: 'Achromatomaly' },
+  { type: 'achromatopsia', label: 'Achromatopsia' },
+]
+
+const reference = HUES.map((hue) => oklch(0.7, 0.14, hue))
+const rows = [
+  { label: 'Typical vision', colours: reference.map(hex) },
+  ...TYPES.map(({ type, label }) => ({
+    label,
+    colours: reference.map((rgb) => hex(simulateVision(rgb, type))),
+  })),
+]
+---
+
+<figure class="vision">
+  {rows.map((row) => (
+    <div class="vision__row">
+      <p class="vision__label">{row.label}</p>
+      <div
+        class="vision__cells"
+        aria-hidden="true"
+      >
+        {row.colours.map((colour) => (
+          <span
+            class="vision__swatch"
+            style={`--swatch:${colour}`}
+          />
+        ))}
+      </div>
+    </div>
+  ))}
+  <figcaption class="vision__caption">
+    Eight hues of equal lightness, then the same hues as each type of color
+    vision deficiency perceives them, simulated with the matrices UI Color
+    Palette uses.
+  </figcaption>
+</figure>
+
+<style>
+  .vision {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    margin: 0;
+  }
+
+  .vision__row {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-gap-400);
+  }
+
+  .vision__label,
+  .vision__caption {
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+  }
+
+  .vision__label {
+    font-weight: var(--text-weight-display);
+  }
+
+  .vision__cells {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: var(--space-gap-100);
+  }
+
+  /* Data colours (an exception listed in tokens.md), like HueRamp. */
+  .vision__swatch {
+    border-radius: var(--site-radius-inner);
+    background-color: var(--swatch);
+    height: var(--control-size-1200);
+  }
+
+  @media (max-width: 639.98px) {
+    .vision__row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-gap-100);
+    }
+  }
+</style>

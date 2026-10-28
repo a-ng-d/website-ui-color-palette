@@ -242,6 +242,165 @@ export const colorSpacesPage: CapabilityPage = {
     },
     {
       icon: 'glasses',
+      title: 'Color blindness simulation',
+      label: 'See the next capability',
+      href: '/capabilities/color-blindness-simulation',
+    },
+  ],
+}
+
+export const colorBlindnessPage: CapabilityPage = {
+  slug: 'color-blindness-simulation',
+  name: 'Color blindness simulation',
+  seo: {
+    title: 'Color Blindness Simulator for Figma — UI Color Palette',
+    description:
+      'Simulate 8 types of color blindness on your palette, from protanopia to achromatopsia, with contrast scores. In Figma, Penpot, Sketch and Framer. Free to start.',
+  },
+  hero: {
+    title: 'Color blindness simulator for UI palettes',
+    tagline:
+      'See your palette and its contrast through 8 types of color vision deficiency, from protanopia to achromatopsia, in Figma, Penpot, Sketch and Framer.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do people with color blindness see your palette?',
+    lead: 'UI Color Palette simulates 8 types of color vision deficiency on every shade of a palette: protanomaly, protanopia, deuteranomaly, deuteranopia, tritanomaly, tritanopia, achromatomaly and achromatopsia. You set the simulation per color mode, and the contrast with your foreground colors is simulated too, so you can check readability for each type.',
+    demo: 'simulations',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'A vision simulation is a parameter of a color mode, like its lightness scale and its foreground colors. Add one mode per type you want to check, then switch between them.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/master-a-color-palette#select-a-vision-simulation`,
+    },
+    steps: [
+      {
+        title: 'Add a color mode',
+        text: 'Next to your light and dark modes, add a mode for the simulation. The /basic plan includes 2 color modes; /pro has no limit.',
+      },
+      {
+        title: 'Pick a vision simulation',
+        text: 'In the parameters of that mode, choose one of the 8 types. Protanomaly is part of the free /basic plan; the other 7 need /pro.',
+      },
+      {
+        title: 'Read the contrast',
+        text: 'The contrast between your light and dark foreground colors and every shade is simulated as well, with its WCAG 2.1 and APCA scores.',
+      },
+      {
+        title: 'Switch modes to compare',
+        text: 'Select another mode to see the palette as another group of people sees it, then adjust the shades that no longer read.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'vision-types',
+      title: 'The 8 types it simulates',
+      intro:
+        'Each type affects one kind of cone in the eye, or all of them. The -anomaly types are partial; the -opia and -opsia types are complete.',
+      caption: 'Types of color vision deficiency simulated by UI Color Palette',
+      rowHeader: 'Type',
+      columns: ['Cones affected', 'Perception', 'Plan'],
+      rows: [
+        { label: 'Protanomaly', values: ['Red (L)', 'Weak', '/basic'] },
+        { label: 'Protanopia', values: ['Red (L)', 'Missing', '/pro'] },
+        { label: 'Deuteranomaly', values: ['Green (M)', 'Weak', '/pro'] },
+        { label: 'Deuteranopia', values: ['Green (M)', 'Missing', '/pro'] },
+        { label: 'Tritanomaly', values: ['Blue (S)', 'Weak', '/pro'] },
+        { label: 'Tritanopia', values: ['Blue (S)', 'Missing', '/pro'] },
+        { label: 'Achromatomaly', values: ['All', 'Weak', '/pro'] },
+        { label: 'Achromatopsia', values: ['All', 'Missing', '/pro'] },
+      ],
+      note: 'Plans apply to the design-tool plugins.',
+    },
+    {
+      id: 'availability',
+      title: 'Where you can use it',
+      intro:
+        'Every design-tool plugin simulates the 8 types, and the MCP server takes the same setting on each theme of a palette.',
+      caption: 'Color blindness simulation per platform',
+      rowHeader: 'Platform',
+      columns: ['Vision types', 'Where you set it'],
+      rows: [
+        {
+          label: 'Figma',
+          href: '/figma',
+          values: ['All 8', 'On each color mode'],
+        },
+        {
+          label: 'Penpot',
+          href: '/penpot',
+          values: ['All 8', 'On each color mode'],
+        },
+        {
+          label: 'Sketch',
+          href: '/sketch',
+          values: ['All 8', 'On each color mode'],
+        },
+        {
+          label: 'Framer',
+          href: '/framer',
+          values: ['All 8', 'On each color mode'],
+        },
+        {
+          label: 'Claude & MCP',
+          href: '/claude',
+          values: ['All 8', 'visionSimulationMode on each theme'],
+        },
+      ],
+    },
+  ],
+  faq: {
+    intro:
+      'Simulating color blindness on a palette, the 8 types, and what they change for contrast.',
+    items: [
+      {
+        question: 'Can I simulate color blindness in Figma?',
+        answer: `Yes. With the UI Color Palette plugin, add a color mode to your palette and set its vision simulation to one of 8 types; the shades and their contrast update. It works the same in Penpot, Sketch and Framer. See ${htmlLink('/figma', 'UI Color Palette for Figma')}.`,
+      },
+      {
+        question: 'Protanopia vs deuteranopia: what is the difference?',
+        answer: `Both are red-green deficiencies. In protanopia the red-sensitive cones are missing, so reds also look darker; in deuteranopia the green-sensitive cones are missing, and reds keep their lightness. See the ${htmlLink('/glossary/color-blindness-types', 'types of color blindness')}.`,
+      },
+      {
+        question: 'What is achromatomaly?',
+        answer: `A partial form of total color blindness: colors look washed out, close to greys, but are not entirely gone as in achromatopsia. It is rare. UI Color Palette simulates both, on /pro.`,
+      },
+      {
+        question: 'Does the simulation change the contrast scores?',
+        answer:
+          'Yes. The contrast between your light and dark foreground colors and every shade is simulated too, so the WCAG 2.1 and APCA scores reflect how each type of vision perceives them.',
+      },
+      {
+        question: 'Is color blindness simulation free?',
+        answer: `In the design-tool plugins, protanomaly is part of the free /basic plan, and the 7 other types need /pro. See ${htmlLink('/pricing', 'Pricing')}.`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'book-open',
+      title: 'What are the types of color blindness?',
+      label: 'Read the definitions',
+      href: '/glossary/color-blindness-types',
+    },
+    {
+      icon: 'glasses',
+      title: 'OKLCH & LCH color spaces',
+      label: 'See the capability',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+    {
+      icon: 'ruler',
+      title: 'Use it in Figma',
+      label: 'See the Figma plugin',
+      href: '/figma',
+    },
+    {
+      icon: 'glasses',
       title: 'Explore every capability',
       label: 'See the capabilities',
       href: '/capabilities',
@@ -249,4 +408,4 @@ export const colorSpacesPage: CapabilityPage = {
   ],
 }
 
-export const capabilityPages = [colorSpacesPage]
+export const capabilityPages = [colorSpacesPage, colorBlindnessPage]
