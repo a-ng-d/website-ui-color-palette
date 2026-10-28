@@ -61,6 +61,7 @@ The docs drive about 65% of organic clicks (see [baseline.md](baseline.md)). New
    - `auth.`, `app.` and `plugin.ui-color-palette.com` send `X-Robots-Tag: noindex, nofollow`, or the equivalent `<meta name="robots">`, on every response.
    - Do **not** block them in `robots.txt`: Google has to crawl a page to see the noindex.
    - The embed iframe on the site's platform pages keeps working, because noindex does not affect embedding.
+   - **Done (2026-10-28):** the Cloudflare Response Header Transform Rule "Noindex app subdomains" sets `X-Robots-Tag: noindex` on all three hosts (verified with curl).
 6. **Investigate "Crawled, currently not indexed".**
    - For each of the 58 URLs, classify it as:
      - a near-duplicate of another platform's page (same guide in figma/, framer/, penpot/, sketch/);
