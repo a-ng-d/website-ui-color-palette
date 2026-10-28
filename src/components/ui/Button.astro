@@ -75,9 +75,12 @@ const hasIcon = Astro.slots.has('icon')
     cursor: pointer;
   }
 
+  /* `flex-basis: 0` shares a row evenly; in a column (hero, mobile) it hits
+     the height instead, so keep the @unoff/ui height as a floor. */
   .site-button--block {
     flex: 1 1 0;
     min-width: 0;
+    min-height: var(--button-base-height);
   }
 
   .site-button--icon-only {
