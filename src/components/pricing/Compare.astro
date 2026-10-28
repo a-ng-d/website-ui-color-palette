@@ -93,6 +93,7 @@ import { compareColumns, compareRows } from '@/data/pricing'
 
   .compare__cards {
     display: flex;
+    position: relative;
     gap: var(--space-gap-200);
     isolation: isolate;
     overflow-x: auto;
@@ -100,6 +101,9 @@ import { compareColumns, compareRows } from '@/data/pricing'
   }
 
   .compare__card {
+    /* Containing block of the absolutely positioned .visually-hidden text:
+       without it they sit outside the scroller and widen the whole page. */
+    position: relative;
     flex: 1 1 280px;
     background-color: var(--site-surface);
     min-width: 280px;

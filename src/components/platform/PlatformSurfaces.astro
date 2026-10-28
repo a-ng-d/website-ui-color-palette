@@ -41,6 +41,7 @@ const { surfaces } = Astro.props
         <>
           <iframe
             class="surfaces__frame"
+            data-embed-frame
             src={surfaces.embed.src}
             title={surfaces.embed.title}
             loading="lazy"
@@ -62,6 +63,38 @@ const { surfaces } = Astro.props
     </div>
   </div>
 </section>
+
+<script>
+  const frames = document.querySelectorAll<HTMLIFrameElement>(
+    'iframe[data-embed-frame]'
+  )
+  const root = document.documentElement
+  const modeOf = () =>
+    root.dataset.mode === 'yelbolt-uicp-dark' ? 'dark' : 'light'
+
+  const sync = () => {
+    const mode = modeOf()
+    for (const frame of frames) {
+      const url = new URL(frame.src)
+      if (url.searchParams.get('mode') === mode) continue
+      url.searchParams.set('mode', mode)
+      try {
+        if (frame.contentWindow) frame.contentWindow.location.replace(url.href)
+        else frame.src = url.href
+      } catch {
+        frame.src = url.href
+      }
+    }
+  }
+
+  if (frames.length) {
+    sync()
+    new MutationObserver(sync).observe(root, {
+      attributes: true,
+      attributeFilter: ['data-mode'],
+    })
+  }
+</script>
 
 <style>
   .surfaces__grid {

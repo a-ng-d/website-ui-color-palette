@@ -146,6 +146,8 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
     toggle.addEventListener('click', () => {
       const open = toggle.getAttribute('aria-expanded') !== 'true'
       toggle.setAttribute('aria-expanded', String(open))
+      // Back to the first level when the menu closes.
+      if (!open) dropdowns.forEach((d) => (d.open = false))
     })
   }
 
@@ -376,23 +378,65 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
       display: none;
     }
 
+    /* Level 1: links aligned left, Resources opens a second level. */
     .header[data-enhanced]:has([aria-expanded='true']) .header__links {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       padding-bottom: var(--space-inset-200);
       width: 100%;
-      text-align: center;
+      /* Taller than the screen: scroll inside the menu. */
+      max-height: calc(100dvh - 7rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      text-align: left;
     }
 
     .header__links :global(.text-button--primary) {
       align-self: stretch;
     }
 
+    .header__dropdown {
+      align-self: stretch;
+    }
+
+    /* Label on the left, chevron pushed to the right edge. */
+    .header__dropdown-toggle {
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    /* The caret points right: there is a second level. */
+    .header__dropdown .header__dropdown-toggle :global(svg),
+    .header__dropdown[open] .header__dropdown-toggle :global(svg) {
+      transform: rotate(-90deg);
+    }
+
+    /* Level 2: the stack takes the whole width, "back" chevron on the left. */
+    .header__links:has(.header__dropdown[open])
+      > :global(*:not(.header__dropdown)) {
+      display: none;
+    }
+
+    .header__dropdown[open] .header__dropdown-toggle {
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+
+    .header__dropdown[open] .header__dropdown-toggle :global(svg) {
+      transform: rotate(90deg);
+    }
+
+    /* No container on mobile: the cards alone, one per row. */
     .header__panel {
       position: static;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1fr);
       margin-top: var(--space-offset-200);
+      border: 0;
+      background: none;
+      padding: 0;
+      width: 100%;
+      text-align: left;
     }
 
     .resource {

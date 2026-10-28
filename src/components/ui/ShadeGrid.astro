@@ -1,6 +1,6 @@
 ---
 /**
- * Frame of rounded shade tiles with the brand gradient glowing through the gaps (Figma wave used
+ * Frame of rounded shade tiles with the brand gradient glowing through the gaps (a wave image used
  * as a mask); light points travel inside it (see .shade-grid__light in styles/motion.css).
  */
 interface Area {
@@ -12,9 +12,9 @@ interface Area {
 }
 
 interface Wave {
-  /** Wave shape from Figma, used as an alpha mask for the glow. */
+  /** Wave shape, used as an alpha mask for the glow. */
   src: ImageMetadata
-  /** Bleed of the wave around the grid (CSS inset), as in the design. */
+  /** Bleed of the wave around the grid (CSS inset). */
   inset: string
 }
 

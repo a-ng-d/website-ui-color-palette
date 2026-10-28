@@ -44,7 +44,7 @@ export const site = {
     name: 'Yelbolt',
     url: 'https://yelbolt.co/',
   },
-  /** Google Analytics 4 measurement ID (same property as the previous site). */
+  /** Google Analytics 4 measurement ID. */
   googleAnalyticsId: 'G-MEC0CFX9P1',
   /** Tawk.to live chat widget: `<propertyId>/<widgetId>`. */
   tawkWidget: '680b8b6e6b4e0c1911f5d5ad/1ipmhha73',
@@ -59,7 +59,6 @@ export interface NavLink {
   description?: string
 }
 
-/** Short links (uicp.ylb.lt) are kept as on the Figma Sites version. */
 export const links = {
   docs: 'https://docs.ui-color-palette.com',
   support: 'https://uicp.ylb.lt/support',

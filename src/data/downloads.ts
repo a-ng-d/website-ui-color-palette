@@ -1,7 +1,6 @@
 /**
- * Content of the Download page (Figma node 15:42577). One card per install
- * route; order matches the DOM (Sketch and Penpot on row 1, then Figma ×2 and
- * Framer) so the tablet and mobile stacks read the same as the Figma frames.
+ * Content of the Download page. One card per install route, in DOM order:
+ * the tablet and mobile stacks follow it.
  */
 import { links } from '@/config/site'
 import figmaMono from '@/assets/icons/figma-mono.svg'
@@ -16,7 +15,7 @@ export interface DownloadCard {
   text: string
   cta: { label: string; href: string }
   icon: typeof figmaMono
-  /** Two columns wide on desktop (the Sketch card). */
+  /** Two columns wide on desktop. */
   wide?: boolean
   variant?: 'primary' | 'secondary'
 }
@@ -74,7 +73,6 @@ export const downloads: DownloadCard[] = [
     id: 'framer',
     platform: 'Framer',
     title: 'UI Color Palette /one on Framer',
-    // The Figma frame carries a placeholder; copy comes from the live page.
     text: "Click the 'Open plugin' button to run the plugin on the desired document.",
     cta: { label: 'Add to Framer', href: links.runFramerPlugin },
     icon: framerMono,

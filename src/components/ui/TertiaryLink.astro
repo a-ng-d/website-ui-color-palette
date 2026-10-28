@@ -1,7 +1,14 @@
 ---
-/** @unoff/ui tertiary Button wrapped in an <a>: build-time render, crawlable, works without JS. */
-import Button from '@unoff-dist/components/actions/button/Button.js'
-import { isExternal } from '@/config/site'
+/**
+ * Tertiary link on the @unoff/ui Button styles: one element, one tab stop.
+ * A real <a href> (build-time render, crawlable, works without JS), or a
+ * <button data-cc="…"> for cookie consent actions.
+ *
+ * Never nest the @unoff/ui <Button> here: it renders a focusable <button>,
+ * which breaks out of a parent <button> (the click loses `data-cc`) and adds
+ * a second tab stop inside an <a>.
+ */
+import Button from '@/components/ui/Button.astro'
 
 interface Props {
   href?: string
@@ -12,62 +19,16 @@ interface Props {
   current?: boolean
 }
 
-const {
-  href = '',
-  action,
-  label,
-  size = 'large',
-  current = false,
-} = Astro.props
-const external = isExternal(href)
+const { href, action, label, size = 'large', current = false } = Astro.props
 ---
 
-{action ? (
-  <button
-    type="button"
-    class="tertiary-link"
-    data-cc={action}
-  >
-    <Button
-      type="tertiary"
-      size={size}
-      label={label}
-    />
-  </button>
-) : (
-  <a
-    class="tertiary-link"
-    href={href}
-    target={external && !href.startsWith('mailto:') ? '_blank' : undefined}
-    rel={external ? 'noopener' : undefined}
-    aria-current={current ? 'page' : undefined}
-  >
-    <Button
-      type="tertiary"
-      size={size}
-      label={label}
-    />
-  </a>
-)}
-
-<style>
-  .tertiary-link {
-    display: inline-flex;
-    appearance: none;
-    border: 0;
-    background: none;
-    padding: 0;
-    color: inherit;
-    font: inherit;
-    text-decoration: none;
-  }
-
-  .tertiary-link:hover :global(.text-button--tertiary),
-  .tertiary-link:focus-visible :global(.text-button--tertiary) {
-    --button-base-text-decoration: var(--button-tertiary-text-decoration-hover);
-  }
-
-  .tertiary-link :global(.text-button) {
-    cursor: pointer;
-  }
-</style>
+<Button
+  class="tertiary-link"
+  href={action ? undefined : href}
+  variant="tertiary"
+  size={size}
+  data-cc={action}
+  aria-current={current ? 'page' : undefined}
+>
+  {label}
+</Button>

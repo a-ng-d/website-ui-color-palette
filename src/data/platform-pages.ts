@@ -1,9 +1,8 @@
 /**
  * Copy of the platform landing pages (/figma, /penpot, /sketch, /framer,
- * /claude). Every page shares the same frame in Figma (/figma: node 14:32192):
+ * /claude). Every page shares the same frame:
  * a hero with the install link, the editors or strengths of the plugin next to
  * a live preview, a "Why it matters" mosaic, and the next steps.
- * Copy of /penpot, /sketch, /framer and /claude comes from the live site.
  */
 import type { CapabilityGroup } from '@/data/capabilities'
 import { links } from '@/config/site'
@@ -255,13 +254,11 @@ export const framerPage: PlatformPage = {
   },
   surfaces: {
     title: 'From blank canvas to shipped site',
-    // TODO(content): the live page repeats the Figma intro here; this one is a
-    // draft written from the Framer cards and SEO description, to validate.
+    // TODO(content): draft intro, to validate.
     intro:
       'Generate an accessible palette, push it to Framer styles, and build your website from scratch — with colors that pass contrast from the first section to the last.',
     embed: {
-      // The live page passes editor=penpot; kept until the plugin team confirms
-      // the value for Framer.
+      // editor=penpot on purpose, until the plugin team confirms the value for Framer.
       src: pluginEmbed('framer', 'penpot'),
       title: 'UI Color Palette running as a Framer plugin',
     },
