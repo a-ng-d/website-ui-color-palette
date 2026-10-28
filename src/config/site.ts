@@ -23,7 +23,10 @@ export const site = {
   author: {
     name: 'Aurélien Grimaud',
     /** Profiles of the author, for `sameAs` in the structured data. */
-    sameAs: ['https://github.com/a-ng-d'],
+    sameAs: [
+      'https://github.com/a-ng-d',
+      'https://www.linkedin.com/in/augrimaud',
+    ],
   },
   /**
    * Official profiles of the product, for the Organization `sameAs`. Canonical
@@ -36,6 +39,8 @@ export const site = {
     'https://penpot.app/penpothub/plugins/ui-color-palette',
     'https://www.framer.com/marketplace/plugins/ui-color-palette-one-wcag-color-palette-manager-for-apps-websites/',
     'https://github.com/a-ng-d/ui-ui-color-palette',
+    // TODO(content): add the Product Hunt page once it is live. Only add
+    // verified, live URLs here: they feed Organization `sameAs`.
   ],
   /** X (Twitter) handle with the @, for twitter:site and twitter:creator. */
   // TODO(content): set the handle once confirmed; the tags are omitted while null.

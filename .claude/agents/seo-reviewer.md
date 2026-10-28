@@ -35,6 +35,16 @@ Load the skills with the Skill tool if they were not preloaded. Two modes:
   page, the JSON-LD comes from `src/data/structured-data.ts` builders: check the right
   ones are passed.
 
+Also check, on the built HTML, what Phase 1 of the SEO program put in place
+(`docs/seo/README.md`): one h1, `BreadcrumbList` on every non-home page, the page in
+`sitemap-0.xml` with `lastmod`, in `llms.txt` / `llms-full.txt`, and listed on `/blog` or
+`/capabilities` when relevant; posts in `rss.xml`; `pubDate` real (flag a date that looks
+like a commit date); no hard-coded price in copy or meta; no credits mention; no Draft
+feature (gamut, hue/chroma distribution, Structure UI, team spaces, Chrome extension)
+presented as shipped; no orphan page; no near-duplicate primary query across pages and
+articles (cannibalization). Profile URLs in `site.profiles` / `author.sameAs` must be
+verified, never guessed.
+
 Fact accuracy is the fact checker's job; only flag a claim if it hurts SEO/GEO (vague,
 unquotable, hedged into meaninglessness).
 

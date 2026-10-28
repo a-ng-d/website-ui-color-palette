@@ -3,7 +3,7 @@ title: '2025 recap: UI Color Palette, from Figma plugin to cross-platform app'
 description: How UI Color Palette grew in 2025 — launches on Penpot, Sketch and Framer, AI palette generation, image extraction, a color wheel and four languages.
 cover: ../../assets/blog/goodbye-2025-plugin-and-welcome-to-2026-app.png
 coverAlt: UI Color Palette running on Figma, Penpot, Sketch and Framer
-pubDate: 2026-10-24
+pubDate: 2026-01-06
 tags: [news, product, figma, penpot]
 category: News
 seo:
