@@ -1,0 +1,15 @@
+---
+import type { GetStaticPaths } from 'astro'
+import CapabilityPageView from '@/components/capabilities/CapabilityPageView.astro'
+import { capabilityPages } from '@/data/capability-pages'
+
+export const getStaticPaths = (() =>
+  capabilityPages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }))) satisfies GetStaticPaths
+
+const { page } = Astro.props
+---
+
+<CapabilityPageView page={page} />

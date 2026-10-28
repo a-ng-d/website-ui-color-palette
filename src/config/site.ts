@@ -142,6 +142,7 @@ export const footerNav = {
   ],
   resources: [
     { label: 'Blog', href: '/blog' },
+    { label: 'Color glossary', href: '/glossary' },
     { label: 'Read the docs', href: links.docs },
     { label: 'Contact support', href: links.support },
   ],

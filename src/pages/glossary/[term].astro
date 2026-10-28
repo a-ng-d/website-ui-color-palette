@@ -1,0 +1,15 @@
+---
+import type { GetStaticPaths } from 'astro'
+import GlossaryTermView from '@/components/glossary/GlossaryTermView.astro'
+import { glossaryTerms } from '@/data/glossary'
+
+export const getStaticPaths = (() =>
+  glossaryTerms.map((term) => ({
+    params: { term: term.slug },
+    props: { term },
+  }))) satisfies GetStaticPaths
+
+const { term } = Astro.props
+---
+
+<GlossaryTermView term={term} />

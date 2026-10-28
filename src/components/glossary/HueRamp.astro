@@ -1,0 +1,154 @@
+---
+import {
+  hex,
+  hsl,
+  hsluv,
+  lch,
+  oklch,
+  perceivedLightness,
+  type Rgb,
+} from '@/scripts/demos/color'
+import type { RampSpace } from '@/data/glossary'
+
+interface Props {
+  space: RampSpace
+}
+
+const HUES = [20, 65, 110, 155, 200, 245, 290, 335]
+
+// Settings chosen so every row lands near the same average perceived lightness.
+const spaces: Record<
+  RampSpace,
+  { name: string; label: string; colour: (h: number) => Rgb }
+> = {
+  oklch: {
+    name: 'OKLCH',
+    label: 'OKLCH, L 0.72',
+    colour: (h) => oklch(0.72, 0.12, h),
+  },
+  lch: { name: 'LCH', label: 'LCH, L 66', colour: (h) => lch(66, 45, h) },
+  oklab: {
+    name: 'OKLab',
+    label: 'OKLab, L 0.72, a and b on a circle',
+    colour: (h) => oklch(0.72, 0.12, h),
+  },
+  hsluv: {
+    name: 'HSLuv',
+    label: 'HSLuv, L 66',
+    colour: (h) => hsluv(h, 80, 66),
+  },
+}
+
+const { space } = Astro.props
+const rows = [
+  {
+    name: 'HSL',
+    label: 'HSL, L 55%',
+    colour: (h: number) => hsl(h, 0.75, 0.55),
+  },
+  spaces[space],
+].map((row) => ({
+  name: row.name,
+  label: row.label,
+  cells: HUES.map((hue) => {
+    const rgb = row.colour(hue)
+    return { colour: hex(rgb), lightness: perceivedLightness(rgb) * 100 }
+  }),
+}))
+const range = (lightness: number[]) =>
+  `${Math.round(Math.min(...lightness))} to ${Math.round(Math.max(...lightness))}`
+const caption = `Eight hues at one lightness setting, with how light each swatch actually looks (OKLab L, 0–100): ${rows
+  .map((row) => `${row.name} from ${range(row.cells.map((c) => c.lightness))}`)
+  .join(', ')}.`
+---
+
+<figure class="ramp">
+  {rows.map((row) => (
+    <div class="ramp__row">
+      <p class="ramp__label">{row.label}</p>
+      <div
+        class="ramp__cells"
+        aria-hidden="true"
+      >
+        {row.cells.map((cell) => (
+          <span
+            class="ramp__cell"
+            style={`--swatch:${cell.colour};--lightness:${cell.lightness.toFixed(1)}%`}
+          >
+            <span class="ramp__swatch" />
+            <span class="ramp__meter">
+              <span class="ramp__bar" />
+            </span>
+            <span class="ramp__value">{Math.round(cell.lightness)}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  ))}
+  <figcaption class="ramp__caption">{caption}</figcaption>
+</figure>
+
+<style>
+  .ramp {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-600);
+    margin: 0;
+  }
+
+  .ramp__row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-200);
+  }
+
+  .ramp__label,
+  .ramp__caption {
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+  }
+
+  .ramp__label {
+    font-weight: var(--text-weight-display);
+  }
+
+  .ramp__cells {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: var(--space-gap-200);
+  }
+
+  .ramp__cell {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-100);
+  }
+
+  /* Data colours (an exception listed in tokens.md): each swatch is the colour the formula returns. */
+  .ramp__swatch {
+    border-radius: var(--site-radius-inner);
+    background-color: var(--swatch);
+    aspect-ratio: 1;
+  }
+
+  .ramp__meter {
+    display: flex;
+    align-items: flex-end;
+    border-radius: var(--site-radius-inner);
+    background-color: var(--site-surface-muted);
+    height: var(--control-size-1200);
+    overflow: hidden;
+  }
+
+  .ramp__value {
+    font-size: var(--text-body-size);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
+  .ramp__bar {
+    background-color: var(--site-ink);
+    width: 100%;
+    height: var(--lightness);
+  }
+</style>

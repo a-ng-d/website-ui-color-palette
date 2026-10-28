@@ -31,6 +31,12 @@ const sources = {
     'src/components/download',
   ],
 }
+const capabilityPageSources = [
+  'src/data/capability-pages.ts',
+  'src/components/capabilities/CapabilityPageView.astro',
+]
+const glossarySources = ['src/data/glossary.ts', 'src/components/glossary']
+
 for (const platform of ['figma', 'penpot', 'sketch', 'framer', 'claude'])
   sources[`/${platform}`] = [
     `src/pages/${platform}.astro`,
@@ -85,5 +91,8 @@ export const lastmodFor = (url) => {
   const path = new URL(url).pathname.replace(/(.)\/$/, '$1')
   if (path.startsWith('/blog/')) return postDates.get(path.slice(6))
   if (path === '/blog') return latest([...postDates.values()])
+  if (path.startsWith('/capabilities/')) return gitDate(capabilityPageSources)
+  if (path === '/glossary' || path.startsWith('/glossary/'))
+    return gitDate([...glossarySources, 'src/pages/glossary.astro'])
   return gitDate(sources[path] ?? [`src/pages${path}.astro`])
 }

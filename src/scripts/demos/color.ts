@@ -152,3 +152,46 @@ export const perceivedLightness = ([r, g, b]: Rgb) => {
   const s = Math.cbrt(0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb)
   return 0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s
 }
+
+const SRGB_FROM_XYZ = [
+  [3.240969941904521, -1.537383177570093, -0.498610760293],
+  [-0.96924363628087, 1.87596750150772, 0.041555057407175],
+  [0.055630079696993, -0.20397695888897, 1.056971514242878],
+]
+const KAPPA = 903.2962962
+const EPSILON = 0.0088564516
+
+/** HSLuv (h in degrees, s and l 0–100) → sRGB, via CIELUV (Boronine's reference). */
+export const hsluv = (h: number, s: number, l: number): Rgb => {
+  if (l > 99.9999999) return [1, 1, 1]
+  if (l < 1e-8) return [0, 0, 0]
+
+  // Saturation is a share of the most chroma sRGB allows at this hue and lightness.
+  const sub1 = (l + 16) ** 3 / 1560896
+  const sub2 = sub1 > EPSILON ? sub1 : l / KAPPA
+  const hue = (h * Math.PI) / 180
+  let maxChroma = Infinity
+  for (const [m1, m2, m3] of SRGB_FROM_XYZ)
+    for (const t of [0, 1]) {
+      const top1 = (284517 * m1 - 94839 * m3) * sub2
+      const top2 =
+        (838422 * m3 + 769860 * m2 + 731718 * m1) * l * sub2 - 769860 * t * l
+      const bottom = (632260 * m3 - 126452 * m2) * sub2 + 126452 * t
+      const length =
+        top2 / bottom / (Math.sin(hue) - (top1 / bottom) * Math.cos(hue))
+      if (length >= 0) maxChroma = Math.min(maxChroma, length)
+    }
+
+  const c = (maxChroma / 100) * s
+  const u = c * Math.cos(hue)
+  const v = c * Math.sin(hue)
+  const varU = u / (13 * l) + 0.19783000664283
+  const varV = v / (13 * l) + 0.46831999493879
+  const y = l <= 8 ? l / KAPPA : ((l + 16) / 116) ** 3
+  const x = -(9 * y * varU) / ((varU - 4) * varV - varU * varV)
+  const z = (9 * y - 15 * varV * y - varV * x) / (3 * varV)
+
+  return SRGB_FROM_XYZ.map(([a, b, d]) =>
+    clamp01(fromLinear(a * x + b * y + d * z))
+  ) as Rgb
+}

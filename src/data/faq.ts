@@ -12,8 +12,7 @@ export const htmlLink = (href: string, label: string) =>
 export const homeFaq: FaqItem[] = [
   {
     question: 'OKLCH or HSL — why does it matter?',
-    answer:
-      "HSL is familiar, but it's perceptually uneven: the same lightness looks brighter for yellow than for blue, so scales drift. OKLCH is perceptually uniform — equal steps look equal to the eye, so your shades stay consistent and your contrast holds up. You can still work in HEX, RGB, or HSL and switch color spaces (OKLCH, OKLAB, HSLuv…) whenever you like.",
+    answer: `HSL's lightness is computed from RGB, so equal steps look uneven across hues. OKLCH is perceptually uniform, so your shades and your contrast stay consistent. You can still work in HEX, RGB, or HSL and switch color spaces whenever you like. See ${htmlLink('/capabilities/oklch-lch-color-spaces', 'OKLCH & LCH color spaces')}.`,
   },
   {
     question: 'WCAG 2.1 or WCAG 3 (APCA)?',
@@ -37,7 +36,7 @@ export const homeFaq: FaqItem[] = [
   },
   {
     question: 'Is there a free plan?',
-    answer: `Yes! The /basic plan is free forever — 3 palettes per document, 5 source colors, 6 stops, 2 color modes, and CSS export. Upgrade to /pro for unlimited everything and full code export whenever you're ready. See ${htmlLink('/pricing', 'Pricing')}.`,
+    answer: `Yes! The /basic plan is free forever — 2 palettes per document, 5 source colors, 6 stops, 2 color modes, and CSS export. Upgrade to /pro for unlimited everything and full code export whenever you're ready. See ${htmlLink('/pricing', 'Pricing')}.`,
   },
   {
     question: "What should I do if I'm stuck and need help?",

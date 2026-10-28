@@ -1,30 +1,38 @@
 ---
+import Button from '@/components/ui/Button.astro'
 import StackSection from '@/components/ui/StackSection.astro'
-import type { PlatformSetup } from '@/data/platform-pages'
+import type { Steps } from '@/data/blocks'
 
 interface Props {
-  setup: PlatformSetup
-  docs: string
+  id: string
+  steps: Steps
 }
 
-const { setup, docs } = Astro.props
+const { id, steps } = Astro.props
 ---
 
 <StackSection
-  id="setup"
-  title={setup.title}
-  intro={setup.intro}
+  id={id}
+  title={steps.title}
+  intro={steps.intro}
   ordered
   cardMinHeight="360px"
 >
-  <p
-    class="setup__docs t-accent"
-    slot="intro"
-  >
-    <a href={docs}>Read the full setup guide in the docs</a>
-  </p>
+  {steps.docs && (
+    <div
+      class="setup__docs"
+      slot="intro"
+    >
+      <Button
+        variant="secondary"
+        href={steps.docs.href}
+      >
+        {steps.docs.label}
+      </Button>
+    </div>
+  )}
 
-  {setup.steps.map((step, index) => (
+  {steps.steps.map((step, index) => (
     <li class="setup__step surface-card">
       <span
         class="setup__index t-main-title"
@@ -42,8 +50,8 @@ const { setup, docs } = Astro.props
 </StackSection>
 
 <style>
-  .setup__docs a {
-    text-decoration: underline;
+  .setup__docs {
+    display: flex;
   }
 
   .setup__step {

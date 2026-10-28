@@ -1,62 +1,18 @@
 import type { CapabilityGroup } from '@/data/capabilities'
 import { htmlLink, type FaqItem } from '@/data/faq'
 import { links } from '@/config/site'
-
-export type IconId =
-  | 'apple'
-  | 'badge-dollar-sign'
-  | 'code-xml'
-  | 'coins'
-  | 'download'
-  | 'glasses'
-  | 'newspaper'
-  | 'package-open'
-  | 'paintbrush'
-  | 'refresh-ccw-dot'
-  | 'ruler'
-  | 'thumbs-up'
-  | 'wrench'
+import type { IconId, NextStep, Steps, Table } from '@/data/blocks'
 
 export interface Surface {
   icon: IconId
   title: string
   text: string
-  /** Columns spanned on desktop (a page with two cards widens the second). */
   span?: number
-}
-
-export interface SetupStep {
-  title: string
-  text: string
-  code?: string
-}
-
-export interface PlatformSetup {
-  title: string
-  intro: string
-  steps: SetupStep[]
-}
-
-/** `true` / `false` render as a check / a dash. */
-export type TableValue = boolean | string
-
-export interface PlatformTable {
-  id: string
-  title: string
-  intro: string
-  code?: string
-  caption: string
-  rowHeader: string
-  columns: string[]
-  rows: { label: string; href?: string; values: TableValue[] }[]
-  note?: string
 }
 
 export interface PlatformPage {
   path: string
-  /** Short platform name, for the JSON-LD. */
   platform: string
-  /** JSON-LD offer name when the platform has no /basic plan. */
   offerName?: string
   seo: { title: string; description: string }
   docs: string
@@ -68,22 +24,14 @@ export interface PlatformPage {
   surfaces: {
     title: string
     intro: string
-    /** Live plugin UI beside the title card; pages without one fill the slot. */
     embed?: { src: string; title: string }
     cards: Surface[]
   }
   why: CapabilityGroup
-  setup?: PlatformSetup
-  tables?: PlatformTable[]
+  setup?: Steps
+  tables?: Table[]
   faq?: { intro: string; items: FaqItem[] }
   nextSteps?: NextStep[]
-}
-
-export interface NextStep {
-  icon: IconId
-  title: string
-  label: string
-  href: string
 }
 
 export const nextSteps: NextStep[] = [
@@ -367,6 +315,10 @@ export const claudePage: PlatformPage = {
   },
   setup: {
     title: 'Set it up in Claude Code',
+    docs: {
+      label: 'Read the full setup guide in the docs',
+      href: `${links.docs}/claude`,
+    },
     intro:
       'Install the plugin from the Yelbolt marketplace, then describe the palette you want. The default agent runs the whole Source → Palette → Deploy → Manage workflow.',
     steps: [

@@ -1,0 +1,124 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Reinsurance from '@/components/home/Reinsurance.astro'
+import PlatformHero from '@/components/platform/PlatformHero.astro'
+import { glossary, glossaryTerms, termPath } from '@/data/glossary'
+import {
+  definedTermSet,
+  glossaryPath,
+  organization,
+  pageBreadcrumbs,
+  webPage,
+} from '@/data/structured-data'
+
+const jsonLd = [
+  organization(),
+  webPage({
+    path: glossaryPath,
+    name: glossary.seo.title,
+    description: glossary.seo.description,
+  }),
+  definedTermSet({
+    name: glossary.title,
+    description: glossary.seo.description,
+    terms: glossaryTerms.map((term) => ({
+      path: termPath(term),
+      name: term.term,
+      description: term.definition,
+    })),
+  }),
+  pageBreadcrumbs('Glossary', glossaryPath),
+]
+---
+
+<BaseLayout
+  title={glossary.seo.title}
+  description={glossary.seo.description}
+  jsonLd={jsonLd}
+>
+  <PlatformHero hero={{ title: glossary.title, tagline: glossary.tagline }} />
+  <section
+    class="section terms"
+    aria-labelledby="terms-title"
+  >
+    <h2
+      class="visually-hidden"
+      id="terms-title"
+    >
+      Terms
+    </h2>
+    <ul class="terms__grid">
+      {glossaryTerms.map((term) => (
+        <li class="terms__item">
+          <a
+            class="terms__card card"
+            href={termPath(term)}
+            aria-labelledby={`term-${term.slug}`}
+          >
+            <h3
+              class="t-paragraph-secondary-title"
+              id={`term-${term.slug}`}
+            >
+              {term.term}
+            </h3>
+            <p class="t-accent">{term.definition}</p>
+            <span
+              class="terms__more text-button text-button--secondary text-button--large"
+              aria-hidden="true"
+            >
+              <span class="text-button__label">Read more</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+  <Reinsurance />
+</BaseLayout>
+
+<style>
+  .terms__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-gap-200);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .terms__item {
+    display: flex;
+  }
+
+  .terms__card {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .terms__more {
+    align-self: flex-start;
+    margin-top: auto;
+  }
+
+  .terms__card:hover .terms__more {
+    --button-base-background-color: var(
+      --button-secondary-background-color-hover
+    );
+    --button-base-border-color: var(--button-secondary-border-color-hover);
+  }
+
+  @media (max-width: 639.98px) {
+    .terms__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .terms__card {
+      padding: var(--space-inset-600);
+    }
+  }
+</style>

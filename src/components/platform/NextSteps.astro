@@ -1,6 +1,7 @@
 ---
 import IconTile from '@/components/ui/IconTile.astro'
-import { nextSteps, type NextStep } from '@/data/platform-pages'
+import type { NextStep } from '@/data/blocks'
+import { nextSteps } from '@/data/platform-pages'
 
 interface Props {
   steps?: NextStep[]
@@ -23,7 +24,7 @@ const { steps = nextSteps, title = 'Keep exploring UI Color Palette' } =
   </h2>
   <ul
     class="next-steps__grid"
-    style={`--next-steps-columns:${steps.length}`}
+    style={`--next-steps-columns:${Math.min(steps.length, 4)}`}
   >
     {steps.map((step) => (
       <li class="next-steps__item">

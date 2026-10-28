@@ -10,9 +10,9 @@ import Faq from '@/components/home/Faq.astro'
 import Reinsurance from '@/components/home/Reinsurance.astro'
 import NextSteps from '@/components/platform/NextSteps.astro'
 import PlatformHero from '@/components/platform/PlatformHero.astro'
-import PlatformSetup from '@/components/platform/PlatformSetup.astro'
 import PlatformSurfaces from '@/components/platform/PlatformSurfaces.astro'
-import PlatformTable from '@/components/platform/PlatformTable.astro'
+import StepsSection from '@/components/ui/StepsSection.astro'
+import TableSection from '@/components/ui/TableSection.astro'
 import { site } from '@/config/site'
 import { nextSteps, type PlatformPage } from '@/data/platform-pages'
 import {
@@ -88,13 +88,13 @@ const jsonLd = [
     platform={textOnly ? undefined : page.platform.toLowerCase()}
   />
   {page.setup && (
-    <PlatformSetup
-      setup={page.setup}
-      docs={page.docs}
+    <StepsSection
+      id="setup"
+      steps={page.setup}
     />
   )}
   {page.tables?.map((table) => (
-    <PlatformTable table={table} />
+    <TableSection table={table} />
   ))}
   {page.faq && (
     <Faq

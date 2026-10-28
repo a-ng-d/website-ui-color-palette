@@ -114,7 +114,7 @@ export const plans: Plan[] = [
       cta: { label: 'Try it out', href: site.appUrl, variant: 'secondary' },
     },
     features: [
-      { icon: PaletteIcon, label: '3 palettes per document' },
+      { icon: PaletteIcon, label: '2 palettes per document' },
       { icon: PaintbrushIcon, label: '5 source colors per palette' },
       { icon: CombineIcon, label: '6 custom stops per palette' },
       { icon: BlendIcon, label: '2 color modes' },
@@ -221,7 +221,7 @@ export const compareColumns = ['/basic', '/pro', '/ultimate'] as const
 export const compareRows: CompareRow[] = [
   {
     feature: 'Palette per document',
-    values: ['3 palettes', 'Unlimited', 'Unlimited'],
+    values: ['2 palettes', 'Unlimited', 'Unlimited'],
   },
   {
     feature: 'Source colors per palette',
@@ -235,7 +235,10 @@ export const compareRows: CompareRow[] = [
     feature: 'Color modes',
     values: ['2 color modes', 'Unlimited', 'Unlimited'],
   },
-  { feature: 'Lightness presets', values: ['Custom', 'All', 'All'] },
+  {
+    feature: 'Lightness presets',
+    values: ['Custom, Material, Tailwind', 'All', 'All'],
+  },
   { feature: 'Color import', values: [true, true, true] },
   { feature: 'Color combinations', values: [true, true, true] },
   { feature: 'Scale adjustments', values: [true, true, true] },

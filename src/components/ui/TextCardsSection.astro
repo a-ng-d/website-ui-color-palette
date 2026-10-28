@@ -1,0 +1,93 @@
+---
+import Button from '@/components/ui/Button.astro'
+
+interface Props {
+  cards: {
+    title: string
+    paragraphs: string[]
+    /** One action renders secondary; with two, the first is primary. */
+    actions?: { label: string; href: string }[]
+  }[]
+}
+
+const { cards } = Astro.props
+---
+
+<section class="section text-cards">
+  <div
+    class="text-cards__grid"
+    style={`--text-cards-columns:${cards.length}`}
+  >
+    {cards.map((card) => (
+      <article class="text-cards__card surface-card">
+        <h2 class="t-paragraph-secondary-title">{card.title}</h2>
+        {card.paragraphs.map((paragraph) => (
+          <p
+            class="t-accent"
+            set:html={paragraph}
+          />
+        ))}
+        {card.actions && (
+          <div class="text-cards__actions">
+            {card.actions.map((action, index) => (
+              <Button
+                variant={
+                  index === 0 && card.actions!.length > 1
+                    ? 'primary'
+                    : 'secondary'
+                }
+                href={action.href}
+              >
+                {action.label}
+              </Button>
+            ))}
+          </div>
+        )}
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .text-cards__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--text-cards-columns), minmax(0, 1fr));
+    gap: var(--space-gap-200);
+  }
+
+  .text-cards__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+  }
+
+  .text-cards__card p :global(a) {
+    text-decoration: underline;
+  }
+
+  .text-cards__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-gap-200);
+    margin-top: auto;
+    padding-top: var(--space-inset-400);
+  }
+
+  @media (max-width: 1023.98px) {
+    .text-cards__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 639.98px) {
+    .text-cards__card {
+      padding: var(--space-inset-600);
+    }
+
+    .text-cards__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>

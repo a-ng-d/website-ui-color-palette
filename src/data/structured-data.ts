@@ -261,6 +261,45 @@ export const blogCollection = (blog: {
   },
 })
 
+export const glossaryPath = '/glossary'
+const termSetId = absolute(`${glossaryPath}#terms`)
+export const termId = (path: string) => `${absolute(path)}#term`
+
+export const definedTermSet = (set: {
+  name: string
+  description: string
+  terms: { path: string; name: string; description: string }[]
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  '@id': termSetId,
+  url: absolute(glossaryPath),
+  name: set.name,
+  description: set.description,
+  inLanguage: site.locale,
+  hasDefinedTerm: set.terms.map((term) => ({
+    '@type': 'DefinedTerm',
+    '@id': termId(term.path),
+    url: absolute(term.path),
+    name: term.name,
+    description: term.description,
+  })),
+})
+
+export const definedTerm = (term: {
+  path: string
+  name: string
+  description: string
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTerm',
+  '@id': termId(term.path),
+  url: absolute(term.path),
+  name: term.name,
+  description: term.description,
+  inDefinedTermSet: { '@id': termSetId },
+})
+
 export const breadcrumbs = (items: { name: string; path: string }[]) => ({
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',

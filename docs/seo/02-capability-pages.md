@@ -1,6 +1,6 @@
 # Phase 2 — Capability, comparison, platform and glossary pages
 
-- **Status**: In progress (step 1 done on branch `seo/phase-2`)
+- **Status**: In progress (steps 1 and 2 done on branch `seo/phase-2`)
 - **Package(s) concerned**: `website-ui-color-palette`
 - **Related spec**: [README.md](README.md), [03-blog-clusters.md](03-blog-clusters.md), [00-measurement.md](00-measurement.md)
 
@@ -193,3 +193,4 @@ Add to each one:
 | 2026-10-26 | Created |
 | 2026-10-28 | Production order set from the Search Console baseline; `mcp-color-palette` merged into `/claude` |
 | 2026-10-28 | Step 1 done: `/claude` enriched (setup guide, design-tool matrix, MCP tools table, FAQ + FAQPage, WebPage JSON-LD). Shared pieces for Lot C: optional `setup`, `tables`, `faq`, `nextSteps` on `PlatformPage`; `llms.txt` / `llms-full.txt` generated from the page data. Open: Lot A links from `/claude` once those pages exist |
+| 2026-10-28 | Step 2 done: `/capabilities/oklch-lch-color-spaces` (template `CapabilityPageView`, data `capability-pages.ts`), `/glossary` hub (`DefinedTermSet`) and terms `oklch`, `lch`, `oklab`, `hsluv` (`DefinedTerm`, `HueRamp` visual). Linked from `/capabilities`, the home FAQ and the footer; listed in `llms.txt` / `llms-full.txt` from the data |
