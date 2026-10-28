@@ -520,27 +520,27 @@ export const claudePage: PlatformPage = {
   nextSteps: [
     {
       icon: 'glasses',
-      title: 'Explore the features',
-      label: 'See the capabilities',
-      href: '/capabilities',
+      title: 'Audit WCAG & APCA contrast',
+      label: 'See the capability',
+      href: '/capabilities/wcag-apca-contrast',
+    },
+    {
+      icon: 'glasses',
+      title: 'Export OKLCH palettes',
+      label: 'See the capability',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+    {
+      icon: 'glasses',
+      title: 'Simulate color blindness',
+      label: 'See the capability',
+      href: '/capabilities/color-blindness-simulation',
     },
     {
       icon: 'newspaper',
       title: 'Try three AI workflows',
       label: 'Read the guide',
       href: '/blog/3-ways-ai-now-builds-audits-and-deploys-your-color-systems',
-    },
-    {
-      icon: 'wrench',
-      title: 'Set it up',
-      label: 'Read the docs',
-      href: `${links.docs}/claude`,
-    },
-    {
-      icon: 'code-xml',
-      title: 'Connect any MCP client',
-      label: 'Read the MCP docs',
-      href: links.docsMcp,
     },
   ],
 }

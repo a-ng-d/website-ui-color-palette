@@ -12,7 +12,7 @@ export interface GlossaryTerm {
   definition: string
   why: string[]
   inProduct: string[]
-  visual: RampSpace | 'vision'
+  visual: RampSpace | 'vision' | 'contrast'
   table?: Table
   capability: { name: string; href: string }
   related: string[]
@@ -33,6 +33,10 @@ export const termPath = (term: GlossaryTerm) => `/glossary/${term.slug}`
 export const termQuestion = (term: GlossaryTerm) =>
   term.question ?? `What is ${term.term}?`
 
+const wcagApca = {
+  name: 'WCAG & APCA contrast',
+  href: '/capabilities/wcag-apca-contrast',
+}
 const colorSpaces = {
   name: 'OKLCH & LCH color spaces',
   href: '/capabilities/oklch-lch-color-spaces',
@@ -220,5 +224,96 @@ export const glossaryTerms: GlossaryTerm[] = [
       href: '/capabilities/color-blindness-simulation',
     },
     related: ['oklch'],
+  },
+  {
+    slug: 'wcag-contrast-ratio',
+    term: 'WCAG contrast ratio',
+    question: 'What is the WCAG contrast ratio?',
+    seo: {
+      title: 'WCAG Contrast Ratio: 4.5:1, 3:1 and 7:1 Explained',
+      description:
+        'The WCAG 2.1 contrast ratio compares the luminance of two colors, from 1:1 to 21:1. What 4.5:1, 3:1 and 7:1 mean for text and UI, and how to meet them.',
+    },
+    definition:
+      'The WCAG contrast ratio compares the relative luminance of two colors, from 1:1 (no contrast) to 21:1 (black on white). WCAG 2.1 asks for at least 4.5:1 for body text and 3:1 for large text at level AA, and 7:1 and 4.5:1 at level AAA.',
+    why: [
+      `The 4.5:1 and 3:1 thresholds come from WCAG, the contrast rule accessibility laws and standards most often cite, so they are the ones to meet for compliance (${htmlLink('https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html', 'Understanding Contrast (Minimum), 1.4.3')}). UI components, such as input borders and focus indicators, and meaningful graphics need 3:1 as well, under 1.4.11.`,
+      `The ratio comes from luminance, which does not always match perceived contrast, and it ignores font weight. ${htmlLink('/glossary/apca', 'APCA')} was designed to address that.`,
+    ],
+    inProduct: [
+      'Every shade of a palette shows its WCAG 2.1 ratio and its A, AA or AAA grade against your light and dark foreground colors, on every plan and in every design-tool plugin.',
+      'You can also set the target ratio of each stop, from 1 to 21, and UI Color Palette recomputes the lightness that meets it.',
+    ],
+    visual: 'contrast',
+    table: {
+      id: 'thresholds',
+      title: 'The thresholds to meet',
+      intro:
+        'Large text means at least 24px, or about 18.7px in bold (18pt and 14pt). Level AA is the usual target; AAA is stricter.',
+      caption: 'WCAG 2.1 contrast thresholds',
+      rowHeader: 'Content',
+      columns: ['Level AA', 'Level AAA'],
+      rows: [
+        { label: 'Body text', values: ['4.5:1', '7:1'] },
+        { label: 'Large text', values: ['3:1', '4.5:1'] },
+        {
+          label: 'UI components and meaningful graphics',
+          values: ['3:1', 'No extra level'],
+        },
+      ],
+    },
+    capability: wcagApca,
+    related: ['apca', 'color-blindness-types'],
+  },
+  {
+    slug: 'apca',
+    term: 'APCA',
+    seo: {
+      title: 'What Is APCA? Perceptual Text Contrast — UI Color Palette',
+      description:
+        'APCA rates text contrast as a lightness contrast (Lc) that depends on font size, weight and polarity. How it differs from WCAG 2.1, and its levels.',
+    },
+    definition:
+      'APCA (Accessible Perceptual Contrast Algorithm) rates the contrast between text and its background as a lightness contrast value, Lc. Unlike the WCAG 2.1 ratio, it accounts for which color is in front, and its guidance depends on font size and weight. It has been proposed for WCAG 3.',
+    why: [
+      `WCAG 2.1 ratios treat thin and bold text alike and do not always match perceived contrast. APCA models perception more closely, taking text size, weight and polarity into account (${htmlLink('https://git.apcacontrast.com/documentation/APCA_in_a_Nutshell.html', 'APCA in a Nutshell')}).`,
+      `APCA is not a legal requirement yet: for compliance, the ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG 2.1 ratio')} remains the reference. Use both — the ratio to comply, APCA to refine.`,
+    ],
+    inProduct: [
+      'Every shade of a palette shows its APCA score next to its WCAG 2.1 ratio, against your light and dark foreground colors, on every plan and in every design-tool plugin.',
+      'On /pro, the contrast report adds a readability score based on APCA and the minimum font size for the weight you pick. In Claude, the audit skill checks WCAG 2.1 and APCA too.',
+    ],
+    visual: 'contrast',
+    table: {
+      id: 'levels',
+      title: 'APCA levels for text and UI',
+      intro:
+        'Minimum Lc values from APCA in a Nutshell, for a reference font such as Helvetica. For a stricter level, comparable to AAA, add Lc 15.',
+      caption: 'APCA minimum lightness contrast levels',
+      rowHeader: 'Lc',
+      columns: ['Use'],
+      rows: [
+        { label: 'Lc 90', values: ['Preferred for body text'] },
+        {
+          label: 'Lc 75',
+          values: ['Minimum for body text (from 18px regular or 14px bold)'],
+        },
+        { label: 'Lc 60', values: ['Minimum for other text meant to be read'] },
+        {
+          label: 'Lc 45',
+          values: ['Minimum for headlines and large text (36px, or 24px bold)'],
+        },
+        {
+          label: 'Lc 30',
+          values: ['Absolute minimum for any text, such as placeholders'],
+        },
+        {
+          label: 'Lc 15',
+          values: ['Minimum for non-text elements such as dividers'],
+        },
+      ],
+    },
+    capability: wcagApca,
+    related: ['wcag-contrast-ratio', 'color-blindness-types'],
   },
 ]

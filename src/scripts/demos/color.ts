@@ -1,8 +1,6 @@
 /**
- * Colour maths shared by the capability demos, at build time (Astro
- * frontmatter renders the first frame) and in the browser (the demos
- * recompute while they play). Real formulas, so the numbers the demos show
- * are the ones UI Color Palette would show.
+ * Real colour-science formulas, for illustration: only `simulateVision` copies
+ * the engine's own matrices.
  */
 
 export type Rgb = [number, number, number] // sRGB, 0–1
@@ -41,7 +39,7 @@ export const hex = (rgb: Rgb) =>
     )
     .join('')}`
 
-/** WCAG 2.1 contrast ratio (1–21). */
+/** 1 to 21. */
 export const wcagRatio = (fg: Rgb, bg: Rgb) => {
   const luminance = ([r, g, b]: Rgb) =>
     0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b)
@@ -98,19 +96,16 @@ const matrix =
     ) as Rgb
   }
 
-/** Red-weak vision (protanomaly). */
 export const protanomaly = matrix([
   0.38545, 0.769005, -0.154455, 0.100526, 0.829802, 0.069673, -0.007442,
   -0.02219, 1.029632,
 ])
 
-/** Blue-weak vision (tritanomaly). */
 export const tritanomaly = matrix([
   1.104996, -0.046633, -0.058363, -0.032137, 0.971635, 0.060503, 0.001336,
   0.317922, 0.680742,
 ])
 
-/** Total colour blindness (achromatopsia): luminance only. */
 export const achromatopsia = ([r, g, b]: Rgb): Rgb => {
   const y = fromLinear(
     0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b)
@@ -118,7 +113,7 @@ export const achromatopsia = ([r, g, b]: Rgb): Rgb => {
   return [y, y, y]
 }
 
-/** HSL (h in degrees, s and l 0–1) → sRGB. */
+/** h in degrees, s and l 0–1. */
 export const hsl = (h: number, s: number, l: number): Rgb => {
   const k = (n: number) => (n + h / 30) % 12
   const a = s * Math.min(l, 1 - l)
@@ -144,7 +139,7 @@ export const lch = (l: number, c: number, h: number): Rgb => {
   ].map((channel) => clamp01(fromLinear(channel))) as Rgb
 }
 
-/** Perceived lightness (OKLab L, 0–1) of an sRGB colour. */
+/** OKLab L, 0–1. */
 export const perceivedLightness = ([r, g, b]: Rgb) => {
   const [lr, lg, lb] = [r, g, b].map(toLinear)
   const l = Math.cbrt(0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb)

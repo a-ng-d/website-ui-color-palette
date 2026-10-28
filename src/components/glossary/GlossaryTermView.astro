@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import HueRamp from '@/components/glossary/HueRamp.astro'
 import VisionRamp from '@/components/glossary/VisionRamp.astro'
+import ContrastRamp from '@/components/glossary/ContrastRamp.astro'
 import Reinsurance from '@/components/home/Reinsurance.astro'
 import NextSteps from '@/components/platform/NextSteps.astro'
 import PlatformHero from '@/components/platform/PlatformHero.astro'
@@ -78,7 +79,9 @@ const jsonLd = [
     title={`${term.term}, in short`}
     intro={term.definition}
   >
-    {term.visual === 'vision' ? (
+    {term.visual === 'contrast' ? (
+      <ContrastRamp />
+    ) : term.visual === 'vision' ? (
       <VisionRamp />
     ) : (
       <HueRamp space={term.visual} />

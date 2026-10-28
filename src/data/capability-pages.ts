@@ -401,11 +401,181 @@ export const colorBlindnessPage: CapabilityPage = {
     },
     {
       icon: 'glasses',
-      title: 'Explore every capability',
-      label: 'See the capabilities',
-      href: '/capabilities',
+      title: 'WCAG & APCA contrast',
+      label: 'See the next capability',
+      href: '/capabilities/wcag-apca-contrast',
     },
   ],
 }
 
-export const capabilityPages = [colorSpacesPage, colorBlindnessPage]
+export const contrastPage: CapabilityPage = {
+  slug: 'wcag-apca-contrast',
+  name: 'WCAG & APCA contrast',
+  seo: {
+    title: 'Accessible Color Palette for Figma: WCAG & APCA Contrast',
+    description:
+      'Build an accessible color palette in Figma, Penpot, Sketch or Framer: WCAG 2.1 ratio and APCA score on every shade, target ratios per stop. Free to start.',
+  },
+  hero: {
+    title:
+      'Accessible color palette for Figma, with WCAG and APCA contrast on every shade',
+    tagline:
+      'Check the WCAG 2.1 ratio and APCA score of every shade against your text colors, in Figma, Penpot, Sketch and Framer.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do you build an accessible color palette?',
+    lead: 'An accessible color palette is one where every shade used behind text reaches at least 4.5:1 against that text, or 3:1 for large text, under WCAG 2.1. UI Color Palette scores every shade against your light and dark text colors with the WCAG 2.1 ratio and the APCA score, and lets you set the target ratio of each stop.',
+    demo: 'contrast',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'Contrast is computed for every shade, against the light and dark foreground colors of each color mode. Scores and target ratios are free; the analysis tools are on /pro.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/master-a-color-palette#adjust-the-contrast-configuration`,
+    },
+    steps: [
+      {
+        title: 'Set your text colors',
+        text: 'Pick the light and dark foreground colors your interface uses; white and black are the defaults. Every score is computed against them.',
+      },
+      {
+        title: 'Read the scores',
+        text: 'Each shade shows its WCAG 2.1 ratio with an A, AA or AAA grade, and its APCA score, for the light and the dark text color.',
+      },
+      {
+        title: 'Set a target ratio',
+        text: 'Switch the scale from lightness to contrast ratio and type the ratio each stop must reach, from 1 to 21. The lightness is recomputed to meet it.',
+      },
+      {
+        title: 'Check the details',
+        text: 'On /pro, filter the shades that pass or fail, read the score interval of each stop, and open a contrast report with sample text, a readability score and a minimum font size.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'standards',
+      title: 'WCAG 2.1 and APCA, side by side',
+      intro:
+        'UI Color Palette shows both scores on every shade: the ratio to comply with today’s rules, APCA to refine readability.',
+      caption: 'WCAG 2.1 contrast ratio and APCA compared',
+      rowHeader: 'Method',
+      columns: ['What it measures', 'Scale', 'Body text'],
+      rows: [
+        {
+          label: 'WCAG 2.1',
+          href: '/glossary/wcag-contrast-ratio',
+          values: [
+            'Luminance ratio between text and background',
+            '1:1 to 21:1',
+            '4.5:1 at level AA, 7:1 at AAA',
+          ],
+        },
+        {
+          label: 'APCA',
+          href: '/glossary/apca',
+          values: [
+            'Perceived lightness contrast, depending on which color is in front',
+            'Lightness contrast (Lc)',
+            'Lc 75 minimum, Lc 90 preferred',
+          ],
+        },
+      ],
+      note: 'WCAG is the contrast rule accessibility laws and standards most often cite; APCA is a newer perceptual method proposed for WCAG 3.',
+    },
+    {
+      id: 'plans',
+      title: 'What you get on each plan',
+      intro:
+        'Every design-tool plugin offers the same contrast tools: Figma, Penpot, Sketch and Framer.',
+      caption: 'Contrast tools per plan',
+      rowHeader: 'Tool',
+      columns: ['/basic', '/pro'],
+      rows: [
+        {
+          label: 'WCAG 2.1 and APCA score on every shade',
+          values: [true, true],
+        },
+        {
+          label: 'Custom light and dark foreground colors',
+          values: [true, true],
+        },
+        { label: 'Target contrast ratio per stop', values: [true, true] },
+        { label: 'Score interval per stop', values: [false, true] },
+        { label: 'Pass and fail filters', values: [false, true] },
+        {
+          label:
+            'Contrast report (sample text, readability score, minimum font size)',
+          values: [false, true],
+        },
+      ],
+      note: 'In Claude, the audit skill checks WCAG 2.1 and APCA for every pair, lists the risky ones and suggests fixes.',
+    },
+  ],
+  faq: {
+    intro:
+      'Checking contrast on a palette, WCAG 2.1 versus APCA, and the ratios to aim for.',
+    items: [
+      {
+        question: 'Is there a WCAG contrast checker for Figma?',
+        answer: `Yes. UI Color Palette shows the WCAG 2.1 ratio and the APCA score of every shade of your palette, on the free /basic plan, in Figma, Penpot, Sketch and Framer (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+      },
+      {
+        question: 'APCA vs WCAG: which contrast method should I use?',
+        answer: `Both. The ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG 2.1 ratio')} is what accessibility laws and standards most often cite; ${htmlLink('/glossary/apca', 'APCA')} models perceived contrast more closely, taking text size and weight into account. UI Color Palette shows both on every shade.`,
+      },
+      {
+        question: 'What contrast ratio does WCAG require for text?',
+        answer: `At level AA, 4.5:1 for body text and 3:1 for large text (24px, or about 18.7px bold); at level AAA, 7:1 and 4.5:1. UI components, such as input borders and focus indicators, and meaningful graphics need 3:1 (see the ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG contrast ratio')}).`,
+      },
+      {
+        question: 'Can I build a palette from target contrast ratios?',
+        answer: `Yes, on every plan. Switch the scale to contrast ratio, type the ratio each stop must reach, and UI Color Palette recomputes its lightness; it works well with the ${htmlLink('/glossary/hsluv', 'HSLuv')} color space.`,
+      },
+      {
+        question: 'Does the contrast change for color-blind users?',
+        answer: `It can. Set a vision simulation on a color mode and the contrast between your foreground colors and every shade is simulated too (see ${htmlLink('/capabilities/color-blindness-simulation', 'color blindness simulation')}). Protanomaly is free; the other simulations are on /pro.`,
+      },
+      {
+        question: 'How do I check if my color palette is accessible?',
+        answer:
+          'Compare every shade with the text colors it will carry and read its WCAG 2.1 ratio: 4.5:1 for body text and 3:1 for large text at level AA. In UI Color Palette, each shade shows its ratio, its A, AA or AAA grade and its APCA score, so failing shades are visible without leaving your design tool.',
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'book-open',
+      title: 'What is APCA?',
+      label: 'Read the definition',
+      href: '/glossary/apca',
+    },
+    {
+      icon: 'book-open',
+      title: 'What is the WCAG contrast ratio?',
+      label: 'Read the definition',
+      href: '/glossary/wcag-contrast-ratio',
+    },
+    {
+      icon: 'glasses',
+      title: 'Color blindness simulation',
+      label: 'See the capability',
+      href: '/capabilities/color-blindness-simulation',
+    },
+    {
+      icon: 'ruler',
+      title: 'Use it in Figma',
+      label: 'See the Figma plugin',
+      href: '/figma',
+    },
+  ],
+}
+
+export const capabilityPages = [
+  colorSpacesPage,
+  colorBlindnessPage,
+  contrastPage,
+]

@@ -1,0 +1,116 @@
+---
+import { apcaLc, hex, oklch, wcagRatio, type Rgb } from '@/scripts/demos/color'
+
+const LIGHTNESS = [0.95, 0.86, 0.77, 0.68, 0.59, 0.5, 0.41, 0.32]
+const TEXTS: { name: string; rgb: Rgb }[] = [
+  { name: 'White', rgb: [1, 1, 1] },
+  { name: 'Black', rgb: [0, 0, 0] },
+]
+
+// Floored, so a 4.46:1 never reads as an AA pass.
+const shades = LIGHTNESS.map((l) => {
+  const rgb = oklch(l, 0.13 * (1 - Math.abs(2 * l - 1) ** 2), 255)
+  return {
+    colour: hex(rgb),
+    texts: TEXTS.map((text) => ({
+      name: text.name,
+      colour: hex(text.rgb),
+      ratio: (Math.floor(wcagRatio(text.rgb, rgb) * 10) / 10).toFixed(1),
+      lc: Math.round(Math.abs(apcaLc(text.rgb, rgb))),
+    })),
+  }
+})
+---
+
+<figure class="contrast">
+  <ul class="contrast__list">
+    {shades.map((shade, index) => (
+      <li
+        class="contrast__shade"
+        style={`--swatch:${shade.colour}`}
+      >
+        <span class="visually-hidden">
+          Shade {index + 1} of {shades.length}:
+        </span>
+        {shade.texts.map((text) => (
+          <span class="contrast__pair">
+            <span
+              class="contrast__sample"
+              style={`--text:${text.colour}`}
+              aria-hidden="true"
+            >
+              Aa
+            </span>
+            <span class="contrast__score">
+              <span class="visually-hidden">{text.name} text: </span>
+              {text.ratio}:1 · Lc {text.lc}
+            </span>
+          </span>
+        ))}
+      </li>
+    ))}
+  </ul>
+  <figcaption class="contrast__caption">
+    One blue scale. On each shade, white text and black text, with the WCAG 2.1
+    contrast ratio and the APCA lightness contrast (Lc, APCA 0.0.98G-4g) of
+    each.
+  </figcaption>
+</figure>
+
+<style>
+  .contrast {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    margin: 0;
+  }
+
+  .contrast__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-100);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contrast__shade {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-gap-400);
+  }
+
+  .contrast__pair {
+    display: flex;
+    align-items: center;
+    gap: var(--space-gap-300);
+  }
+
+  /* Data colours (tokens.md exception): the shade, and the white and black text
+     the scores are computed for. */
+  .contrast__sample {
+    border-radius: var(--site-radius-inner);
+    background-color: var(--swatch);
+    padding: var(--space-inset-200) var(--space-inset-400);
+    color: var(--text);
+    font-weight: var(--text-weight-display);
+    font-family: var(--font-display);
+  }
+
+  .contrast__score,
+  .contrast__caption {
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+  }
+
+  .contrast__score {
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 479.98px) {
+    .contrast__shade {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-gap-100);
+    }
+  }
+</style>

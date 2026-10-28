@@ -33,9 +33,11 @@ Already used for specific needs:
   spotlight. Also the light points in `.shade-grid__light`.
 - Platform logo tiles: brand colours of each platform (`tile` in `src/data/platforms.ts`).
 - Terminal snippets: `--snippet-*`, defined from UICP primitives (`--uicp-2/4/5/7/8`).
-- Glossary ramps (`HueRamp`, `VisionRamp`): swatch colours computed by
+- Glossary ramps (`HueRamp`, `VisionRamp`, `ContrastRamp`): swatch colours computed by
   `src/scripts/demos/color.ts` and set as inline `--swatch` (and `--lightness` for
-  HueRamp). Data, like the demos; labels, bars and meters use tokens.
+  HueRamp). Data, like the demos; labels, bars and meters use tokens. `ContrastRamp`
+  also sets its white and black sample text as inline `--text`: the colours its scores are
+  computed for.
 - Capability demos: the palette *content* (shades, previews, tracks) is computed from
   OKLCH in `src/scripts/demos/` and set as inline styles — it is data, like a palette
   image, and does not follow the site mode. The demo chrome is the demo kit: @unoff/ui
