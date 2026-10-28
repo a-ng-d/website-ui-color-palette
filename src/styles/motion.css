@@ -16,7 +16,7 @@
 }
 
 /* REVEAL: .card, .surface-card, .shade-grid__area, .platforms__intro,
-   .posts__intro, .extra__intro, .faq__intro, .stack__intro, .mosaic__intro,
+   .posts__intro, .extra__intro, .intro-card__intro, .stack__intro, .mosaic__intro,
    .audience__intro (keep in sync with reveal.ts) */
 
 /* ---- 1. Scale in ---- */
@@ -28,7 +28,7 @@
     .platforms__intro,
     .posts__intro,
     .extra__intro,
-    .faq__intro,
+    .intro-card__intro,
     .stack__intro,
     .mosaic__intro,
     .audience__intro
@@ -46,7 +46,7 @@
     .platforms__intro,
     .posts__intro,
     .extra__intro,
-    .faq__intro,
+    .intro-card__intro,
     .stack__intro,
     .mosaic__intro,
     .audience__intro
@@ -74,7 +74,7 @@
     .platforms__intro,
     .posts__intro,
     .extra__intro,
-    .faq__intro,
+    .intro-card__intro,
     .stack__intro,
     .mosaic__intro,
     .audience__intro
@@ -90,7 +90,7 @@
     .platforms__intro,
     .posts__intro,
     .extra__intro,
-    .faq__intro,
+    .intro-card__intro,
     .stack__intro,
     .mosaic__intro,
     .audience__intro
@@ -117,7 +117,7 @@
     .platforms__intro,
     .posts__intro,
     .extra__intro,
-    .faq__intro,
+    .intro-card__intro,
     .stack__intro,
     .mosaic__intro,
     .audience__intro
@@ -150,7 +150,7 @@
     .platforms__intro,
     .posts__intro,
     .extra__intro,
-    .faq__intro,
+    .intro-card__intro,
     .stack__intro,
     .mosaic__intro,
     .audience__intro
@@ -213,7 +213,7 @@
     .platforms__intro,
     .posts__intro,
     .extra__intro,
-    .faq__intro,
+    .intro-card__intro,
     .stack__intro,
     .mosaic__intro,
     .audience__intro

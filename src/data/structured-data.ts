@@ -76,6 +76,8 @@ export const softwareApplication = (offers: object | object[] = freeOffer) => ({
   offers,
 })
 
+export const platformSoftwareId = (path: string) => `${absolute(path)}#software`
+
 /**
  * A platform edition of the plugin (/figma, /penpot…), part of the main
  * application so engines tie the pages together.
@@ -90,7 +92,7 @@ export const platformApplication = (page: {
 }) => ({
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  '@id': `${absolute(page.path)}#software`,
+  '@id': platformSoftwareId(page.path),
   name: page.name,
   url: absolute(page.path),
   description: page.description,
@@ -104,7 +106,24 @@ export const platformApplication = (page: {
   offers: freeOffer,
 })
 
-/** The plans of the Pricing page, as offers of the application. */
+/** `about`: the `@id` of the entity the page describes. */
+export const webPage = (page: {
+  path: string
+  name: string
+  description: string
+  about?: string
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${absolute(page.path)}#webpage`,
+  url: absolute(page.path),
+  name: page.name,
+  description: page.description,
+  inLanguage: site.locale,
+  isPartOf: { '@id': websiteId },
+  ...(page.about ? { about: { '@id': page.about } } : {}),
+})
+
 export const pricingOffers = () => {
   const offer = (plan: Plan, period: string, variant: PlanVariant) => ({
     '@type': 'Offer',
@@ -214,7 +233,6 @@ export const blogPosting = (post: {
     : {}),
 })
 
-/** The blog index: a collection page listing every article. */
 export const blogCollection = (blog: {
   path: string
   title: string

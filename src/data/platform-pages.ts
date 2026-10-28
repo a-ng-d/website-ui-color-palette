@@ -5,9 +5,9 @@
  * a live preview, a "Why it matters" mosaic, and the next steps.
  */
 import type { CapabilityGroup } from '@/data/capabilities'
+import { htmlLink, type FaqItem } from '@/data/faq'
 import { links } from '@/config/site'
 
-/** Lucide icon shown in the dark tile of a card. */
 export type IconId =
   | 'apple'
   | 'badge-dollar-sign'
@@ -31,6 +31,33 @@ export interface Surface {
   span?: number
 }
 
+export interface SetupStep {
+  title: string
+  text: string
+  code?: string
+}
+
+export interface PlatformSetup {
+  title: string
+  intro: string
+  steps: SetupStep[]
+}
+
+/** `true` / `false` render as a check / a dash. */
+export type TableValue = boolean | string
+
+export interface PlatformTable {
+  id: string
+  title: string
+  intro: string
+  code?: string
+  caption: string
+  rowHeader: string
+  columns: string[]
+  rows: { label: string; href?: string; values: TableValue[] }[]
+  note?: string
+}
+
 export interface PlatformPage {
   path: string
   /** Short platform name, for the JSON-LD. */
@@ -50,6 +77,10 @@ export interface PlatformPage {
     cards: Surface[]
   }
   why: CapabilityGroup
+  setup?: PlatformSetup
+  tables?: PlatformTable[]
+  faq?: { intro: string; items: FaqItem[] }
+  nextSteps?: NextStep[]
 }
 
 export interface NextStep {
@@ -59,7 +90,6 @@ export interface NextStep {
   href: string
 }
 
-/** The link cards that close every platform page. */
 export const nextSteps: NextStep[] = [
   {
     icon: 'glasses',
@@ -87,7 +117,6 @@ export const nextSteps: NextStep[] = [
   },
 ]
 
-/** The plugin UI in embed mode, as each platform shows it. */
 const pluginEmbed = (platform: string, editor: string) => {
   const url = new URL(links.pluginEmbed)
   url.search = new URLSearchParams({
@@ -259,7 +288,6 @@ export const framerPage: PlatformPage = {
   },
   surfaces: {
     title: 'From blank canvas to shipped site',
-    // TODO(content): draft intro, to validate.
     intro:
       'Generate an accessible palette, push it to Framer styles, and build your website from scratch — with colors that pass contrast from the first section to the last.',
     embed: {
@@ -284,49 +312,52 @@ export const framerPage: PlatformPage = {
   why: designToolWhy,
 }
 
+const code = (text: string) => `<code>${text}</code>`
+
 export const claudePage: PlatformPage = {
   path: '/claude',
   docs: `${links.docs}/claude`,
   platform: 'Claude',
   seo: {
-    title: 'Claude Color Palette Plugin — UI Color Palette',
+    title: 'Claude Color Palette Plugin & MCP Server — UI Color Palette',
     description:
-      'Design accessible color palettes right inside Claude Code, with agents, skills, and pre-connected design & code integrations for GitHub and GitLab.',
+      'Generate accessible color palettes in Claude Code: WCAG and APCA audits, 14 code and token formats, and MCP sync to Figma, Penpot, Sketch and Framer.',
   },
   hero: {
-    title: 'UI Color Palette for Claude',
-    tagline: 'The dedicated, optimized way to design color with AI.',
+    title: 'Claude color palette plugin & MCP server',
+    tagline:
+      'Generate, audit and ship accessible color palettes with Claude AI, in Claude Code or any MCP client.',
     cta: { label: 'Add to Claude', href: links.runClaudePlugin },
   },
   surfaces: {
-    title: 'A color studio, tuned for Claude',
+    title: 'What the Claude color palette plugin does',
     intro:
-      'More than a generic MCP setup: the Claude plugin is a specific, tuned experience — cheaper to run, easier to steer, and ready to install in a click.',
+      'UI Color Palette for Claude is a Claude Code plugin built on the UI Color Palette MCP server. Describe a palette, share an image or give a base color: it builds the scale, checks every shade against WCAG 2.1 and APCA, exports it in 14 code and token formats, and pushes it to Figma, Penpot, Sketch or Framer.',
     cards: [
       {
         icon: 'ruler',
         title: 'Integrated agents',
-        text: 'Purpose-built agents designed for lower-token transactions — more done, for less.',
+        text: 'A default orchestrator plus five specialist agents for color systems, audits, code export, publishing and design-tool transitions.',
       },
       {
         icon: 'paintbrush',
         title: 'Skills',
-        text: 'Built-in skills that keep the conversation relevant and on track.',
+        text: 'One skill per step — source colors, scale, color system, audit, code export, publishing — callable as /ui-color-palette:skill-name.',
       },
       {
         icon: 'code-xml',
         title: 'Pre-connected integrations',
-        text: 'Its MCP servers come wired up ahead of time — to your design tools, and to GitHub & GitLab for code.',
+        text: 'Its MCP servers are registered when you enable it — Figma, Penpot, Sketch, Framer, GitHub and GitLab — with credentials only where the tool needs them.',
       },
     ],
   },
   why: {
     id: 'why-it-matters',
-    title: 'Why it matters',
+    title: 'Why use it in Claude Code',
     cards: [
       {
-        title: 'One-click marketplace install',
-        text: 'Up and running in seconds, no setup headaches.',
+        title: 'Marketplace install',
+        text: 'Two commands from the Yelbolt marketplace, no config file to edit.',
       },
       {
         title: 'Guided creation & semantic structuring',
@@ -334,8 +365,242 @@ export const claudePage: PlatformPage = {
       },
       {
         title: 'Tokens, Tailwind & CSS export',
-        text: 'Production-ready handoff your team can ship directly.',
+        text: 'Export to CSS, Tailwind, DTCG tokens, Style Dictionary, SwiftUI, Compose and more.',
       },
     ],
   },
+  setup: {
+    title: 'Set it up in Claude Code',
+    intro:
+      'Install the plugin from the Yelbolt marketplace, then describe the palette you want. The default agent runs the whole Source → Palette → Deploy → Manage workflow.',
+    steps: [
+      {
+        title: 'Add the Yelbolt marketplace',
+        text: 'Once per machine.',
+        code: '/plugin marketplace add yelbolt/claude-marketplace',
+      },
+      {
+        title: 'Install the plugin',
+        text: 'On first enable, it asks for optional credentials (Penpot token, Framer MCP URL, GitLab URL). Skip them and set them later with /plugin config.',
+        code: '/plugin install ui-color-palette@yelbolt',
+      },
+      {
+        title: 'Pick the uicper agent',
+        text: 'The default orchestrator asks only the blocking questions and hands the heavy work to five specialist agents: auditor, codegen, color systemer, publisher and transitioner.',
+        code: '/agents',
+      },
+      {
+        title: 'Ask in plain language',
+        text: 'Or call one skill directly, such as /ui-color-palette:audit-palette.',
+        code: 'Generate a warm, earthy brand palette and push it to Figma as variables',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'design-tools',
+      title: 'What Claude pushes to each design tool',
+      intro:
+        'One skill per design tool takes the palette already built in the conversation and writes it into your file, without rebuilding it.',
+      caption: 'What the Claude plugin creates or exports in each design tool',
+      rowHeader: 'Design tool',
+      columns: [
+        'Variables',
+        'Styles',
+        'Tokens',
+        'Swatch board',
+        'Colors from selection',
+        'Needs',
+      ],
+      rows: [
+        {
+          label: 'Figma',
+          href: '/figma',
+          values: [
+            'With one mode per theme',
+            'Paint styles',
+            false,
+            true,
+            true,
+            'Figma desktop with MCP enabled',
+          ],
+        },
+        {
+          label: 'Penpot',
+          href: '/penpot',
+          values: [
+            false,
+            'Color styles',
+            'With per-theme overrides',
+            true,
+            true,
+            'Your Penpot URL and user token',
+          ],
+        },
+        {
+          label: 'Sketch',
+          href: '/sketch',
+          values: [
+            'Swatches',
+            'Shared layer styles',
+            'Exported for token plugins',
+            true,
+            true,
+            'MCP enabled in Sketch preferences',
+          ],
+        },
+        {
+          label: 'Framer',
+          href: '/framer',
+          values: [
+            false,
+            'Color styles',
+            false,
+            true,
+            true,
+            'The Framer MCP plugin URL',
+          ],
+        },
+      ],
+      note: 'Figma variables and Penpot tokens can also carry a semantic layer that references the primitive shades.',
+    },
+    {
+      id: 'mcp-server',
+      title: 'Color palette MCP server for Claude Desktop, Cursor and VS Code',
+      intro:
+        'An MCP server lets an AI assistant call tools such as get_palette directly. The plugin runs on the UI Color Palette MCP server, and so can any MCP client: Claude Desktop, VS Code, Cursor, Windsurf, OpenAI Codex or Gemini CLI.',
+      code: 'claude mcp add --transport http ui-color-palette https://mcp.ui-color-palette.com/mcp',
+      caption: 'Tools of the UI Color Palette MCP server',
+      rowHeader: 'Tool',
+      columns: ['What it does', 'Sign-in'],
+      rows: [
+        {
+          label: 'get_palette',
+          values: ['Builds a full palette from source colors and themes', 'No'],
+        },
+        {
+          label: 'get_color_system',
+          values: ['Maps the palette to semantic tokens', 'No'],
+        },
+        {
+          label: 'create_color_harmony',
+          values: ['Derives harmonies from a base color', 'No'],
+        },
+        {
+          label: 'extract_dominant_colors',
+          values: ['Extracts the dominant colors of an image URL', 'No'],
+        },
+        {
+          label: 'generate_colors_from_prompt',
+          values: ['Turns a description into source colors', 'No'],
+        },
+        {
+          label: 'generate_code',
+          values: [
+            'Exports CSS, Tailwind, SwiftUI, DTCG tokens and more',
+            'No',
+          ],
+        },
+        {
+          label: 'preview_palette',
+          values: ['Renders the palette as an inline image', 'No'],
+        },
+        {
+          label: 'list_published_palettes',
+          values: ['Browses the palettes shared by the community', 'No'],
+        },
+        {
+          label: 'get_published_palette',
+          values: ['Fetches a published palette by ID', 'No'],
+        },
+        {
+          label: 'list_my_published_palettes',
+          values: ['Lists your own published palettes', 'Required'],
+        },
+        {
+          label: 'publish_palette',
+          values: ['Saves a palette to your account', 'Required'],
+        },
+        {
+          label: 'update_published_palette',
+          values: ['Updates a published palette', 'Required'],
+        },
+        {
+          label: 'share_published_palette / unshare_published_palette',
+          values: ['Makes a palette public or private', 'Required'],
+        },
+        {
+          label: 'unpublish_palette',
+          values: ['Deletes a published palette', 'Required'],
+        },
+      ],
+      note: 'Sign-in uses OAuth 2.0: your MCP client opens it the first time you call a tool that needs it.',
+    },
+  ],
+  faq: {
+    intro:
+      'Installing the plugin, using it outside Claude Code, and what it can do for your design files and your code.',
+    items: [
+      {
+        question: 'How do I install the color palette plugin in Claude Code?',
+        answer: `Run ${code('/plugin marketplace add yelbolt/claude-marketplace')}, then ${code('/plugin install ui-color-palette@yelbolt')}. On first enable, the plugin asks for optional credentials (Penpot token, Framer MCP URL, GitLab URL): skip them and set them later with ${code('/plugin config')}. The ${htmlLink(`${links.docs}/claude`, 'Claude plugin docs')} cover every option.`,
+      },
+      {
+        question: 'Can Claude AI generate an accessible color palette?',
+        answer:
+          'Yes. With the UI Color Palette plugin, Claude builds the scale from a prompt, an image or a base color, and its audit skill checks every shade against WCAG 2.1 and APCA. The contrast scores come from the palette engine, not from an estimate by the model.',
+      },
+      {
+        question: 'Can I use it in Claude Desktop, Cursor or VS Code?',
+        answer: `Yes, through the MCP server. The plugin, with its agents and skills, is built for Claude Code; any MCP client can add the server (${code(links.mcpEndpoint)}) and generate, preview and export palettes with the same engine, and read the contrast of every shade. The ${htmlLink(links.docsMcp, 'MCP docs')} give the setup for Claude Desktop, VS Code, Cursor, Windsurf, OpenAI Codex and Gemini CLI, and the open-source ${htmlLink(links.skills, 'LLM Skills')} teach the same color method to any assistant.`,
+      },
+      {
+        question: 'What skills come with the Claude plugin?',
+        answer: `The plugin has one skill per step of the Source → Palette → Deploy → Manage workflow: ${code('generate-source-colors')} (from an image, a prompt, a harmony or a design tool selection), ${code('scale-palette')}, ${code('build-color-system')}, ${code('audit-palette')}, ${code('generate-code')}, ${code('generate-semantic-code')} and ${code('manage-palettes')}. One more skill per design tool (Figma, Penpot, Sketch, Framer) pushes the palette into your file. Call them as ${code('/ui-color-palette:skill-name')}, or let the uicper agent pick them.`,
+      },
+      {
+        question: 'Do I need a UI Color Palette account?',
+        answer:
+          'Not to generate palettes, harmonies, color systems, previews or code, and not to browse published palettes. You sign in, through OAuth, only to publish, update, share, unshare, delete or list your own palettes.',
+      },
+      {
+        question: 'Can Claude commit the generated tokens to my repository?',
+        answer: `Yes, when you ask for it. The plugin connects to GitHub and GitLab through their MCP servers (OAuth), and its codegen agent can commit the generated file to your repository. GitLab needs your instance URL in ${code('/plugin config')}.`,
+      },
+    ],
+  },
+  nextSteps: [
+    {
+      icon: 'glasses',
+      title: 'Explore the features',
+      label: 'See the capabilities',
+      href: '/capabilities',
+    },
+    {
+      icon: 'newspaper',
+      title: 'Try three AI workflows',
+      label: 'Read the guide',
+      href: '/blog/3-ways-ai-now-builds-audits-and-deploys-your-color-systems',
+    },
+    {
+      icon: 'wrench',
+      title: 'Set it up',
+      label: 'Read the docs',
+      href: `${links.docs}/claude`,
+    },
+    {
+      icon: 'code-xml',
+      title: 'Connect any MCP client',
+      label: 'Read the MCP docs',
+      href: links.docsMcp,
+    },
+  ],
 }
+
+export const platformPages = [
+  figmaPage,
+  penpotPage,
+  sketchPage,
+  framerPage,
+  claudePage,
+]

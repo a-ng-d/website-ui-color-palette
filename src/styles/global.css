@@ -128,6 +128,19 @@ button {
   letter-spacing: var(--text-tagline-tracking);
 }
 
+.code-snippet {
+  border: var(--stroke-width-thin) solid var(--snippet-border);
+  border-radius: var(--site-radius-inner);
+  background-color: var(--snippet-background);
+  padding: var(--space-inset-300) var(--space-inset-400);
+  color: var(--snippet-text);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  font-family: var(--font-display);
+  user-select: all;
+  overflow-wrap: anywhere;
+}
+
 .visually-hidden {
   position: absolute;
   clip-path: inset(50%);

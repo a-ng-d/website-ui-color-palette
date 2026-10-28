@@ -6,12 +6,9 @@ import { audiences, capabilityGroups } from '@/data/capabilities'
 import { downloadPage, downloads } from '@/data/downloads'
 import { homeFaq, pricingFaq, type FaqItem } from '@/data/faq'
 import {
-  claudePage,
-  figmaPage,
-  framerPage,
-  penpotPage,
-  sketchPage,
+  platformPages,
   type PlatformPage,
+  type TableValue,
 } from '@/data/platform-pages'
 import { compareColumns, compareRows, plans } from '@/data/pricing'
 
@@ -51,9 +48,50 @@ export const GET: APIRoute = async () => {
     '',
     ...page.why.cards.map((card) => `- **${card.title}**: ${card.text}`),
     '',
+    ...(page.setup
+      ? [
+          `### ${page.setup.title}`,
+          '',
+          page.setup.intro,
+          '',
+          ...page.setup.steps.map(
+            (step, index) =>
+              `${index + 1}. **${step.title}**: ${step.text}${step.code ? ` \`${step.code}\`` : ''}`
+          ),
+          '',
+          `Full setup guide: ${page.docs}`,
+          '',
+        ]
+      : []),
+    ...(page.tables ?? []).flatMap((table) => [
+      `### ${table.title}`,
+      '',
+      table.intro,
+      '',
+      ...(table.code ? ['```', table.code, '```', ''] : []),
+      `| ${[table.rowHeader, ...table.columns].join(' | ')} |`,
+      `|${' --- |'.repeat(table.columns.length + 1)}`,
+      ...table.rows.map(
+        (row) => `| ${[row.label, ...row.values.map(tableCell)].join(' | ')} |`
+      ),
+      '',
+      ...(table.note ? [table.note, ''] : []),
+    ]),
+    ...(page.faq
+      ? [
+          `### ${page.hero.title}: FAQ`,
+          '',
+          ...faq(page.faq.items).map((line) =>
+            line.startsWith('### ') ? `#${line}` : line
+          ),
+        ]
+      : []),
     `Install: ${page.hero.cta.href}`,
     '',
   ]
+
+  const tableCell = (value: TableValue) =>
+    value === true ? 'yes' : value === false ? 'no' : value
 
   const cell = (value: string | boolean) =>
     value === true ? 'included' : value === false ? 'not included' : value
@@ -89,9 +127,7 @@ export const GET: APIRoute = async () => {
       ...item.points.map((point) => `  - ${point.lead}: ${point.text}`),
     ]),
     '',
-    ...[figmaPage, penpotPage, sketchPage, framerPage, claudePage].flatMap(
-      platformSection
-    ),
+    ...platformPages.flatMap(platformSection),
     '## Download',
     '',
     `URL: ${url(downloadPage.path)}`,

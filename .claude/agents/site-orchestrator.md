@@ -83,7 +83,9 @@ the Figma source, the specs or the skills answer.
   real `<a href>`, content in HTML at build time, light + dark, one h1, reduced motion
   and no-JS complete).
 - Write no superfluous code comments: only a non-obvious why (constraint, workaround,
-  keep-in-sync link, documented exception), per `CLAUDE.md` "Code comments". Brief every
-  agent that writes code with this rule.
+  keep-in-sync link, documented exception), per `CLAUDE.md` "Code comments" and its
+  delete test. No JSDoc that paraphrases a name, no `TODO`/`FIXME` markers (open work
+  goes in an issue or `docs/`). Brief every agent that writes code with this rule, and
+  reread your own diff for comments before calling a reviewer.
 - Don't spawn a reviewer whose rule doesn't match: each spawn starts cold and costs.
 - Don't commit unless asked.

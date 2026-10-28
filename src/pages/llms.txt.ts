@@ -1,8 +1,9 @@
 import type { APIRoute } from 'astro'
 
-import { footerNav, links, site } from '@/config/site'
+import { links, site } from '@/config/site'
 import { getPosts, postPath } from '@/data/blog'
 import { homeFaq, pricingFaq } from '@/data/faq'
+import { platformPages } from '@/data/platform-pages'
 
 /** llms.txt (https://llmstxt.org): Markdown map of the site for LLMs, generated at build time. */
 export const GET: APIRoute = async () => {
@@ -24,7 +25,10 @@ export const GET: APIRoute = async () => {
     `- [Capabilities](${url('/capabilities')}): everything the tool can do`,
     `- [Pricing](${url('/pricing')}): plans, from the free /basic plan to /pro and /ultimate`,
     `- [Download](${url('/download')}): install on every platform`,
-    ...footerNav.products.map((item) => `- [${item.label}](${url(item.href)})`),
+    ...platformPages.map(
+      (page) =>
+        `- [${page.hero.title}](${url(page.path)}): ${page.seo.description}`
+    ),
     '',
     '## AI tools',
     '',

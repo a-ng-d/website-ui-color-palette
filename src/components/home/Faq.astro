@@ -1,6 +1,7 @@
 ---
 import PlusIcon from '@lucide/astro/icons/plus'
 import CloseIcon from '@lucide/astro/icons/x'
+import IntroCardSection from '@/components/ui/IntroCardSection.astro'
 import type { FaqItem } from '@/data/faq'
 
 interface Props {
@@ -16,83 +17,36 @@ const {
 } = Astro.props
 ---
 
-<section
-  class="section faq"
-  aria-labelledby="faq-title"
+<IntroCardSection
+  id="faq"
+  title={title}
+  intro={intro}
 >
-  <div class="faq__layout">
-    <div class="faq__intro">
-      <div class="faq__intro-content">
-        <h2
-          class="t-section-title"
-          id="faq-title"
+  {items.map((item) => (
+    <details
+      class="faq__item"
+      name="faq"
+    >
+      <summary class="faq__question">
+        <h3 class="t-accent">{item.question}</h3>
+        <!-- A real <button> inside <summary> would swallow the click. -->
+        <span
+          class="faq__toggle icon-button icon-button--default"
+          aria-hidden="true"
         >
-          {title}
-        </h2>
-        <p class="t-accent">{intro}</p>
-      </div>
-    </div>
-
-    <div class="faq__card surface-card">
-      {items.map((item) => (
-        <details
-          class="faq__item"
-          name="faq"
-        >
-          <summary class="faq__question">
-            <h3 class="t-accent">{item.question}</h3>
-            <!-- A real <button> inside <summary> would swallow the click. -->
-            <span
-              class="faq__toggle icon-button icon-button--default"
-              aria-hidden="true"
-            >
-              <PlusIcon class="faq__toggle-open" />
-              <CloseIcon class="faq__toggle-close" />
-            </span>
-          </summary>
-          <div
-            class="faq__answer"
-            set:html={item.answer}
-          />
-        </details>
-      ))}
-    </div>
-  </div>
-</section>
+          <PlusIcon class="faq__toggle-open" />
+          <CloseIcon class="faq__toggle-close" />
+        </span>
+      </summary>
+      <div
+        class="faq__answer"
+        set:html={item.answer}
+      />
+    </details>
+  ))}
+</IntroCardSection>
 
 <style>
-  .faq__layout {
-    display: grid;
-    grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr);
-    gap: var(--space-gap-200);
-  }
-
-  .faq__intro {
-    display: flex;
-    flex-direction: column;
-    align-self: stretch;
-    border: var(--stroke-width-thin) solid var(--site-border-soft);
-    border-radius: var(--site-radius-card);
-    background-color: var(--site-surface);
-  }
-
-  .faq__intro-content {
-    display: flex;
-    position: sticky;
-    top: var(--layout-header-height);
-    flex-direction: column;
-    gap: var(--space-gap-400);
-    padding: var(--space-inset-800);
-    max-width: var(--layout-content-max);
-  }
-
-  .faq__card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-gap-400);
-    padding: var(--space-inset-800);
-  }
-
   .faq__item {
     border-bottom: var(--stroke-width-thin) solid var(--site-border-strong);
     padding-block: var(--space-inset-400);
@@ -139,21 +93,11 @@ const {
     padding-bottom: var(--space-inset-400);
   }
 
-  .faq__answer :global(a) {
-    text-decoration: underline;
+  .faq__answer :global(code) {
+    font-family: var(--font-display);
   }
 
-  @media (max-width: 1023.98px) {
-    .faq__layout {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .faq__intro-content {
-      position: static;
-    }
-
-    .faq__card {
-      padding: var(--space-inset-400) var(--space-inset-600);
-    }
+  .faq__answer :global(a) {
+    text-decoration: underline;
   }
 </style>

@@ -6,7 +6,7 @@ export interface FaqItem {
   answer: string
 }
 
-const a = (href: string, label: string) =>
+export const htmlLink = (href: string, label: string) =>
   `<a href="${href}"${/^https?:/.test(href) ? ' target="_blank" rel="noopener"' : ''}>${label}</a>`
 
 export const homeFaq: FaqItem[] = [
@@ -37,19 +37,19 @@ export const homeFaq: FaqItem[] = [
   },
   {
     question: 'Is there a free plan?',
-    answer: `Yes! The /basic plan is free forever — 3 palettes per document, 5 source colors, 6 stops, 2 color modes, and CSS export. Upgrade to /pro for unlimited everything and full code export whenever you're ready. See ${a('/pricing', 'Pricing')}.`,
+    answer: `Yes! The /basic plan is free forever — 3 palettes per document, 5 source colors, 6 stops, 2 color modes, and CSS export. Upgrade to /pro for unlimited everything and full code export whenever you're ready. See ${htmlLink('/pricing', 'Pricing')}.`,
   },
   {
     question: "What should I do if I'm stuck and need help?",
-    answer: `Send an email to ${a(`mailto:${site.email}`, site.email)} with clear steps to reproduce and any relevant screenshots, and we'll help you out.`,
+    answer: `Send an email to ${htmlLink(`mailto:${site.email}`, site.email)} with clear steps to reproduce and any relevant screenshots, and we'll help you out.`,
   },
   {
     question: 'How can I give feedback or suggest a new feature?',
-    answer: `We'd love to hear from you! Use our ${a(links.feedback, 'feedback form')} or submit ideas on our ${a(links.ideas, 'feature request platform')}.`,
+    answer: `We'd love to hear from you! Use our ${htmlLink(links.feedback, 'feedback form')} or submit ideas on our ${htmlLink(links.ideas, 'feature request platform')}.`,
   },
   {
     question: "It's open-source — can I contribute?",
-    answer: `Absolutely. UI Color Palette is open-source, so you're welcome to explore the code, open issues, and submit pull requests on ${a(links.repository, 'GitHub')}. Community fixes and feature ideas are what keep it getting better.`,
+    answer: `Absolutely. UI Color Palette is open-source, so you're welcome to explore the code, open issues, and submit pull requests on ${htmlLink(links.repository, 'GitHub')}. Community fixes and feature ideas are what keep it getting better.`,
   },
 ]
 
@@ -59,13 +59,10 @@ export interface FaqCategory {
   items: FaqItem[]
 }
 
-const mail = a(`mailto:${site.email}`, site.email)
+const mail = htmlLink(`mailto:${site.email}`, site.email)
 const polar = '<strong>Polar</strong>'
 
-/**
- * FAQ of the Pricing page, one tab per category.
- * A category without items is not shown.
- */
+/** A category without items is not shown. */
 export const pricingFaq: FaqCategory[] = [
   {
     id: 'subscription',
@@ -82,7 +79,7 @@ export const pricingFaq: FaqCategory[] = [
       {
         question:
           "Would I be refunded if my subscription isn't what I expected?",
-        answer: `Refunds are handled case by case, in line with our ${a(links.sale, 'Terms of Sale')}. You can cancel anytime on ${polar} to stop future renewals; for a refund, contact us at ${mail} with your order details and we'll review your request.`,
+        answer: `Refunds are handled case by case, in line with our ${htmlLink(links.sale, 'Terms of Sale')}. You can cancel anytime on ${polar} to stop future renewals; for a refund, contact us at ${mail} with your order details and we'll review your request.`,
       },
     ],
   },
@@ -107,7 +104,7 @@ export const pricingFaq: FaqCategory[] = [
       },
       {
         question: "Would I be refunded if my license isn't what I expected?",
-        answer: `Refunds are handled case by case, in line with our ${a(links.sale, 'Terms of Sale')}. You can pause or cancel anytime on Lemon Squeezy to stop future payments; for a refund, contact us at ${mail} with your order details and we'll review your request.`,
+        answer: `Refunds are handled case by case, in line with our ${htmlLink(links.sale, 'Terms of Sale')}. You can pause or cancel anytime on Lemon Squeezy to stop future payments; for a refund, contact us at ${mail} with your order details and we'll review your request.`,
       },
     ],
   },
@@ -122,7 +119,7 @@ export const pricingFaq: FaqCategory[] = [
       },
       {
         question: 'Which Figma editors are supported?',
-        answer: `UI Color Palette runs in <strong>Figma Design</strong>, <strong>Dev Mode</strong>, <strong>Buzz</strong>, and <strong>FigJam</strong> — with modes, variables, and styles available in <strong>Figma Design</strong>. See the ${a('/figma', 'UI Color Palette for Figma')} page for the details.`,
+        answer: `UI Color Palette runs in <strong>Figma Design</strong>, <strong>Dev Mode</strong>, <strong>Buzz</strong>, and <strong>FigJam</strong> — with modes, variables, and styles available in <strong>Figma Design</strong>. See the ${htmlLink('/figma', 'UI Color Palette for Figma')} page for the details.`,
       },
     ],
   },

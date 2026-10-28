@@ -35,7 +35,6 @@ export const site = {
     'https://penpot.app/penpothub/plugins/ui-color-palette',
     'https://www.framer.com/marketplace/plugins/ui-color-palette-one-wcag-color-palette-manager-for-apps-websites/',
     'https://github.com/a-ng-d/ui-ui-color-palette',
-    // TODO(content): add the Product Hunt page once live.
   ],
   /** X handle with the @. Twitter tags are omitted while null. */
   twitterHandle: null as string | null,
@@ -98,7 +97,6 @@ export const mainNav: NavLink[] = [
   { label: 'Blog', href: '/blog' },
 ]
 
-// TODO(content): confirm entries and descriptions of the Resources menu.
 export const resourcesNav: NavLink[] = [
   {
     label: 'Read the docs',

@@ -1,0 +1,85 @@
+---
+interface Props {
+  id: string
+  title: string
+  intro: string
+  code?: string
+}
+
+const { id, title, intro, code } = Astro.props
+const titleId = `${id}-title`
+---
+
+<section
+  id={id}
+  class="section intro-card"
+  aria-labelledby={titleId}
+>
+  <div class="intro-card__layout">
+    <div class="intro-card__intro">
+      <div class="intro-card__intro-content">
+        <h2
+          class="t-section-title"
+          id={titleId}
+        >
+          {title}
+        </h2>
+        <p class="t-accent">{intro}</p>
+        {code && <code class="code-snippet">{code}</code>}
+      </div>
+    </div>
+
+    <div class="intro-card__card surface-card">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .intro-card__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr);
+    gap: var(--space-gap-200);
+  }
+
+  .intro-card__intro {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    border: var(--stroke-width-thin) solid var(--site-border-soft);
+    border-radius: var(--site-radius-card);
+    background-color: var(--site-surface);
+  }
+
+  .intro-card__intro-content {
+    display: flex;
+    position: sticky;
+    top: var(--layout-header-height);
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+    max-width: var(--layout-content-max);
+  }
+
+  .intro-card__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    padding: var(--space-inset-800);
+    min-width: 0;
+  }
+
+  @media (max-width: 1023.98px) {
+    .intro-card__layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .intro-card__intro-content {
+      position: static;
+    }
+
+    .intro-card__card {
+      padding: var(--space-inset-400) var(--space-inset-600);
+    }
+  }
+</style>
