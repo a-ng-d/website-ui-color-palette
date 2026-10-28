@@ -31,7 +31,12 @@ const rows = [
 <figure class="vision">
   {rows.map((row) => (
     <div class="vision__row">
-      <p class="vision__label">{row.label}</p>
+      <p
+        class="vision__label"
+        aria-hidden="true"
+      >
+        {row.label}
+      </p>
       <div
         class="vision__cells"
         aria-hidden="true"
@@ -46,25 +51,30 @@ const rows = [
     </div>
   ))}
   <figcaption class="vision__caption">
-    Eight hues of equal lightness, then the same hues as each type of color
-    vision deficiency perceives them, simulated with the matrices UI Color
-    Palette uses.
+    Eight hues of the same OKLCH lightness, then the same hues as each of the 8
+    types of color vision deficiency perceives them, from protanomaly to
+    achromatopsia, simulated with the matrices UI Color Palette uses.
   </figcaption>
 </figure>
 
 <style>
+  /* One label column shared by every row (subgrid), so the swatches line up. */
   .vision {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
     gap: var(--space-gap-400);
     margin: 0;
   }
 
   .vision__row {
     display: grid;
-    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
     align-items: center;
-    gap: var(--space-gap-400);
+  }
+
+  .vision__caption {
+    grid-column: 1 / -1;
   }
 
   .vision__label,
@@ -83,7 +93,7 @@ const rows = [
     gap: var(--space-gap-100);
   }
 
-  /* Data colours (an exception listed in tokens.md), like HueRamp. */
+  /* Data colours (an exception listed in tokens.md). */
   .vision__swatch {
     border-radius: var(--site-radius-inner);
     background-color: var(--swatch);
@@ -91,8 +101,11 @@ const rows = [
   }
 
   @media (max-width: 639.98px) {
-    .vision__row {
+    .vision {
       grid-template-columns: minmax(0, 1fr);
+    }
+
+    .vision__row {
       gap: var(--space-gap-100);
     }
   }

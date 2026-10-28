@@ -141,14 +141,15 @@ export const glossaryTerms: GlossaryTerm[] = [
     term: 'Color blindness types',
     question: 'What are the types of color blindness?',
     seo: {
-      title: 'Types of Color Blindness: The 8 Explained — UI Color Palette',
+      title: 'Types of Color Blindness: Protanopia to Achromatomaly',
       description:
-        'Protanopia, deuteranopia, tritanopia, achromatomaly and more: the 8 types of color blindness, how each one sees color, and how to design palettes for them.',
+        'Protanopia, deuteranopia, tritanopia, achromatomaly, achromatopsia: what each of the 8 types of color blindness is, which cones it affects and how colors look.',
     },
     definition:
       'Color blindness, or color vision deficiency, comes in 8 main types, grouped by the cone cells affected: red (protan), green (deutan), blue (tritan), or all of them (achromat). Each group has a partial form, ending in -anomaly, and a complete form, ending in -opia or -opsia.',
     why: [
-      'Red-green deficiencies (protan and deutan) are by far the most common: they affect about 1 man in 12 and 1 woman in 200 of Northern European descent. Tritan types and total color blindness are rare.',
+      `Red-green deficiencies (protan and deutan) are the most common, and men are much more at risk than women; complete color blindness is rare (${htmlLink('https://www.nei.nih.gov/learn-about-eye-health/eye-conditions-and-diseases/color-blindness', 'US National Eye Institute')}).`,
+      'Achromatomaly is a partial form of total color blindness: colors look washed out, close to grey, without disappearing entirely as in achromatopsia.',
       `A red error and a green success can look alike to many of these users. Color alone should not carry meaning — WCAG makes it a rule (${htmlLink('https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html', 'Use of Color, 1.4.1')}) — so pair it with text, icons or a clear difference in lightness.`,
     ],
     inProduct: [
@@ -169,29 +170,23 @@ export const glossaryTerms: GlossaryTerm[] = [
           label: 'Protanomaly',
           values: [
             'Red, weak',
-            'Reds look duller and darker; red and green are harder to tell apart.',
+            'Reds look duller; red and green are harder to tell apart.',
           ],
         },
         {
           label: 'Protanopia',
           values: [
             'Red, missing',
-            'Reds look dark, close to brown; red and green are confused.',
+            'Red and green are confused, and so are some browns.',
           ],
         },
         {
           label: 'Deuteranomaly',
-          values: [
-            'Green, weak',
-            'The most common type: reds and greens drift toward each other.',
-          ],
+          values: ['Green, weak', 'Reds and greens drift toward each other.'],
         },
         {
           label: 'Deuteranopia',
-          values: [
-            'Green, missing',
-            'Red and green are confused, but reds keep their lightness.',
-          ],
+          values: ['Green, missing', 'Red and green are confused.'],
         },
         {
           label: 'Tritanomaly',
@@ -209,10 +204,7 @@ export const glossaryTerms: GlossaryTerm[] = [
         },
         {
           label: 'Achromatomaly',
-          values: [
-            'All, weak',
-            'Colors look washed out, close to greys. A rare type.',
-          ],
+          values: ['All, weak', 'Colors look washed out, close to greys.'],
         },
         {
           label: 'Achromatopsia',

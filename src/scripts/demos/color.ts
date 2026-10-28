@@ -249,7 +249,6 @@ const VISION_MATRICES: Record<VisionType, number[][]> = {
   ],
 }
 
-/** A colour as UI Color Palette simulates it for one type of color vision deficiency. */
 export const simulateVision = ([r, g, b]: Rgb, type: VisionType): Rgb =>
   VISION_MATRICES[type].map(([x, y, z]) =>
     clamp01(x * r + y * g + z * b)
