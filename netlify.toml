@@ -8,6 +8,12 @@
   # .env.example). POLAR_ACCESS_TOKEN stays scanned: it is the only real secret.
   SECRETS_SCAN_OMIT_KEYS = "POLAR_SERVER,POLAR_SUCCESS_URL,PUBLIC_DEMO_PALETTE_URL"
 
+# The pre-Astro site served /sitemap.xml; Search Console and crawlers still request it.
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap-index.xml"
+  status = 301
+
 # Hashed build assets never change: cache them for a year.
 [[headers]]
   for = "/_astro/*"
