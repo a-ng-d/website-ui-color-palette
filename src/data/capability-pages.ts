@@ -561,9 +561,193 @@ export const contrastPage: CapabilityPage = {
     },
     {
       icon: 'glasses',
-      title: 'Color blindness simulation',
+      title: 'Color palette generator',
+      label: 'See the next capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'ruler',
+      title: 'Use it in Figma',
+      label: 'See the Figma plugin',
+      href: '/figma',
+    },
+  ],
+}
+
+export const generatorPage: CapabilityPage = {
+  slug: 'color-palette-generator',
+  name: 'Color palette generator',
+  seo: {
+    title: 'UI Color Palette Generator for Figma — UI Color Palette',
+    description:
+      'Generate a UI color palette in Figma, Penpot, Sketch or Framer: every source color scaled into shades, set by lightness or contrast per stop. Free to start.',
+  },
+  hero: {
+    title:
+      'UI color palette generator, with a full scale of shades for every color',
+    tagline:
+      'Turn a few source colors into scales of shades and tints, tune each stop by lightness or contrast, and keep the palette inside your design tool.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'What does a UI color palette generator do?',
+    lead: 'A UI color palette generator turns a few source colors into full scales of shades and tints. UI Color Palette does it in Figma, Penpot, Sketch and Framer: pick a preset such as Material 3 or Tailwind, or your own stops, and set each stop by lightness or target contrast.',
+    demo: 'ready',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'A palette is a set of source colors, a lightness scale and color modes. Every change recomputes the shades live in the preview.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/create-a-color-palette`,
+    },
+    steps: [
+      {
+        title: 'Start a palette',
+        text: 'Click + in the Palettes manager: the palette opens with default colors, or with the colors of the filled layers selected on your canvas. You can also start from AI, an image, a color harmony or Color Hunt.',
+      },
+      {
+        title: 'Set your source colors',
+        text: 'Add, rename and reorder colors, and type or pick their hex code. Each source color becomes a scale of shades and tints.',
+      },
+      {
+        title: 'Choose a scale preset',
+        text: 'Pick a lightness scale preset, such as Material 3 or Tailwind, or a Custom set of stops named 1–10, 10–100 or 100–1000.',
+      },
+      {
+        title: 'Tune the stops',
+        text: 'Slide the lightness of each stop, or switch to contrast ratio and type the ratio each stop must reach, from 1 to 21. A distribution easing spreads the stops across the range.',
+      },
+      {
+        title: 'Use the palette',
+        text: 'Sync it with the styles, variables or tokens of your design tool, or export it to code.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'starts',
+      title: 'Five ways to start a palette',
+      intro:
+        'Whichever you choose, you get a complete palette — source colors, lightness scale and color modes — opened and ready to refine.',
+      caption: 'Ways to start a palette in UI Color Palette',
+      rowHeader: 'Start from',
+      columns: ['What you get'],
+      rows: [
+        {
+          label: 'A blank palette',
+          values: [
+            'Default source colors, or the colors of the layers selected on your canvas',
+          ],
+        },
+        {
+          label: 'AI colors',
+          values: [
+            'Five colors from a prompt or a preset theme, each with a role: Primary, Text, Success, Warning or Alert',
+          ],
+        },
+        {
+          label: 'An image',
+          values: ['Up to 5 dominant colors from a PNG image'],
+        },
+        {
+          label: 'A color harmony',
+          href: '/glossary/color-harmony',
+          values: [
+            'Analogous, complementary, compound, triadic or tetradic colors from a base color',
+          ],
+        },
+        {
+          label: 'Color Hunt',
+          values: ['A palette from the Color Hunt community feed'],
+        },
+      ],
+    },
+    {
+      id: 'plans',
+      title: 'What you get on each plan',
+      intro: 'The same plans apply on Figma, Penpot, Sketch and Framer.',
+      caption: 'Palette generator features per plan',
+      rowHeader: 'Feature',
+      columns: ['/basic', '/pro'],
+      rows: [
+        {
+          label:
+            'Palettes per page (Figma, Penpot) or per document (Sketch, Framer)',
+          values: ['1', 'Unlimited'],
+        },
+        { label: 'Source colors per palette', values: ['5', 'Unlimited'] },
+        { label: 'Color modes per palette', values: ['2', 'Unlimited'] },
+        { label: 'Material 3 and Tailwind presets', values: [true, true] },
+        {
+          label: 'The other named presets (Radix, Spectrum, Carbon, Polaris…)',
+          values: [false, true],
+        },
+        { label: 'Stops in a Custom set', values: ['Up to 6', 'Up to 24'] },
+        {
+          label: 'Lightness and target contrast ratio per stop',
+          values: [true, true],
+        },
+        {
+          label: 'Hue and chroma shifts, per color and for the whole palette',
+          values: [false, true],
+        },
+        { label: 'Source colors lock', values: [false, true] },
+      ],
+      note: 'Syncing the palette with your styles, variables and tokens is free, and so is the CSS export; the other code formats are on /pro.',
+    },
+  ],
+  faq: {
+    intro:
+      'Generating shades from your colors, choosing a scale, and what the free plan covers.',
+    items: [
+      {
+        question: 'Is there a color palette generator plugin for Figma?',
+        answer: `Yes. UI Color Palette is a color scale generator plugin for Figma: each source color becomes a scale of shades you can sync with your styles and variables. It also runs in Penpot, Sketch and Framer (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+      },
+      {
+        question: 'How do I generate shades and tints from a hex color?',
+        answer:
+          'Yes. Type or paste the hex code of a source color and UI Color Palette computes its shades and tints along the scale, live, with the hex code of each one in the preview.',
+      },
+      {
+        question: 'How many shades should a UI color scale have?',
+        answer: `It depends on your system. Tailwind uses 11 stops, from 50 to 950, and Material 3 uses 13, from 0 to 100; Atlassian’s ADS Foundations uses 7. Pick the preset your codebase already follows, or a Custom set (see ${htmlLink('/glossary/color-scale', 'What is a color scale?')}).`,
+      },
+      {
+        question: 'Can I generate a palette from contrast ratios?',
+        answer: `Yes, on every plan. Switch the scale from lightness to contrast ratio and type the ratio each stop must reach, from 1 to 21; the lightness is recomputed to meet it (see ${htmlLink('/capabilities/wcag-apca-contrast', 'WCAG & APCA contrast')}).`,
+      },
+      {
+        question: 'How do I manage several color palettes in Figma?',
+        answer: `A color palette manager keeps all your palettes in one place. In UI Color Palette, the Palettes manager lists the palettes of your page or document, so you can create, duplicate, open and delete them without leaving your design tool (see ${htmlLink('/', 'the WCAG color palette manager')}).`,
+      },
+      {
+        question: 'Is the color palette generator free?',
+        answer:
+          'Yes, on the /basic plan: one palette per page or document, up to 5 source colors and 2 color modes, the Material 3 and Tailwind presets, Custom sets of up to 6 stops, sync with your design tool and the CSS export. /pro lifts the caps and adds the other presets, hue and chroma shifts, and the other code formats (Framer exports a narrower set).',
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'book-open',
+      title: 'What is a color scale?',
+      label: 'Read the definition',
+      href: '/glossary/color-scale',
+    },
+    {
+      icon: 'glasses',
+      title: 'OKLCH & LCH color spaces',
       label: 'See the capability',
-      href: '/capabilities/color-blindness-simulation',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+    {
+      icon: 'glasses',
+      title: 'WCAG & APCA contrast',
+      label: 'See the capability',
+      href: '/capabilities/wcag-apca-contrast',
     },
     {
       icon: 'ruler',
@@ -578,4 +762,5 @@ export const capabilityPages = [
   colorSpacesPage,
   colorBlindnessPage,
   contrastPage,
+  generatorPage,
 ]

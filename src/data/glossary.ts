@@ -365,7 +365,10 @@ export const glossaryTerms: GlossaryTerm[] = [
       'Each stop can be set by its lightness or by a target contrast ratio, and an easing curve shapes how the steps are spread. On /pro, you can also shift the hue and chroma of the whole scale.',
     ],
     visual: 'scale',
-    capability: { name: 'scale editing', href: '/capabilities#master' },
+    capability: {
+      name: 'Color palette generator',
+      href: '/capabilities/color-palette-generator',
+    },
     related: ['oklch', 'design-token', 'semantic-color', 'color-harmony'],
   },
   {

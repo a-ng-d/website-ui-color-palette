@@ -1,6 +1,6 @@
 # Phase 2 — Capability, comparison, platform and glossary pages
 
-- **Status**: In progress — steps 1 to 4 done (branch `seo/phase-2`), Lot D complete (branch `seo/phase-2-2`); steps 5 to 8 to do. See [Progress](#progress).
+- **Status**: In progress — steps 1 to 4 done (branch `seo/phase-2`), Lot D and step 5 done (branch `seo/phase-2-2`); steps 6 to 8 to do. See [Progress](#progress).
 - **Package(s) concerned**: `website-ui-color-palette`
 - **Related spec**: [README.md](README.md), [03-blog-clusters.md](03-blog-clusters.md), [00-measurement.md](00-measurement.md)
 
@@ -39,7 +39,7 @@ Phase 1b ([01-indexation-recovery.md](01-indexation-recovery.md)) ships first. T
 
 ## Progress
 
-Last update: 2026-10-29.
+Last update: 2026-10-30.
 
 | Order | Status | Live pages |
 |---|---|---|
@@ -47,12 +47,12 @@ Last update: 2026-10-29.
 | 2 | Done | `/capabilities/oklch-lch-color-spaces`, `/glossary`, `/glossary/oklch`, `/glossary/lch`, `/glossary/oklab`, `/glossary/hsluv` |
 | 3 | Done | `/capabilities/color-blindness-simulation`, `/glossary/color-blindness-types` |
 | 4 | Done | `/capabilities/wcag-apca-contrast`, `/glossary/apca`, `/glossary/wcag-contrast-ratio` |
-| 5 | To do | `color-palette-generator` |
+| 5 | Done | `/capabilities/color-palette-generator`; the `color-scale` term now links to it |
 | 6 | To do | `/figma`, then `/framer` (Lot C, same blocks as `/claude`) |
 | 7 | To do | `tailwind-color-palette`, `swiftui-compose-colors` |
 | 8 | In progress | Lot D done: `/glossary/cielab`, `/glossary/color-scale`, `/glossary/design-token`, `/glossary/semantic-color`, `/glossary/color-harmony`. To do — Lot A: `export-design-tokens`, `ai-color-palette-generator`, `image-to-color-palette`, `color-wheel-harmony`, `light-dark-themes`, `design-system-presets`, `semantic-color-system`. Lot C: `/penpot`, `/sketch`. Lot B: the 5 comparison pages and the `/compare` hub |
 
-Lot A pages left: 10 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C: 4 of 5. Lot D: done (12 terms and the hub). Lot B: all 6.
+Lot A pages left: 9 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C: 4 of 5. Lot D: done (12 terms and the hub). Lot B: all 6.
 
 ### What is in place for the next pages
 
@@ -64,7 +64,7 @@ Lot A pages left: 10 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C
 
 ### Follow-ups
 
-- **Interim capability links (Lot D)**: `color-scale`, `design-token` and `color-harmony` point to `/capabilities#master`, `#deploy` and `#generate`, and `semantic-color` to `/claude`. When `color-palette-generator`, `export-design-tokens`, `color-wheel-harmony` and `semantic-color-system` ship, repoint each `capability` in `src/data/glossary.ts` to its `/capabilities/<slug>`.
+- **Interim capability links (Lot D)**: `design-token` and `color-harmony` point to `/capabilities#deploy` and `#generate`, and `semantic-color` to `/claude` (`color-scale` now points to `color-palette-generator`). When `export-design-tokens`, `color-wheel-harmony` and `semantic-color-system` ship, repoint each `capability` in `src/data/glossary.ts` to its `/capabilities/<slug>`.
 - **Glossary vs Lot A ownership**: a glossary term owns "what is X" and the definition; its Lot A page owns "how to do it in the tool" (formats, presets, plan detail). Keep tool detail out of the term pages.
 - **Unsourced claim on live terms**: `oklch` and `oklab` say "Switching … keeps your scale and your source colors"; no spec or doc states it. Confirm with the product owner or rewrite as on `cielab`.
 - **Spec conflicts found by the fact-check**: resolved on 2026-10-29 in `specs-ui-color-palette` — plan content removed from the specs (plans live only in docs `free-and-pro.md`), `scale.md` now counts 19 presets (3 custom + 16 named), and the contracts list the `system?` input of `generate_code`.
@@ -73,11 +73,10 @@ Lot A pages left: 10 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C
 - **Lighthouse**: run on mobile on one capability page after deploy (SEO = 100, green Core Web Vitals) — not done yet.
 - **Sitemap `lastmod`**: check that the new URLs carry a date after deploy (it comes from the git history of the data files).
 - **Docs glossary**: link each docs entry to its site term page (OKLCH, LCH, OKLab, HSLuv, CIELAB, Primitive colors → design token, Semantic colors, the 8 color blindness types, APCA, WCAG 2.1), as Lot D requires.
-- **Docs**: `general/introduction/free-and-pro.md` lists hue/chroma distribution curves as `/pro`, but `hue-chroma-distribution.md` is a Draft spec.
 
 ### Acceptance criteria, where they stand
 
-- Lot A pages: one h1 with the primary query, a 40–60 word lead, FAQPage + BreadcrumbList + WebPage JSON-LD, ≥3 links out and ≥2 in, fact-checked — met for the 3 live pages.
+- Lot A pages: one h1 with the primary query, a 40–60 word lead, FAQPage + BreadcrumbList + WebPage JSON-LD, ≥3 links out and ≥2 in, fact-checked — met for the 4 live pages.
 - `/capabilities` links to every Lot A page — met (through the "Capabilities in depth" row).
 - Platform pages: capability matrix, setup guide, FAQ with FAQPage, ≥3 Lot A links — met for `/claude`; `/figma`, `/penpot`, `/sketch`, `/framer` to do.
 - Glossary terms: definition of 60 words or fewer first, `DefinedTerm` linked to the `/glossary` `DefinedTermSet` — met for the 12 live terms.
@@ -245,3 +244,4 @@ Add to each one:
 | 2026-10-28 | Step 4 done: `/capabilities/wcag-apca-contrast` (demo `contrast`), `/glossary/apca` and `/glossary/wcag-contrast-ratio` (thresholds and APCA levels tables, `ContrastRamp` visual with real WCAG/APCA scores) |
 | 2026-10-28 | `/claude` closing cards now link the 3 live Lot A pages (contrast, OKLCH, color blindness): the "≥3 Lot A links" criterion is met for `/claude` |
 | 2026-10-29 | Lot D done: `/glossary/cielab`, `/glossary/color-scale`, `/glossary/design-token`, `/glossary/semantic-color`, `/glossary/color-harmony` (visuals `ScaleRamp`, `TokenRamp`, `HarmonyRamp`; `HueRamp` gains CIELAB). Interim capability links to `/capabilities` anchors and `/claude`. Reviewed by `seo-reviewer`, `fact-checker` and `style-guardian`, fixes applied |
+| 2026-10-30 | Step 5 done: `/capabilities/color-palette-generator` (demo `ready`, tables of ways to start and plans, FAQ for "color scale generator figma", shades and palette manager queries); linked from `/capabilities`, the contrast page and `/glossary/color-scale`. Reviewed by `seo-reviewer` and `fact-checker`, fixes applied. Specs aligned: Color Hunt on every platform, hue/chroma distribution curves Implemented |
