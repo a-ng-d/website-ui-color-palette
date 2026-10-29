@@ -578,7 +578,7 @@ export const generatorPage: CapabilityPage = {
   slug: 'color-palette-generator',
   name: 'Color palette generator',
   seo: {
-    title: 'UI Color Palette Generator for Figma — UI Color Palette',
+    title: 'UI Color Palette Generator — Shades & Scales',
     description:
       'Generate a UI color palette in Figma, Penpot, Sketch or Framer: every source color scaled into shades, set by lightness or contrast per stop. Free to start.',
   },
