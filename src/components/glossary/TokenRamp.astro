@@ -1,0 +1,166 @@
+---
+import { blueShade, hex } from '@/scripts/demos/color'
+
+interface Props {
+  layer: 'primitive' | 'semantic'
+}
+
+const { layer } = Astro.props
+
+const blue: Record<string, string> = {
+  '100': hex(blueShade(0.93)),
+  '300': hex(blueShade(0.78)),
+  '500': hex(blueShade(0.62)),
+  '700': hex(blueShade(0.46)),
+  '900': hex(blueShade(0.3)),
+}
+
+const primitives = Object.entries(blue).map(([stop, value]) => ({
+  name: `color.blue.${stop}`,
+  swatches: [value],
+  values: [value],
+}))
+
+const semantics = [
+  { name: 'brand.default', light: '500', dark: '300' },
+  { name: 'brand.subtle', light: '100', dark: '900' },
+  { name: 'text.link', light: '700', dark: '300' },
+].map((token) => ({
+  name: token.name,
+  swatches: [blue[token.light], blue[token.dark]],
+  values: [`blue.${token.light}`, `blue.${token.dark}`],
+}))
+
+const rows = layer === 'primitive' ? primitives : semantics
+const columns =
+  layer === 'primitive' ? ['Value'] : ['Light theme', 'Dark theme']
+const caption =
+  layer === 'primitive'
+    ? 'Five primitive tokens of one blue scale: a name, and the color it stores.'
+    : 'Three semantic tokens: each one points to a primitive shade, a different one per theme.'
+const captionId = `tokens-caption-${layer}`
+---
+
+<figure class="tokens">
+  <!-- Focusable so keyboard users can scroll a table wider than the screen. -->
+  <div
+    class="tokens__scroll"
+    tabindex="0"
+    role="region"
+    aria-labelledby={captionId}
+  >
+    <table
+      class="tokens__table"
+      aria-labelledby={captionId}
+    >
+      <thead>
+        <tr>
+          <th scope="col">Token</th>
+          {columns.map((column) => (
+            <th scope="col">{column}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr>
+            <th scope="row">
+              <code>{row.name}</code>
+            </th>
+            {row.values.map((value, index) => (
+              <td>
+                <span
+                  class="tokens__swatch"
+                  style={`--swatch:${row.swatches[index]}`}
+                  aria-hidden="true"
+                />
+                <code>{value}</code>
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <figcaption
+    class="tokens__caption"
+    id={captionId}
+  >
+    {caption}
+  </figcaption>
+</figure>
+
+<style>
+  .tokens {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    margin: 0;
+  }
+
+  .tokens__scroll {
+    position: relative;
+    overflow-x: auto;
+  }
+
+  .tokens__scroll:focus-visible {
+    outline: var(--site-focus-outline);
+    outline-offset: var(--site-focus-offset);
+  }
+
+  .tokens__table {
+    border-spacing: 0;
+    width: 100%;
+    min-width: 24rem;
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+  }
+
+  .tokens__table th,
+  .tokens__table td {
+    vertical-align: middle;
+    padding: var(--space-inset-200) var(--space-inset-400);
+    text-align: left;
+  }
+
+  .tokens__table thead th {
+    border-bottom: var(--stroke-width-thin) solid var(--site-border-strong);
+    font-weight: var(--text-weight-display);
+  }
+
+  .tokens__table tbody tr:nth-child(odd) > * {
+    background-color: var(--site-surface-muted);
+  }
+
+  .tokens__table tbody tr > :first-child {
+    border-radius: var(--site-radius-inner) 0 0 var(--site-radius-inner);
+  }
+
+  .tokens__table tbody tr > :last-child {
+    border-radius: 0 var(--site-radius-inner) var(--site-radius-inner) 0;
+  }
+
+  .tokens__table tbody th {
+    font-weight: var(--text-weight-text);
+  }
+
+  .tokens__table td {
+    white-space: nowrap;
+  }
+
+  /* Data colours (tokens.md exception): the shade each token stores or points to. */
+  .tokens__swatch {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: var(--space-gap-200);
+    border-radius: var(--site-radius-inner);
+    background-color: var(--swatch);
+    width: var(--control-size-600);
+    height: var(--control-size-600);
+  }
+
+  .tokens__caption {
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+  }
+</style>

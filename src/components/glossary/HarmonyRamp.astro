@@ -1,0 +1,114 @@
+---
+import { hex, hsl } from '@/scripts/demos/color'
+
+const BASE_HUE = 200
+const SATURATION = 0.7
+const LIGHTNESS = 0.5
+
+const rules = [
+  { name: 'Analogous', offsets: [0, -30, 30], how: '30° on each side' },
+  { name: 'Complementary', offsets: [0, 180], how: 'the opposite hue' },
+  {
+    name: 'Compound',
+    offsets: [0, 150, 210],
+    how: '30° on each side of the opposite hue',
+  },
+  { name: 'Triadic', offsets: [0, 120, 240], how: '3 hues 120° apart' },
+  { name: 'Tetradic', offsets: [0, 90, 180, 270], how: '4 hues 90° apart' },
+].map((rule) => ({
+  ...rule,
+  colours: rule.offsets.map((offset) =>
+    hex(hsl((BASE_HUE + offset + 360) % 360, SATURATION, LIGHTNESS))
+  ),
+}))
+---
+
+<figure class="harmony">
+  <ul class="harmony__list">
+    {rules.map((rule) => (
+      <li class="harmony__rule">
+        <p class="harmony__label">
+          <span class="harmony__name">{rule.name}</span>
+          <span>{rule.how}</span>
+        </p>
+        <span
+          class="harmony__swatches"
+          aria-hidden="true"
+        >
+          {rule.colours.map((colour) => (
+            <span
+              class="harmony__swatch"
+              style={`--swatch:${colour}`}
+            />
+          ))}
+        </span>
+      </li>
+    ))}
+  </ul>
+  <figcaption class="harmony__caption">
+    The 5 harmony rules of the color wheel, from one blue base color (HSL hue
+    200°). Each rule turns the hue and keeps the saturation and lightness of the
+    base.
+  </figcaption>
+</figure>
+
+<style>
+  .harmony {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    margin: 0;
+  }
+
+  .harmony__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .harmony__rule {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-gap-400);
+  }
+
+  .harmony__label {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .harmony__name {
+    font-weight: var(--text-weight-display);
+  }
+
+  .harmony__label,
+  .harmony__caption {
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+  }
+
+  .harmony__swatches {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-gap-200);
+  }
+
+  /* Data colours (tokens.md exception): each swatch is the colour the rule returns. */
+  .harmony__swatch {
+    border-radius: var(--site-radius-inner);
+    background-color: var(--swatch);
+    aspect-ratio: 1;
+  }
+
+  @media (max-width: 479.98px) {
+    .harmony__rule {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-gap-200);
+    }
+  }
+</style>

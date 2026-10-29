@@ -27,6 +27,11 @@ const spaces: Record<
     colour: (h) => oklch(0.72, 0.12, h),
   },
   lch: { name: 'LCH', label: 'LCH, L 66', colour: (h) => lch(66, 45, h) },
+  cielab: {
+    name: 'CIELAB',
+    label: 'CIELAB, L 66, a and b on a circle',
+    colour: (h) => lch(66, 45, h),
+  },
   oklab: {
     name: 'OKLab',
     label: 'OKLab, L 0.72, a and b on a circle',

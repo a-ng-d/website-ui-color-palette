@@ -1,6 +1,6 @@
 # Phase 2 — Capability, comparison, platform and glossary pages
 
-- **Status**: In progress — steps 1 to 4 done (branch `seo/phase-2`); steps 5 to 8 to do. See [Progress](#progress).
+- **Status**: In progress — steps 1 to 4 done (branch `seo/phase-2`), Lot D complete (branch `seo/phase-2-2`); steps 5 to 8 to do. See [Progress](#progress).
 - **Package(s) concerned**: `website-ui-color-palette`
 - **Related spec**: [README.md](README.md), [03-blog-clusters.md](03-blog-clusters.md), [00-measurement.md](00-measurement.md)
 
@@ -39,7 +39,7 @@ Phase 1b ([01-indexation-recovery.md](01-indexation-recovery.md)) ships first. T
 
 ## Progress
 
-Last update: 2026-10-28.
+Last update: 2026-10-29.
 
 | Order | Status | Live pages |
 |---|---|---|
@@ -50,25 +50,29 @@ Last update: 2026-10-28.
 | 5 | To do | `color-palette-generator` |
 | 6 | To do | `/figma`, then `/framer` (Lot C, same blocks as `/claude`) |
 | 7 | To do | `tailwind-color-palette`, `swiftui-compose-colors` |
-| 8 | To do | Lot A: `export-design-tokens`, `ai-color-palette-generator`, `image-to-color-palette`, `color-wheel-harmony`, `light-dark-themes`, `design-system-presets`, `semantic-color-system`. Lot C: `/penpot`, `/sketch`. Lot D: `cielab`, `color-scale`, `design-token`, `semantic-color`, `color-harmony`. Lot B: the 5 comparison pages and the `/compare` hub |
+| 8 | In progress | Lot D done: `/glossary/cielab`, `/glossary/color-scale`, `/glossary/design-token`, `/glossary/semantic-color`, `/glossary/color-harmony`. To do — Lot A: `export-design-tokens`, `ai-color-palette-generator`, `image-to-color-palette`, `color-wheel-harmony`, `light-dark-themes`, `design-system-presets`, `semantic-color-system`. Lot C: `/penpot`, `/sketch`. Lot B: the 5 comparison pages and the `/compare` hub |
 
-Lot A pages left: 10 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C: 4 of 5. Lot D: 5 of 12 (the hub is live). Lot B: all 6.
+Lot A pages left: 10 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C: 4 of 5. Lot D: done (12 terms and the hub). Lot B: all 6.
 
 ### What is in place for the next pages
 
 - **Capability page**: a `CapabilityPage` in `src/data/capability-pages.ts`, rendered by `CapabilityPageView` at `/capabilities/<slug>`. A new page is data only; each planned page has a matching demo in `src/components/capabilities/demos/`.
-- **Glossary term**: a `GlossaryTerm` in `src/data/glossary.ts` (optional `question` h1, `visual`, `table`, `capability`). Visuals: `HueRamp`, `VisionRamp`, `ContrastRamp`.
+- **Glossary term**: a `GlossaryTerm` in `src/data/glossary.ts` (optional `question` h1, `visual`, `table`, `capability`). Visuals: `HueRamp`, `VisionRamp`, `ContrastRamp`, `ScaleRamp`, `TokenRamp` (primitive or semantic layer), `HarmonyRamp`.
 - **Platform page**: optional `setup`, `tables`, `faq` and `nextSteps` on `PlatformPage` (used by `/claude` only so far).
 - **Wiring is automatic**: `/capabilities` "Capabilities in depth" row, `/glossary` hub, `llms.txt` / `llms-full.txt`, sitemap `lastmod`, breadcrumbs and JSON-LD come from the data.
 - **Reviews per step**: `seo-reviewer`, `fact-checker` and `style-guardian`, then the fixes, before merge.
 
 ### Follow-ups
 
+- **Interim capability links (Lot D)**: `color-scale`, `design-token` and `color-harmony` point to `/capabilities#master`, `#deploy` and `#generate`, and `semantic-color` to `/claude`. When `color-palette-generator`, `export-design-tokens`, `color-wheel-harmony` and `semantic-color-system` ship, repoint each `capability` in `src/data/glossary.ts` to its `/capabilities/<slug>`.
+- **Glossary vs Lot A ownership**: a glossary term owns "what is X" and the definition; its Lot A page owns "how to do it in the tool" (formats, presets, plan detail). Keep tool detail out of the term pages.
+- **Unsourced claim on live terms**: `oklch` and `oklab` say "Switching … keeps your scale and your source colors"; no spec or doc states it. Confirm with the product owner or rewrite as on `cielab`.
+- **Spec conflicts found by the fact-check**: resolved on 2026-10-29 in `specs-ui-color-palette` — plan content removed from the specs (plans live only in docs `free-and-pro.md`), `scale.md` now counts 19 presets (3 custom + 16 named), and the contracts list the `system?` input of `generate_code`.
 - **`/capabilities` "Capabilities in depth" row**: a compact card variant is needed past about 8 pages (around step 7).
 - **Cluster articles** ([03-blog-clusters.md](03-blog-clusters.md)): when an article ships, link it from its pillar page (related cards, FAQ "Full comparison") and respect the ownership rules recorded there.
 - **Lighthouse**: run on mobile on one capability page after deploy (SEO = 100, green Core Web Vitals) — not done yet.
 - **Sitemap `lastmod`**: check that the new URLs carry a date after deploy (it comes from the git history of the data files).
-- **Docs glossary**: link each docs entry to its site term page (OKLCH, LCH, OKLab, HSLuv, the 8 color blindness types, APCA, WCAG 2.1), as Lot D requires.
+- **Docs glossary**: link each docs entry to its site term page (OKLCH, LCH, OKLab, HSLuv, CIELAB, Primitive colors → design token, Semantic colors, the 8 color blindness types, APCA, WCAG 2.1), as Lot D requires.
 - **Docs**: `general/introduction/free-and-pro.md` lists hue/chroma distribution curves as `/pro`, but `hue-chroma-distribution.md` is a Draft spec.
 
 ### Acceptance criteria, where they stand
@@ -76,7 +80,7 @@ Lot A pages left: 10 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C
 - Lot A pages: one h1 with the primary query, a 40–60 word lead, FAQPage + BreadcrumbList + WebPage JSON-LD, ≥3 links out and ≥2 in, fact-checked — met for the 3 live pages.
 - `/capabilities` links to every Lot A page — met (through the "Capabilities in depth" row).
 - Platform pages: capability matrix, setup guide, FAQ with FAQPage, ≥3 Lot A links — met for `/claude`; `/figma`, `/penpot`, `/sketch`, `/framer` to do.
-- Glossary terms: definition of 60 words or fewer first, `DefinedTerm` linked to the `/glossary` `DefinedTermSet` — met for the 7 live terms.
+- Glossary terms: definition of 60 words or fewer first, `DefinedTerm` linked to the `/glossary` `DefinedTermSet` — met for the 12 live terms.
 - Sitemap, `llms.txt`, `llms-full.txt` — met for every new page (`lastmod` to check after deploy).
 - Comparison pages and Lighthouse — not started.
 
@@ -108,7 +112,7 @@ The table keeps the original numbering. The production order is the one above.
 3. A visual (video or screenshot, using the blog's video and image conventions) with descriptive alt text.
 4. **How it works**: 3–5 steps grounded in the docs guide for that feature.
 5. **What you get**: specifics such as formats, presets, modes and counts, sourced from the spec.
-6. **Availability**: platforms (from `platform-capabilities.md`) and plan (/basic vs /pro, from `plans.md`), with no price amounts.
+6. **Availability**: platforms (from `platform-capabilities.md`) and plan (/basic vs /pro, from docs `general/introduction/free-and-pro.md`), with no price amounts.
 7. **FAQ**: 4–6 real questions taken from GSC and People Also Ask.
 8. **Related**: 2 cluster articles (from Phase 3), the relevant platform pages and the next capability.
 9. CTA to install or download, with UTM parameters (see Phase 0).
@@ -240,3 +244,4 @@ Add to each one:
 | 2026-10-28 | Step 3 done: `/capabilities/color-blindness-simulation` (demo `simulations`) and `/glossary/color-blindness-types` (8-type table, `VisionRamp` visual computed with the engine's matrices). Glossary terms gained `question`, `visual`, `table` and `capability` |
 | 2026-10-28 | Step 4 done: `/capabilities/wcag-apca-contrast` (demo `contrast`), `/glossary/apca` and `/glossary/wcag-contrast-ratio` (thresholds and APCA levels tables, `ContrastRamp` visual with real WCAG/APCA scores) |
 | 2026-10-28 | `/claude` closing cards now link the 3 live Lot A pages (contrast, OKLCH, color blindness): the "≥3 Lot A links" criterion is met for `/claude` |
+| 2026-10-29 | Lot D done: `/glossary/cielab`, `/glossary/color-scale`, `/glossary/design-token`, `/glossary/semantic-color`, `/glossary/color-harmony` (visuals `ScaleRamp`, `TokenRamp`, `HarmonyRamp`; `HueRamp` gains CIELAB). Interim capability links to `/capabilities` anchors and `/claude`. Reviewed by `seo-reviewer`, `fact-checker` and `style-guardian`, fixes applied |

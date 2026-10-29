@@ -248,3 +248,6 @@ export const simulateVision = ([r, g, b]: Rgb, type: VisionType): Rgb =>
   VISION_MATRICES[type].map(([x, y, z]) =>
     clamp01(x * r + y * g + z * b)
   ) as Rgb
+
+export const blueShade = (l: number): Rgb =>
+  oklch(l, 0.14 * (1 - Math.abs(2 * l - 1) ** 2), 255)

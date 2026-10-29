@@ -1,0 +1,132 @@
+---
+import { blueShade, hex, wcagRatio, type Rgb } from '@/scripts/demos/color'
+
+const STOPS = [
+  { name: '50', l: 0.97 },
+  { name: '100', l: 0.93 },
+  { name: '200', l: 0.86 },
+  { name: '300', l: 0.78 },
+  { name: '400', l: 0.7 },
+  { name: '500', l: 0.62 },
+  { name: '600', l: 0.54 },
+  { name: '700', l: 0.46 },
+  { name: '800', l: 0.38 },
+  { name: '900', l: 0.3 },
+]
+const WHITE: Rgb = [1, 1, 1]
+
+// Floored, so a 4.46:1 never reads as an AA pass.
+const shades = STOPS.map((stop) => {
+  const rgb = blueShade(stop.l)
+  return {
+    name: stop.name,
+    colour: hex(rgb),
+    lightness: Math.round(stop.l * 100),
+    ratio: (Math.floor(wcagRatio(WHITE, rgb) * 10) / 10).toFixed(1),
+  }
+})
+---
+
+<figure class="scale">
+  <ol class="scale__list">
+    {shades.map((shade) => (
+      <li
+        class="scale__stop"
+        style={`--swatch:${shade.colour}`}
+      >
+        <span
+          class="scale__swatch"
+          aria-hidden="true"
+        />
+        <span class="scale__name">{shade.name}</span>
+        <span class="scale__value">
+          <span class="visually-hidden">Lightness </span>
+          <span aria-hidden="true">L </span>
+          {shade.lightness}
+        </span>
+        <span class="scale__value">
+          <span class="visually-hidden">White text: </span>
+          {shade.ratio}:1
+        </span>
+      </li>
+    ))}
+  </ol>
+  <figcaption class="scale__caption">
+    One blue scale of 10 stops, from 50 to 900, computed in OKLCH. Under each
+    stop: its lightness (OKLCH L, 0–100) and the WCAG 2.1 contrast ratio of
+    white text on it.
+  </figcaption>
+</figure>
+
+<style>
+  .scale {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-400);
+    margin: 0;
+  }
+
+  .scale__list {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: var(--space-gap-200);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .scale__stop {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gap-100);
+    text-align: center;
+  }
+
+  /* Data colours (tokens.md exception): each swatch is the colour the formula returns. */
+  .scale__swatch {
+    border-radius: var(--site-radius-inner);
+    background-color: var(--swatch);
+    aspect-ratio: 1 / 2;
+  }
+
+  .scale__name {
+    font-weight: var(--text-weight-display);
+  }
+
+  .scale__name,
+  .scale__value,
+  .scale__caption {
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+  }
+
+  .scale__value {
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 639.98px) {
+    .scale__list {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      row-gap: var(--space-gap-400);
+    }
+  }
+
+  @media (max-width: 479.98px) {
+    .scale__list {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-gap-200);
+    }
+
+    .scale__stop {
+      display: grid;
+      grid-template-columns: var(--control-size-1200) 3rem 1fr 1fr;
+      align-items: center;
+      gap: var(--space-gap-300);
+      text-align: left;
+    }
+
+    .scale__swatch {
+      aspect-ratio: 1;
+    }
+  }
+</style>

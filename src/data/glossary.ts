@@ -1,7 +1,7 @@
 import type { Table } from '@/data/blocks'
 import { htmlLink } from '@/data/faq'
 
-export type RampSpace = 'oklch' | 'lch' | 'oklab' | 'hsluv'
+export type RampSpace = 'oklch' | 'lch' | 'cielab' | 'oklab' | 'hsluv'
 
 export interface GlossaryTerm {
   slug: string
@@ -12,7 +12,14 @@ export interface GlossaryTerm {
   definition: string
   why: string[]
   inProduct: string[]
-  visual: RampSpace | 'vision' | 'contrast'
+  visual:
+    | RampSpace
+    | 'vision'
+    | 'contrast'
+    | 'scale'
+    | 'primitive'
+    | 'semantic'
+    | 'harmony'
   table?: Table
   capability: { name: string; href: string }
   related: string[]
@@ -25,7 +32,7 @@ export const glossary = {
   seo: {
     title: 'Color Glossary for UI Design — UI Color Palette',
     description:
-      'Short, precise definitions of the color spaces and terms behind accessible UI palettes, from OKLCH and HSLuv to the types of color blindness.',
+      'Short, precise definitions of the color spaces and terms behind accessible UI palettes, from OKLCH and APCA to color scales and design tokens.',
   },
 }
 
@@ -73,7 +80,7 @@ export const glossaryTerms: GlossaryTerm[] = [
     ],
     visual: 'oklch',
     capability: colorSpaces,
-    related: ['oklab', 'lch', 'hsluv'],
+    related: ['oklab', 'lch', 'color-scale', 'color-harmony'],
   },
   {
     slug: 'lch',
@@ -95,7 +102,7 @@ export const glossaryTerms: GlossaryTerm[] = [
     ],
     visual: 'lch',
     capability: colorSpaces,
-    related: ['oklch', 'oklab', 'hsluv'],
+    related: ['oklch', 'cielab', 'oklab'],
   },
   {
     slug: 'oklab',
@@ -117,7 +124,7 @@ export const glossaryTerms: GlossaryTerm[] = [
     ],
     visual: 'oklab',
     capability: colorSpaces,
-    related: ['oklch', 'lch', 'hsluv'],
+    related: ['oklch', 'cielab', 'hsluv'],
   },
   {
     slug: 'hsluv',
@@ -263,7 +270,7 @@ export const glossaryTerms: GlossaryTerm[] = [
       ],
     },
     capability: wcagApca,
-    related: ['apca', 'color-blindness-types'],
+    related: ['apca', 'color-scale', 'color-blindness-types'],
   },
   {
     slug: 'apca',
@@ -315,5 +322,119 @@ export const glossaryTerms: GlossaryTerm[] = [
     },
     capability: wcagApca,
     related: ['wcag-contrast-ratio', 'color-blindness-types'],
+  },
+  {
+    slug: 'cielab',
+    term: 'CIELAB',
+    seo: {
+      title: 'What Is CIELAB? The CIE L*a*b* Space — UI Color Palette',
+      description:
+        'CIELAB describes a color by lightness and two opponent axes, so distances match perceived differences. What it is, and how it relates to LCH and OKLab.',
+    },
+    definition:
+      'CIELAB, or CIE L*a*b*, is a color space defined by the International Commission on Illumination (CIE) in 1976. It describes a color by a lightness (L*, 0 to 100) and two opponent axes, a* (green to red) and b* (blue to yellow), so that the distance between two colors roughly matches how different they look.',
+    why: [
+      `CIELAB is the reference behind color-difference measurement: ΔE, a measure of the difference between two colors computed from their CIELAB coordinates, is how print, textiles and paint check that a color matches its target. CSS supports it through the ${code('lab()')} function, defined in ${cssColor4}.`,
+      `Its polar form is ${htmlLink('/glossary/lch', 'LCH')}, and it shares its weak spots: blues drift toward purple as chroma changes. ${htmlLink('/glossary/oklab', 'OKLab')}, published in 2020, keeps the same layout with a closer fit to vision.`,
+    ],
+    inProduct: [
+      'A palette in UI Color Palette can be computed in LAB, the app’s name for CIELAB, on the /pro plan, in Figma, Penpot, Sketch and Framer. You can switch a palette’s color space at any time from its settings.',
+      'To design a scale, LCH, available on every plan, is easier to read: hue and chroma become an angle and a distance. OKLCH, the default, goes further.',
+    ],
+    visual: 'cielab',
+    capability: colorSpaces,
+    related: ['lch', 'oklab', 'oklch'],
+  },
+  {
+    slug: 'color-scale',
+    term: 'Color scale',
+    question: 'What is a color scale?',
+    seo: {
+      title: 'What Is a Color Scale? Shades and Stops — UI Color Palette',
+      description:
+        'A color scale is one color in shades from light to dark, named by stops like 100 to 900. What scales are, why stops matter for contrast, and how UI uses them.',
+    },
+    definition:
+      'A color scale is a series of shades of one color, ordered from light to dark, each identified by a stop such as 50, 100 or 900. In a UI palette, every source color gets its own scale, and its shades become the primitive colors a design system builds on.',
+    why: [
+      'When every scale uses the same stops and each stop has a consistent perceived lightness, a stop means roughly the same thing for every color: blue 600 and green 600 sit at the same level, so their contrast with white text stays close. That is what makes a palette predictable for components, themes and dark mode — though each pair still needs checking.',
+      `Scales built in HSL break that promise, because HSL lightness does not match how light a color looks. Building them in a perceptual space such as ${htmlLink('/glossary/oklch', 'OKLCH')} keeps the steps even across hues, and the ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG contrast ratio')} of each stop tells you which ones are safe for text.`,
+    ],
+    inProduct: [
+      'UI Color Palette turns each source color into a scale, in Figma, Penpot, Sketch and Framer, from a built-in preset — Material 3 and Tailwind on every plan, the other named presets on /pro — or from a custom set of stops.',
+      'Each stop can be set by its lightness or by a target contrast ratio, and an easing curve shapes how the steps are spread. On /pro, you can also shift the hue and chroma of the whole scale.',
+    ],
+    visual: 'scale',
+    capability: { name: 'scale editing', href: '/capabilities#master' },
+    related: ['oklch', 'design-token', 'semantic-color', 'color-harmony'],
+  },
+  {
+    slug: 'design-token',
+    term: 'Design token',
+    question: 'What is a design token?',
+    seo: {
+      title: 'What Is a Design Token? Color Tokens — UI Color Palette',
+      description:
+        'A design token stores a design decision, such as a color, as named data shared by design files and code. How color tokens work, from primitives to DTCG.',
+    },
+    definition:
+      'A design token is a named design decision stored as data, such as a color called color.blue.500 and its value, so design files and code read the same source. Color tokens come in two layers: primitives, which hold the raw shades of a palette, and semantic tokens, which point to them by role.',
+    why: [
+      `Tokens keep design and code in step: change a value once, and every tool that reads the token follows. The W3C Design Tokens Community Group publishes a JSON format for them, known as DTCG (${htmlLink('https://www.designtokens.org/', 'designtokens.org')}), which tools such as Style Dictionary turn into CSS, iOS or Android code.`,
+      `A palette is only half of a token set: its shades are the primitives. Components should use the ${htmlLink('/glossary/semantic-color', 'semantic layer')}, so a theme can change without touching them.`,
+    ],
+    inProduct: [
+      'UI Color Palette syncs a palette with the native mechanism of each design tool, on every plan: local variables and styles in Figma and Sketch, native tokens and styles in Penpot, color styles in Framer.',
+      `Export to CSS is free. On /pro, it also exports design tokens — native tokens, DTCG and Style Dictionary — and Tailwind, SCSS, Less, Apple and Android code; Framer exports a narrower set, JSON tokens included. With Claude or the MCP server, ${code('generate_code')} returns the same formats.`,
+    ],
+    visual: 'primitive',
+    capability: { name: 'token export & sync', href: '/capabilities#deploy' },
+    related: ['semantic-color', 'color-scale'],
+  },
+  {
+    slug: 'semantic-color',
+    term: 'Semantic colors',
+    question: 'What are semantic colors?',
+    seo: {
+      title: 'What Are Semantic Colors? UI Color Roles — UI Color Palette',
+      description:
+        'Semantic colors name a color by its role, such as brand or danger, and point to a primitive shade per theme. How they work, how to name them, why they matter.',
+    },
+    definition:
+      'Semantic colors are color tokens named by their role in the interface, such as brand.default, danger.subtle or text.link, rather than by hue and stop. Each one points to a primitive shade, and can point to a different shade per theme, so components keep the same names in light and dark mode.',
+    why: [
+      `Components that use ${code('blue.500')} directly must be edited when the brand color changes or a dark theme arrives. Components that use ${code('brand.default')} do not: you point the token to another shade, and every component follows.`,
+      'Most systems name them along a few dimensions — a role (brand, danger, success), a prominence (default, subtle, strong) and a state (hover, pressed, disabled) — or by surface and content. Keep the set small: every token you add is one more decision to maintain.',
+    ],
+    inProduct: [
+      `UI Color Palette builds the semantic layer on top of your palette without changing it. Today this happens with Claude, whose guided flow proposes a naming pattern and bindings for you to refine, or through the MCP server and the API with ${code('get_color_system')}. A binding can use a different shade per theme.`,
+      `${code('generate_code')} then writes a semantic tokens file alongside the primitives, ready for your codebase.`,
+    ],
+    visual: 'semantic',
+    capability: { name: 'UI Color Palette for Claude', href: '/claude' },
+    related: ['design-token', 'color-scale'],
+  },
+  {
+    slug: 'color-harmony',
+    term: 'Color harmony',
+    question: 'What is color harmony?',
+    seo: {
+      title: 'What Is Color Harmony? 5 Classic Rules — UI Color Palette',
+      description:
+        'Color harmony picks hues by their place on the color wheel: analogous, complementary, compound, triadic, tetradic. What each rule does, and how to use it in UI.',
+    },
+    definition:
+      'A color harmony is a set of hues chosen by their positions on the color wheel so that they work together. The classic rules are analogous (neighboring hues), complementary (opposite hues), compound or split-complementary (the two neighbors of the opposite hue), triadic (three hues 120° apart) and tetradic (two complementary pairs).',
+    why: [
+      `A harmony picks hues, not a palette: it says nothing about lightness or contrast. Rules computed on an HSL wheel keep the same HSL lightness, yet a yellow and a blue at the same HSL lightness look nothing alike — see ${htmlLink('/glossary/oklch', 'OKLCH')}.`,
+      `Treat a harmony as the source colors of a palette: give each hue a ${htmlLink('/glossary/color-scale', 'color scale')}, then check the ${htmlLink('/glossary/wcag-contrast-ratio', 'contrast ratio')} of the stops you use for text.`,
+    ],
+    inProduct: [
+      'In UI Color Palette, the color wheel creates a palette from a harmony, in Figma, Penpot, Sketch and Framer. Pick a base color and one of five rules — analogous, complementary, compound, triadic or tetradic — and the swatches update live, each with its hex code and the closest color name. “Use this palette” turns them into source colors.',
+      `With Claude or the MCP server, ${code('create_color_harmony')} computes harmonies from a base color.`,
+    ],
+    visual: 'harmony',
+    capability: { name: 'palette generation', href: '/capabilities#generate' },
+    related: ['color-scale', 'oklch'],
   },
 ]
