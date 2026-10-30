@@ -21,6 +21,13 @@ export interface NextStep {
   href: string
 }
 
+export interface LinkCard {
+  title: string
+  text: string
+  label: string
+  href: string
+}
+
 export interface Step {
   title: string
   text: string

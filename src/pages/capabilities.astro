@@ -5,8 +5,8 @@ import GenerateSection from '@/components/capabilities/GenerateSection.astro'
 import MosaicSection from '@/components/capabilities/MosaicSection.astro'
 import AudienceSection from '@/components/capabilities/AudienceSection.astro'
 import Reinsurance from '@/components/home/Reinsurance.astro'
-import NextSteps from '@/components/platform/NextSteps.astro'
-import { capabilityPages, capabilityPath } from '@/data/capability-pages'
+import InDepthSection from '@/components/capabilities/InDepthSection.astro'
+import { inDepth } from '@/data/capability-pages'
 import {
   capabilityGroups,
   deploy,
@@ -19,21 +19,6 @@ import {
   pageBreadcrumbs,
   softwareApplication,
 } from '@/data/structured-data'
-
-const inDepth = [
-  ...capabilityPages.map((page) => ({
-    icon: 'glasses' as const,
-    title: page.name,
-    label: 'Explore in depth',
-    href: capabilityPath(page),
-  })),
-  {
-    icon: 'book-open' as const,
-    title: 'Color glossary',
-    label: 'Read the definitions',
-    href: '/glossary',
-  },
-]
 
 const featureList = capabilityGroups.flatMap((group) =>
   group.cards.map((card) => card.title)
@@ -61,9 +46,10 @@ const featureList = capabilityGroups.flatMap((group) =>
     group={superpowers}
     mediaFirst
   />
-  <NextSteps
-    steps={inDepth}
-    title="Capabilities in depth"
+  <InDepthSection
+    title={inDepth.title}
+    intro={inDepth.intro}
+    items={inDepth.cards}
   />
   <AudienceSection />
   <Reinsurance />

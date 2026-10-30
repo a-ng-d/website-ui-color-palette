@@ -1,7 +1,8 @@
 import { links } from '@/config/site'
-import type { NextStep, Steps, Table } from '@/data/blocks'
+import type { LinkCard, NextStep, Steps, Table } from '@/data/blocks'
 import type { DemoId } from '@/data/capabilities'
 import { htmlLink, type FaqItem } from '@/data/faq'
+import { glossary } from '@/data/glossary'
 
 export interface CapabilityPage {
   slug: string
@@ -1122,3 +1123,23 @@ export const capabilityPages = [
   tailwindPage,
   nativePage,
 ]
+
+export const inDepth = {
+  title: 'Capabilities in depth',
+  intro:
+    'One page per capability: how it works, what you get on each plan, and the questions people ask.',
+  cards: [
+    ...capabilityPages.map((page): LinkCard => ({
+      title: page.name,
+      text: page.hero.tagline,
+      label: 'Explore in depth',
+      href: capabilityPath(page),
+    })),
+    {
+      title: 'Color glossary',
+      text: glossary.tagline,
+      label: 'Read the definitions',
+      href: '/glossary',
+    },
+  ],
+}

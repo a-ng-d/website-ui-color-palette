@@ -27,6 +27,13 @@
   --button-base-border-color: var(--button-secondary-border-color-hover);
 }
 
+.card:hover .text-button--secondary {
+  --button-base-background-color: var(
+    --button-secondary-background-color-hover
+  );
+  --button-base-border-color: var(--button-secondary-border-color-hover);
+}
+
 :is(a, summary, label).text-button--secondary:active {
   --button-base-background-color: var(
     --button-secondary-background-color-pressed

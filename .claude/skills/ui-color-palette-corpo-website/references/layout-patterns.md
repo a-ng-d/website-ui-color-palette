@@ -25,6 +25,7 @@ column), `479.98px` (small phones). Mobile first is not required; keep desktop r
 | **Title card + live embed + editor cards** | `platform/PlatformSurfaces` | 3 cols: rotated title (col 1, rows 1–2), plugin iframe (cols 2–3, rows 1–2), `IconTile` cards on row 3; 2 cols < 1024 with the embed last on a full row; 1 col < 640 |
 | **Static text cards** | `ui/TextCardsSection` (glossary terms) | one column per card (`cards`: title + HTML paragraphs), `--space-inset-800`; 1 col < 1024 |
 | **Terms grid** | `/glossary` | 2 cols of whole-card `<a class="card">` (term, definition, "Read more"), link named by the term (`aria-labelledby`); 1 col < 640 |
+| **Capabilities in depth** | `capabilities/InDepthSection` (`/capabilities`, data `inDepth` in `capability-pages.ts`) | intro `surface-card` (soft border, site surface, not rotated) full width, then 3 cols of compact whole-card `<a class="card">` (page name, hero tagline, "Explore in depth"), link named by the title (`aria-labelledby`), `--space-inset-600`, 8px gutter throughout; 2 cols < 1024, 1 col < 640. Lists every `capabilityPages` entry plus the glossary |
 | **Next steps link cards** | `platform/NextSteps` | one column per whole-card `<a class="card">`, 4 at most per row (`steps` prop; default: capabilities, pricing, downloads, blog); 1 col < 1024. Also on the 404 |
 
 Capability pages (`/capabilities/<slug>`) are data-driven too: a `CapabilityPage` in
