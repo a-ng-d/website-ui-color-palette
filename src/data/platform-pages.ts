@@ -386,6 +386,7 @@ export const penpotPage: PlatformPage = {
           ],
         },
       ],
+      note: 'With the tokens deep sync on in the Preferences, the next sync deletes every token of those sets that is no longer in the palette, including tokens you added by hand.',
     },
     {
       id: 'plans',
