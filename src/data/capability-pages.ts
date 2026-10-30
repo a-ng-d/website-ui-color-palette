@@ -750,6 +750,362 @@ export const generatorPage: CapabilityPage = {
       href: '/capabilities/wcag-apca-contrast',
     },
     {
+      icon: 'glasses',
+      title: 'Tailwind color palette',
+      label: 'See the next capability',
+      href: '/capabilities/tailwind-color-palette',
+    },
+  ],
+}
+
+export const tailwindPage: CapabilityPage = {
+  slug: 'tailwind-color-palette',
+  name: 'Tailwind color palette',
+  seo: {
+    title: 'Tailwind Color Palette Generator, v3 & v4 — UI Color Palette',
+    description:
+      'Generate a Tailwind color palette with OKLCH scales in Figma, Penpot, Sketch or Framer. Export a v4 @theme or v3 config, or oklch() CSS, with WCAG scores.',
+  },
+  hero: {
+    title: 'Tailwind color palette generator, for Tailwind v4 and v3',
+    tagline:
+      'Build your own color scales on Tailwind’s 50 to 950 stops, check their contrast, and export them as a Tailwind v4 @theme or a v3 config.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do you generate a custom Tailwind color palette?',
+    lead: 'Start from your brand colors, scale them on Tailwind’s 11 stops, from 50 to 950, and export the result as theme code. UI Color Palette does it in Figma, Penpot, Sketch and Framer: it computes the shades in OKLCH by default, scores their WCAG and APCA contrast, and writes a Tailwind v4 @theme or a v3 config.',
+    demo: 'tokens',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'The Tailwind preset gives your scale the stop names of Tailwind’s own palette. With one color mode, a color named Brand becomes --color-brand-500 and classes such as bg-brand-500 work as usual; with several, the mode name comes first, as in --color-light-brand-500.',
+    docs: {
+      label: 'Read the export guide in the docs',
+      href: `${links.docs}/guides/export-a-color-palette-to-code`,
+    },
+    steps: [
+      {
+        title: 'Add your brand colors',
+        text: 'Pick them, paste their hex codes or generate them. Name each one the way you want its classes to read.',
+      },
+      {
+        title: 'Pick the Tailwind preset',
+        text: 'Its 11 stops run from 50 to 950, like Tailwind’s default palette. The preset is free on every plan.',
+      },
+      {
+        title: 'Check the contrast',
+        text: 'Read the WCAG 2.1 and APCA score of every shade against your text colors, or set the contrast ratio each stop must reach.',
+      },
+      {
+        title: 'Export for Tailwind',
+        text: 'In Export, choose Tailwind v4 for a CSS file with an @theme block, or Tailwind v3 for a tailwind.config.js file. Copy the code or download it.',
+      },
+      {
+        title: 'Use it in your project',
+        text: 'With Tailwind v4, use the file as your CSS entry or copy its @theme block into yours. The shades become utilities right away (here for a palette with one color mode):',
+        code: '<button class="bg-blue-600 text-white hover:bg-blue-700">',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'tailwind-versions',
+      title: 'Tailwind v4 and v3 exports, side by side',
+      intro:
+        'Both exports carry every shade of every source color, in hex. Here is the start of a Tailwind v4 export for one blue color:',
+      code: '@import "tailwindcss";\n\n@theme {\n  --color-*: initial;\n\n  /* Blue */\n  --color-blue-source: #2563eb;\n  --color-blue-950: #02004b;\n  --color-blue-900: #000070;\n  --color-blue-800: #001a92;\n  --color-blue-700: #0034b3;\n  --color-blue-600: #134ed1;\n  /* 500 to 50 follow */\n}',
+      caption: 'Tailwind v4 and Tailwind v3 exports compared',
+      rowHeader: 'Export',
+      columns: ['Tailwind v4', 'Tailwind v3'],
+      rows: [
+        { label: 'File', values: ['tailwind.theme.css', 'tailwind.config.js'] },
+        {
+          label: 'Format',
+          values: ['CSS variables in an @theme block', 'A theme.colors object'],
+        },
+        {
+          label: 'Names',
+          values: ['--color-<color>-<stop>', 'colors.<color>.<stop>'],
+        },
+        {
+          label: 'Color modes',
+          values: [
+            'The mode name is added to each variable',
+            'One nested object per mode',
+          ],
+        },
+        {
+          label: 'Tailwind’s default colors',
+          values: [
+            'Replaced, with --color-*: initial',
+            'Replaced, through theme.colors',
+          ],
+        },
+      ],
+      note: 'Want oklch() values instead of hex? The CSS export writes oklch(), and it is free.',
+    },
+    {
+      id: 'oklch',
+      title: 'Tailwind v4 with OKLCH colors',
+      intro:
+        'Tailwind v4 defines its own palette in OKLCH. UI Color Palette computes your scales in OKLCH by default; the Tailwind file writes them in hex, and the free CSS export writes oklch() values. To use those in Tailwind v4, paste them into your @theme block as --color-blue-500 and so on. Here is the start of a CSS export in OKLCH:',
+      code: ':root {\n  /* Blue */\n  --blue-50: oklch(92% 0.060 215);\n  --blue-100: oklch(84% 0.086 239);\n  --blue-200: oklch(77% 0.120 252);\n  --blue-300: oklch(70% 0.158 258);\n  --blue-400: oklch(63% 0.196 262);\n  --blue-500: oklch(55% 0.212 262);\n  /* 600 to 950 follow */\n}',
+      caption: 'Where OKLCH appears, from the scale to the code',
+      rowHeader: 'Step',
+      columns: ['Values', 'Names'],
+      rows: [
+        {
+          label: 'Scale computation',
+          values: ['OKLCH, by default', 'Stops 50 to 950'],
+        },
+        { label: 'Tailwind v4 export', values: ['Hex', '--color-blue-500'] },
+        {
+          label: 'CSS export (free)',
+          values: ['oklch(), rgb(), hex and more', '--blue-500'],
+        },
+      ],
+    },
+    {
+      id: 'plans',
+      title: 'What you get on each plan',
+      intro:
+        'The Tailwind preset and the contrast scores are free; the Tailwind export is on /pro, in Figma, Penpot, Sketch and Framer.',
+      caption: 'Tailwind features per plan',
+      rowHeader: 'Feature',
+      columns: ['/basic', '/pro'],
+      rows: [
+        { label: 'Tailwind scale preset (50 to 950)', values: [true, true] },
+        {
+          label: 'WCAG 2.1 and APCA score on every shade',
+          values: [true, true],
+        },
+        {
+          label: 'CSS export, with hex, rgb() or oklch() values',
+          values: [true, true],
+        },
+        { label: 'Tailwind v4 and v3 export', values: [false, true] },
+      ],
+      note: `With Claude or the MCP server, ${code('generate_code')} writes the same Tailwind v4 and v3 files, plus a semantic file when you pass a color system.`,
+    },
+  ],
+  faq: {
+    intro:
+      'Custom Tailwind colors, OKLCH in Tailwind v4, and what the export replaces.',
+    items: [
+      {
+        question: 'How do I add a custom color palette to Tailwind v4?',
+        answer: `Declare your colors as --color-* variables in an @theme block, and each becomes utilities such as bg-brand-500. UI Color Palette writes that block for you, with a full scale per color (see ${htmlLink('https://tailwindcss.com/docs/theme', 'Tailwind’s theme docs')}).`,
+      },
+      {
+        question:
+          'Does Tailwind v4 use OKLCH colors, and can I export oklch() values?',
+        answer: `Yes: Tailwind v4’s default palette is defined in OKLCH. UI Color Palette computes your scales in ${htmlLink('/glossary/oklch', 'OKLCH')} too, by default. The Tailwind export writes hex values; the free CSS export writes oklch() values you can paste into an @theme block as --color-* variables.`,
+      },
+      {
+        question: 'Can I export a Tailwind config from Figma?',
+        answer:
+          'Yes, on /pro. In Figma, Penpot, Sketch or Framer, open Export and choose Tailwind v4 for an @theme CSS file, or Tailwind v3 for a tailwind.config.js file.',
+      },
+      {
+        question: 'Will the export replace Tailwind’s default colors?',
+        answer:
+          'Yes. The v4 file starts with --color-*: initial and the v3 file sets theme.colors, so only your palette remains. Delete that line in v4 if you want to keep Tailwind’s colors next to yours.',
+      },
+      {
+        question:
+          'Can I recreate Tailwind’s default color scales for my brand color?',
+        answer:
+          'Yes. The Tailwind preset gives your color the same 11 stops as Tailwind’s default palette, from 50 to 950, so a color named Brand becomes --color-brand-500. The shades are computed from your color, so they do not copy Tailwind’s own values.',
+      },
+      {
+        question: 'How do I make sure my Tailwind shades are accessible?',
+        answer: `Check them before you export. Every shade shows its WCAG 2.1 ratio and APCA score against your text colors, and you can set the ratio each stop must reach (see ${htmlLink('/capabilities/wcag-apca-contrast', 'WCAG & APCA contrast')}).`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'glasses',
+      title: 'Color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'OKLCH & LCH color spaces',
+      label: 'See the capability',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+    {
+      icon: 'book-open',
+      title: 'What is a design token?',
+      label: 'Read the definition',
+      href: '/glossary/design-token',
+    },
+    {
+      icon: 'glasses',
+      title: 'SwiftUI & Compose colors',
+      label: 'See the next capability',
+      href: '/capabilities/swiftui-compose-colors',
+    },
+  ],
+}
+
+export const nativePage: CapabilityPage = {
+  slug: 'swiftui-compose-colors',
+  name: 'SwiftUI & Compose colors',
+  seo: {
+    title: 'SwiftUI & Jetpack Compose Color Palette — UI Color Palette',
+    description:
+      'Export a color palette to SwiftUI, Jetpack Compose, Android colors.xml or UIKit from Figma, Penpot or Sketch, with WCAG and APCA scores on every shade.',
+  },
+  hero: {
+    title:
+      'SwiftUI and Jetpack Compose color palette, exported from your design tool',
+    tagline:
+      'Turn the palette you build in Figma, Penpot or Sketch into Swift and Kotlin code: SwiftUI, UIKit, Jetpack Compose and Android XML resources.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do you export a color palette to SwiftUI or Compose?',
+    lead: 'Build the palette in your design tool, then export it as native code. UI Color Palette writes every shade of every source color to a SwiftUI or UIKit Swift file, a Jetpack Compose Kotlin file or an Android XML resource file, from Figma, Penpot and Sketch, so your app uses the same scale as your designs.',
+    demo: 'handoff',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'The export is generated from the palette as it is now, so run it again after each change to the scale or the colors.',
+    docs: {
+      label: 'Read the export guide in the docs',
+      href: `${links.docs}/guides/export-a-color-palette-to-code`,
+    },
+    steps: [
+      {
+        title: 'Build the palette',
+        text: 'Set your source colors and scale preset in Figma, Penpot or Sketch, and add a color mode for each theme your app needs.',
+      },
+      {
+        title: 'Check the contrast',
+        text: 'Read the WCAG 2.1 and APCA score of every shade against your text colors before it reaches your app.',
+      },
+      {
+        title: 'Export for Apple or Android',
+        text: 'In Export, choose SwiftUI or UIKit for a .swift file, or Compose or Resources for a .kt or .xml file. Copy the code or download it.',
+      },
+      {
+        title: 'Add it to your project',
+        text: 'Drop the file into Xcode or Android Studio. In SwiftUI, every shade is a constant of Color.Token (with color modes, the mode comes first, as in Color.Token.LightBlue600):',
+        code: 'Text("Pay").foregroundStyle(Color.Token.Blue600)',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'native-formats',
+      title: 'SwiftUI, UIKit, Compose and Android colors.xml formats',
+      intro:
+        'Each file lists every shade, named after its source color and stop. Here is the start of a SwiftUI export for one blue color:',
+      code: 'import SwiftUI\n\npublic extension Color {\n  static let Token = Color.TokenColor()\n  struct TokenColor {\n    // Blue\n    public let Blue500 = Color(red: 0.169, green: 0.408, blue: 0.933)\n    public let Blue600 = Color(red: 0.075, green: 0.306, blue: 0.820)\n  }\n}',
+      caption: 'Apple and Android export formats',
+      rowHeader: 'Format',
+      columns: ['File', 'What it contains'],
+      rows: [
+        {
+          label: 'SwiftUI',
+          values: ['.swift', 'A Color extension with one constant per shade'],
+        },
+        {
+          label: 'UIKit',
+          values: [
+            '.swift',
+            'One constant per shade, in one struct per color mode when there are several',
+          ],
+        },
+        {
+          label: 'Jetpack Compose',
+          values: ['.kt', 'One Color value per shade, such as blue_500'],
+        },
+        {
+          label: 'Android resources',
+          values: ['.xml', 'One color resource per shade'],
+        },
+      ],
+      note: 'When a palette has several color modes, each shade is exported once per mode, with the mode in its name.',
+    },
+    {
+      id: 'availability',
+      title: 'Where you can export to Apple and Android',
+      intro:
+        'Apple and Android exports are on /pro, in the design-tool plugins that offer the full format set. Here is the start of an Android resources export:',
+      code: '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  <!--Blue-->\n  <color name="blue_500">#2b68ee</color>\n  <color name="blue_600">#134ed1</color>\n  <color name="blue_700">#0034b3</color>\n</resources>',
+      caption: 'Apple and Android export availability per platform',
+      rowHeader: 'Platform',
+      columns: ['SwiftUI and UIKit', 'Compose and Android XML'],
+      rows: [
+        { label: 'Figma', href: '/figma', values: ['/pro', '/pro'] },
+        { label: 'Penpot', href: '/penpot', values: ['/pro', '/pro'] },
+        { label: 'Sketch', href: '/sketch', values: ['/pro', '/pro'] },
+        { label: 'Framer', href: '/framer', values: [false, false] },
+      ],
+      note: `With Claude or the MCP server, ${code('generate_code')} writes the same four formats.`,
+    },
+  ],
+  faq: {
+    intro:
+      'Exporting colors to SwiftUI, Jetpack Compose and Android resources, and where it works.',
+    items: [
+      {
+        question: 'How do I export Figma colors to SwiftUI?',
+        answer: `Build the palette with UI Color Palette in Figma, open Export and choose SwiftUI. You get a .swift file that extends Color with one constant per shade, ready for Xcode (see ${htmlLink('/figma', 'UI Color Palette for Figma')}). The Apple export is on /pro.`,
+      },
+      {
+        question: 'How do I add a color palette to Jetpack Compose?',
+        answer:
+          'Export the palette with the Compose format to get a Kotlin file with one Color value per shade, such as blue_500. Add it to your project and use it in your composables, for example Text("Pay", color = blue_600).',
+      },
+      {
+        question: 'Can I generate an Android colors.xml from Figma?',
+        answer:
+          'Yes. Choose Resources in Export to get an XML resource file with one color per shade, in Figma, Penpot or Sketch, on /pro.',
+      },
+      {
+        question: 'How do I add a color palette to Xcode?',
+        answer:
+          'Export SwiftUI or UIKit, then drag the .swift file into your Xcode project and reference shades such as Color.Token.Blue600. Run the export again when the palette changes.',
+      },
+      {
+        question: 'Does it work with light and dark themes?',
+        answer:
+          'Each color mode of the palette is exported with its own names, so a light and a dark mode give you two sets of constants to switch between in your app.',
+      },
+      {
+        question: 'Can I export to SwiftUI from Framer?',
+        answer: `No. Framer exports CSS, SCSS, Less, Tailwind and JSON tokens only; use Figma, Penpot or Sketch for Apple and Android code, or ${htmlLink('/claude', 'Claude and the MCP server')}.`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'glasses',
+      title: 'Tailwind color palette',
+      label: 'See the capability',
+      href: '/capabilities/tailwind-color-palette',
+    },
+    {
+      icon: 'glasses',
+      title: 'WCAG & APCA contrast',
+      label: 'See the capability',
+      href: '/capabilities/wcag-apca-contrast',
+    },
+    {
+      icon: 'book-open',
+      title: 'What is a design token?',
+      label: 'Read the definition',
+      href: '/glossary/design-token',
+    },
+    {
       icon: 'ruler',
       title: 'Use it in Figma',
       label: 'See the Figma plugin',
@@ -763,4 +1119,6 @@ export const capabilityPages = [
   colorBlindnessPage,
   contrastPage,
   generatorPage,
+  tailwindPage,
+  nativePage,
 ]
