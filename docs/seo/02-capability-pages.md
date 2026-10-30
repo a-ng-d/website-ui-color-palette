@@ -1,6 +1,6 @@
 # Phase 2 — Capability, comparison, platform and glossary pages
 
-- **Status**: In progress — steps 1 to 4 done (branch `seo/phase-2`), Lot D, steps 5 to 7 done (branch `seo/phase-2-2`); step 8 to do. See [Progress](#progress).
+- **Status**: In progress — steps 1 to 4 done (branch `seo/phase-2`), Lot D, steps 5 to 7 and Lot C done (branch `seo/phase-2-2`); the rest of step 8 to do. See [Progress](#progress).
 - **Package(s) concerned**: `website-ui-color-palette`
 - **Related spec**: [README.md](README.md), [03-blog-clusters.md](03-blog-clusters.md), [00-measurement.md](00-measurement.md)
 
@@ -52,7 +52,7 @@ Last update: 2026-10-30.
 | 7 | Done | `/capabilities/tailwind-color-palette`, `/capabilities/swiftui-compose-colors` (real export samples from `generate_code`) |
 | 8 | In progress | Lot D done: `/glossary/cielab`, `/glossary/color-scale`, `/glossary/design-token`, `/glossary/semantic-color`, `/glossary/color-harmony`. To do — Lot A: `export-design-tokens`, `ai-color-palette-generator`, `image-to-color-palette`, `color-wheel-harmony`, `light-dark-themes`, `design-system-presets`, `semantic-color-system`. Lot C: `/penpot`, `/sketch`. Lot B: the 5 comparison pages and the `/compare` hub |
 
-Lot A pages left: 7 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C: 2 of 5 (`/penpot`, `/sketch`). Lot D: done (12 terms and the hub). Lot B: all 6.
+Lot A pages left: 7 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C: done. Lot D: done (12 terms and the hub). Lot B: all 6.
 
 ### What is in place for the next pages
 
@@ -74,6 +74,9 @@ Lot A pages left: 7 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C:
   - Framer storage: the spec and the Framer docs store palettes in the browser; `palette-publication-lifecycle.md` says "in your Framer project", and Framer `free-and-pro.md` caps palettes "per document". How the /basic cap counts across browsers is not documented.
   - Figma docs sync guide: a lock icon on "Sync to the local variables" although sync is free; and a default variable mode named `Value` whose interplay with the Starter 1-mode cap is not documented.
   - "Simulate on selection" has docs guides (Figma, Framer, /pro) but its specs (`apply-simulate-palette.md`, `apply-to-selection.md`) are Draft, so it stays off the site.
+  - Sketch variables re-sync: the spec says "safe to re-run, matched by name"; the Sketch docs warn that new variables lose the link with the published ones. The page follows the docs warning.
+  - Penpot "remove tokens no longer linked": the Penpot tokens guide documents it, `preferences.md` says the deep-sync toggles are not wired yet, and the Penpot preferences doc lists only the local-styles option. Kept off the page.
+  - Docs lock icons on Penpot "Sync to the local styles" and Sketch "Sync to the local variables" although sync is free; Penpot and Sketch guides say "Team Library" (Figma's term).
   - The Framer embed passes `editor=penpot` on purpose until the plugin team confirms the Framer value.
 - **Export pages ownership**: `tailwind-color-palette` owns the Tailwind queries (including "tailwind v4 oklch colors"), `swiftui-compose-colors` owns SwiftUI, UIKit, Compose and Android XML, and the future `export-design-tokens` owns DTCG, Style Dictionary and "design tokens colors". Keep DTCG and Style Dictionary out of the first two beyond a link; when `export-design-tokens` ships, link it from both ("See all export formats").
 - **`/capabilities` row**: 6 Lot A pages now; the compact card variant is due.
@@ -87,7 +90,7 @@ Lot A pages left: 7 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C:
 
 - Lot A pages: one h1 with the primary query, a 40–60 word lead, FAQPage + BreadcrumbList + WebPage JSON-LD, ≥3 links out and ≥2 in, fact-checked — met for the 6 live pages.
 - `/capabilities` links to every Lot A page — met (through the "Capabilities in depth" row).
-- Platform pages: capability matrix, setup guide, FAQ with FAQPage, ≥3 Lot A links — met for `/claude`, `/figma` and `/framer`; `/penpot` and `/sketch` to do.
+- Platform pages: capability matrix, setup guide, FAQ with FAQPage, ≥3 Lot A links — met for the 5 platform pages.
 - Glossary terms: definition of 60 words or fewer first, `DefinedTerm` linked to the `/glossary` `DefinedTermSet` — met for the 12 live terms.
 - Sitemap, `llms.txt`, `llms-full.txt` — met for every new page (`lastmod` to check after deploy).
 - Comparison pages and Lighthouse — not started.
@@ -259,3 +262,4 @@ Add to each one:
 | 2026-10-30 | Step 6 done: `/figma` and `/framer` enriched (setup guide, capability and plans tables, FAQ + FAQPage, 4 Lot A links); h1 and titles target the platform plugin queries. The generator title drops "for Figma" to leave that intent to `/figma`. Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |
 | 2026-10-30 | Naming rule: platform pages keep "UI Color Palette for <Platform>" as h1 and title prefix; `/figma`, `/framer` and `/claude` restored to it, the query moved to the title suffix and the tagline |
 | 2026-10-30 | Step 7 done: `/capabilities/tailwind-color-palette` (v4/v3 table, Tailwind v4 with OKLCH block, plans) and `/capabilities/swiftui-compose-colors` (four native formats, availability per platform); `CodeSnippet` renders multi-line samples as `<pre><code>`. Reviewed by `seo-reviewer`, `fact-checker` and `style-guardian`, fixes applied |
+| 2026-10-30 | Lot C done: `/penpot` (tokens and library colors sync table, plans, setup, FAQ) and `/sketch` (variables and layer styles sync table, plans, setup, FAQ); "Material 3 and Tailwind are free" added to the preset step of the 4 design-tool pages. Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |

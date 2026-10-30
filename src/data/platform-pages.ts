@@ -155,7 +155,7 @@ export const figmaPage: PlatformPage = {
       },
       {
         title: 'Tune the scale and the contrast',
-        text: 'Pick a scale preset, set each stop by lightness or target contrast ratio, and read the WCAG 2.1 and APCA score of every shade.',
+        text: 'Pick a scale preset (Material 3 and Tailwind are free), set each stop by lightness or target contrast ratio, and read the WCAG 2.1 and APCA score of every shade.',
       },
       {
         title: 'Sync with local styles or variables',
@@ -291,17 +291,18 @@ export const penpotPage: PlatformPage = {
   docs: `${links.docs}/penpot`,
   platform: 'Penpot',
   seo: {
-    title: 'UI Color Palette for Penpot — Open-Source Color',
+    title: 'UI Color Palette for Penpot — Plugin & Color Tokens',
     description:
-      'Create accessible color palettes in Penpot, tokens included. Generate scales, master contrast, and export open design tokens for your whole team.',
+      'Penpot color palette plugin: build accessible scales and sync them to native Penpot design tokens and library colors, with WCAG and APCA scores. Free to start.',
   },
   hero: {
     title: 'UI Color Palette for Penpot',
-    tagline: 'Accessible color scales, the open-source way.',
+    tagline:
+      'The Penpot color palette plugin: accessible scales synced to native color tokens, the open-source way.',
     cta: { label: 'Add to Penpot', href: links.runPenpotPlugin },
   },
   surfaces: {
-    title: 'Open-source color, tokens included',
+    title: 'Open-source Penpot color tokens, built from your palette',
     intro:
       'Generate, master, and deploy accessible color scales end to end — with every shade delivered as tokens, right where Penpot expects them.',
     embed: {
@@ -312,7 +313,7 @@ export const penpotPage: PlatformPage = {
       {
         icon: 'coins',
         title: 'Everything, with tokens',
-        text: 'The full generate → master → deploy flow — styles, modes, export — with your palette delivered as tokens (W3C DTCG, Tokens Studio, Style Dictionary).',
+        text: 'The full generate → master → deploy flow — styles, modes, export — with your palette synced as native Penpot design tokens, and exportable as W3C DTCG, Style Dictionary or Tokens Studio JSON on /pro.',
       },
       {
         icon: 'package-open',
@@ -323,6 +324,155 @@ export const penpotPage: PlatformPage = {
     ],
   },
   why: designToolWhy,
+  setup: {
+    title: 'How to set up the color palette plugin in Penpot',
+    docs: {
+      label: 'Read the Penpot guides in the docs',
+      href: `${links.docs}/penpot`,
+    },
+    intro:
+      'Add the plugin to Penpot, build the palette in your file, then sync it with Penpot’s native design tokens or its library colors.',
+    steps: [
+      {
+        title: 'Add the plugin to Penpot',
+        text: 'Paste the UI Color Palette manifest link in Penpot’s plugin manager, then open the plugin in a file. Palettes are saved on the page you are on, for everyone who opens the file.',
+      },
+      {
+        title: 'Create a palette',
+        text: 'Click + in the Palettes manager. Select filled layers first to start from their colors, or start from AI, an image, a color harmony or Color Hunt.',
+      },
+      {
+        title: 'Tune the scale and the contrast',
+        text: 'Pick a scale preset (Material 3 and Tailwind are free), set each stop by lightness or target contrast ratio, and read the WCAG 2.1 and APCA score of every shade.',
+      },
+      {
+        title: 'Sync with tokens',
+        text: 'Click Synchronize, then Synchronize with tokens. Every shade becomes a Penpot design token, with one token set and one Penpot theme per color mode. Run it again after each change: existing sets, themes and tokens are updated, never duplicated.',
+      },
+      {
+        title: 'Or sync with library colors',
+        text: 'Sync with the local styles to add every shade to the file’s library colors instead, grouped by source color, and publish them as a library.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'penpot-sync',
+      title: 'What a sync creates in Penpot: color tokens or library colors',
+      intro:
+        'Penpot has native design tokens, so the palette can land as tokens with themes, or as plain library colors.',
+      caption: 'What UI Color Palette creates in Penpot',
+      rowHeader: 'Sync',
+      columns: [
+        'What it creates',
+        'Color modes',
+        'Lightness and contrast in the description',
+      ],
+      rows: [
+        {
+          label: 'Tokens',
+          values: [
+            'One design token per shade, grouped by source color',
+            'One token set and one Penpot theme per mode',
+            true,
+          ],
+        },
+        {
+          label: 'Library colors',
+          values: [
+            'One library color per shade, grouped by source color',
+            'Groups named after each mode',
+            false,
+          ],
+        },
+      ],
+    },
+    {
+      id: 'plans',
+      title: 'What you get on each plan in Penpot',
+      intro:
+        'Syncing with Penpot tokens and library colors is free. Volume, documentation and most code formats are on /pro.',
+      caption: 'UI Color Palette for Penpot, per plan',
+      rowHeader: 'Feature',
+      columns: ['/basic', '/pro'],
+      rows: [
+        { label: 'Palettes per page', values: ['1', 'Unlimited'] },
+        { label: 'Source colors per palette', values: ['5', 'Unlimited'] },
+        { label: 'Color modes per palette', values: ['2', 'Unlimited'] },
+        { label: 'Sync with tokens and library colors', values: [true, true] },
+        {
+          label: 'WCAG 2.1 and APCA score on every shade',
+          values: [true, true],
+        },
+        { label: 'Palette documentation as boards', values: [false, true] },
+        {
+          label: 'Export to code',
+          values: [
+            'CSS',
+            'Every format: tokens, Tailwind, SCSS, Less, Apple, Android…',
+          ],
+        },
+      ],
+    },
+  ],
+  faq: {
+    intro:
+      'Penpot design tokens, color modes and themes, and what the free plan covers.',
+    items: [
+      {
+        question: 'Is there a color palette plugin for Penpot?',
+        answer: `Yes. UI Color Palette runs in Penpot as a plugin: it builds accessible color scales, shows the WCAG 2.1 and APCA score of every shade, and syncs them with Penpot’s native design tokens or library colors. It also runs in ${htmlLink('/figma', 'Figma')}, Sketch and Framer.`,
+      },
+      {
+        question: 'How do I create Penpot color tokens from a palette?',
+        answer: `Click Synchronize, then Synchronize with tokens: each shade becomes a Penpot color design token. UI Color Palette creates them through Penpot’s plugin API, with no file to export or import, and documents each shade with its lightness and its WCAG and APCA scores (see ${htmlLink('/glossary/design-token', 'design tokens')}).`,
+      },
+      {
+        question: 'How do color modes map to Penpot themes?',
+        answer:
+          'Each color mode of the palette gets its own token set, paired with a Penpot theme, so switching the theme switches every shade. A palette with no color mode goes into a single set.',
+      },
+      {
+        question: 'Does Penpot support design tokens natively?',
+        answer:
+          'Yes. Penpot has native design tokens, with token sets and themes. UI Color Palette creates them through the plugin API, so a palette lands as one token per shade, with no file to import. Sync again after each change: existing sets, themes and tokens are reused, never duplicated.',
+      },
+      {
+        question: 'Can I export Penpot colors as DTCG tokens or Tailwind?',
+        answer: `Yes, on /pro: native and ${htmlLink('/glossary/design-token', 'DTCG tokens')}, Style Dictionary, Tailwind v3 and v4, SCSS, Less, Apple and Android code. CSS export is free (see ${htmlLink('/capabilities/tailwind-color-palette', 'Tailwind color palette')}).`,
+      },
+      {
+        question: 'Is UI Color Palette for Penpot free?',
+        answer: `Yes, on the /basic plan: one palette per page, up to 5 source colors and 2 color modes, contrast scores on every shade, sync with tokens and library colors, and the CSS export. /pro lifts the caps (see ${htmlLink('/pricing', 'pricing')}).`,
+      },
+    ],
+  },
+  nextSteps: [
+    {
+      icon: 'glasses',
+      title: 'Generate a UI color palette',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'Check WCAG & APCA contrast',
+      label: 'See the capability',
+      href: '/capabilities/wcag-apca-contrast',
+    },
+    {
+      icon: 'glasses',
+      title: 'Build palettes in OKLCH',
+      label: 'See the capability',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+    {
+      icon: 'glasses',
+      title: 'Export to Tailwind',
+      label: 'See the capability',
+      href: '/capabilities/tailwind-color-palette',
+    },
+  ],
 }
 
 export const sketchPage: PlatformPage = {
@@ -330,13 +480,14 @@ export const sketchPage: PlatformPage = {
   docs: `${links.docs}/sketch`,
   platform: 'Sketch',
   seo: {
-    title: 'UI Color Palette for Sketch — Native Mac Color',
+    title: 'UI Color Palette for Sketch — Color Palette Plugin',
     description:
-      'Design accessible color palettes natively on Mac with Sketch. Generate WCAG scales, fine-tune every shade, and sync with your local libraries.',
+      'Sketch color palette plugin: build accessible scales on Mac and sync them to color variables and layer styles, with WCAG and APCA scores. Free to start.',
   },
   hero: {
     title: 'UI Color Palette for Sketch',
-    tagline: 'Accessible color scales, native to Mac.',
+    tagline:
+      'The Sketch color palette plugin: accessible color scales synced to color variables and layer styles, native to Mac.',
     cta: { label: 'Add to Sketch', href: links.runSketchPlugin },
   },
   surfaces: {
@@ -350,8 +501,8 @@ export const sketchPage: PlatformPage = {
     cards: [
       {
         icon: 'thumbs-up',
-        title: 'Fully compatible',
-        text: 'The complete UI Color Palette experience — styles, modes, and export — with nothing left out.',
+        title: 'The whole flow, on Sketch',
+        text: 'The generate, master and deploy flow — scales, contrast scores, styles and export. Sketch has no color modes, so each mode becomes its own flat set.',
       },
       {
         icon: 'apple',
@@ -362,6 +513,153 @@ export const sketchPage: PlatformPage = {
     ],
   },
   why: designToolWhy,
+  setup: {
+    title: 'How to set up the color palette plugin in Sketch',
+    docs: {
+      label: 'Read the Sketch guides in the docs',
+      href: `${links.docs}/sketch`,
+    },
+    intro:
+      'Install the plugin in Sketch on your Mac, build the palette in your document, then sync it with color variables or layer styles.',
+    steps: [
+      {
+        title: 'Install the plugin',
+        text: 'Download UI Color Palette for Sketch and install the plugin on your Mac, then run it from Sketch. Palettes are saved in the document, for everyone who opens it.',
+      },
+      {
+        title: 'Create a palette',
+        text: 'Click + in the Palettes manager. Select filled layers first to start from their colors, or start from AI, an image, a color harmony or Color Hunt.',
+      },
+      {
+        title: 'Tune the scale and the contrast',
+        text: 'Pick a scale preset (Material 3 and Tailwind are free), set each stop by lightness or target contrast ratio, and read the WCAG 2.1 and APCA score of every shade.',
+      },
+      {
+        title: 'Sync with variables or styles',
+        text: 'Sync with the local variables to get a color variable per shade, or with the local styles to get a layer style per shade, grouped by source color, and under the palette name when it has a custom name.',
+      },
+      {
+        title: 'Share it',
+        text: 'Publish the variables and styles in a library. Re-syncing variables creates new ones that lose the link with the published ones, a Sketch limitation, so sync before you publish.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'sketch-sync',
+      title: 'What a sync creates in Sketch',
+      intro:
+        'Sketch has no color modes: a palette with several modes gets one flat set of variables or styles per mode, named after it.',
+      caption: 'What UI Color Palette creates in Sketch',
+      rowHeader: 'Sync',
+      columns: ['What it creates', 'Color modes', 'Updated on re-sync'],
+      rows: [
+        {
+          label: 'Variables',
+          values: [
+            'One color variable per shade, grouped by source color',
+            'One flat set per mode',
+            'Re-created, without the library link',
+          ],
+        },
+        {
+          label: 'Layer styles',
+          values: [
+            'One layer style per shade, grouped by source color',
+            'One flat set per mode',
+            'Updated',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'plans',
+      title: 'What you get on each plan in Sketch',
+      intro:
+        'Syncing with Sketch variables and styles is free. Volume, documentation and most code formats are on /pro.',
+      caption: 'UI Color Palette for Sketch, per plan',
+      rowHeader: 'Feature',
+      columns: ['/basic', '/pro'],
+      rows: [
+        { label: 'Palettes per document', values: ['1', 'Unlimited'] },
+        { label: 'Source colors per palette', values: ['5', 'Unlimited'] },
+        { label: 'Color modes per palette', values: ['2', 'Unlimited'] },
+        { label: 'Sync with variables and layer styles', values: [true, true] },
+        {
+          label: 'WCAG 2.1 and APCA score on every shade',
+          values: [true, true],
+        },
+        { label: 'Palette documentation as artboards', values: [false, true] },
+        {
+          label: 'Export to code',
+          values: [
+            'CSS',
+            'Every format: tokens, Tailwind, SCSS, Less, Apple, Android…',
+          ],
+        },
+      ],
+    },
+  ],
+  faq: {
+    intro:
+      'Color variables and styles in Sketch, color modes, and exporting to Apple code.',
+    items: [
+      {
+        question: 'Is there a color palette plugin for Sketch?',
+        answer: `Yes. UI Color Palette is a Sketch plugin for Mac: it builds accessible color scales, shows the ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG 2.1')} and ${htmlLink('/glossary/apca', 'APCA')} score of every shade, and syncs them with your color variables and layer styles. It also runs in ${htmlLink('/figma', 'Figma')}, Penpot and Framer.`,
+      },
+      {
+        question: 'How do I create color variables in Sketch from a palette?',
+        answer:
+          'Click Sync with the local variables. UI Color Palette adds a color variable for every shade to the document, grouped by source color, and under the palette name when it has a custom name.',
+      },
+      {
+        question: 'Does Sketch support light and dark color modes?',
+        answer:
+          'Not natively: a Sketch color variable holds one value. UI Color Palette creates one flat set of variables or styles per color mode, named after it.',
+      },
+      {
+        question:
+          'Why do my Sketch color variables lose their library link after a sync?',
+        answer:
+          'Because Sketch cannot update existing variables, a new sync creates new ones, unlinked from the published ones. Sync before you publish; layer styles are updated in place and keep their link.',
+      },
+      {
+        question: 'Can I export a Sketch palette to SwiftUI or Xcode?',
+        answer: `Yes, on /pro: export the palette as a SwiftUI or UIKit Swift file and add it to your Xcode project (see ${htmlLink('/capabilities/swiftui-compose-colors', 'SwiftUI & Compose colors')}).`,
+      },
+      {
+        question: 'Is UI Color Palette for Sketch free?',
+        answer: `Yes, on the /basic plan: one palette per document, up to 5 source colors and 2 color modes, contrast scores on every shade, sync with variables and layer styles, and the CSS export. /pro lifts the caps (see ${htmlLink('/pricing', 'pricing')}).`,
+      },
+    ],
+  },
+  nextSteps: [
+    {
+      icon: 'glasses',
+      title: 'Generate a UI color palette',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'Check WCAG & APCA contrast',
+      label: 'See the capability',
+      href: '/capabilities/wcag-apca-contrast',
+    },
+    {
+      icon: 'glasses',
+      title: 'Build palettes in OKLCH',
+      label: 'See the capability',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+    {
+      icon: 'glasses',
+      title: 'Export to SwiftUI & Compose',
+      label: 'See the capability',
+      href: '/capabilities/swiftui-compose-colors',
+    },
+  ],
 }
 
 export const framerPage: PlatformPage = {
@@ -422,7 +720,7 @@ export const framerPage: PlatformPage = {
       },
       {
         title: 'Tune the scale and the contrast',
-        text: 'Pick a scale preset, set each stop by lightness or target contrast ratio, and read the WCAG 2.1 and APCA score of every shade.',
+        text: 'Pick a scale preset (Material 3 and Tailwind are free), set each stop by lightness or target contrast ratio, and read the WCAG 2.1 and APCA score of every shade.',
       },
       {
         title: 'Sync with the color styles',
