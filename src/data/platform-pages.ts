@@ -540,7 +540,7 @@ export const sketchPage: PlatformPage = {
       },
       {
         title: 'Share it',
-        text: 'Publish the variables and styles in a library. Re-syncing variables creates new ones that lose the link with the published ones, a Sketch limitation, so sync before you publish.',
+        text: 'Publish the variables and styles in a library. Sketch matches variables by name, so renaming a source color makes the next sync create new variables, unlinked from the published ones. Settle the names before you publish.',
       },
     ],
   },
@@ -559,7 +559,7 @@ export const sketchPage: PlatformPage = {
           values: [
             'One color variable per shade, grouped by source color',
             'One flat set per mode',
-            'Re-created, without the library link',
+            'Updated, matched by name',
           ],
         },
         {
@@ -567,7 +567,7 @@ export const sketchPage: PlatformPage = {
           values: [
             'One layer style per shade, grouped by source color',
             'One flat set per mode',
-            'Updated',
+            'Updated, matched by name',
           ],
         },
       ],
@@ -622,7 +622,7 @@ export const sketchPage: PlatformPage = {
         question:
           'Why do my Sketch color variables lose their library link after a sync?',
         answer:
-          'Because Sketch cannot update existing variables, a new sync creates new ones, unlinked from the published ones. Sync before you publish; layer styles are updated in place and keep their link.',
+          'Sketch matches variables by their name, not by an identifier. If you rename a source color, the next sync cannot find the variables created under the old name, so it creates new ones, unlinked from the published ones. Settle the color names before you publish.',
       },
       {
         question: 'Can I export a Sketch palette to SwiftUI or Xcode?',
