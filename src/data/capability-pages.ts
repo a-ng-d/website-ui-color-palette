@@ -717,7 +717,7 @@ export const generatorPage: CapabilityPage = {
       },
       {
         question: 'How many shades should a UI color scale have?',
-        answer: `It depends on your system. Tailwind uses 11 stops, from 50 to 950, and Material 3 uses 13, from 0 to 100; Atlassian’s ADS Foundations uses 7. Pick the preset your codebase already follows, or a Custom set (see ${htmlLink('/glossary/color-scale', 'What is a color scale?')}).`,
+        answer: `It depends on your system. Tailwind uses 11 stops, from 50 to 950, and Material 3 uses 13, from 0 to 100; Atlassian’s ADS Foundations uses 10. Compare them all in the ${htmlLink('/capabilities/design-system-presets', 'design system presets')}. Pick the preset your codebase already follows, or a Custom set (see ${htmlLink('/glossary/color-scale', 'What is a color scale?')}).`,
       },
       {
         question: 'Can I generate a palette from contrast ratios?',
@@ -920,8 +920,7 @@ export const tailwindPage: CapabilityPage = {
       {
         question:
           'Can I recreate Tailwind’s default color scales for my brand color?',
-        answer:
-          'Yes. The Tailwind preset gives your color the same 11 stops as Tailwind’s default palette, from 50 to 950, so a color named Brand becomes --color-brand-500. The shades are computed from your color, so they do not copy Tailwind’s own values.',
+        answer: `Yes. The Tailwind preset gives your color the same 11 stops as Tailwind’s default palette, from 50 to 950, so a color named Brand becomes --color-brand-500. The shades are computed from your color, so they do not copy Tailwind’s own values (see ${htmlLink('/capabilities/design-system-presets', 'the other design system scales')}).`,
       },
       {
         question: 'How do I make sure my Tailwind shades are accessible?',
@@ -1450,8 +1449,7 @@ export const semanticPage: CapabilityPage = {
       },
       {
         question: 'Can a semantic token use a different shade in dark mode?',
-        answer:
-          'Yes. A binding has a default shade and can override it for each theme, so brand.default can point to blue.600 in light mode and blue.400 in dark mode.',
+        answer: `Yes. A binding has a default shade and can override it for each theme, so brand.default can point to blue.600 in light mode and blue.400 in dark mode (see ${htmlLink('/capabilities/light-dark-themes', 'dark mode color palette')}).`,
       },
       {
         question: 'Can I build semantic tokens in Figma?',
@@ -1898,6 +1896,394 @@ export const wheelPage: CapabilityPage = {
   ],
 }
 
+export const modesPage: CapabilityPage = {
+  slug: 'light-dark-themes',
+  name: 'Light & dark modes',
+  seo: {
+    title: 'Dark Mode Color Palette & Light Themes — UI Color Palette',
+    description:
+      'Build light and dark color modes for one palette, each with its own scale, text colors and background, then sync them as Figma variable modes or Penpot themes.',
+  },
+  hero: {
+    title: 'Dark mode color palette, with light and dark modes side by side',
+    tagline:
+      'Give each color mode its own lightness scale, text colors and background, then sync the modes to Figma or Penpot, or export them with your code.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do you build a dark mode color palette?',
+    lead: 'A dark mode palette uses the same colors as the light one, with shades and contrast tuned for a dark background. In UI Color Palette, you add a color mode per theme: each has its own lightness scale, text colors, background and vision simulation, and syncs as Figma variable modes or Penpot themes, or exports with your code.',
+    demo: 'modes',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'Color modes share the palette’s source colors; what changes is the scale and the colors the contrast is measured against. The free /basic plan includes 2 color modes.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/manage-a-color-palette#create-color-modes`,
+    },
+    steps: [
+      {
+        title: 'Add a color mode',
+        text: 'Click + in Color modes and name it, such as Dark. The new mode becomes the active one.',
+      },
+      {
+        title: 'Set its background and text colors',
+        text: 'Give it a dark palette background, and the light and dark foreground colors your dark theme uses: the contrast scores are measured against them.',
+      },
+      {
+        title: 'Tune its scale',
+        text: 'Each mode has its own lightness scale: move the stops, reverse them, or set the contrast ratio each stop must reach against the mode’s text colors.',
+      },
+      {
+        title: 'Check every mode',
+        text: 'Switch between modes to read the WCAG 2.1 and APCA score of every shade in each one.',
+      },
+      {
+        title: 'Sync or export the modes',
+        text: 'Sync them as Figma variable modes or Penpot themes, or export them: each mode gets its own set of values in the code. CSS is free; the other formats are on /pro.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'mode-settings',
+      title: 'What each color mode sets',
+      intro:
+        'A color mode is a variant of the whole palette. These settings belong to the mode, not to the palette:',
+      caption: 'Settings of a color mode',
+      rowHeader: 'Setting',
+      columns: ['What it changes'],
+      rows: [
+        {
+          label: 'Lightness scale',
+          values: [
+            'The lightness, or the target contrast ratio, of every stop',
+          ],
+        },
+        {
+          label: 'Light and dark text colors',
+          values: ['The colors every contrast score is measured against'],
+        },
+        {
+          label: 'Palette background',
+          values: [
+            'The background the shades are shown on, darker for a dark mode',
+          ],
+        },
+        {
+          label: 'Vision simulation',
+          href: '/capabilities/color-blindness-simulation',
+          values: [
+            'One of the 8 types of color blindness, or none (protanomaly is free, the other 7 are on /pro)',
+          ],
+        },
+        {
+          label: 'Name and description',
+          values: ['How the mode is named in your variables, tokens and code'],
+        },
+      ],
+    },
+    {
+      id: 'mode-outputs',
+      title: 'How color modes reach your tools',
+      intro:
+        'Figma and Penpot store color modes natively; Sketch and Framer have no mode switching. In CSS, every mode you add gets its own block, selected with a data-theme attribute. Here are the first stops of a palette whose dark mode reverses the scale:',
+      code: "/* Light */\n:root[data-theme='light'] {\n  /* Blue */\n  --blue-50: rgb(184 240 255);\n  --blue-100: rgb(152 213 255);\n  /* 200 to 950 follow */\n}\n\n/* Dark */\n:root[data-theme='dark'] {\n  /* Blue */\n  --blue-50: rgb(2 0 75);\n  --blue-100: rgb(0 0 112);\n  /* 200 to 950 follow */\n}",
+      caption: 'Color modes per design tool and in code',
+      rowHeader: 'Target',
+      columns: ['What you get'],
+      rows: [
+        {
+          label: 'Figma',
+          href: '/figma',
+          values: ['One variable mode per color mode, in one collection'],
+        },
+        {
+          label: 'Penpot',
+          href: '/penpot',
+          values: ['One token set and one Penpot theme per color mode'],
+        },
+        {
+          label: 'Sketch',
+          href: '/sketch',
+          values: [
+            'Flat swatches and shared styles for each color mode: Sketch has no mode switching',
+          ],
+        },
+        {
+          label: 'Framer',
+          href: '/framer',
+          values: [
+            'Color styles with a light and a dark value, the shade and its mirror in the scale, rather than your color modes',
+          ],
+        },
+        {
+          label: 'CSS, SCSS and Less',
+          values: [
+            'One block of variables per color mode you add, after the default :root block; CSS is free, SCSS and Less are on /pro',
+          ],
+        },
+        {
+          label: 'DTCG tokens',
+          href: '/capabilities/export-design-tokens',
+          values: [
+            'One token file per color mode, tied by a resolver file, on /pro',
+          ],
+        },
+      ],
+      note: 'Figma caps variable modes per collection: 1 on the Starter plan, 10 on Professional and Organization.',
+    },
+  ],
+  faq: {
+    intro:
+      'Dark mode palettes, color modes in Figma and Penpot, and contrast in each mode.',
+    items: [
+      {
+        question: 'How do I create a dark mode color palette in Figma?',
+        answer: `Add a Dark color mode to your palette, give it a dark background and its own scale, then sync with the local variables: each color mode becomes a variable mode of the same collection (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+      },
+      {
+        question: 'Can light and dark mode use different shades?',
+        answer: `Yes. Each mode has its own lightness scale, so the same stop can be lighter or darker from one mode to the next. With Claude or the MCP server, semantic tokens can also point to a different shade per mode (see ${htmlLink('/capabilities/semantic-color-system', 'Semantic color system')}).`,
+      },
+      {
+        question:
+          'How many light and dark modes can a Figma color palette have?',
+        answer: `2 on the free /basic plan, as many as you need on /pro. In Figma, your Figma plan also caps variable modes per collection (see ${htmlLink('/pricing', 'pricing')}).`,
+      },
+      {
+        question: 'How do I check contrast in dark mode?',
+        answer: `Set the dark mode’s light and dark text colors: every shade of that mode shows its WCAG 2.1 ratio and APCA score against them, on every plan (see ${htmlLink('/capabilities/wcag-apca-contrast', 'WCAG & APCA contrast')}).`,
+      },
+      {
+        question: 'How do you make a dark mode color palette in CSS?',
+        answer:
+          "Each mode gets its own block of custom properties, such as :root[data-theme='dark'], so switching the attribute on your root element switches every color.",
+      },
+      {
+        question: 'Can a color mode simulate color blindness?',
+        answer: `Yes. Each mode can simulate one of the 8 types of color blindness: protanomaly is free, the other 7 are on /pro. Keep a mode to check your palette with deuteranopia, for example (see ${htmlLink('/capabilities/color-blindness-simulation', 'Color blindness simulation')}).`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'glasses',
+      title: 'Color blindness simulation',
+      label: 'See the capability',
+      href: '/capabilities/color-blindness-simulation',
+    },
+    {
+      icon: 'glasses',
+      title: 'Semantic color system',
+      label: 'See the capability',
+      href: '/capabilities/semantic-color-system',
+    },
+    {
+      icon: 'ruler',
+      title: 'Use it in Figma',
+      label: 'See the Figma plugin',
+      href: '/figma',
+    },
+    {
+      icon: 'glasses',
+      title: 'Design system presets',
+      label: 'See the next capability',
+      href: '/capabilities/design-system-presets',
+    },
+  ],
+}
+
+export const presetsPage: CapabilityPage = {
+  slug: 'design-system-presets',
+  name: 'Design system presets',
+  seo: {
+    title: 'Material 3 Color Palette & Design Scales — UI Color Palette',
+    description:
+      'Start a palette from 16 design system color scales — Material 3, Spectrum, Atlassian, Carbon, Polaris, Fluent, Tailwind and more — in your design tool.',
+  },
+  hero: {
+    title: 'Material 3 color palette and 15 more design system color scales',
+    tagline:
+      'Give your palette the stop names your codebase already uses, from Material 3’s 0 to 100 to Tailwind’s 50 to 950.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'Which color scale should your design system use?',
+    lead: 'Choose the color scale your codebase already uses, so designers and developers share the same stop names. UI Color Palette has 16 presets inspired by design systems — Material 3, Tailwind, Spectrum, Atlassian, Carbon, Polaris, Fluent and more — plus 3 custom sets. Material 3 and Tailwind are free, and every stop is computed from your own colors.',
+    demo: 'presets',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'A preset sets the stops, their names, the lightness range and the easing of the scale. Your source colors stay yours: every shade is computed from them.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/create-a-color-palette#choose-a-lightness-scale-preset`,
+    },
+    steps: [
+      {
+        title: 'Pick a preset',
+        text: 'In the scale settings, choose a preset, grouped by family: Google, Frameworks, Atlassian, Adobe and more. Material 3 and Tailwind are free.',
+      },
+      {
+        title: 'Get the stops',
+        text: 'The scale is recomputed with the preset’s stops and names, such as 50 to 950 for Tailwind, for every source color.',
+      },
+      {
+        title: 'Fine-tune it',
+        text: 'Move each stop’s lightness or set the contrast ratio it must reach. On /pro, shift the hue and chroma of the scale too.',
+      },
+      {
+        title: 'Or make your own',
+        text: 'Choose a Custom set named 1–10, 10–100 or 100–1000, and add or remove stops: up to 6 on /basic, 24 on /pro.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'presets',
+      title: 'The 16 design system presets',
+      intro:
+        'UI Color Palette has 16 design system presets: Material 3 (13 stops, 0 to 100) and Tailwind (11 stops, 50 to 950) are free; the other 14 are on /pro. Each follows the stop names and count of the design system it is inspired by; the colors come from your palette.',
+      caption: 'Design system color scale presets',
+      rowHeader: 'Preset',
+      columns: ['Inspired by', 'Stops', 'Names', 'Plan'],
+      rows: [
+        {
+          label: 'Material Design',
+          values: ['Google', '10', '50 to 900', '/pro'],
+        },
+        {
+          label: 'Material 3',
+          values: ['Google', '13', '0 to 100', 'Free'],
+        },
+        {
+          label: 'Tailwind',
+          href: '/capabilities/tailwind-color-palette',
+          values: ['Tailwind CSS', '11', '50 to 950', 'Free'],
+        },
+        {
+          label: 'Ant Design',
+          values: ['Ant Design', '10', '1 to 10', '/pro'],
+        },
+        {
+          label: 'Bootstrap',
+          values: ['Bootstrap', '9', '100 to 900', '/pro'],
+        },
+        { label: 'Radix', values: ['Radix', '12', '1 to 12', '/pro'] },
+        {
+          label: 'Untitled UI',
+          values: ['Untitled UI', '12', '25 to 950', '/pro'],
+        },
+        { label: 'Open Color', values: ['Open Color', '10', '0 to 9', '/pro'] },
+        {
+          label: 'ADS Foundations',
+          values: ['Atlassian', '10', '100 to 1000', '/pro'],
+        },
+        {
+          label: 'ADS Foundations Neutral',
+          values: ['Atlassian', '12', '0 to 1100', '/pro'],
+        },
+        { label: 'Spectrum', values: ['Adobe', '13', '100 to 1300', '/pro'] },
+        {
+          label: 'Spectrum Neutral',
+          values: ['Adobe', '11', '50 to 900', '/pro'],
+        },
+        { label: 'Carbon', values: ['IBM', '10', '10 to 100', '/pro'] },
+        { label: 'Base', values: ['Uber', '8', '50 to 700', '/pro'] },
+        { label: 'Polaris', values: ['Shopify', '16', '1 to 16', '/pro'] },
+        { label: 'Fluent 2', values: ['Microsoft', '16', '10 to 160', '/pro'] },
+      ],
+      note: 'Presets set the stops, not the values: UI Color Palette does not copy the colors of these design systems, it computes yours on their scale.',
+    },
+    {
+      id: 'custom-sets',
+      title: 'Custom sets',
+      intro:
+        'When no design system fits, start from a Custom set and shape the stops yourself.',
+      caption: 'Custom scale sets',
+      rowHeader: 'Set',
+      columns: ['Stop names', 'Stops you can have'],
+      rows: [
+        {
+          label: '1–10',
+          values: ['1, 2, 3…', 'Up to 6 on /basic, 24 on /pro'],
+        },
+        {
+          label: '10–100',
+          values: ['10, 20, 30…', 'Up to 6 on /basic, 24 on /pro'],
+        },
+        {
+          label: '100–1000',
+          values: ['100, 200, 300…', 'Up to 6 on /basic, 24 on /pro'],
+        },
+      ],
+    },
+  ],
+  faq: {
+    intro:
+      'Using Material 3, Tailwind or Radix scales, and what the free plan includes.',
+    items: [
+      {
+        question: 'Can I use the Material 3 color scale in Figma?',
+        answer: `Yes, on every plan. The Material 3 preset gives your colors its 13 stops, from 0 to 100, computed from your own colors (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+      },
+      {
+        question: 'Which design system presets are free?',
+        answer: `Material 3 and Tailwind, plus the 3 Custom sets with up to 6 stops. The other 14 presets, from Radix to Fluent, are on /pro (see ${htmlLink('/pricing', 'pricing')}).`,
+      },
+      {
+        question: 'Does UI Color Palette have a 12-step scale like Radix?',
+        answer:
+          'The Radix preset gives your colors 12 stops, from 1 to 12, on /pro. The shades are computed from your colors, so they follow your palette rather than copying Radix’s own values.',
+      },
+      {
+        question: 'Is the Material 3 color palette the same as Google’s?',
+        answer:
+          'Not exactly. The Material 3 preset gives your colors its stop names and count, but every shade is computed from your source colors: no preset copies a design system’s own colors.',
+      },
+      {
+        question: 'Can I add or remove stops in a preset?',
+        answer: `Only in a Custom set: click the range to add a stop, select one and press Backspace to remove it, up to 6 stops on /basic and 24 on /pro (see ${htmlLink('/glossary/color-scale', 'What is a color scale?')}).`,
+      },
+      {
+        question: 'What are the Atlassian and Adobe Spectrum color scales?',
+        answer:
+          'UI Color Palette has ADS Foundations (10 stops, 100 to 1000) and ADS Foundations Neutral (12 stops, 0 to 1100) for Atlassian, and Spectrum (13 stops, 100 to 1300) and Spectrum Neutral (11 stops, 50 to 900) for Adobe, on /pro. The stops follow those systems; the colors come from your palette.',
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'glasses',
+      title: 'Color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'Tailwind color palette',
+      label: 'See the capability',
+      href: '/capabilities/tailwind-color-palette',
+    },
+    {
+      icon: 'book-open',
+      title: 'What is a color scale?',
+      label: 'Read the definition',
+      href: '/glossary/color-scale',
+    },
+    {
+      icon: 'glasses',
+      title: 'OKLCH & LCH color spaces',
+      label: 'See the capability',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+  ],
+}
+
 export const capabilityPages = [
   colorSpacesPage,
   colorBlindnessPage,
@@ -1910,6 +2296,8 @@ export const capabilityPages = [
   aiPage,
   imagePage,
   wheelPage,
+  modesPage,
+  presetsPage,
 ]
 
 export const inDepth = {

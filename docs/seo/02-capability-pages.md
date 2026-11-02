@@ -1,6 +1,6 @@
 # Phase 2 — Capability, comparison, platform and glossary pages
 
-- **Status**: In progress — steps 1 to 4 done (branch `seo/phase-2`), Lot D, steps 5 to 7 and Lot C done (branch `seo/phase-2-2`); the rest of step 8 to do. See [Progress](#progress).
+- **Status**: In progress — steps 1 to 4 done (branch `seo/phase-2`), Lots A, C and D done (branch `seo/phase-2-2`); Lot B to do. See [Progress](#progress).
 - **Package(s) concerned**: `website-ui-color-palette`
 - **Related spec**: [README.md](README.md), [03-blog-clusters.md](03-blog-clusters.md), [00-measurement.md](00-measurement.md)
 
@@ -50,9 +50,9 @@ Last update: 2026-10-30.
 | 5 | Done | `/capabilities/color-palette-generator`; the `color-scale` term now links to it |
 | 6 | Done | `/figma` (Figma products table, plans, setup, FAQ) and `/framer` (what syncs to Framer, plans, setup, FAQ) |
 | 7 | Done | `/capabilities/tailwind-color-palette`, `/capabilities/swiftui-compose-colors` (real export samples from `generate_code`) |
-| 8 | In progress | Done: Lot D, Lot C (`/penpot`, `/sketch`), `/capabilities/export-design-tokens`, `/capabilities/semantic-color-system`, `/capabilities/ai-color-palette-generator`, `/capabilities/image-to-color-palette`, `/capabilities/color-wheel-harmony`. To do — Lot A: `light-dark-themes`, `design-system-presets`. Lot B: the 5 comparison pages and the `/compare` hub |
+| 8 | In progress | Done: Lot D, Lot C (`/penpot`, `/sketch`), `/capabilities/export-design-tokens`, `/capabilities/semantic-color-system`, `/capabilities/ai-color-palette-generator`, `/capabilities/image-to-color-palette`, `/capabilities/color-wheel-harmony`, `/capabilities/light-dark-themes`, `/capabilities/design-system-presets`. To do — Lot B: the 5 comparison pages and the `/compare` hub |
 
-Lot A pages left: 2 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C: done. Lot D: done (12 terms and the hub). Lot B: all 6.
+Lot A: done (13 pages, `mcp-color-palette` merged into `/claude`) (`mcp-color-palette` is merged into `/claude`). Lot C: done. Lot D: done (12 terms and the hub). Lot B: all 6.
 
 ### What is in place for the next pages
 
@@ -81,6 +81,7 @@ Lot A pages left: 2 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C:
 - **Semantic layer in exports**: the design-tool Export writes primitives only (no in-plugin color system yet); with Claude or the MCP server, `generate_code` with a color system adds semantic tokens in every format, DTCG included (one semantic file per mode with a resolver). The docs export guide's "DTCG only exports primitives" is true of the plugin Export only.
 - **Tokens demo**: the `tokens` capability demo shows a simplified DTCG `$value` (a hex string); the real export uses an object (`colorSpace`, `components`, `hex`). Align the demo or caption it as simplified.
 - **Generate-it pages, sources to align**: the plugins' image input has a PNG drop zone (drag and drop or browse) plus paste, though `image-extraction.md` says there is no upload button; the docs say a JPEG "will result in an error" while it is silently ignored; Penpot has no canvas image selection (its host does not push the selected image); the UI buttons read "Create a UI Color Palette with these colors", not the docs' "Use this palette"; `en-US.json` still holds per-action credit strings.
+- **Presets sources to align**: `en-US.json` labels Spectrum Neutral "25-900" while the code has 50–900 (the docs were fixed to 50–900, and ADS Foundations to 10 stops 100–1000, ADS Foundations Neutral to 12 stops 0–1100); the docs call the Custom 1–10 set the default while the code defaults to Custom 10–100.
 - **Cluster articles** ([03-blog-clusters.md](03-blog-clusters.md)): when an article ships, link it from its pillar page (related cards, FAQ "Full comparison") and respect the ownership rules recorded there.
 - **Lighthouse**: run on mobile on one capability page after deploy (SEO = 100, green Core Web Vitals) — not done yet.
 - **Sitemap `lastmod`**: check that the new URLs carry a date after deploy (it comes from the git history of the data files).
@@ -88,7 +89,7 @@ Lot A pages left: 2 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C:
 
 ### Acceptance criteria, where they stand
 
-- Lot A pages: one h1 with the primary query, a 40–60 word lead, FAQPage + BreadcrumbList + WebPage JSON-LD, ≥3 links out and ≥2 in, fact-checked — met for the 6 live pages.
+- Lot A pages: one h1 with the primary query, a 40–60 word lead, FAQPage + BreadcrumbList + WebPage JSON-LD, ≥3 links out and ≥2 in, fact-checked — met for the 13 live pages.
 - `/capabilities` links to every Lot A page — met (through the "Capabilities in depth" row).
 - Platform pages: capability matrix, setup guide, FAQ with FAQPage, ≥3 Lot A links — met for the 5 platform pages.
 - Glossary terms: definition of 60 words or fewer first, `DefinedTerm` linked to the `/glossary` `DefinedTermSet` — met for the 12 live terms.
@@ -269,3 +270,4 @@ Add to each one:
 | 2026-10-30 | Product owner: deep sync preferences are free, like the sync itself — docs (preferences, free-and-pro) and `/penpot` updated |
 | 2026-10-30 | Step 8: `/capabilities/export-design-tokens` (four JSON formats, real DTCG sample, availability) and `/capabilities/semantic-color-system` (primitive vs semantic table, naming patterns with a real semantic CSS sample, outputs; glossary TokenRamp as visual). Glossary `design-token` and `semantic-color` repointed to them; `/claude` links the semantic page. Table intros and notes no longer render `<code>` as text. Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |
 | 2026-11-02 | Step 8: `/capabilities/ai-color-palette-generator` (12 presets, where to generate), `/capabilities/image-to-color-palette` (image sources; canvas selection on Figma, Sketch and Framer only) and `/capabilities/color-wheel-harmony` (five rules with the engine's hue math). Generator "ways to start" rows and the AI blog post link to them; glossary `color-harmony` repointed (no interim link left). Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |
+| 2026-11-03 | Lot A done: `/capabilities/light-dark-themes` (mode settings, how modes reach each tool, real CSS sample with a reversed dark scale) and `/capabilities/design-system-presets` (16 presets from the code, custom sets). Generator FAQ fixed (ADS Foundations has 10 stops); docs preset list and free-and-pro (per-shade scores free) updated. Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |

@@ -247,8 +247,7 @@ export const figmaPage: PlatformPage = {
       },
       {
         question: 'How many color modes can a palette sync as variable modes?',
-        answer:
-          'Up to the lower of two caps: your UI Color Palette plan (2 color modes on /basic, unlimited on /pro) and your Figma plan (1 mode per collection on Starter, 10 on Professional and Organization). A color mode that cannot get its own variable mode is skipped with a warning, and the rest of the sync goes through.',
+        answer: `Up to the lower of two caps: your UI Color Palette plan (2 color modes on /basic, unlimited on /pro) and your Figma plan (1 mode per collection on Starter, 10 on Professional and Organization). A color mode that cannot get its own variable mode is skipped with a warning, and the rest of the sync goes through. See how to build them in a ${htmlLink('/capabilities/light-dark-themes', 'dark mode color palette')}.`,
       },
       {
         question:
