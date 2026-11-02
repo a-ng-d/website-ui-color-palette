@@ -1136,9 +1136,9 @@ export const claudePage: PlatformPage = {
     },
     {
       icon: 'glasses',
-      title: 'Simulate color blindness',
+      title: 'Build semantic color tokens',
       label: 'See the capability',
-      href: '/capabilities/color-blindness-simulation',
+      href: '/capabilities/semantic-color-system',
     },
     {
       icon: 'newspaper',

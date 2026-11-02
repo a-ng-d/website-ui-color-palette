@@ -14,7 +14,8 @@ export interface CapabilityPage {
     tagline: string
     cta: { label: string; href: string }
   }
-  overview: { title: string; lead: string; demo: DemoId }
+  /** `semantic-layer` shows the glossary's semantic TokenRamp instead of a demo. */
+  overview: { title: string; lead: string; demo: DemoId | 'semantic-layer' }
   how: Steps
   tables: Table[]
   faq: { intro: string; items: FaqItem[] }
@@ -888,7 +889,7 @@ export const tailwindPage: CapabilityPage = {
         },
         { label: 'Tailwind v4 and v3 export', values: [false, true] },
       ],
-      note: `With Claude or the MCP server, ${code('generate_code')} writes the same Tailwind v4 and v3 files, plus a semantic file when you pass a color system.`,
+      note: 'With Claude or the MCP server, generate_code writes the same Tailwind v4 and v3 files, plus a semantic file when you pass a color system.',
     },
   ],
   faq: {
@@ -940,10 +941,10 @@ export const tailwindPage: CapabilityPage = {
       href: '/capabilities/oklch-lch-color-spaces',
     },
     {
-      icon: 'book-open',
-      title: 'What is a design token?',
-      label: 'Read the definition',
-      href: '/glossary/design-token',
+      icon: 'glasses',
+      title: 'Export design tokens',
+      label: 'See the capability',
+      href: '/capabilities/export-design-tokens',
     },
     {
       icon: 'glasses',
@@ -1050,7 +1051,7 @@ export const nativePage: CapabilityPage = {
         { label: 'Sketch', href: '/sketch', values: ['/pro', '/pro'] },
         { label: 'Framer', href: '/framer', values: [false, false] },
       ],
-      note: `With Claude or the MCP server, ${code('generate_code')} writes the same four formats.`,
+      note: 'With Claude or the MCP server, generate_code writes the same four formats.',
     },
   ],
   faq: {
@@ -1107,10 +1108,384 @@ export const nativePage: CapabilityPage = {
       href: '/glossary/design-token',
     },
     {
+      icon: 'glasses',
+      title: 'Export design tokens',
+      label: 'See the next capability',
+      href: '/capabilities/export-design-tokens',
+    },
+  ],
+}
+
+export const tokensPage: CapabilityPage = {
+  slug: 'export-design-tokens',
+  name: 'Export design tokens',
+  seo: {
+    title: 'Export Colors as Design Tokens (DTCG) — UI Color Palette',
+    description:
+      'Export your colors as design tokens from Figma, Penpot, Sketch or Framer: W3C DTCG with WCAG and APCA scores, Style Dictionary and native JSON.',
+  },
+  hero: {
+    title:
+      'Export colors as design tokens: DTCG, Style Dictionary and native JSON',
+    tagline:
+      'Turn every shade of your palette into JSON design tokens your pipeline can read, with WCAG and APCA scores in the DTCG format.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do you export colors as design tokens?',
+    lead: 'Build the palette in your design tool, then export it as JSON. UI Color Palette writes every shade, source color included, as a design token: in the W3C DTCG format with WCAG and APCA scores in each token, for Style Dictionary v3, or as native tokens for Tokens Studio and Penpot. Framer exports the native and DTCG tokens.',
+    demo: 'tokens',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'The export is generated from the palette as it is now, so run it again after each change. To keep design files in sync instead, sync the palette with Figma variables or Penpot tokens, for free.',
+    docs: {
+      label: 'Read the export guide in the docs',
+      href: `${links.docs}/guides/export-a-color-palette-to-code`,
+    },
+    steps: [
+      {
+        title: 'Build the palette',
+        text: 'Set your source colors and scale preset, and add a color mode for each theme your product needs.',
+      },
+      {
+        title: 'Check the contrast',
+        text: 'Read the WCAG 2.1 and APCA score of every shade against your text colors: the DTCG export carries them into each token.',
+      },
+      {
+        title: 'Choose a token format',
+        text: 'In Export, pick DTCG tokens, Native tokens, Style Dictionary or Universal JSON. Copy the code or download it.',
+      },
+      {
+        title: 'Feed your pipeline',
+        text: 'Style Dictionary v4 and Terrazzo read the DTCG files; Tokens Studio and Penpot import the native tokens.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'token-formats',
+      title: 'Four JSON token formats',
+      intro:
+        'UI Color Palette exports four JSON token formats: DTCG, native tokens, Style Dictionary and universal JSON. Each holds every shade of every source color; here is one shade of a DTCG export, with its contrast scores in $extensions:',
+      code: '{\n  "Blue": {\n    "500": {\n      "$type": "color",\n      "$value": {\n        "colorSpace": "srgb",\n        "components": [0.169, 0.408, 0.933],\n        "hex": "#2b68ee"\n      },\n      "$description": "Shade/Tint color with 56.0% of lightness — WCAG 4.86:1 (AA) · APCA Lc 78.5 (content text)",\n      "$extensions": {\n        "com.uicp.wcag": {\n          "light": { "score": "AA", "ratio": 4.86 },\n          "dark": { "score": "A", "ratio": 4.32 }\n        },\n        "com.uicp.apca": {\n          "light": { "score": 78.48, "recommendation": "CONTENT_TEXT" },\n          "dark": { "score": 31.03, "recommendation": "SPOT_TEXT" }\n        }\n      }\n    }\n  }\n}',
+      caption: 'Design token export formats',
+      rowHeader: 'Format',
+      columns: ['Read by', 'What it contains'],
+      rows: [
+        {
+          label: 'DTCG tokens',
+          values: [
+            'Style Dictionary v4, Terrazzo and other DTCG tools',
+            'sRGB components and hex, WCAG and APCA scores; with several color modes, one file per mode, tied by a tokens.resolver.json file',
+          ],
+        },
+        {
+          label: 'Native tokens',
+          values: [
+            'Tokens Studio, Penpot',
+            'One token set per color mode, listed in $themes',
+          ],
+        },
+        {
+          label: 'Style Dictionary',
+          values: [
+            'Style Dictionary v3',
+            'A basic Style Dictionary v3 configuration (a legacy format: v4 reads DTCG)',
+          ],
+        },
+        {
+          label: 'Universal JSON',
+          values: [
+            'Any tool that reads JSON',
+            'Every color space value of each shade',
+          ],
+        },
+      ],
+      note: 'The design-tool Export writes the primitives. With Claude or the MCP server, generate_code with a color system adds semantic tokens in every format, DTCG included.',
+    },
+    {
+      id: 'availability',
+      title: 'Where you can export design tokens',
+      intro:
+        'Token exports are on /pro. Figma, Penpot and Sketch offer all four formats; Framer offers the native and DTCG tokens.',
+      caption: 'Design token export availability per platform',
+      rowHeader: 'Platform',
+      columns: [
+        'DTCG and native tokens',
+        'Style Dictionary and universal JSON',
+      ],
+      rows: [
+        { label: 'Figma', href: '/figma', values: ['/pro', '/pro'] },
+        { label: 'Penpot', href: '/penpot', values: ['/pro', '/pro'] },
+        { label: 'Sketch', href: '/sketch', values: ['/pro', '/pro'] },
+        { label: 'Framer', href: '/framer', values: ['/pro', false] },
+      ],
+      note: 'With Claude or the MCP server, generate_code writes the same four formats.',
+    },
+  ],
+  faq: {
+    intro:
+      'The DTCG format, Style Dictionary, contrast scores in tokens, and color modes.',
+    items: [
+      {
+        question: 'What is the DTCG design token format?',
+        answer: `A JSON format for design tokens published by the W3C Design Tokens Community Group (${htmlLink('https://www.designtokens.org/', 'designtokens.org')}). Each token has a type, such as color, and a value; tools such as Style Dictionary v4 and Terrazzo read it (see ${htmlLink('/glossary/design-token', 'What is a design token?')}).`,
+      },
+      {
+        question: 'How do I export Figma colors as design tokens?',
+        answer: `Build the palette with UI Color Palette in Figma, open Export and choose DTCG tokens, Native tokens, Style Dictionary or Universal JSON (/pro). To keep the colors inside Figma, sync them with your local variables instead, for free (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+      },
+      {
+        question: 'Does Style Dictionary read DTCG tokens?',
+        answer:
+          'Yes, Style Dictionary v4 reads the DTCG export. For a Style Dictionary v3 project, choose the Style Dictionary format, a basic v3 configuration.',
+      },
+      {
+        question: 'Do the design tokens include contrast scores?',
+        answer: `Yes, in the DTCG export: each token carries its WCAG 2.1 ratio and grade and its APCA score against your light and dark text colors, in ${code('$extensions')}, and a summary in its description.`,
+      },
+      {
+        question: 'How are light and dark modes exported as tokens?',
+        answer:
+          'With several color modes, the DTCG export gives each mode its own complete token file, packaged in a zip with a tokens.resolver.json file that a resolver-aware tool reads to pick the active mode. The native tokens export lists one token set per mode.',
+      },
+      {
+        question: 'Can I export semantic color tokens?',
+        answer: `Yes, with Claude or the MCP server: pass a color system to generate_code and the output adds semantic tokens that reference the primitives, in a separate file for most formats and merged into tokens.json for native tokens. The design-tool Export writes the primitives (see ${htmlLink('/capabilities/semantic-color-system', 'Semantic color system')}).`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'book-open',
+      title: 'What is a design token?',
+      label: 'Read the definition',
+      href: '/glossary/design-token',
+    },
+    {
+      icon: 'glasses',
+      title: 'Tailwind color palette',
+      label: 'See the capability',
+      href: '/capabilities/tailwind-color-palette',
+    },
+    {
+      icon: 'glasses',
+      title: 'SwiftUI & Compose colors',
+      label: 'See the capability',
+      href: '/capabilities/swiftui-compose-colors',
+    },
+    {
+      icon: 'glasses',
+      title: 'Semantic color system',
+      label: 'See the next capability',
+      href: '/capabilities/semantic-color-system',
+    },
+  ],
+}
+
+export const semanticPage: CapabilityPage = {
+  slug: 'semantic-color-system',
+  name: 'Semantic color system',
+  seo: {
+    title: 'Semantic vs Primitive Color Tokens — UI Color Palette',
+    description:
+      'Build semantic color tokens on your palette: roles, states and per-theme bindings, made with Claude or the MCP server and exported with your primitives.',
+  },
+  hero: {
+    title: 'Semantic color tokens, built on your palette with Claude and MCP',
+    tagline:
+      'Name colors by their role, bind each one to a shade per theme, and export a semantic file next to your primitives.',
+    cta: { label: 'Add to Claude', href: links.runClaudePlugin },
+  },
+  overview: {
+    title: 'How do you build semantic color tokens?',
+    lead: 'Name each color by its role, such as brand.default or link.default, and point it to a primitive shade of your palette, with a different shade per theme when you need one. UI Color Palette builds this semantic layer with Claude, or through the MCP server and the API, and writes it as a semantic file next to your primitives.',
+    demo: 'semantic-layer',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'The semantic layer sits on top of the palette and never changes it. Today it is built with Claude, the MCP server or the API.',
+    docs: {
+      label: 'Read the Claude plugin docs',
+      href: `${links.docs}/claude`,
+    },
+    steps: [
+      {
+        title: 'Start from a palette',
+        text: 'Generate it with Claude, or build it in your design tool first. Its shades are the primitives the semantic tokens point to.',
+      },
+      {
+        title: 'Pick a naming pattern',
+        text: 'Choose the dimensions of your token names, such as Role × State or Role × Prominence × State, or define your own.',
+      },
+      {
+        title: 'Bind tokens to shades',
+        text: 'Claude proposes a shade for each token; you refine the bindings and confirm. A binding can point to a different shade in each theme.',
+        code: '/ui-color-palette:build-color-system',
+      },
+      {
+        title: 'Generate the code',
+        text: `Ask for the code: ${'generate_code'} writes the primitives file and, next to it, a semantic file whose tokens reference them.`,
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'primitive-vs-semantic',
+      title: 'Primitive vs semantic color tokens',
+      intro:
+        'Primitive tokens name a raw shade, such as blue.600; semantic tokens name a role, such as brand.default, and point to a primitive. Components use the semantic ones.',
+      caption: 'Primitive and semantic color tokens compared',
+      rowHeader: 'Token',
+      columns: ['Primitive tokens', 'Semantic tokens'],
+      rows: [
+        {
+          label: 'Named by',
+          values: ['Hue and stop: blue.600', 'Role: brand.default'],
+        },
+        {
+          label: 'Holds',
+          values: ['A color value', 'A reference to a primitive'],
+        },
+        {
+          label: 'In dark mode',
+          values: ['The shade of that mode', 'Can point to another shade'],
+        },
+        {
+          label: 'Used by',
+          values: ['The semantic tokens', 'Your components'],
+        },
+      ],
+    },
+    {
+      id: 'naming',
+      title: 'Color token naming patterns: role, prominence, state',
+      intro:
+        'A naming pattern combines a few dimensions; each combination becomes a token. Here is a CSS semantic file for two roles and two prominences, with a dark theme; its first comment lists the token left without a binding:',
+      code: "/* Unbound semantic tokens */\n/*   Link-Subtle */\n\n:root {\n  --brand-default: var(--blue-600);\n  --brand-subtle: var(--blue-100);\n  --link-default: var(--blue-700);\n}\n\n/* Dark */\n:root[data-theme='dark'] {\n  --brand-default: var(--blue-400);\n  --brand-subtle: var(--blue-900);\n  --link-default: var(--blue-300);\n}",
+      caption: 'Semantic color naming patterns',
+      rowHeader: 'Pattern',
+      columns: ['Dimensions', 'Example token'],
+      rows: [
+        {
+          label: 'Role × State',
+          values: [
+            'Role (brand, danger, success) and state (default, hover, disabled)',
+            'brand.hover',
+          ],
+        },
+        {
+          label: 'Role × Prominence × State',
+          values: [
+            'Role, prominence (default, subtle, strong) and state',
+            'danger.subtle.hover',
+          ],
+        },
+        {
+          label: 'Surface × Content',
+          values: [
+            'Surface (background, border) and content (primary, secondary, inverse)',
+            'background.primary',
+          ],
+        },
+        {
+          label: 'Custom',
+          values: ['Your own dimensions and members', 'Any path'],
+        },
+      ],
+      note: 'A token with no binding stays in the output, flagged as unbound, so gaps stay visible; a token marked as excluded is left out of every file.',
+    },
+    {
+      id: 'outputs',
+      title: 'Where the semantic layer goes',
+      intro:
+        'The same color system feeds your code and, through Claude, your design files.',
+      caption: 'Outputs of the semantic color system',
+      rowHeader: 'Output',
+      columns: ['Semantic layer'],
+      rows: [
+        {
+          label: 'Code and token exports, with Claude or the MCP server',
+          values: [
+            'Every format: a semantic file next to the primitives, merged into tokens.json for native tokens',
+          ],
+        },
+        {
+          label: 'Figma variables and Penpot tokens, with Claude',
+          href: '/claude',
+          values: [
+            'Semantic variables or tokens referencing the primitive shades',
+          ],
+        },
+        {
+          label: 'Export in the design-tool plugins',
+          values: ['The primitives'],
+        },
+      ],
+      note: 'Through the MCP server or the API, get_color_system resolves every token for every theme.',
+    },
+  ],
+  faq: {
+    intro:
+      'Semantic versus primitive tokens, naming, themes, and where the semantic layer is built.',
+    items: [
+      {
+        question: 'How do semantic color tokens work in UI Color Palette?',
+        answer: `Each token has a role name, such as brand.default, and points to a primitive shade, with a different shade per theme when needed. UI Color Palette writes them as a semantic file next to your primitives (see ${htmlLink('/glossary/semantic-color', 'What are semantic colors?')}).`,
+      },
+      {
+        question:
+          'What is the difference between primitive and semantic tokens?',
+        answer: `Primitives hold the raw shades of a palette, such as blue.600; semantic tokens point to them by role, such as brand.default. Components use the semantic tokens, so you can change a theme or a brand color by rebinding them (see ${htmlLink('/glossary/design-token', 'What is a design token?')}).`,
+      },
+      {
+        question: 'How should I name semantic color tokens?',
+        answer:
+          'Along a few dimensions: a role (brand, danger, success), a prominence (default, subtle, strong) and a state (hover, pressed, disabled), or a surface and its content. Keep the set small: every token is one more decision to maintain.',
+      },
+      {
+        question: 'Can a semantic token use a different shade in dark mode?',
+        answer:
+          'Yes. A binding has a default shade and can override it for each theme, so brand.default can point to blue.600 in light mode and blue.400 in dark mode.',
+      },
+      {
+        question: 'Can I build semantic tokens in Figma?',
+        answer: `With Claude, yes: once the color system is built, the Figma skill writes semantic variables that reference the primitive variables, and the Penpot skill does the same with tokens (see ${htmlLink('/claude', 'UI Color Palette for Claude')}).`,
+      },
+      {
+        question: 'Which export formats include the semantic layer?',
+        answer:
+          'Every format, through generate_code with a color system: CSS, SCSS, Less, Tailwind, SwiftUI, UIKit, Compose, Android XML, CSV, Style Dictionary, universal JSON and DTCG get semantic tokens next to the primitives, and native tokens merge them into tokens.json. The design-tool Export writes the primitives.',
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'book-open',
+      title: 'What are semantic colors?',
+      label: 'Read the definition',
+      href: '/glossary/semantic-color',
+    },
+    {
+      icon: 'glasses',
+      title: 'Export design tokens',
+      label: 'See the capability',
+      href: '/capabilities/export-design-tokens',
+    },
+    {
+      icon: 'glasses',
+      title: 'Tailwind color palette',
+      label: 'See the capability',
+      href: '/capabilities/tailwind-color-palette',
+    },
+    {
       icon: 'ruler',
-      title: 'Use it in Figma',
-      label: 'See the Figma plugin',
-      href: '/figma',
+      title: 'Use it with Claude',
+      label: 'See the Claude plugin',
+      href: '/claude',
     },
   ],
 }
@@ -1122,6 +1497,8 @@ export const capabilityPages = [
   generatorPage,
   tailwindPage,
   nativePage,
+  tokensPage,
+  semanticPage,
 ]
 
 export const inDepth = {

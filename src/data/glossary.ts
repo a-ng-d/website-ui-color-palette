@@ -391,7 +391,10 @@ export const glossaryTerms: GlossaryTerm[] = [
       `Export to CSS is free. On /pro, it also exports design tokens — native tokens, DTCG and Style Dictionary — and Tailwind, SCSS, Less, Apple and Android code; Framer exports a narrower set, JSON tokens included. With Claude or the MCP server, ${code('generate_code')} returns the same formats.`,
     ],
     visual: 'primitive',
-    capability: { name: 'token export & sync', href: '/capabilities#deploy' },
+    capability: {
+      name: 'Export design tokens',
+      href: '/capabilities/export-design-tokens',
+    },
     related: ['semantic-color', 'color-scale'],
   },
   {
@@ -414,7 +417,10 @@ export const glossaryTerms: GlossaryTerm[] = [
       `${code('generate_code')} then writes a semantic tokens file alongside the primitives, ready for your codebase.`,
     ],
     visual: 'semantic',
-    capability: { name: 'UI Color Palette for Claude', href: '/claude' },
+    capability: {
+      name: 'Semantic color system',
+      href: '/capabilities/semantic-color-system',
+    },
     related: ['design-token', 'color-scale'],
   },
   {

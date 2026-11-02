@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import Demo from '@/components/capabilities/Demo.astro'
+import TokenRamp from '@/components/glossary/TokenRamp.astro'
 import Faq from '@/components/home/Faq.astro'
 import Reinsurance from '@/components/home/Reinsurance.astro'
 import NextSteps from '@/components/platform/NextSteps.astro'
@@ -52,7 +53,11 @@ const jsonLd = [
     title={page.overview.title}
     intro={page.overview.lead}
   >
-    <Demo id={page.overview.demo} />
+    {page.overview.demo === 'semantic-layer' ? (
+      <TokenRamp layer="semantic" />
+    ) : (
+      <Demo id={page.overview.demo} />
+    )}
   </IntroCardSection>
   <StepsSection
     id="how-it-works"

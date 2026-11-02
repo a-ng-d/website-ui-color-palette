@@ -10,21 +10,25 @@ const { layer } = Astro.props
 const blue: Record<string, string> = {
   '100': hex(blueShade(0.93)),
   '300': hex(blueShade(0.78)),
+  '400': hex(blueShade(0.7)),
   '500': hex(blueShade(0.62)),
+  '600': hex(blueShade(0.54)),
   '700': hex(blueShade(0.46)),
   '900': hex(blueShade(0.3)),
 }
 
-const primitives = Object.entries(blue).map(([stop, value]) => ({
-  name: `color.blue.${stop}`,
-  swatches: [value],
-  values: [value],
-}))
+const primitives = ['100', '300', '500', '700', '900']
+  .map((stop) => [stop, blue[stop]] as const)
+  .map(([stop, value]) => ({
+    name: `color.blue.${stop}`,
+    swatches: [value],
+    values: [value],
+  }))
 
 const semantics = [
-  { name: 'brand.default', light: '500', dark: '300' },
+  { name: 'brand.default', light: '600', dark: '400' },
   { name: 'brand.subtle', light: '100', dark: '900' },
-  { name: 'text.link', light: '700', dark: '300' },
+  { name: 'link.default', light: '700', dark: '300' },
 ].map((token) => ({
   name: token.name,
   swatches: [blue[token.light], blue[token.dark]],
