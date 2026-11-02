@@ -50,9 +50,9 @@ Last update: 2026-10-30.
 | 5 | Done | `/capabilities/color-palette-generator`; the `color-scale` term now links to it |
 | 6 | Done | `/figma` (Figma products table, plans, setup, FAQ) and `/framer` (what syncs to Framer, plans, setup, FAQ) |
 | 7 | Done | `/capabilities/tailwind-color-palette`, `/capabilities/swiftui-compose-colors` (real export samples from `generate_code`) |
-| 8 | In progress | Done: Lot D, Lot C (`/penpot`, `/sketch`), `/capabilities/export-design-tokens`, `/capabilities/semantic-color-system`. To do — Lot A: `ai-color-palette-generator`, `image-to-color-palette`, `color-wheel-harmony`, `light-dark-themes`, `design-system-presets`. Lot B: the 5 comparison pages and the `/compare` hub |
+| 8 | In progress | Done: Lot D, Lot C (`/penpot`, `/sketch`), `/capabilities/export-design-tokens`, `/capabilities/semantic-color-system`, `/capabilities/ai-color-palette-generator`, `/capabilities/image-to-color-palette`, `/capabilities/color-wheel-harmony`. To do — Lot A: `light-dark-themes`, `design-system-presets`. Lot B: the 5 comparison pages and the `/compare` hub |
 
-Lot A pages left: 5 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C: done. Lot D: done (12 terms and the hub). Lot B: all 6.
+Lot A pages left: 2 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C: done. Lot D: done (12 terms and the hub). Lot B: all 6.
 
 ### What is in place for the next pages
 
@@ -65,7 +65,7 @@ Lot A pages left: 5 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C:
 
 ### Follow-ups
 
-- **Interim capability link (Lot D)**: only `color-harmony` still points to `/capabilities#generate`; repoint it to `/capabilities/color-wheel-harmony` when that page ships.
+- **Interim capability links (Lot D)**: none left; every glossary term links to a live Lot A page.
 - **Glossary vs Lot A ownership**: a glossary term owns "what is X" and the definition; its Lot A page owns "how to do it in the tool" (formats, presets, plan detail). Keep tool detail out of the term pages.
 - **Unsourced claim on live terms**: `oklch` and `oklab` say "Switching … keeps your scale and your source colors"; no spec or doc states it. Confirm with the product owner or rewrite as on `cielab`.
 - **Spec conflicts found by the fact-check**: resolved on 2026-10-29 in `specs-ui-color-palette` — plan content removed from the specs (plans live only in docs `free-and-pro.md`), `scale.md` now counts 19 presets (3 custom + 16 named), and the contracts list the `system?` input of `generate_code`.
@@ -80,6 +80,7 @@ Lot A pages left: 5 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C:
 - **Code samples**: multi-line `code` renders as a scrollable `<pre><code>` through `CodeSnippet`; samples come from real `generate_code` output, trimmed with a code comment, never hand-written.
 - **Semantic layer in exports**: the design-tool Export writes primitives only (no in-plugin color system yet); with Claude or the MCP server, `generate_code` with a color system adds semantic tokens in every format, DTCG included (one semantic file per mode with a resolver). The docs export guide's "DTCG only exports primitives" is true of the plugin Export only.
 - **Tokens demo**: the `tokens` capability demo shows a simplified DTCG `$value` (a hex string); the real export uses an object (`colorSpace`, `components`, `hex`). Align the demo or caption it as simplified.
+- **Generate-it pages, sources to align**: the plugins' image input has a PNG drop zone (drag and drop or browse) plus paste, though `image-extraction.md` says there is no upload button; the docs say a JPEG "will result in an error" while it is silently ignored; Penpot has no canvas image selection (its host does not push the selected image); the UI buttons read "Create a UI Color Palette with these colors", not the docs' "Use this palette"; `en-US.json` still holds per-action credit strings.
 - **Cluster articles** ([03-blog-clusters.md](03-blog-clusters.md)): when an article ships, link it from its pillar page (related cards, FAQ "Full comparison") and respect the ownership rules recorded there.
 - **Lighthouse**: run on mobile on one capability page after deploy (SEO = 100, green Core Web Vitals) — not done yet.
 - **Sitemap `lastmod`**: check that the new URLs carry a date after deploy (it comes from the git history of the data files).
@@ -267,3 +268,4 @@ Add to each one:
 | 2026-10-30 | Product owner: deep sync works (deletes every item no longer in the palette, hand-added ones included). `preferences.md`, the docs preferences pages (tokens preference on Penpot added) and the `/penpot` sync table aligned |
 | 2026-10-30 | Product owner: deep sync preferences are free, like the sync itself — docs (preferences, free-and-pro) and `/penpot` updated |
 | 2026-10-30 | Step 8: `/capabilities/export-design-tokens` (four JSON formats, real DTCG sample, availability) and `/capabilities/semantic-color-system` (primitive vs semantic table, naming patterns with a real semantic CSS sample, outputs; glossary TokenRamp as visual). Glossary `design-token` and `semantic-color` repointed to them; `/claude` links the semantic page. Table intros and notes no longer render `<code>` as text. Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |
+| 2026-11-02 | Step 8: `/capabilities/ai-color-palette-generator` (12 presets, where to generate), `/capabilities/image-to-color-palette` (image sources; canvas selection on Figma, Sketch and Framer only) and `/capabilities/color-wheel-harmony` (five rules with the engine's hue math). Generator "ways to start" rows and the AI blog post link to them; glossary `color-harmony` repointed (no interim link left). Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |

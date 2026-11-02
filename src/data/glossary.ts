@@ -439,11 +439,14 @@ export const glossaryTerms: GlossaryTerm[] = [
       `Treat a harmony as the source colors of a palette: give each hue a ${htmlLink('/glossary/color-scale', 'color scale')}, then check the ${htmlLink('/glossary/wcag-contrast-ratio', 'contrast ratio')} of the stops you use for text.`,
     ],
     inProduct: [
-      'In UI Color Palette, the color wheel creates a palette from a harmony, in Figma, Penpot, Sketch and Framer. Pick a base color and one of five rules — analogous, complementary, compound, triadic or tetradic — and the swatches update live, each with its hex code and the closest color name. “Use this palette” turns them into source colors.',
+      'In UI Color Palette, the color wheel creates a palette from a harmony, in Figma, Penpot, Sketch and Framer. Pick a base color and one of five rules — analogous, complementary, compound, triadic or tetradic — and the swatches update live, each with its hex code and the closest color name. Creating the palette turns them into source colors.',
       `With Claude or the MCP server, ${code('create_color_harmony')} computes harmonies from a base color.`,
     ],
     visual: 'harmony',
-    capability: { name: 'palette generation', href: '/capabilities#generate' },
+    capability: {
+      name: 'Color wheel & harmonies',
+      href: '/capabilities/color-wheel-harmony',
+    },
     related: ['color-scale', 'oklch'],
   },
 ]

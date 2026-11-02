@@ -645,17 +645,19 @@ export const generatorPage: CapabilityPage = {
         },
         {
           label: 'AI colors',
+          href: '/capabilities/ai-color-palette-generator',
           values: [
             'Five colors from a prompt or a preset theme, each with a role: Primary, Text, Success, Warning or Alert',
           ],
         },
         {
           label: 'An image',
+          href: '/capabilities/image-to-color-palette',
           values: ['Up to 5 dominant colors from a PNG image'],
         },
         {
           label: 'A color harmony',
-          href: '/glossary/color-harmony',
+          href: '/capabilities/color-wheel-harmony',
           values: [
             'Analogous, complementary, compound, triadic or tetradic colors from a base color',
           ],
@@ -1490,6 +1492,412 @@ export const semanticPage: CapabilityPage = {
   ],
 }
 
+export const aiPage: CapabilityPage = {
+  slug: 'ai-color-palette-generator',
+  name: 'AI color palette generator',
+  seo: {
+    title: 'AI Color Palette Generator from a Prompt — UI Color Palette',
+    description:
+      'Describe a mood or a use case and get a 5-color UI palette, one color per role, in Figma, Penpot, Sketch, Framer or Claude. Free on every plan.',
+  },
+  hero: {
+    title: 'AI color palette generator, from a prompt to a full UI palette',
+    tagline:
+      'Describe the mood or the product you have in mind, or pick a preset, and get five source colors with a role each, ready to scale.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How does an AI color palette generator work?',
+    lead: 'An AI color palette generator turns a short description into colors. In UI Color Palette, Mistral AI returns five source colors from your prompt, one per role — primary, text, success, warning and alert — which become a full palette with scales and contrast scores, in Figma, Penpot, Sketch and Framer.',
+    demo: 'ai',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'AI generation is one of the ways to start a palette, free on every plan. You see the whole palette before you create it.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/create-a-color-palette#generate-colors-with-ai`,
+    },
+    steps: [
+      {
+        title: 'Open AI Colors',
+        text: 'In the Colors combinator, open AI Colors and type what you have in mind: a mood, a brand, a product.',
+      },
+      {
+        title: 'Or pick a preset',
+        text: 'Choose one of 12 preset prompts, from Cyberpunk to Documentation. Hover a preset to read its full prompt first.',
+      },
+      {
+        title: 'Generate the colors',
+        text: 'The AI returns five colors, one per role, each named after its role and its color, such as Primary · Crimson Red.',
+      },
+      {
+        title: 'Use the palette',
+        text: 'Create the palette from these colors: it opens with a scale for each color. Then tune the stops and check their contrast.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'presets',
+      title: 'Twelve preset prompts',
+      intro:
+        'Six presets set a mood, six fit a kind of product. Each one fills the prompt for you; you can still edit it.',
+      caption: 'AI color palette preset prompts',
+      rowHeader: 'Kind',
+      columns: ['Presets'],
+      rows: [
+        {
+          label: 'Vibes',
+          values: ['Cyberpunk, Minimalist, Pastel, Corporate, Nature, Vintage'],
+        },
+        {
+          label: 'Use cases',
+          values: [
+            'Landing page, Blog, Resume, Portfolio, Documentation, E-commerce',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'where',
+      title: 'Where you can generate a palette from a prompt',
+      intro:
+        'The same AI generation runs in the design-tool plugins and through the MCP server.',
+      caption: 'AI palette generation per surface',
+      rowHeader: 'Surface',
+      columns: ['How', 'What you get'],
+      rows: [
+        {
+          label: 'Figma, Penpot, Sketch and Framer',
+          values: [
+            'AI Colors, in the Colors combinator',
+            'Five source colors with a role each, on every plan',
+          ],
+        },
+        {
+          label: 'Claude and MCP clients',
+          href: '/claude',
+          values: [
+            'generate_colors_from_prompt, with a prompt of up to 500 characters',
+            'Source colors ready for get_palette',
+          ],
+        },
+      ],
+    },
+  ],
+  faq: {
+    intro:
+      'Generating a UI palette from a prompt, the presets, and what happens next.',
+    items: [
+      {
+        question: 'Can AI generate a color palette for my UI?',
+        answer:
+          'Yes. Describe the mood or the product, and UI Color Palette’s AI returns five source colors with a role each — primary, text, success, warning and alert — then turns them into a full palette with a scale for each color, in your design tool.',
+      },
+      {
+        question: 'What AI does UI Color Palette use to generate colors?',
+        answer:
+          'Mistral AI. The colors are adapted to their role: an alert color is always reddish, for example. Each one is named after its role and its color.',
+      },
+      {
+        question: 'How do I generate a color palette from a prompt?',
+        answer:
+          'Open AI Colors in the Colors combinator, type a mood or a product, or pick one of 12 presets, and generate: you get five source colors with a role each, then create the palette from them. It is free on every plan.',
+      },
+      {
+        question: 'Are AI-generated colors accessible?',
+        answer: `The AI picks the source colors; accessibility comes from the scale. Every shade shows its WCAG 2.1 ratio and APCA score, and you can set the contrast ratio each stop must reach (see ${htmlLink('/capabilities/wcag-apca-contrast', 'WCAG & APCA contrast')}).`,
+      },
+      {
+        question: 'Can I generate a palette from a prompt in Claude or Cursor?',
+        answer: `Yes, through the MCP server: generate_colors_from_prompt turns a description of up to 500 characters into source colors, and get_palette scales them (see ${htmlLink('/claude', 'UI Color Palette for Claude')}).`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'glasses',
+      title: 'Color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'WCAG & APCA contrast',
+      label: 'See the capability',
+      href: '/capabilities/wcag-apca-contrast',
+    },
+    {
+      icon: 'ruler',
+      title: 'Use it with Claude',
+      label: 'See the Claude plugin',
+      href: '/claude',
+    },
+    {
+      icon: 'glasses',
+      title: 'Image to color palette',
+      label: 'See the next capability',
+      href: '/capabilities/image-to-color-palette',
+    },
+  ],
+}
+
+export const imagePage: CapabilityPage = {
+  slug: 'image-to-color-palette',
+  name: 'Image to color palette',
+  seo: {
+    title: 'Extract a Color Palette from an Image — UI Color Palette',
+    description:
+      'Drop or paste a PNG to extract its 5 dominant colors and turn them into an accessible UI palette in Figma, Penpot, Sketch or Framer. Free on every plan.',
+  },
+  hero: {
+    title: 'Color palette from an image, extracted inside your design tool',
+    tagline:
+      'Drop or paste a PNG, or select an image on your canvas: its dominant colors become the source colors of a full, accessible palette.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do you extract a color palette from an image?',
+    lead: 'A palette extractor finds the colors that cover most of an image and gives them back as swatches. In UI Color Palette, you drop or paste a PNG, or select an image on your canvas in Figma, Sketch and Framer, and up to 5 dominant colors become the source colors of a palette with full scales, in every design-tool plugin.',
+    demo: 'image',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'Image extraction is one of the ways to start a palette, free on every plan. The colors are extracted in the plugin, and you see them before you create the palette.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/create-a-color-palette#extract-colors-from-an-image`,
+    },
+    steps: [
+      {
+        title: 'Open Image palette',
+        text: 'In the Colors combinator, open Image palette.',
+      },
+      {
+        title: 'Bring in the image',
+        text: 'Drop a PNG file or click to browse, paste a PNG with Ctrl+V or Cmd+V, or, in Figma, Sketch and Framer, select an image on your canvas.',
+      },
+      {
+        title: 'Check the colors',
+        text: 'Up to 5 dominant colors appear next to the image.',
+      },
+      {
+        title: 'Use the palette',
+        text: 'Create the palette from these colors: it opens with a scale for each color. Then tune the stops and check their contrast.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'inputs',
+      title: 'Ways to bring in an image',
+      intro:
+        'In the plugins, the image comes from the clipboard or from your canvas; with Claude or an MCP client, from a URL.',
+      caption: 'Image sources for color extraction',
+      rowHeader: 'Source',
+      columns: ['Formats', 'Colors extracted'],
+      rows: [
+        {
+          label: 'Drop, browse or paste a file',
+          values: ['PNG only', 'Up to 5'],
+        },
+        {
+          label: 'Image selected on the canvas (Figma, Sketch, Framer)',
+          values: ['The selected image', 'Up to 5'],
+        },
+        {
+          label: 'Claude and MCP clients',
+          href: '/claude',
+          values: ['A public JPEG or PNG URL', '1 to 16, 5 by default'],
+        },
+      ],
+      note: 'Through the MCP server, extract_dominant_colors uses k-means clustering and can skip transparent pixels.',
+    },
+  ],
+  faq: {
+    intro:
+      'Extracting colors from an image, the formats that work, and what you get.',
+    items: [
+      {
+        question: 'How do I extract colors from an image?',
+        answer: `Open Image palette in the Colors combinator, then drop or paste a PNG, or select an image on your canvas in Figma, Sketch or Framer. Up to 5 dominant colors appear; create the palette from them to get a scale for each (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+      },
+      {
+        question: 'How many colors are extracted from an image?',
+        answer:
+          'Up to 5 dominant colors in the design-tool plugins. Through the MCP server, extract_dominant_colors returns 1 to 16 colors, 5 by default.',
+      },
+      {
+        question: 'Can I extract a color palette from a JPEG?',
+        answer:
+          'Not in the plugins: they accept PNG images only, and other formats are ignored. Save the image as a PNG first, or use Claude or an MCP client, which read JPEG and PNG images from a URL.',
+      },
+      {
+        question: 'Is the image to color palette tool free?',
+        answer: `Yes, on every plan. The free /basic plan keeps one palette per page or document; /pro lifts that cap (see ${htmlLink('/pricing', 'pricing')}).`,
+      },
+      {
+        question: 'Are the extracted colors ready for a UI?',
+        answer: `They are a starting point. Image colors are rarely balanced for text and backgrounds, so UI Color Palette turns each one into a scale and shows the WCAG 2.1 and APCA score of every shade (see ${htmlLink('/glossary/color-scale', 'What is a color scale?')}).`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'glasses',
+      title: 'AI color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/ai-color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'Color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'book-open',
+      title: 'What is a color scale?',
+      label: 'Read the definition',
+      href: '/glossary/color-scale',
+    },
+    {
+      icon: 'glasses',
+      title: 'Color wheel & harmonies',
+      label: 'See the next capability',
+      href: '/capabilities/color-wheel-harmony',
+    },
+  ],
+}
+
+export const wheelPage: CapabilityPage = {
+  slug: 'color-wheel-harmony',
+  name: 'Color wheel & harmonies',
+  seo: {
+    title: 'Color Harmony Generator on a Color Wheel — UI Color Palette',
+    description:
+      'Pick a base color and a harmony rule — complementary, triadic, analogous, compound or tetradic — and get an accessible UI palette with full scales.',
+  },
+  hero: {
+    title: 'Color harmony generator, from a base color to a full UI palette',
+    tagline:
+      'Pick a base color and one of five harmony rules on the color wheel, preview the colors live, and turn them into scales with contrast scores.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do you generate a color harmony palette?',
+    lead: 'A color harmony generator builds a palette from one base color and a rule on the color wheel. In UI Color Palette, pick analogous, complementary, compound, triadic or tetradic, and the harmony colors become source colors with full scales and contrast scores, in Figma, Penpot, Sketch and Framer.',
+    demo: 'wheel',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'The color wheel is one of the ways to start a palette, free on every plan. The swatches update as you change the base color or the rule.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/create-a-color-palette#create-a-color-harmony`,
+    },
+    steps: [
+      {
+        title: 'Open Color harmony',
+        text: 'In the Colors combinator, open Color harmony.',
+      },
+      {
+        title: 'Pick a base color',
+        text: 'Choose the color the harmony starts from, such as your brand color.',
+      },
+      {
+        title: 'Choose a rule',
+        text: 'Analogous, complementary, compound, triadic or tetradic. The swatches update live, each with its hex code and the closest color name.',
+      },
+      {
+        title: 'Use the palette',
+        text: 'Create the palette from these colors: they become source colors, and the palette opens with a scale for each.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'rules',
+      title: 'The five harmony rules',
+      intro:
+        'Each rule turns the hue of the base color on the wheel and keeps its saturation and lightness.',
+      caption: 'Color harmony rules',
+      rowHeader: 'Rule',
+      columns: ['Colors', 'Hues'],
+      rows: [
+        { label: 'Analogous', values: ['3', 'The base, and 30° on each side'] },
+        { label: 'Complementary', values: ['2', 'The base and its opposite'] },
+        {
+          label: 'Compound',
+          values: ['3', 'The base, and 30° on each side of its opposite'],
+        },
+        { label: 'Triadic', values: ['3', 'Three hues 120° apart'] },
+        { label: 'Tetradic', values: ['4', 'Four hues 90° apart'] },
+      ],
+      note: 'Through the MCP server, create_color_harmony also accepts a square type (the same hues as tetradic) and a custom spread for analogous colors.',
+    },
+  ],
+  faq: {
+    intro:
+      'Harmony rules, how harmonies become UI colors, and where you can use them.',
+    items: [
+      {
+        question: 'What is a color harmony generator?',
+        answer: `A tool that picks colors by their positions on the color wheel from a base color, such as its opposite for a complementary harmony (see ${htmlLink('/glossary/color-harmony', 'What is color harmony?')}). UI Color Palette then turns those colors into full scales for your UI.`,
+      },
+      {
+        question: 'Which harmony rules can I use?',
+        answer:
+          'Five in the design-tool plugins: analogous, complementary, compound, triadic and tetradic. Through the MCP server, create_color_harmony adds a square rule and lets you set the analogous spread.',
+      },
+      {
+        question: 'Do harmony colors pass WCAG contrast?',
+        answer: `Not by themselves: a harmony picks hues, not lightness. UI Color Palette turns each color into a scale and shows the WCAG 2.1 ratio and APCA score of every shade, so you pick the stops that pass (see ${htmlLink('/capabilities/wcag-apca-contrast', 'WCAG & APCA contrast')}).`,
+      },
+      {
+        question:
+          'What is the difference between complementary, triadic and analogous palettes?',
+        answer:
+          'Complementary uses the base color and its opposite on the wheel, 2 colors; triadic uses three hues 120° apart; analogous uses the base and its neighbors, 30° on each side. All three are free on every plan.',
+      },
+      {
+        question: 'Can I generate color harmonies with Claude?',
+        answer: `Yes. Through the MCP server, create_color_harmony computes harmonies from a base color, and Claude can turn them into a full palette (see ${htmlLink('/claude', 'UI Color Palette for Claude')}).`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'book-open',
+      title: 'What is color harmony?',
+      label: 'Read the definition',
+      href: '/glossary/color-harmony',
+    },
+    {
+      icon: 'glasses',
+      title: 'AI color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/ai-color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'Image to color palette',
+      label: 'See the capability',
+      href: '/capabilities/image-to-color-palette',
+    },
+    {
+      icon: 'glasses',
+      title: 'Color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+  ],
+}
+
 export const capabilityPages = [
   colorSpacesPage,
   colorBlindnessPage,
@@ -1499,6 +1907,9 @@ export const capabilityPages = [
   nativePage,
   tokensPage,
   semanticPage,
+  aiPage,
+  imagePage,
+  wheelPage,
 ]
 
 export const inDepth = {
