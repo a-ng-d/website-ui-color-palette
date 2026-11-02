@@ -682,7 +682,6 @@ export const framerPage: PlatformPage = {
     intro:
       'Generate an accessible palette, push it to Framer styles, and build your website from scratch — with colors that pass contrast from the first section to the last.',
     embed: {
-      // editor=penpot on purpose, until the plugin team confirms the value for Framer.
       src: pluginEmbed('framer', 'penpot'),
       title: 'UI Color Palette running as a Framer plugin',
     },
