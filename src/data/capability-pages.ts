@@ -535,7 +535,7 @@ export const contrastPage: CapabilityPage = {
       },
       {
         question: 'Can I build a palette from target contrast ratios?',
-        answer: `Yes, on every plan. Switch the scale to contrast ratio, type the ratio each stop must reach, and UI Color Palette recomputes its lightness; it works well with the ${htmlLink('/glossary/hsluv', 'HSLuv')} color space.`,
+        answer: `Yes, on every plan. Switch the scale to contrast ratio, type the ratio each stop must reach, and UI Color Palette recomputes its lightness; it works well with the ${htmlLink('/glossary/hsluv', 'HSLuv')} color space, on /pro. For a web and code tool built around target ratios, see ${htmlLink('/compare/ui-color-palette-vs-leonardo', 'UI Color Palette vs Adobe Leonardo')}.`,
       },
       {
         question: 'Does the contrast change for color-blind users?',
@@ -712,8 +712,7 @@ export const generatorPage: CapabilityPage = {
       },
       {
         question: 'How do I generate shades and tints from a hex color?',
-        answer:
-          'Yes. Type or paste the hex code of a source color and UI Color Palette computes its shades and tints along the scale, live, with the hex code of each one in the preview.',
+        answer: `Type or paste the hex code of a source color and UI Color Palette computes its shades and tints along the scale, live, with the hex code of each one in the preview. Found the colors in Coolors or Realtime Colors? See ${htmlLink('/compare/ui-color-palette-vs-coolors', 'UI Color Palette vs Coolors')} and ${htmlLink('/compare/ui-color-palette-vs-realtime-colors', 'UI Color Palette vs Realtime Colors')}.`,
       },
       {
         question: 'How many shades should a UI color scale have?',
@@ -2237,13 +2236,12 @@ export const presetsPage: CapabilityPage = {
       },
       {
         question: 'Does UI Color Palette have a 12-step scale like Radix?',
-        answer:
-          'The Radix preset gives your colors 12 stops, from 1 to 12, on /pro. The shades are computed from your colors, so they follow your palette rather than copying Radix’s own values.',
+        answer: `The Radix preset gives your colors 12 stops, from 1 to 12, on /pro. The shades are computed from your colors, so they follow your palette rather than copying the Radix Colors values. See how the two compare in ${htmlLink('/compare/ui-color-palette-vs-radix-colors', 'UI Color Palette vs Radix Colors')}.`,
       },
       {
-        question: 'Is the Material 3 color palette the same as Google’s?',
-        answer:
-          'Not exactly. The Material 3 preset gives your colors its stop names and count, but every shade is computed from your source colors: no preset copies a design system’s own colors.',
+        question:
+          'Is the Material 3 preset the same as Material Theme Builder?',
+        answer: `Not exactly. The Material 3 preset gives your colors its stop names and count, but every shade is computed from your source colors: no preset copies a design system’s own colors. For Material 3 schemes in HCT, see ${htmlLink('/compare/ui-color-palette-vs-material-theme-builder', 'UI Color Palette vs Material Theme Builder')}.`,
       },
       {
         question: 'Can I add or remove stops in a preset?',

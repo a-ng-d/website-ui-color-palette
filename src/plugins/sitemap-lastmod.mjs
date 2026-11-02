@@ -83,6 +83,15 @@ const postDates = new Map(
     })
 )
 
+/** Comparison pages: the date their facts were last verified. */
+const compareDates = new Map(
+  [
+    ...readFileSync(`${root}src/data/compare-pages.ts`, 'utf8').matchAll(
+      /slug: '([^']+)'[\s\S]*?verified: '(\d{4}-\d{2}-\d{2})'/g
+    ),
+  ].map(([, slug, date]) => [slug, new Date(`${date}T00:00:00Z`)])
+)
+
 const latest = (dates) =>
   dates.filter(Boolean).sort((a, b) => b.getTime() - a.getTime())[0]
 
@@ -92,6 +101,8 @@ export const lastmodFor = (url) => {
   if (path.startsWith('/blog/')) return postDates.get(path.slice(6))
   if (path === '/blog') return latest([...postDates.values()])
   if (path.startsWith('/capabilities/')) return gitDate(capabilityPageSources)
+  if (path.startsWith('/compare/')) return compareDates.get(path.slice(9))
+  if (path === '/compare') return latest([...compareDates.values()])
   if (path === '/glossary' || path.startsWith('/glossary/'))
     return gitDate([...glossarySources, 'src/pages/glossary.astro'])
   return gitDate(sources[path] ?? [`src/pages${path}.astro`])

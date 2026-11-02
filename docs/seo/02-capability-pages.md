@@ -1,6 +1,6 @@
 # Phase 2 — Capability, comparison, platform and glossary pages
 
-- **Status**: In progress — steps 1 to 4 done (branch `seo/phase-2`), Lots A, C and D done (branch `seo/phase-2-2`); Lot B to do. See [Progress](#progress).
+- **Status**: Done — steps 1 to 4 on branch `seo/phase-2`, steps 5 to 8 (Lots A, B, C and D) on branch `seo/phase-2-2`. Open items are listed in [Follow-ups](#follow-ups). See [Progress](#progress).
 - **Package(s) concerned**: `website-ui-color-palette`
 - **Related spec**: [README.md](README.md), [03-blog-clusters.md](03-blog-clusters.md), [00-measurement.md](00-measurement.md)
 
@@ -50,7 +50,7 @@ Last update: 2026-10-30.
 | 5 | Done | `/capabilities/color-palette-generator`; the `color-scale` term now links to it |
 | 6 | Done | `/figma` (Figma products table, plans, setup, FAQ) and `/framer` (what syncs to Framer, plans, setup, FAQ) |
 | 7 | Done | `/capabilities/tailwind-color-palette`, `/capabilities/swiftui-compose-colors` (real export samples from `generate_code`) |
-| 8 | In progress | Done: Lot D, Lot C (`/penpot`, `/sketch`), `/capabilities/export-design-tokens`, `/capabilities/semantic-color-system`, `/capabilities/ai-color-palette-generator`, `/capabilities/image-to-color-palette`, `/capabilities/color-wheel-harmony`, `/capabilities/light-dark-themes`, `/capabilities/design-system-presets`. To do — Lot B: the 5 comparison pages and the `/compare` hub |
+| 8 | Done | Lot A, Lot C (`/penpot`, `/sketch`), Lot D, and Lot B: `/compare` and the 5 comparison pages (Coolors, Adobe Leonardo, Material Theme Builder, Radix Colors, Realtime Colors) |
 
 Lot A: done (13 pages, `mcp-color-palette` merged into `/claude`) (`mcp-color-palette` is merged into `/claude`). Lot C: done. Lot D: done (12 terms and the hub). Lot B: all 6.
 
@@ -82,6 +82,7 @@ Lot A: done (13 pages, `mcp-color-palette` merged into `/claude`) (`mcp-color-pa
 - **Tokens demo**: the `tokens` capability demo shows a simplified DTCG `$value` (a hex string); the real export uses an object (`colorSpace`, `components`, `hex`). Align the demo or caption it as simplified.
 - **Generate-it pages, sources to align**: the plugins' image input has a PNG drop zone (drag and drop or browse) plus paste, though `image-extraction.md` says there is no upload button; the docs say a JPEG "will result in an error" while it is silently ignored; Penpot has no canvas image selection (its host does not push the selected image); the UI buttons read "Create a UI Color Palette with these colors", not the docs' "Use this palette"; `en-US.json` still holds per-action credit strings.
 - **Presets sources to align**: `en-US.json` labels Spectrum Neutral "25-900" while the code has 50–900 (the docs were fixed to 50–900, and ADS Foundations to 10 stops 100–1000, ADS Foundations Neutral to 12 stops 0–1100); the docs call the Custom 1–10 set the default while the code defaults to Custom 10–100.
+- **Comparisons**: competitor facts were verified on 2026-11-03 from primary sources only. Not confirmed, so shown as "not documented": Coolors' generation model and what its Figma plugin creates; color blindness simulation in Material Theme Builder, Radix Colors and Realtime Colors. Material Theme Builder's Figma variables are documented only on a Google DesignCompose page. Refresh every quarter (Phase 5): re-check each competitor and bump `verified`. Figma Community listings return HTTP 403 to automated fetches; check them by hand.
 - **Cluster articles** ([03-blog-clusters.md](03-blog-clusters.md)): when an article ships, link it from its pillar page (related cards, FAQ "Full comparison") and respect the ownership rules recorded there.
 - **Lighthouse**: run on mobile on one capability page after deploy (SEO = 100, green Core Web Vitals) — not done yet.
 - **Sitemap `lastmod`**: check that the new URLs carry a date after deploy (it comes from the git history of the data files).
@@ -94,7 +95,7 @@ Lot A: done (13 pages, `mcp-color-palette` merged into `/claude`) (`mcp-color-pa
 - Platform pages: capability matrix, setup guide, FAQ with FAQPage, ≥3 Lot A links — met for the 5 platform pages.
 - Glossary terms: definition of 60 words or fewer first, `DefinedTerm` linked to the `/glossary` `DefinedTermSet` — met for the 12 live terms.
 - Sitemap, `llms.txt`, `llms-full.txt` — met for every new page (`lastmod` to check after deploy).
-- Comparison pages and Lighthouse — not started.
+- Comparison pages: "Last verified", "When to choose <competitor>" and no superlatives — met for the 5 pages. Lighthouse — not run yet.
 
 ## Lot A — capability pages
 
@@ -271,3 +272,4 @@ Add to each one:
 | 2026-10-30 | Step 8: `/capabilities/export-design-tokens` (four JSON formats, real DTCG sample, availability) and `/capabilities/semantic-color-system` (primitive vs semantic table, naming patterns with a real semantic CSS sample, outputs; glossary TokenRamp as visual). Glossary `design-token` and `semantic-color` repointed to them; `/claude` links the semantic page. Table intros and notes no longer render `<code>` as text. Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |
 | 2026-11-02 | Step 8: `/capabilities/ai-color-palette-generator` (12 presets, where to generate), `/capabilities/image-to-color-palette` (image sources; canvas selection on Figma, Sketch and Framer only) and `/capabilities/color-wheel-harmony` (five rules with the engine's hue math). Generator "ways to start" rows and the AI blog post link to them; glossary `color-harmony` repointed (no interim link left). Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |
 | 2026-11-03 | Lot A done: `/capabilities/light-dark-themes` (mode settings, how modes reach each tool, real CSS sample with a reversed dark scale) and `/capabilities/design-system-presets` (16 presets from the code, custom sets). Generator FAQ fixed (ADS Foundations has 10 stops); docs preset list and free-and-pro (per-shade scores free) updated. Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |
+| 2026-11-03 | Lot B done: `/compare` hub (`CollectionPage` + `ItemList`) and 5 comparison pages (`ComparePage` data, `ComparePageView`), competitor facts from a dated primary-source check; sitemap `lastmod` and JSON-LD `dateModified` read `verified`; `TextCardsSection` gains a `links` list. Lot A FAQs link each comparison. Reviewed by `seo-reviewer`, `fact-checker` and `style-guardian`, fixes applied |

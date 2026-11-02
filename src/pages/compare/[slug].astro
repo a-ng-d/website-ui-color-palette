@@ -1,0 +1,15 @@
+---
+import type { GetStaticPaths } from 'astro'
+import ComparePageView from '@/components/compare/ComparePageView.astro'
+import { comparePages } from '@/data/compare-pages'
+
+export const getStaticPaths = (() =>
+  comparePages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }))) satisfies GetStaticPaths
+
+const { page } = Astro.props
+---
+
+<ComparePageView page={page} />

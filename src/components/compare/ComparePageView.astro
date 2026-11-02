@@ -1,0 +1,97 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Faq from '@/components/home/Faq.astro'
+import Reinsurance from '@/components/home/Reinsurance.astro'
+import NextSteps from '@/components/platform/NextSteps.astro'
+import PlatformHero from '@/components/platform/PlatformHero.astro'
+import TableSection from '@/components/ui/TableSection.astro'
+import TextCardsSection from '@/components/ui/TextCardsSection.astro'
+import { comparePath, type ComparePage } from '@/data/compare-pages'
+import {
+  breadcrumbs,
+  faqPage,
+  organization,
+  softwareId,
+  webPage,
+} from '@/data/structured-data'
+
+interface Props {
+  page: ComparePage
+}
+
+const { page } = Astro.props
+const path = comparePath(page)
+
+const jsonLd = [
+  organization(),
+  webPage({
+    path,
+    name: page.seo.title,
+    description: page.seo.description,
+    about: softwareId,
+    dateModified: page.verified,
+  }),
+  breadcrumbs([
+    { name: 'Home', path: '/' },
+    { name: 'Compare', path: '/compare' },
+    { name: `UI Color Palette vs ${page.competitor}`, path },
+  ]),
+  faqPage(page.faq.items),
+]
+
+const verified = new Date(`${page.verified}T00:00:00Z`).toLocaleDateString(
+  'en-US',
+  { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }
+)
+---
+
+<BaseLayout
+  title={page.seo.title}
+  description={page.seo.description}
+  jsonLd={jsonLd}
+>
+  <PlatformHero hero={page.hero} />
+  <TextCardsSection
+    cards={[
+      {
+        title: `UI Color Palette vs ${page.competitor} in short`,
+        paragraphs: [page.summary],
+      },
+    ]}
+  />
+  <TableSection
+    table={{
+      ...page.table,
+      intro: `${page.table.intro} Last verified on ${verified}.`,
+    }}
+  />
+  <TextCardsSection
+    cards={[
+      { title: 'When to choose UI Color Palette', paragraphs: page.chooseUs },
+      {
+        title: `When to choose ${page.competitor}`,
+        paragraphs: page.chooseThem,
+      },
+    ]}
+  />
+  <Faq
+    items={page.faq.items}
+    intro={page.faq.intro}
+  />
+  <TextCardsSection
+    cards={[
+      {
+        title: 'Sources',
+        paragraphs: [
+          `Last verified: <time datetime="${page.verified}">${verified}</time>. ${page.competitor} details come from its own site and documentation; ours come from the UI Color Palette documentation.`,
+        ],
+        links: page.sources,
+      },
+    ]}
+  />
+  <NextSteps
+    steps={page.related}
+    title={`Related to UI Color Palette vs ${page.competitor}`}
+  />
+  <Reinsurance />
+</BaseLayout>

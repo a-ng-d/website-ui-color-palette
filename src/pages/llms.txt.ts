@@ -4,6 +4,7 @@ import { links, site } from '@/config/site'
 import { getPosts, postPath } from '@/data/blog'
 import { homeFaq, pricingFaq } from '@/data/faq'
 import { capabilityPages, capabilityPath } from '@/data/capability-pages'
+import { compare, comparePages, comparePath } from '@/data/compare-pages'
 import { glossary, glossaryTerms, termPath } from '@/data/glossary'
 import { platformPages } from '@/data/platform-pages'
 
@@ -37,6 +38,14 @@ export const GET: APIRoute = async () => {
     ...capabilityPages.map(
       (page) =>
         `- [${page.name}](${url(capabilityPath(page))}): ${page.seo.description}`
+    ),
+    '',
+    '## Comparisons',
+    '',
+    `- [${compare.title}](${url('/compare')}): ${compare.seo.description}`,
+    ...comparePages.map(
+      (page) =>
+        `- [UI Color Palette vs ${page.competitor}](${url(comparePath(page))}): ${page.seo.description}`
     ),
     '',
     '## Glossary',

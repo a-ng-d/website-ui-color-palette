@@ -1,0 +1,48 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import InDepthSection from '@/components/capabilities/InDepthSection.astro'
+import Reinsurance from '@/components/home/Reinsurance.astro'
+import PlatformHero from '@/components/platform/PlatformHero.astro'
+import { compare, comparePages, comparePath } from '@/data/compare-pages'
+import { site } from '@/config/site'
+import { organization, pageBreadcrumbs, webPage } from '@/data/structured-data'
+
+const jsonLd = [
+  organization(),
+  webPage({
+    path: '/compare',
+    name: compare.seo.title,
+    description: compare.seo.description,
+    type: 'CollectionPage',
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: comparePages.map((page, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: `UI Color Palette vs ${page.competitor}`,
+        url: new URL(comparePath(page), site.url).href,
+      })),
+    },
+  }),
+  pageBreadcrumbs('Compare', '/compare'),
+]
+---
+
+<BaseLayout
+  title={compare.seo.title}
+  description={compare.seo.description}
+  jsonLd={jsonLd}
+>
+  <PlatformHero hero={{ title: compare.title, tagline: compare.tagline }} />
+  <InDepthSection
+    title="Alternatives, side by side"
+    intro="Each page compares features, then says when the other tool is the better choice."
+    items={comparePages.map((page) => ({
+      title: `UI Color Palette vs ${page.competitor}`,
+      text: page.hero.tagline,
+      label: 'Read the comparison',
+      href: comparePath(page),
+    }))}
+  />
+  <Reinsurance />
+</BaseLayout>
