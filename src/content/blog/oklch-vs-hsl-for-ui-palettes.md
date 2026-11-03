@@ -55,7 +55,7 @@ One HSL value, a spread from 1.07:1 to 8.59:1. That is the whole problem: in HSL
 
 ## How does OKLCH fix it?
 
-[OKLCH](/glossary/oklch) describes a color by lightness, chroma and hue, on top of [OKLab](/glossary/oklab), a model Björn Ottosson fitted to human vision and [published in 2020](https://bottosson.github.io/posts/oklab/). Its lightness is designed so that equal steps look equal, whatever the hue.
+[OKLCH](/glossary/oklch) describes a color by lightness, chroma and hue, on top of OKLab, a model Björn Ottosson fitted to human vision and [published in 2020](https://bottosson.github.io/posts/oklab/). Its lightness is designed so that equal steps look equal, whatever the hue.
 
 Run the same check the other way. Fix the OKLCH lightness at 0.6 and the chroma at 0.1, and only turn the hue:
 

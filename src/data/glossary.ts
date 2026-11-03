@@ -255,7 +255,7 @@ export const glossaryTerms: GlossaryTerm[] = [
       id: 'thresholds',
       title: 'The thresholds to meet',
       intro:
-        'Large text means at least 24px, or about 18.7px in bold (18pt and 14pt). Level AA is the usual target; AAA is stricter.',
+        'Large text means at least 24px, or about 18.5px in bold (18pt and 14pt). Level AA is the usual target; AAA is stricter.',
       caption: 'WCAG 2.1 contrast thresholds',
       rowHeader: 'Content',
       columns: ['Level AA', 'Level AAA'],

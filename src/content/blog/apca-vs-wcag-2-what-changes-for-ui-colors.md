@@ -114,7 +114,7 @@ The W3C says WCAG 3 is [not expected to be a completed standard for a few more y
 To build a WCAG color palette that also reads well under APCA, UI Color Palette scores every shade with both methods, in its Figma, Penpot, Sketch and Framer plugins. The ratio it shows is the WCAG 2.1 ratio, which uses the same formula and text thresholds as WCAG 2.2.
 
 1. **Set your foreground colors** — pick the light and dark foreground colors your interface uses. Black `#000` and white `#FFF` are the defaults, and every score is computed against both.
-2. **Read both scores on every shade** — each shade shows its WCAG 2.1 ratio and its APCA score for the light and the dark foreground color, on the free /basic plan.
+2. **Read both scores on every shade** — each shade shows its WCAG 2.1 ratio and its APCA score for the light and the dark foreground color, on the free /basic plan. Hover a ratio to see its A, AA or AAA grade.
 3. **Set target ratios** — switch the scale from `Lightness` to `Contrast ratio` and type the ratio each stop must reach against the light or dark foreground color, from 1 to 21. The lightness is recomputed until the ratio is met. Targets use the WCAG ratio, so check the APCA score afterwards.
 4. **Check the details on /pro** — filter the shades that pass or fail WCAG or APCA, read the score interval of each stop, and open the contrast report: sample text and font weight, the WCAG grade (A, AA or AAA), the APCA score, a readability score based on APCA and a minimum font size.
 

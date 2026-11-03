@@ -7,7 +7,7 @@ import {
 import type { APIRoute } from 'astro'
 
 import { site } from '@/config/site'
-import { getPosts, postPath } from '@/data/blog'
+import { getPosts, postPath, withArticleLinks } from '@/data/blog'
 import { audiences, capabilityGroups } from '@/data/capabilities'
 import { downloadPage, downloads } from '@/data/downloads'
 import { homeFaq, pricingFaq, type FaqItem } from '@/data/faq'
@@ -30,9 +30,9 @@ import { compareColumns, compareRows, plans } from '@/data/pricing'
 export const GET: APIRoute = async () => {
   const url = (path: string) => new URL(path, site.url).href
   const stripHtml = (html: string) => html.replace(/<[^>]+>/g, '')
-  // Article bodies: absolute links, images reduced to their description.
   const plainMarkdown = (body: string) =>
     body
+      .replace(/<!--[\s\S]*?-->\n?/g, '')
       .replace(/!\[([^\]]*)\]\([^)]*\)/g, '[Image: $1]')
       .replace(/\]\(\//g, `](${site.url}/`)
       .trim()
@@ -106,7 +106,7 @@ export const GET: APIRoute = async () => {
     '',
   ]
 
-  const capabilitySection = (page: CapabilityPage) => [
+  const capabilitySection = (page: CapabilityPage, faqItems: FaqItem[]) => [
     `## ${page.hero.title}`,
     '',
     `URL: ${url(capabilityPath(page))}`,
@@ -115,7 +115,7 @@ export const GET: APIRoute = async () => {
     '',
     ...stepsLines(page.how),
     ...page.tables.flatMap(tableLines),
-    ...faqLines(page.name, page.faq.items),
+    ...faqLines(page.name, faqItems),
   ]
 
   const compareSection = (page: ComparePage) => [
@@ -141,6 +141,9 @@ export const GET: APIRoute = async () => {
     value === true ? 'included' : value === false ? 'not included' : value
 
   const posts = await getPosts()
+  const capabilityFaqs = await Promise.all(
+    capabilityPages.map((page) => withArticleLinks(page.faq.items))
+  )
 
   const body = [
     `# ${site.name}`,
@@ -171,7 +174,9 @@ export const GET: APIRoute = async () => {
       ...item.points.map((point) => `  - ${point.lead}: ${point.text}`),
     ]),
     '',
-    ...capabilityPages.flatMap(capabilitySection),
+    ...capabilityPages.flatMap((page, index) =>
+      capabilitySection(page, capabilityFaqs[index])
+    ),
     ...platformPages.flatMap(platformSection),
     '## Download',
     '',

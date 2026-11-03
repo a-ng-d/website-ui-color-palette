@@ -28,6 +28,7 @@ const blog = defineCollection({
       tags: z.array(z.string()).default([]),
       /** Guides, Product, AI or News. */
       category: z.string().optional(),
+      /** Path of the cluster's pillar page (a capability or platform page), e.g. `/capabilities/wcag-apca-contrast`. The pillar lists the article in its related cards. See docs/seo/03-blog-clusters.md. */
       pillar: z.string().startsWith('/').optional(),
       draft: z.boolean().default(false),
       /** Overrides for search engines and social cards; each falls back to the field above. */

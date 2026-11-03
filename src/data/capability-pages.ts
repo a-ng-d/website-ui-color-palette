@@ -202,11 +202,19 @@ export const colorSpacesPage: CapabilityPage = {
     items: [
       {
         question: 'OKLCH vs HSL: which is better for a color palette?',
-        answer: `OKLCH. HSL computes lightness from the RGB channels, so a yellow and a blue at 50% lightness look nothing alike; ${htmlLink('/glossary/oklch', 'OKLCH')} lightness follows how light a color looks, so steps stay even across hues. UI Color Palette shows a warning when you pick HSL. Full comparison: ${htmlLink('/blog/oklch-vs-hsl-for-ui-palettes', 'OKLCH vs HSL for UI palettes')}.`,
+        answer: `OKLCH. HSL computes lightness from the RGB channels, so a yellow and a blue at 50% lightness look nothing alike; ${htmlLink('/glossary/oklch', 'OKLCH')} lightness follows how light a color looks, so steps stay even across hues. UI Color Palette shows a warning when you pick HSL.`,
+        article: {
+          lead: 'Full comparison',
+          post: 'oklch-vs-hsl-for-ui-palettes',
+        },
       },
       {
         question: 'LCH vs OKLCH: what is the difference?',
         answer: `Both describe a color by lightness, chroma and hue. ${htmlLink('/glossary/lch', 'LCH')} is built on CIELAB (1976) and OKLCH on ${htmlLink('/glossary/oklab', 'OKLab')} (2020), which predicts hue and lightness more evenly: blues no longer drift toward purple as chroma changes. OKLCH is the default in UI Color Palette.`,
+        article: {
+          lead: 'Full comparison',
+          post: 'lch-vs-oklch-for-design-systems',
+        },
       },
       {
         question: 'HSLuv vs OKLCH: which one should you pick?',
@@ -527,11 +535,19 @@ export const contrastPage: CapabilityPage = {
       },
       {
         question: 'APCA vs WCAG: which contrast method should I use?',
-        answer: `Both. The ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG 2.1 ratio')} is what accessibility laws and standards most often cite; ${htmlLink('/glossary/apca', 'APCA')} models perceived contrast more closely, taking text size and weight into account. UI Color Palette shows both on every shade. Full comparison: ${htmlLink('/blog/apca-vs-wcag-2-what-changes-for-ui-colors', 'APCA vs WCAG 2: what changes for UI colors')}.`,
+        answer: `Both. The ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG 2.1 ratio')} is what accessibility laws and standards most often cite; ${htmlLink('/glossary/apca', 'APCA')} models perceived contrast more closely, taking text size and weight into account. UI Color Palette shows both on every shade.`,
+        article: {
+          lead: 'Full comparison',
+          post: 'apca-vs-wcag-2-what-changes-for-ui-colors',
+        },
       },
       {
         question: 'What contrast ratio does WCAG require for text?',
-        answer: `At level AA, 4.5:1 for body text and 3:1 for large text (24px, or about 18.7px bold); at level AAA, 7:1 and 4.5:1. UI components, such as input borders and focus indicators, and meaningful graphics need 3:1 (see the ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG contrast ratio')}).`,
+        answer: `At level AA, 4.5:1 for body text and 3:1 for large text (24px, or about 18.5px bold); at level AAA, 7:1 and 4.5:1. UI components, such as input borders and focus indicators, and meaningful graphics need 3:1 (see the ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG contrast ratio')}).`,
+        article: {
+          lead: 'For buttons, borders and focus rings',
+          post: 'contrast-ratio-for-buttons-borders-and-text',
+        },
       },
       {
         question: 'Can I build a palette from target contrast ratios?',

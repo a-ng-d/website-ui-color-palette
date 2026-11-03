@@ -84,7 +84,8 @@ Candidates for wave 2:
 - Every article goes through `blog-writer`, then `seo-reviewer` and `fact-checker`, then a revision.
 - **Pillar field.** Each article sets `pillar:` in its front-matter to the path of its pillar page (`/capabilities/<slug>` or a platform page such as `/penpot`). The schema is in `src/content.config.ts`. `getPosts()` in `src/data/blog.ts` fails the build on an unknown pillar path.
 - **Pillar → article links** are automatic. `pillarArticles(path)` in `src/data/blog.ts` puts the cluster's articles, newest first, ahead of the curated related cards on capability pages (`CapabilityPageView.astro`) and platform pages (`PlatformPageView.astro`).
-- **Pillar FAQ link.** Adding the "Full comparison: …" link to the pillar FAQ answer is done by hand in `src/data/capability-pages.ts` when the article ships.
+- **Pillar FAQ link.** Set `article: { lead: 'Full comparison', post: '<post id>' }` on the pillar FAQ item in `src/data/capability-pages.ts`. `withArticleLinks()` in `src/data/blog.ts` appends "<lead>: <article title>." to the answer (page, FAQPage JSON-LD, `llms-full.txt`) only once the article is published.
+- **Scheduled publishing.** An article with a future `pubDate` is built in `npm run dev` and in Netlify deploy previews and branch deploys, so it can be reviewed, and left out of production builds until its date (`isLive` in `src/data/blog.ts`). `netlify/functions/publish-scheduled.mjs` triggers a production rebuild every day at 06:00 UTC through a build hook (`BUILD_HOOK_URL`). An article may link only to articles published on or before its own `pubDate`.
 - **Progress** is tracked in the table below.
 
 ## Progress
@@ -93,6 +94,8 @@ Candidates for wave 2:
 |---|---|---|---|
 | 1 | `apca-vs-wcag-2-what-changes-for-ui-colors` | Reviewed (SEO + facts), revised | Cover (placeholder), screenshots and Screen Studio clip |
 | 5 | `oklch-vs-hsl-for-ui-palettes` | Reviewed (SEO + facts), revised | Cover (placeholder), diagram, Screen Studio clip, export screenshot |
+| 3 | `contrast-ratio-for-buttons-borders-and-text` | Reviewed (SEO + facts), revised | Cover (placeholder), optional screenshot and clip |
+| 6 | `lch-vs-oklch-for-design-systems` | Reviewed (SEO + facts), revised | Cover (placeholder), Screen Studio clip, 2 screenshots (`TODO(asset)` comments in the body) |
 
 ## See also
 
@@ -105,3 +108,5 @@ Candidates for wave 2:
 | ---- | ------ |
 | 2026-10-26 | Created |
 | 2026-11-03 | Implementation started: `pillar` front-matter field, automatic pillar → article cards, articles 1 and 5 drafted |
+| 2026-11-03 | Articles 3 and 6 drafted (pubDate 2026-11-10), pillar FAQ links added |
+| 2026-11-03 | Scheduled publishing (future `pubDate` hidden in production, daily rebuild) and conditional pillar FAQ links |
