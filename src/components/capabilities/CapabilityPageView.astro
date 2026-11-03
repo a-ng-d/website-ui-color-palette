@@ -25,7 +25,11 @@ interface Props {
 
 const { page } = Astro.props
 const path = capabilityPath(page)
-const related = [...(await pillarArticles(path)), ...page.related]
+const articles = await pillarArticles(path)
+const related = [
+  ...articles,
+  ...page.related.filter(({ href }) => !articles.some((a) => a.href === href)),
+]
 const faqItems = await withArticleLinks(page.faq.items)
 
 const jsonLd = [

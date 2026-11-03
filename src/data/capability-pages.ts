@@ -370,6 +370,10 @@ export const colorBlindnessPage: CapabilityPage = {
       {
         question: 'Can I simulate color blindness in Figma?',
         answer: `Yes. In the UI Color Palette plugin, add a color mode to your palette and set its vision simulation to one of 8 types; the shades and their contrast update. It works the same in Penpot, Sketch and Framer (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+        article: {
+          lead: 'How to design for it',
+          post: 'designing-for-color-blindness-ui-checklist',
+        },
       },
       {
         question: 'Protanopia vs deuteranopia: how do they differ?',
@@ -552,6 +556,10 @@ export const contrastPage: CapabilityPage = {
       {
         question: 'Can I build a palette from target contrast ratios?',
         answer: `Yes, on every plan. Switch the scale to contrast ratio, type the ratio each stop must reach, and UI Color Palette recomputes its lightness; it works well with the ${htmlLink('/glossary/hsluv', 'HSLuv')} color space, on /pro. For a web and code tool built around target ratios, see ${htmlLink('/compare/ui-color-palette-vs-leonardo', 'UI Color Palette vs Adobe Leonardo')}.`,
+        article: {
+          lead: 'Step by step',
+          post: 'how-to-build-an-accessible-color-scale',
+        },
       },
       {
         question: 'Does the contrast change for color-blind users?',

@@ -44,7 +44,11 @@ const defaultSteps =
         }
       : step
   )
-const steps = [...(await pillarArticles(page.path)), ...defaultSteps]
+const articles = await pillarArticles(page.path)
+const steps = [
+  ...articles,
+  ...defaultSteps.filter(({ href }) => !articles.some((a) => a.href === href)),
+]
 
 const jsonLd = [
   organization(),

@@ -96,6 +96,8 @@ Candidates for wave 2:
 | 5 | `oklch-vs-hsl-for-ui-palettes` | Reviewed (SEO + facts), revised | Cover (placeholder), diagram, Screen Studio clip, export screenshot |
 | 3 | `contrast-ratio-for-buttons-borders-and-text` | Reviewed (SEO + facts), revised | Cover (placeholder), optional screenshot and clip |
 | 6 | `lch-vs-oklch-for-design-systems` | Reviewed (SEO + facts), revised | Cover (placeholder), Screen Studio clip, 2 screenshots (`TODO(asset)` comments in the body) |
+| 2 | `how-to-build-an-accessible-color-scale` (pubDate 2026-11-17) | Reviewed (SEO + facts), revised; cover done | 2 screenshots and a Screen Studio clip (`TODO(asset)`) |
+| 4 | `designing-for-color-blindness-ui-checklist` (pubDate 2026-11-20) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip (`TODO(asset)`) |
 
 ## See also
 
@@ -110,3 +112,4 @@ Candidates for wave 2:
 | 2026-11-03 | Implementation started: `pillar` front-matter field, automatic pillar → article cards, articles 1 and 5 drafted |
 | 2026-11-03 | Articles 3 and 6 drafted (pubDate 2026-11-10), pillar FAQ links added |
 | 2026-11-03 | Scheduled publishing (future `pubDate` hidden in production, daily rebuild) and conditional pillar FAQ links |
+| 2026-11-03 | Articles 2 and 4 drafted and reviewed; the AI post gets `/claude` as its pillar |

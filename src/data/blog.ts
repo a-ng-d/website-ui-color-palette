@@ -73,7 +73,8 @@ export const pillarArticles = async (path: string): Promise<NextStep[]> =>
 export const withArticleLinks = async (items: FaqItem[]) => {
   const posts = await getPosts()
   return items.map((item) => {
-    const post = item.article && posts.find(({ id }) => id === item.article?.post)
+    const post =
+      item.article && posts.find(({ id }) => id === item.article?.post)
     return post
       ? {
           ...item,
