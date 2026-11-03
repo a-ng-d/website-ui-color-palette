@@ -12,11 +12,8 @@ type Variant = 'primary' | 'secondary' | 'tertiary' | 'alternative'
 interface Props extends Omit<HTMLAttributes<'a'>, 'href' | 'type'> {
   href?: string
   variant?: Variant
-  /** @unoff/ui size: `default` for inline text links, `large` for actions. */
   size?: 'default' | 'large'
-  /** Stretch to fill the parent. */
   block?: boolean
-  /** Square button with only an icon; `label` becomes its accessible name. */
   iconOnly?: boolean
   label?: string
 }

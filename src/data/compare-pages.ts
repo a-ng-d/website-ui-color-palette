@@ -10,15 +10,12 @@ export interface ComparePage {
     tagline: string
     cta: { label: string; href: string }
   }
-  /** The answer-first passage, 40 to 60 words. */
   summary: string
-  /** Its columns are UI Color Palette, then the competitor. */
   table: Table
   chooseUs: string[]
   chooseThem: string[]
   faq: { intro: string; items: FaqItem[] }
   sources: { label: string; href: string }[]
-  /** YYYY-MM-DD, shown as "Last verified". */
   verified: string
   related: NextStep[]
 }

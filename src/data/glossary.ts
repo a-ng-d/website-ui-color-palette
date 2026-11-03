@@ -6,7 +6,6 @@ export type RampSpace = 'oklch' | 'lch' | 'cielab' | 'oklab' | 'hsluv'
 export interface GlossaryTerm {
   slug: string
   term: string
-  /** The h1, when "What is <term>?" does not read well. */
   question?: string
   seo: { title: string; description: string }
   definition: string

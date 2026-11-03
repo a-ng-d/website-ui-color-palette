@@ -2,7 +2,6 @@
 /** Chips acting as a single choice, driven by scripts/demos/choices.ts. A chip without `data-on` takes the inactive tokens. */
 interface Props {
   items: ReadonlyArray<{ id: string; label: string }>
-  /** Chip selected in the still picture (defaults to the first). */
   active?: string
 }
 
@@ -22,8 +21,6 @@ const { items, active = items[0]?.id } = Astro.props
 </div>
 
 <style>
-  /* One row: wrapping shifts the panel. Off chips read as “off”, not
-     disabled: outlined, with the secondary text and border tokens. */
   .choices {
     --chip-background-color-inactive: transparent;
     --chip-border-color-inactive: var(--k-panel-border);

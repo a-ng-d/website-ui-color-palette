@@ -5,12 +5,10 @@ import Tag from '@/components/ui/Tag.astro'
 import { getPosts, type Post } from '@/data/blog'
 
 interface Props {
-  /** Defaults to the latest articles. */
   posts?: Post[]
   limit?: number
   tag?: string
   title?: string
-  /** Date and category on the cards. */
   meta?: boolean
 }
 

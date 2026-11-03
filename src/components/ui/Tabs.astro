@@ -14,12 +14,9 @@ interface Item {
 }
 
 interface Props {
-  /** Unique per page: ids and radio group name. */
   name: string
-  /** Accessible name of the group (not displayed). */
   label: string
   items: Item[]
-  /** Tab selected on load (defaults to the first one). */
   active?: string
 }
 

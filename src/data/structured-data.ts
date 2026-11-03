@@ -19,7 +19,6 @@ export const websiteId = `${site.url}/#website`
 export const softwareId = `${site.url}/#software`
 export const authorId = `${site.url}/#aurelien-grimaud`
 
-/** The founder and blog author, referenced by `@id`. */
 const founder = {
   '@type': 'Person',
   '@id': authorId,

@@ -6,7 +6,6 @@ import Tabs from '@/components/ui/Tabs.astro'
 import Tag from '@/components/ui/Tag.astro'
 import { billingPeriods, plans } from '@/data/pricing'
 
-/** [period or null, content]: one entry when it never changes. */
 const variantsOf = (plan: (typeof plans)[number]) =>
   plan.variants
     ? billingPeriods.map((p) => [p.id, plan.variants![p.id]] as const)

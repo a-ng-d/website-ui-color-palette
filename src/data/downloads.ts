@@ -15,7 +15,6 @@ export interface DownloadCard {
   text: string
   cta: { label: string; href: string }
   icon: typeof figmaMono
-  /** Two columns wide on desktop. */
   wide?: boolean
   variant?: 'primary' | 'secondary'
 }

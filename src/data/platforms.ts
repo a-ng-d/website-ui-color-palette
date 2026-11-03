@@ -18,17 +18,12 @@ export interface Platform {
   id: 'figma' | 'penpot' | 'sketch' | 'framer' | 'claude'
   name: string
   href: string
-  /** Playful call to action shown under the name on the home grid. */
   pun: string
   logo: ImageMetadata
-  /** Brand tile colour behind the logo. */
   tile: string
-  /** Tilt of the logo tile in degrees. */
   tilt: number
   shards: ImageMetadata
-  /** Position of the decorative rays around the tile (CSS inset). */
   shardsInset: string
-  /** Monochrome icon used in the “Add to …” list (inlined, follows currentColor). */
   icon: typeof figmaMono
   isNew?: boolean
 }

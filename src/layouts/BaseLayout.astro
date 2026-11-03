@@ -21,7 +21,6 @@ export type Props = SeoProps
       name="viewport"
       content="width=device-width, initial-scale=1"
     />
-    <!-- Apply the saved (or system) colour mode before first paint. -->
     <script is:inline>
       try {
         const saved = localStorage.getItem('uicp-theme')
@@ -34,7 +33,6 @@ export type Props = SeoProps
       } catch {}
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
         document.documentElement.classList.add('motion')
-        // Safety net: if the reveal script never runs, show everything.
         setTimeout(() => {
           if (!window.__revealReady)
             document.documentElement.classList.remove('motion')
