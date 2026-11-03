@@ -7,6 +7,7 @@ interface Props {
     paragraphs: string[]
     /** One action renders secondary; with two, the first is primary. */
     actions?: { label: string; href: string }[]
+    links?: { label: string; href: string }[]
   }[]
 }
 
@@ -27,6 +28,22 @@ const { cards } = Astro.props
             set:html={paragraph}
           />
         ))}
+        {card.links && (
+          <ul class="text-cards__links">
+            {card.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  {...(/^https?:/.test(link.href)
+                    ? { target: '_blank', rel: 'noopener' }
+                    : {})}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
         {card.actions && (
           <div class="text-cards__actions">
             {card.actions.map((action, index) => (
@@ -63,6 +80,21 @@ const { cards } = Astro.props
   }
 
   .text-cards__card p :global(a) {
+    text-decoration: underline;
+  }
+
+  .text-cards__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-gap-200) var(--space-gap-600);
+    margin: 0;
+    padding: 0;
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+    list-style: none;
+  }
+
+  .text-cards__links a {
     text-decoration: underline;
   }
 

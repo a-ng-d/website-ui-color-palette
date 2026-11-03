@@ -19,7 +19,6 @@ export const websiteId = `${site.url}/#website`
 export const softwareId = `${site.url}/#software`
 export const authorId = `${site.url}/#aurelien-grimaud`
 
-/** The founder and blog author, referenced by `@id`. */
 const founder = {
   '@type': 'Person',
   '@id': authorId,
@@ -113,9 +112,12 @@ export const webPage = (page: {
   name: string
   description: string
   about?: string
+  type?: 'WebPage' | 'CollectionPage'
+  dateModified?: string
+  mainEntity?: object
 }) => ({
   '@context': 'https://schema.org',
-  '@type': 'WebPage',
+  '@type': page.type ?? 'WebPage',
   '@id': `${absolute(page.path)}#webpage`,
   url: absolute(page.path),
   name: page.name,
@@ -123,6 +125,8 @@ export const webPage = (page: {
   inLanguage: site.locale,
   isPartOf: { '@id': websiteId },
   ...(page.about ? { about: { '@id': page.about } } : {}),
+  ...(page.dateModified ? { dateModified: page.dateModified } : {}),
+  ...(page.mainEntity ? { mainEntity: page.mainEntity } : {}),
 })
 
 export const pricingOffers = () => {

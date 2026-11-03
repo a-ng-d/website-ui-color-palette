@@ -1,6 +1,6 @@
 # Phase 2 — Capability, comparison, platform and glossary pages
 
-- **Status**: In progress — steps 1 to 4 done (branch `seo/phase-2`); steps 5 to 8 to do. See [Progress](#progress).
+- **Status**: Done — steps 1 to 4 on branch `seo/phase-2`, steps 5 to 8 (Lots A, B, C and D) on branch `seo/phase-2-2`. Open items are listed in [Follow-ups](#follow-ups). See [Progress](#progress).
 - **Package(s) concerned**: `website-ui-color-palette`
 - **Related spec**: [README.md](README.md), [03-blog-clusters.md](03-blog-clusters.md), [00-measurement.md](00-measurement.md)
 
@@ -39,7 +39,7 @@ Phase 1b ([01-indexation-recovery.md](01-indexation-recovery.md)) ships first. T
 
 ## Progress
 
-Last update: 2026-10-28.
+Last update: 2026-10-30.
 
 | Order | Status | Live pages |
 |---|---|---|
@@ -47,38 +47,55 @@ Last update: 2026-10-28.
 | 2 | Done | `/capabilities/oklch-lch-color-spaces`, `/glossary`, `/glossary/oklch`, `/glossary/lch`, `/glossary/oklab`, `/glossary/hsluv` |
 | 3 | Done | `/capabilities/color-blindness-simulation`, `/glossary/color-blindness-types` |
 | 4 | Done | `/capabilities/wcag-apca-contrast`, `/glossary/apca`, `/glossary/wcag-contrast-ratio` |
-| 5 | To do | `color-palette-generator` |
-| 6 | To do | `/figma`, then `/framer` (Lot C, same blocks as `/claude`) |
-| 7 | To do | `tailwind-color-palette`, `swiftui-compose-colors` |
-| 8 | To do | Lot A: `export-design-tokens`, `ai-color-palette-generator`, `image-to-color-palette`, `color-wheel-harmony`, `light-dark-themes`, `design-system-presets`, `semantic-color-system`. Lot C: `/penpot`, `/sketch`. Lot D: `cielab`, `color-scale`, `design-token`, `semantic-color`, `color-harmony`. Lot B: the 5 comparison pages and the `/compare` hub |
+| 5 | Done | `/capabilities/color-palette-generator`; the `color-scale` term now links to it |
+| 6 | Done | `/figma` (Figma products table, plans, setup, FAQ) and `/framer` (what syncs to Framer, plans, setup, FAQ) |
+| 7 | Done | `/capabilities/tailwind-color-palette`, `/capabilities/swiftui-compose-colors` (real export samples from `generate_code`) |
+| 8 | Done | Lot A, Lot C (`/penpot`, `/sketch`), Lot D, and Lot B: `/compare` and the 5 comparison pages (Coolors, Adobe Leonardo, Material Theme Builder, Radix Colors, Realtime Colors) |
 
-Lot A pages left: 10 of 13 (`mcp-color-palette` is merged into `/claude`). Lot C: 4 of 5. Lot D: 5 of 12 (the hub is live). Lot B: all 6.
+Lot A: done (13 pages, `mcp-color-palette` merged into `/claude`) (`mcp-color-palette` is merged into `/claude`). Lot C: done. Lot D: done (12 terms and the hub). Lot B: all 6.
 
 ### What is in place for the next pages
 
+- **`/capabilities` hub**: the "Capabilities in depth" row is `capabilities/InDepthSection` (compact cards, data `inDepth`), fed by `capabilityPages`, so new pages join it automatically.
 - **Capability page**: a `CapabilityPage` in `src/data/capability-pages.ts`, rendered by `CapabilityPageView` at `/capabilities/<slug>`. A new page is data only; each planned page has a matching demo in `src/components/capabilities/demos/`.
-- **Glossary term**: a `GlossaryTerm` in `src/data/glossary.ts` (optional `question` h1, `visual`, `table`, `capability`). Visuals: `HueRamp`, `VisionRamp`, `ContrastRamp`.
+- **Glossary term**: a `GlossaryTerm` in `src/data/glossary.ts` (optional `question` h1, `visual`, `table`, `capability`). Visuals: `HueRamp`, `VisionRamp`, `ContrastRamp`, `ScaleRamp`, `TokenRamp` (primitive or semantic layer), `HarmonyRamp`.
 - **Platform page**: optional `setup`, `tables`, `faq` and `nextSteps` on `PlatformPage` (used by `/claude` only so far).
 - **Wiring is automatic**: `/capabilities` "Capabilities in depth" row, `/glossary` hub, `llms.txt` / `llms-full.txt`, sitemap `lastmod`, breadcrumbs and JSON-LD come from the data.
 - **Reviews per step**: `seo-reviewer`, `fact-checker` and `style-guardian`, then the fixes, before merge.
 
 ### Follow-ups
 
-- **`/capabilities` "Capabilities in depth" row**: a compact card variant is needed past about 8 pages (around step 7).
+- **Interim capability links (Lot D)**: none left; every glossary term links to a live Lot A page.
+- **Glossary vs Lot A ownership**: a glossary term owns "what is X" and the definition; its Lot A page owns "how to do it in the tool" (formats, presets, plan detail). Keep tool detail out of the term pages.
+- **Unsourced claim on live terms**: `oklch` and `oklab` say "Switching … keeps your scale and your source colors"; no spec or doc states it. Confirm with the product owner or rewrite as on `cielab`.
+- **Spec conflicts found by the fact-check**: resolved on 2026-10-29 in `specs-ui-color-palette` — plan content removed from the specs (plans live only in docs `free-and-pro.md`), `scale.md` now counts 19 presets (3 custom + 16 named), and the contracts list the `system?` input of `generate_code`.
+- **Doc and spec conflicts found on step 6** (product owner to settle, pages follow the spec):
+  - Framer sync: the spec pairs each shade with its mirror shade as the dark value; the docs Framer sync guide says the dark color is "generated by inverting the base color". Reword the docs.
+  - Framer storage: the spec and the Framer docs store palettes in the browser; `palette-publication-lifecycle.md` says "in your Framer project", and Framer `free-and-pro.md` caps palettes "per document". How the /basic cap counts across browsers is not documented.
+  - Figma docs sync guide: a default variable mode named `Value` whose interplay with the Starter 1-mode cap is not documented.
+  - "Simulate on selection" has docs guides (Figma, Framer, /pro) but its specs (`apply-simulate-palette.md`, `apply-to-selection.md`) are Draft, so it stays off the site.
+  - Penpot and Sketch guides say "Team Library" (Figma's term).
+  - The Framer embed passes `editor=penpot` on purpose until the plugin team confirms the Framer value.
+- **Export pages ownership**: `tailwind-color-palette` owns the Tailwind queries (including "tailwind v4 oklch colors"), `swiftui-compose-colors` owns SwiftUI, UIKit, Compose and Android XML, and the future `export-design-tokens` owns DTCG, Style Dictionary and "design tokens colors". Keep DTCG and Style Dictionary out of the first two beyond a link; when `export-design-tokens` ships, link it from both ("See all export formats").
+- **Code samples**: multi-line `code` renders as a scrollable `<pre><code>` through `CodeSnippet`; samples come from real `generate_code` output, trimmed with a code comment, never hand-written.
+- **Semantic layer in exports**: the design-tool Export writes primitives only (no in-plugin color system yet); with Claude or the MCP server, `generate_code` with a color system adds semantic tokens in every format, DTCG included (one semantic file per mode with a resolver). The docs export guide's "DTCG only exports primitives" is true of the plugin Export only.
+- **Tokens demo**: the `tokens` capability demo shows a simplified DTCG `$value` (a hex string); the real export uses an object (`colorSpace`, `components`, `hex`). Align the demo or caption it as simplified.
+- **Generate-it pages, sources to align**: the plugins' image input has a PNG drop zone (drag and drop or browse) plus paste, though `image-extraction.md` says there is no upload button; the docs say a JPEG "will result in an error" while it is silently ignored; Penpot has no canvas image selection (its host does not push the selected image); the UI buttons read "Create a UI Color Palette with these colors", not the docs' "Use this palette"; `en-US.json` still holds per-action credit strings.
+- **Presets sources to align**: `en-US.json` labels Spectrum Neutral "25-900" while the code has 50–900 (the docs were fixed to 50–900, and ADS Foundations to 10 stops 100–1000, ADS Foundations Neutral to 12 stops 0–1100); the docs call the Custom 1–10 set the default while the code defaults to Custom 10–100.
+- **Comparisons**: competitor facts were verified on 2026-11-03 from primary sources only. Not confirmed, so shown as "not documented": Coolors' generation model and what its Figma plugin creates; color blindness simulation in Material Theme Builder, Radix Colors and Realtime Colors. Material Theme Builder's Figma variables are documented only on a Google DesignCompose page. Refresh every quarter (Phase 5): re-check each competitor and bump `verified`. Figma Community listings return HTTP 403 to automated fetches; check them by hand.
 - **Cluster articles** ([03-blog-clusters.md](03-blog-clusters.md)): when an article ships, link it from its pillar page (related cards, FAQ "Full comparison") and respect the ownership rules recorded there.
 - **Lighthouse**: run on mobile on one capability page after deploy (SEO = 100, green Core Web Vitals) — not done yet.
 - **Sitemap `lastmod`**: check that the new URLs carry a date after deploy (it comes from the git history of the data files).
-- **Docs glossary**: link each docs entry to its site term page (OKLCH, LCH, OKLab, HSLuv, the 8 color blindness types, APCA, WCAG 2.1), as Lot D requires.
-- **Docs**: `general/introduction/free-and-pro.md` lists hue/chroma distribution curves as `/pro`, but `hue-chroma-distribution.md` is a Draft spec.
+- **Docs glossary**: link each docs entry to its site term page (OKLCH, LCH, OKLab, HSLuv, CIELAB, Primitive colors → design token, Semantic colors, the 8 color blindness types, APCA, WCAG 2.1), as Lot D requires.
 
 ### Acceptance criteria, where they stand
 
-- Lot A pages: one h1 with the primary query, a 40–60 word lead, FAQPage + BreadcrumbList + WebPage JSON-LD, ≥3 links out and ≥2 in, fact-checked — met for the 3 live pages.
+- Lot A pages: one h1 with the primary query, a 40–60 word lead, FAQPage + BreadcrumbList + WebPage JSON-LD, ≥3 links out and ≥2 in, fact-checked — met for the 13 live pages.
 - `/capabilities` links to every Lot A page — met (through the "Capabilities in depth" row).
-- Platform pages: capability matrix, setup guide, FAQ with FAQPage, ≥3 Lot A links — met for `/claude`; `/figma`, `/penpot`, `/sketch`, `/framer` to do.
-- Glossary terms: definition of 60 words or fewer first, `DefinedTerm` linked to the `/glossary` `DefinedTermSet` — met for the 7 live terms.
+- Platform pages: capability matrix, setup guide, FAQ with FAQPage, ≥3 Lot A links — met for the 5 platform pages.
+- Glossary terms: definition of 60 words or fewer first, `DefinedTerm` linked to the `/glossary` `DefinedTermSet` — met for the 12 live terms.
 - Sitemap, `llms.txt`, `llms-full.txt` — met for every new page (`lastmod` to check after deploy).
-- Comparison pages and Lighthouse — not started.
+- Comparison pages: "Last verified", "When to choose <competitor>" and no superlatives — met for the 5 pages. Lighthouse — not run yet.
 
 ## Lot A — capability pages
 
@@ -108,7 +125,7 @@ The table keeps the original numbering. The production order is the one above.
 3. A visual (video or screenshot, using the blog's video and image conventions) with descriptive alt text.
 4. **How it works**: 3–5 steps grounded in the docs guide for that feature.
 5. **What you get**: specifics such as formats, presets, modes and counts, sourced from the spec.
-6. **Availability**: platforms (from `platform-capabilities.md`) and plan (/basic vs /pro, from `plans.md`), with no price amounts.
+6. **Availability**: platforms (from `platform-capabilities.md`) and plan (/basic vs /pro, from docs `general/introduction/free-and-pro.md`), with no price amounts.
 7. **FAQ**: 4–6 real questions taken from GSC and People Also Ask.
 8. **Related**: 2 cluster articles (from Phase 3), the relevant platform pages and the next capability.
 9. CTA to install or download, with UTM parameters (see Phase 0).
@@ -145,6 +162,8 @@ Rules for every comparison page:
 ## Lot C — enrich platform pages
 
 The existing `/figma`, `/penpot`, `/sketch`, `/framer` and `/claude` pages are rendered by `PlatformPageView.astro` from `src/data/platform-pages.ts`. URLs stay unchanged.
+
+**Naming rule (product owner, 2026-10-30)**: the h1 of every platform page is "UI Color Palette for <Platform>", and its title starts with it ("UI Color Palette for <Platform> — <query>"). The primary query goes in the rest of the title, the tagline and the section headings.
 
 Add to each one:
 1. A **platform-specific capability matrix** taken from `docs/general/introduction/platform-capabilities.md`. For example, Penpot syncs native tokens, and Figma syncs variables and styles.
@@ -240,3 +259,17 @@ Add to each one:
 | 2026-10-28 | Step 3 done: `/capabilities/color-blindness-simulation` (demo `simulations`) and `/glossary/color-blindness-types` (8-type table, `VisionRamp` visual computed with the engine's matrices). Glossary terms gained `question`, `visual`, `table` and `capability` |
 | 2026-10-28 | Step 4 done: `/capabilities/wcag-apca-contrast` (demo `contrast`), `/glossary/apca` and `/glossary/wcag-contrast-ratio` (thresholds and APCA levels tables, `ContrastRamp` visual with real WCAG/APCA scores) |
 | 2026-10-28 | `/claude` closing cards now link the 3 live Lot A pages (contrast, OKLCH, color blindness): the "≥3 Lot A links" criterion is met for `/claude` |
+| 2026-10-29 | Lot D done: `/glossary/cielab`, `/glossary/color-scale`, `/glossary/design-token`, `/glossary/semantic-color`, `/glossary/color-harmony` (visuals `ScaleRamp`, `TokenRamp`, `HarmonyRamp`; `HueRamp` gains CIELAB). Interim capability links to `/capabilities` anchors and `/claude`. Reviewed by `seo-reviewer`, `fact-checker` and `style-guardian`, fixes applied |
+| 2026-10-30 | Step 5 done: `/capabilities/color-palette-generator` (demo `ready`, tables of ways to start and plans, FAQ for "color scale generator figma", shades and palette manager queries); linked from `/capabilities`, the contrast page and `/glossary/color-scale`. Reviewed by `seo-reviewer` and `fact-checker`, fixes applied. Specs aligned: Color Hunt on every platform, hue/chroma distribution curves Implemented |
+| 2026-10-30 | Step 6 done: `/figma` and `/framer` enriched (setup guide, capability and plans tables, FAQ + FAQPage, 4 Lot A links); h1 and titles target the platform plugin queries. The generator title drops "for Figma" to leave that intent to `/figma`. Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |
+| 2026-10-30 | Naming rule: platform pages keep "UI Color Palette for <Platform>" as h1 and title prefix; `/figma`, `/framer` and `/claude` restored to it, the query moved to the title suffix and the tagline |
+| 2026-10-30 | Step 7 done: `/capabilities/tailwind-color-palette` (v4/v3 table, Tailwind v4 with OKLCH block, plans) and `/capabilities/swiftui-compose-colors` (four native formats, availability per platform); `CodeSnippet` renders multi-line samples as `<pre><code>`. Reviewed by `seo-reviewer`, `fact-checker` and `style-guardian`, fixes applied |
+| 2026-10-30 | Lot C done: `/penpot` (tokens and library colors sync table, plans, setup, FAQ) and `/sketch` (variables and layer styles sync table, plans, setup, FAQ); "Material 3 and Tailwind are free" added to the preset step of the 4 design-tool pages. Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |
+| 2026-10-30 | Product owner: Sketch matches variables by name (renaming a source color unlinks the published ones) — spec, docs and `/sketch` aligned; sync lock icons removed from the Figma, Penpot and Sketch docs (sync is free); "open-source" (Penpot) and "Mac" (Sketch) stay as marketing copy, no spec needed |
+| 2026-10-30 | `/capabilities` "Capabilities in depth" row moved to compact cards (`InDepthSection`: intro card, 3-column grid of name + tagline); shared `.card:hover .text-button--secondary` rule in `unoff-links.css` replaces three local copies (glossary, post cards, in-depth). Reviewed by `style-guardian`, fixes applied |
+| 2026-10-30 | Product owner: deep sync works (deletes every item no longer in the palette, hand-added ones included). `preferences.md`, the docs preferences pages (tokens preference on Penpot added) and the `/penpot` sync table aligned |
+| 2026-10-30 | Product owner: deep sync preferences are free, like the sync itself — docs (preferences, free-and-pro) and `/penpot` updated |
+| 2026-10-30 | Step 8: `/capabilities/export-design-tokens` (four JSON formats, real DTCG sample, availability) and `/capabilities/semantic-color-system` (primitive vs semantic table, naming patterns with a real semantic CSS sample, outputs; glossary TokenRamp as visual). Glossary `design-token` and `semantic-color` repointed to them; `/claude` links the semantic page. Table intros and notes no longer render `<code>` as text. Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |
+| 2026-11-02 | Step 8: `/capabilities/ai-color-palette-generator` (12 presets, where to generate), `/capabilities/image-to-color-palette` (image sources; canvas selection on Figma, Sketch and Framer only) and `/capabilities/color-wheel-harmony` (five rules with the engine's hue math). Generator "ways to start" rows and the AI blog post link to them; glossary `color-harmony` repointed (no interim link left). Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |
+| 2026-11-03 | Lot A done: `/capabilities/light-dark-themes` (mode settings, how modes reach each tool, real CSS sample with a reversed dark scale) and `/capabilities/design-system-presets` (16 presets from the code, custom sets). Generator FAQ fixed (ADS Foundations has 10 stops); docs preset list and free-and-pro (per-shade scores free) updated. Reviewed by `seo-reviewer` and `fact-checker`, fixes applied |
+| 2026-11-03 | Lot B done: `/compare` hub (`CollectionPage` + `ItemList`) and 5 comparison pages (`ComparePage` data, `ComparePageView`), competitor facts from a dated primary-source check; sitemap `lastmod` and JSON-LD `dateModified` read `verified`; `TextCardsSection` gains a `links` list. Lot A FAQs link each comparison. Reviewed by `seo-reviewer`, `fact-checker` and `style-guardian`, fixes applied |

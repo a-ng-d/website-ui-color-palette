@@ -4,20 +4,16 @@ import { site } from '@/config/site'
 export interface Props {
   title?: string
   description?: string
-  /** Absolute or root-relative image path for social previews. */
   image?: string
   imageAlt?: string
   type?: 'website' | 'article'
   noindex?: boolean
-  /** JSON-LD objects, each rendered in its own script tag. */
   jsonLd?: Record<string, unknown>[]
   publishedTime?: Date
   modifiedTime?: Date
-  /** Article only. */
   author?: string
   section?: string
   tags?: string[]
-  /** Overrides the computed canonical (content first published elsewhere). */
   canonicalUrl?: string
 }
 

@@ -1,4 +1,5 @@
 ---
+import CodeSnippet from '@/components/ui/CodeSnippet.astro'
 import Button from '@/components/ui/Button.astro'
 import StackSection from '@/components/ui/StackSection.astro'
 import type { Steps } from '@/data/blocks'
@@ -43,7 +44,7 @@ const { id, steps } = Astro.props
       <div class="setup__body">
         <h3 class="t-paragraph-secondary-title">{step.title}</h3>
         <p class="t-accent">{step.text}</p>
-        {step.code && <code class="code-snippet">{step.code}</code>}
+        {step.code && <CodeSnippet code={step.code} />}
       </div>
     </li>
   ))}

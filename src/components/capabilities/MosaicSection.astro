@@ -4,15 +4,9 @@ import FeatureCard from './FeatureCard.astro'
 
 interface Props {
   group: CapabilityGroup
-  /** Columns on desktop. */
   columns?: 2 | 3 | 4
-  /** Columns from 640 to 1024px. */
   tabletColumns?: 1 | 2
   mediaFirst?: boolean
-  /**
-   * Platform whose UI the demos wear (`data-platform`); the page imports
-   * the matching generated/unoff-tokens-<platform>.css.
-   */
   platform?: string
 }
 
@@ -24,8 +18,6 @@ const {
   platform,
 } = Astro.props
 const titleId = `${group.id}-title`
-// On two tablet columns, an odd count of single cards leaves the last one
-// alone: it takes the whole row.
 const singles = group.cards.filter((card) => (card.span ?? 1) === 1).length
 const lastAlone = tabletColumns === 2 && singles % 2 === 1
 ---

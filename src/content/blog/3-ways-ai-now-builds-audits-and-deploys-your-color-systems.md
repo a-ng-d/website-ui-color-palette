@@ -79,6 +79,8 @@ Compose your setup à la carte:
 - 🧩 **Claude plugin** — the all-in-one option: [install it from the Yelbolt marketplace →](https://uicp.ylb.lt/run-claude-plugin)
 - 📖 **Reference** — [read the MCP documentation →](https://uicp.ylb.lt/docs-mcp)
 
+Prefer to start from a prompt inside your design tool? See the [AI color palette generator](/capabilities/ai-color-palette-generator).
+
 There's more to explore: palette import from Coolors and Realtime Colors, colorblindness simulations, cloud publishing, community browsing. [See everything UI Color Palette can do →](/capabilities)
 
 And tell us what you think — this is a first release, and your feedback drives what we build next: [share it here →](https://uicp.ylb.lt/feedback).

@@ -4,14 +4,12 @@
  * more knobs (`[data-knob]`, positioned in % by the demo scripts).
  */
 interface Knob {
-  /** Position on the track, 0–100. */
   at: number
   label: string
 }
 
 interface Props {
   knobs: Knob[]
-  /** CSS background of the track (gradient of the values). */
   track?: string
   class?: string
   [key: `data-${string}`]: unknown

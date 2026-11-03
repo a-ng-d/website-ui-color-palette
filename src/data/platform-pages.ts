@@ -99,17 +99,18 @@ export const figmaPage: PlatformPage = {
   docs: `${links.docs}/figma`,
   platform: 'Figma',
   seo: {
-    title: 'UI Color Palette for Figma — Accessible Color Scales',
+    title: 'UI Color Palette for Figma — Color Palette Plugin',
     description:
-      'Build WCAG-compliant color palettes right inside Figma. Generate scales, check contrast, and sync styles, variables, and tokens without leaving your file.',
+      'Figma color palette plugin: build accessible scales and sync them to local variables and styles, with WCAG and APCA scores on every shade. Free to start.',
   },
   hero: {
     title: 'UI Color Palette for Figma',
-    tagline: 'Accessible color scales, native to the whole Figma family.',
+    tagline:
+      'The Figma color palette plugin for accessible scales, synced to your variables and styles.',
     cta: { label: 'Add to Figma', href: links.runFigmaPlugin },
   },
   surfaces: {
-    title: 'One plugin, targeted for each Figma product',
+    title: 'A color palette plugin for each Figma product',
     intro:
       "UI Color Palette lives across Figma's product line and adapts to what each surface can do — from full design systems to pure creation, and even your IDE. Wherever you work in Figma, you're covered.",
     embed: {
@@ -120,12 +121,12 @@ export const figmaPage: PlatformPage = {
       {
         icon: 'ruler',
         title: 'Figma Design',
-        text: 'The full experience — generate, master, and deploy to variables & styles with color modes and export. Hand off straight into Dev Mode.',
+        text: 'The full experience — generate, master, and deploy to variables & styles with color modes and export. Developers can then browse it in Dev Mode and export it to code.',
       },
       {
         icon: 'paintbrush',
         title: 'Figma Buzz & FigJam',
-        text: "Creation-focused — modes, variables and styles aren't available here, so UI Color Palette shines at generating and exporting palettes.",
+        text: 'Creation-focused — FigJam creates palettes and exports them to code; Buzz creates palettes, without color modes or export. Neither syncs with styles or variables.',
       },
       {
         icon: 'code-xml',
@@ -135,6 +136,153 @@ export const figmaPage: PlatformPage = {
     ],
   },
   why: designToolWhy,
+  setup: {
+    title: 'How to set up the color palette plugin in Figma',
+    docs: {
+      label: 'Read the Figma guides in the docs',
+      href: `${links.docs}/figma`,
+    },
+    intro:
+      'Add the plugin from the Figma Community, build the palette in your file, then sync it with your local styles and variables.',
+    steps: [
+      {
+        title: 'Add the plugin to Figma',
+        text: 'Open UI Color Palette on the Figma Community and run it in a Figma Design file. Palettes are saved on the page you are on, for everyone who opens the file.',
+      },
+      {
+        title: 'Create a palette',
+        text: 'Click + in the Palettes manager. Select filled layers first to start from their colors, or start from AI, an image, a color harmony or Color Hunt.',
+      },
+      {
+        title: 'Tune the scale and the contrast',
+        text: 'Pick a scale preset (Material 3 and Tailwind are free), set each stop by lightness or target contrast ratio, and read the WCAG 2.1 and APCA score of every shade.',
+      },
+      {
+        title: 'Sync with local styles or variables',
+        text: 'Sync with the local variables to get one collection named after the palette, with one mode per color mode; or with the local styles. Run it again after each change: existing styles and variables are updated, never duplicated.',
+      },
+      {
+        title: 'Hand it off',
+        text: 'Publish the styles and variables as a team library, and developers can open the palette in Dev Mode to read its scores and export it to code.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'figma-products',
+      title: 'What the plugin does in each Figma product',
+      intro:
+        'UI Color Palette runs across the Figma product line, with a set of features tailored to each one.',
+      caption: 'UI Color Palette features per Figma product',
+      rowHeader: 'Figma product',
+      columns: [
+        'Create and edit palettes',
+        'Sync to styles',
+        'Sync to variables',
+        'Export to code',
+      ],
+      rows: [
+        { label: 'Figma Design', values: [true, true, true, true] },
+        { label: 'Dev Mode', values: [false, false, false, true] },
+        {
+          label: 'VS Code (Figma plugin)',
+          values: [false, false, false, true],
+        },
+        { label: 'FigJam', values: [true, false, false, true] },
+        { label: 'Figma Buzz', values: [true, false, false, false] },
+      ],
+      note: 'In Dev Mode and in VS Code, you browse the palettes of the selected page, read their properties and contrast scores, and export them; a designer creates them in Figma Design. Buzz has no color modes.',
+    },
+    {
+      id: 'plans',
+      title: 'What you get on each plan in Figma',
+      intro:
+        'Syncing with your Figma library is free. Volume, documentation and most code formats are on /pro.',
+      caption: 'UI Color Palette for Figma, per plan',
+      rowHeader: 'Feature',
+      columns: ['/basic', '/pro'],
+      rows: [
+        { label: 'Palettes per page', values: ['1', 'Unlimited'] },
+        { label: 'Source colors per palette', values: ['5', 'Unlimited'] },
+        { label: 'Color modes per palette', values: ['2', 'Unlimited'] },
+        { label: 'Sync with local styles and variables', values: [true, true] },
+        {
+          label: 'WCAG 2.1 and APCA score on every shade',
+          values: [true, true],
+        },
+        { label: 'Palette documentation as frames', values: [false, true] },
+        {
+          label: 'Export to code',
+          values: [
+            'CSS',
+            'Every format: tokens, Tailwind, SCSS, Less, Apple, Android…',
+          ],
+        },
+      ],
+      note: 'Figma itself caps variable modes per collection: 1 on the Starter plan, 10 on Professional and Organization.',
+    },
+  ],
+  faq: {
+    intro:
+      'Installing the plugin, syncing variables and styles, and using it beyond Figma Design.',
+    items: [
+      {
+        question: 'Is there a free color palette plugin for Figma?',
+        answer: `Yes. On the free /basic plan, UI Color Palette builds one palette per page with up to 5 source colors and 2 color modes, shows the WCAG 2.1 and APCA score of every shade, syncs with your local styles and variables, and exports to CSS. /pro lifts the caps (see ${htmlLink('/pricing', 'pricing')}).`,
+      },
+      {
+        question: 'How do I turn a color palette into Figma variables?',
+        answer:
+          'Click Sync with the local variables. UI Color Palette creates a collection named after the palette, with the shades grouped by source color and one mode per color mode. Each generated shade’s description gives its lightness and its WCAG and APCA scores, so anyone inspecting it sees them without the plugin.',
+      },
+      {
+        question: 'Can I use UI Color Palette in Dev Mode?',
+        answer:
+          'Yes. In Dev Mode, and in the VS Code Figma plugin, you browse the palettes of the selected page, read the properties and contrast scores of each shade, and export the palette to code. The palettes themselves are created in Figma Design.',
+      },
+      {
+        question: 'Is there a color palette plugin for FigJam?',
+        answer:
+          'Yes. In FigJam you can create palettes and export them to code, but not sync them with styles or variables, which FigJam does not support.',
+      },
+      {
+        question: 'How many color modes can a palette sync as variable modes?',
+        answer: `Up to the lower of two caps: your UI Color Palette plan (2 color modes on /basic, unlimited on /pro) and your Figma plan (1 mode per collection on Starter, 10 on Professional and Organization). A color mode that cannot get its own variable mode is skipped with a warning, and the rest of the sync goes through. See how to build them in a ${htmlLink('/capabilities/light-dark-themes', 'dark mode color palette')}.`,
+      },
+      {
+        question:
+          'What is the difference between the UI Color Palette /one and /team Figma plugins?',
+        answer:
+          'They are two Figma plugins. /one works with a subscription; /team works with license keys, one seat per user. New /team license sales are suspended, and existing keys remain supported.',
+      },
+    ],
+  },
+  nextSteps: [
+    {
+      icon: 'glasses',
+      title: 'Generate a UI color palette',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'Check WCAG & APCA contrast',
+      label: 'See the capability',
+      href: '/capabilities/wcag-apca-contrast',
+    },
+    {
+      icon: 'glasses',
+      title: 'Build palettes in OKLCH',
+      label: 'See the capability',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+    {
+      icon: 'glasses',
+      title: 'Simulate color blindness',
+      label: 'See the capability',
+      href: '/capabilities/color-blindness-simulation',
+    },
+  ],
 }
 
 export const penpotPage: PlatformPage = {
@@ -142,17 +290,18 @@ export const penpotPage: PlatformPage = {
   docs: `${links.docs}/penpot`,
   platform: 'Penpot',
   seo: {
-    title: 'UI Color Palette for Penpot — Open-Source Color',
+    title: 'UI Color Palette for Penpot — Plugin & Color Tokens',
     description:
-      'Create accessible color palettes in Penpot, tokens included. Generate scales, master contrast, and export open design tokens for your whole team.',
+      'Penpot color palette plugin: build accessible scales and sync them to native Penpot design tokens and library colors, with WCAG and APCA scores. Free to start.',
   },
   hero: {
     title: 'UI Color Palette for Penpot',
-    tagline: 'Accessible color scales, the open-source way.',
+    tagline:
+      'The Penpot color palette plugin: accessible scales synced to native color tokens, the open-source way.',
     cta: { label: 'Add to Penpot', href: links.runPenpotPlugin },
   },
   surfaces: {
-    title: 'Open-source color, tokens included',
+    title: 'Open-source Penpot color tokens, built from your palette',
     intro:
       'Generate, master, and deploy accessible color scales end to end — with every shade delivered as tokens, right where Penpot expects them.',
     embed: {
@@ -163,7 +312,7 @@ export const penpotPage: PlatformPage = {
       {
         icon: 'coins',
         title: 'Everything, with tokens',
-        text: 'The full generate → master → deploy flow — styles, modes, export — with your palette delivered as tokens (W3C DTCG, Tokens Studio, Style Dictionary).',
+        text: 'The full generate → master → deploy flow — styles, modes, export — with your palette synced as native Penpot design tokens, and exportable as W3C DTCG, Style Dictionary or Tokens Studio JSON on /pro.',
       },
       {
         icon: 'package-open',
@@ -174,6 +323,156 @@ export const penpotPage: PlatformPage = {
     ],
   },
   why: designToolWhy,
+  setup: {
+    title: 'How to set up the color palette plugin in Penpot',
+    docs: {
+      label: 'Read the Penpot guides in the docs',
+      href: `${links.docs}/penpot`,
+    },
+    intro:
+      'Add the plugin to Penpot, build the palette in your file, then sync it with Penpot’s native design tokens or its library colors.',
+    steps: [
+      {
+        title: 'Add the plugin to Penpot',
+        text: 'Paste the UI Color Palette manifest link in Penpot’s plugin manager, then open the plugin in a file. Palettes are saved on the page you are on, for everyone who opens the file.',
+      },
+      {
+        title: 'Create a palette',
+        text: 'Click + in the Palettes manager. Select filled layers first to start from their colors, or start from AI, an image, a color harmony or Color Hunt.',
+      },
+      {
+        title: 'Tune the scale and the contrast',
+        text: 'Pick a scale preset (Material 3 and Tailwind are free), set each stop by lightness or target contrast ratio, and read the WCAG 2.1 and APCA score of every shade.',
+      },
+      {
+        title: 'Sync with tokens',
+        text: 'Click Synchronize, then Synchronize with tokens. Every shade becomes a Penpot design token, with one token set and one Penpot theme per color mode. Run it again after each change: existing sets, themes and tokens are updated, never duplicated.',
+      },
+      {
+        title: 'Or sync with library colors',
+        text: 'Sync with the local styles to add every shade to the file’s library colors instead, grouped by source color, and publish them as a library.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'penpot-sync',
+      title: 'What a sync creates in Penpot: color tokens or library colors',
+      intro:
+        'Penpot has native design tokens, so the palette can land as tokens with themes, or as plain library colors.',
+      caption: 'What UI Color Palette creates in Penpot',
+      rowHeader: 'Sync',
+      columns: [
+        'What it creates',
+        'Color modes',
+        'Lightness and contrast in the description',
+      ],
+      rows: [
+        {
+          label: 'Tokens',
+          values: [
+            'One design token per shade, grouped by source color',
+            'One token set and one Penpot theme per mode',
+            true,
+          ],
+        },
+        {
+          label: 'Library colors',
+          values: [
+            'One library color per shade, grouped by source color',
+            'Groups named after each mode',
+            false,
+          ],
+        },
+      ],
+      note: 'With the tokens deep sync on in the Preferences, the next sync deletes every token of those sets that is no longer in the palette, including tokens you added by hand.',
+    },
+    {
+      id: 'plans',
+      title: 'What you get on each plan in Penpot',
+      intro:
+        'Syncing with Penpot tokens and library colors is free. Volume, documentation and most code formats are on /pro.',
+      caption: 'UI Color Palette for Penpot, per plan',
+      rowHeader: 'Feature',
+      columns: ['/basic', '/pro'],
+      rows: [
+        { label: 'Palettes per page', values: ['1', 'Unlimited'] },
+        { label: 'Source colors per palette', values: ['5', 'Unlimited'] },
+        { label: 'Color modes per palette', values: ['2', 'Unlimited'] },
+        { label: 'Sync with tokens and library colors', values: [true, true] },
+        {
+          label: 'WCAG 2.1 and APCA score on every shade',
+          values: [true, true],
+        },
+        { label: 'Palette documentation as boards', values: [false, true] },
+        {
+          label: 'Export to code',
+          values: [
+            'CSS',
+            'Every format: tokens, Tailwind, SCSS, Less, Apple, Android…',
+          ],
+        },
+      ],
+    },
+  ],
+  faq: {
+    intro:
+      'Penpot design tokens, color modes and themes, and what the free plan covers.',
+    items: [
+      {
+        question: 'Is there a color palette plugin for Penpot?',
+        answer: `Yes. UI Color Palette runs in Penpot as a plugin: it builds accessible color scales, shows the WCAG 2.1 and APCA score of every shade, and syncs them with Penpot’s native design tokens or library colors. It also runs in ${htmlLink('/figma', 'Figma')}, Sketch and Framer.`,
+      },
+      {
+        question: 'How do I create Penpot color tokens from a palette?',
+        answer: `Click Synchronize, then Synchronize with tokens: each shade becomes a Penpot color design token. UI Color Palette creates them through Penpot’s plugin API, with no file to export or import, and documents each shade with its lightness and its WCAG and APCA scores (see ${htmlLink('/glossary/design-token', 'design tokens')}).`,
+      },
+      {
+        question: 'How do color modes map to Penpot themes?',
+        answer:
+          'Each color mode of the palette gets its own token set, paired with a Penpot theme, so switching the theme switches every shade. A palette with no color mode goes into a single set.',
+      },
+      {
+        question: 'Does Penpot support design tokens natively?',
+        answer:
+          'Yes. Penpot has native design tokens, with token sets and themes. UI Color Palette creates them through the plugin API, so a palette lands as one token per shade, with no file to import. Sync again after each change: existing sets, themes and tokens are reused, never duplicated.',
+      },
+      {
+        question: 'Can I export Penpot colors as DTCG tokens or Tailwind?',
+        answer: `Yes, on /pro: native and ${htmlLink('/glossary/design-token', 'DTCG tokens')}, Style Dictionary, Tailwind v3 and v4, SCSS, Less, Apple and Android code. CSS export is free (see ${htmlLink('/capabilities/tailwind-color-palette', 'Tailwind color palette')}).`,
+      },
+      {
+        question: 'Is UI Color Palette for Penpot free?',
+        answer: `Yes, on the /basic plan: one palette per page, up to 5 source colors and 2 color modes, contrast scores on every shade, sync with tokens and library colors, and the CSS export. /pro lifts the caps (see ${htmlLink('/pricing', 'pricing')}).`,
+      },
+    ],
+  },
+  nextSteps: [
+    {
+      icon: 'glasses',
+      title: 'Generate a UI color palette',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'Check WCAG & APCA contrast',
+      label: 'See the capability',
+      href: '/capabilities/wcag-apca-contrast',
+    },
+    {
+      icon: 'glasses',
+      title: 'Build palettes in OKLCH',
+      label: 'See the capability',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+    {
+      icon: 'glasses',
+      title: 'Export to Tailwind',
+      label: 'See the capability',
+      href: '/capabilities/tailwind-color-palette',
+    },
+  ],
 }
 
 export const sketchPage: PlatformPage = {
@@ -181,13 +480,14 @@ export const sketchPage: PlatformPage = {
   docs: `${links.docs}/sketch`,
   platform: 'Sketch',
   seo: {
-    title: 'UI Color Palette for Sketch — Native Mac Color',
+    title: 'UI Color Palette for Sketch — Color Palette Plugin',
     description:
-      'Design accessible color palettes natively on Mac with Sketch. Generate WCAG scales, fine-tune every shade, and sync with your local libraries.',
+      'Sketch color palette plugin: build accessible scales on Mac and sync them to color variables and layer styles, with WCAG and APCA scores. Free to start.',
   },
   hero: {
     title: 'UI Color Palette for Sketch',
-    tagline: 'Accessible color scales, native to Mac.',
+    tagline:
+      'The Sketch color palette plugin: accessible color scales synced to color variables and layer styles, native to Mac.',
     cta: { label: 'Add to Sketch', href: links.runSketchPlugin },
   },
   surfaces: {
@@ -201,8 +501,8 @@ export const sketchPage: PlatformPage = {
     cards: [
       {
         icon: 'thumbs-up',
-        title: 'Fully compatible',
-        text: 'The complete UI Color Palette experience — styles, modes, and export — with nothing left out.',
+        title: 'The whole flow, on Sketch',
+        text: 'The generate, master and deploy flow — scales, contrast scores, styles and export. Sketch has no color modes, so each mode becomes its own flat set.',
       },
       {
         icon: 'apple',
@@ -213,6 +513,153 @@ export const sketchPage: PlatformPage = {
     ],
   },
   why: designToolWhy,
+  setup: {
+    title: 'How to set up the color palette plugin in Sketch',
+    docs: {
+      label: 'Read the Sketch guides in the docs',
+      href: `${links.docs}/sketch`,
+    },
+    intro:
+      'Install the plugin in Sketch on your Mac, build the palette in your document, then sync it with color variables or layer styles.',
+    steps: [
+      {
+        title: 'Install the plugin',
+        text: 'Download UI Color Palette for Sketch and install the plugin on your Mac, then run it from Sketch. Palettes are saved in the document, for everyone who opens it.',
+      },
+      {
+        title: 'Create a palette',
+        text: 'Click + in the Palettes manager. Select filled layers first to start from their colors, or start from AI, an image, a color harmony or Color Hunt.',
+      },
+      {
+        title: 'Tune the scale and the contrast',
+        text: 'Pick a scale preset (Material 3 and Tailwind are free), set each stop by lightness or target contrast ratio, and read the WCAG 2.1 and APCA score of every shade.',
+      },
+      {
+        title: 'Sync with variables or styles',
+        text: 'Sync with the local variables to get a color variable per shade, or with the local styles to get a layer style per shade, grouped by source color, and under the palette name when it has a custom name.',
+      },
+      {
+        title: 'Share it',
+        text: 'Publish the variables and styles in a library. Sketch matches variables by name, so renaming a source color makes the next sync create new variables, unlinked from the published ones. Settle the names before you publish.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'sketch-sync',
+      title: 'What a sync creates in Sketch',
+      intro:
+        'Sketch has no color modes: a palette with several modes gets one flat set of variables or styles per mode, named after it.',
+      caption: 'What UI Color Palette creates in Sketch',
+      rowHeader: 'Sync',
+      columns: ['What it creates', 'Color modes', 'Updated on re-sync'],
+      rows: [
+        {
+          label: 'Variables',
+          values: [
+            'One color variable per shade, grouped by source color',
+            'One flat set per mode',
+            'Updated, matched by name',
+          ],
+        },
+        {
+          label: 'Layer styles',
+          values: [
+            'One layer style per shade, grouped by source color',
+            'One flat set per mode',
+            'Updated, matched by name',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'plans',
+      title: 'What you get on each plan in Sketch',
+      intro:
+        'Syncing with Sketch variables and styles is free. Volume, documentation and most code formats are on /pro.',
+      caption: 'UI Color Palette for Sketch, per plan',
+      rowHeader: 'Feature',
+      columns: ['/basic', '/pro'],
+      rows: [
+        { label: 'Palettes per document', values: ['1', 'Unlimited'] },
+        { label: 'Source colors per palette', values: ['5', 'Unlimited'] },
+        { label: 'Color modes per palette', values: ['2', 'Unlimited'] },
+        { label: 'Sync with variables and layer styles', values: [true, true] },
+        {
+          label: 'WCAG 2.1 and APCA score on every shade',
+          values: [true, true],
+        },
+        { label: 'Palette documentation as artboards', values: [false, true] },
+        {
+          label: 'Export to code',
+          values: [
+            'CSS',
+            'Every format: tokens, Tailwind, SCSS, Less, Apple, Android…',
+          ],
+        },
+      ],
+    },
+  ],
+  faq: {
+    intro:
+      'Color variables and styles in Sketch, color modes, and exporting to Apple code.',
+    items: [
+      {
+        question: 'Is there a color palette plugin for Sketch?',
+        answer: `Yes. UI Color Palette is a Sketch plugin for Mac: it builds accessible color scales, shows the ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG 2.1')} and ${htmlLink('/glossary/apca', 'APCA')} score of every shade, and syncs them with your color variables and layer styles. It also runs in ${htmlLink('/figma', 'Figma')}, Penpot and Framer.`,
+      },
+      {
+        question: 'How do I create color variables in Sketch from a palette?',
+        answer:
+          'Click Sync with the local variables. UI Color Palette adds a color variable for every shade to the document, grouped by source color, and under the palette name when it has a custom name.',
+      },
+      {
+        question: 'Does Sketch support light and dark color modes?',
+        answer:
+          'Not natively: a Sketch color variable holds one value. UI Color Palette creates one flat set of variables or styles per color mode, named after it.',
+      },
+      {
+        question:
+          'Why do my Sketch color variables lose their library link after a sync?',
+        answer:
+          'Sketch matches variables by their name, not by an identifier. If you rename a source color, the next sync cannot find the variables created under the old name, so it creates new ones, unlinked from the published ones. Settle the color names before you publish.',
+      },
+      {
+        question: 'Can I export a Sketch palette to SwiftUI or Xcode?',
+        answer: `Yes, on /pro: export the palette as a SwiftUI or UIKit Swift file and add it to your Xcode project (see ${htmlLink('/capabilities/swiftui-compose-colors', 'SwiftUI & Compose colors')}).`,
+      },
+      {
+        question: 'Is UI Color Palette for Sketch free?',
+        answer: `Yes, on the /basic plan: one palette per document, up to 5 source colors and 2 color modes, contrast scores on every shade, sync with variables and layer styles, and the CSS export. /pro lifts the caps (see ${htmlLink('/pricing', 'pricing')}).`,
+      },
+    ],
+  },
+  nextSteps: [
+    {
+      icon: 'glasses',
+      title: 'Generate a UI color palette',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'Check WCAG & APCA contrast',
+      label: 'See the capability',
+      href: '/capabilities/wcag-apca-contrast',
+    },
+    {
+      icon: 'glasses',
+      title: 'Build palettes in OKLCH',
+      label: 'See the capability',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+    {
+      icon: 'glasses',
+      title: 'Export to SwiftUI & Compose',
+      label: 'See the capability',
+      href: '/capabilities/swiftui-compose-colors',
+    },
+  ],
 }
 
 export const framerPage: PlatformPage = {
@@ -220,21 +667,21 @@ export const framerPage: PlatformPage = {
   docs: `${links.docs}/framer`,
   platform: 'Framer',
   seo: {
-    title: 'UI Color Palette for Framer — Ship Accessible Color',
+    title: 'UI Color Palette for Framer — Color Palette Plugin',
     description:
-      'Go from blank canvas to shipped site with accessible color in Framer. Generate palettes, check contrast, and export production-ready tokens.',
+      'Generate an accessible color palette in Framer and sync it to color styles with light and dark values, WCAG and APCA scores on every shade. Free to start.',
   },
   hero: {
     title: 'UI Color Palette for Framer',
-    tagline: 'Generate a palette, ship the whole site.',
+    tagline:
+      'The Framer color palette plugin: an accessible palette synced to your color styles, ready to ship the whole site.',
     cta: { label: 'Add to Framer', href: links.runFramerPlugin },
   },
   surfaces: {
-    title: 'From blank canvas to shipped site',
+    title: 'Color palette plugin for Framer: from blank canvas to shipped site',
     intro:
       'Generate an accessible palette, push it to Framer styles, and build your website from scratch — with colors that pass contrast from the first section to the last.',
     embed: {
-      // editor=penpot on purpose, until the plugin team confirms the value for Framer.
       src: pluginEmbed('framer', 'penpot'),
       title: 'UI Color Palette running as a Framer plugin',
     },
@@ -242,7 +689,7 @@ export const framerPage: PlatformPage = {
       {
         icon: 'wrench',
         title: 'Generate with powerful tools',
-        text: 'AI, images, color wheel, canvas, or 1M+ imported combinations — an accessible scale in minutes.',
+        text: 'AI, images, color wheel, canvas or Color Hunt palettes — an accessible scale in minutes.',
       },
       {
         icon: 'refresh-ccw-dot',
@@ -253,6 +700,161 @@ export const framerPage: PlatformPage = {
     ],
   },
   why: designToolWhy,
+  setup: {
+    title: 'How to set up the color palette plugin in Framer',
+    docs: {
+      label: 'Read the Framer guides in the docs',
+      href: `${links.docs}/framer`,
+    },
+    intro:
+      'Add the plugin from the Framer Marketplace, build the palette, then sync it with your project’s color styles.',
+    steps: [
+      {
+        title: 'Add the plugin to Framer',
+        text: 'Open UI Color Palette on the Framer Marketplace and run it in your project.',
+      },
+      {
+        title: 'Create a palette',
+        text: 'Click + in the Palettes manager, or start from AI, an image, a color harmony or Color Hunt.',
+      },
+      {
+        title: 'Tune the scale and the contrast',
+        text: 'Pick a scale preset (Material 3 and Tailwind are free), set each stop by lightness or target contrast ratio, and read the WCAG 2.1 and APCA score of every shade.',
+      },
+      {
+        title: 'Sync with the color styles',
+        text: 'Every shade becomes a Framer color style: its own color is the light value and its mirror in the scale is the dark value, so Framer’s light and dark mode flips the palette. Framer asks for its color-style permission first.',
+      },
+      {
+        title: 'Publish it to keep it',
+        text: 'In Framer, palettes are stored in your browser, not in the project. Sign in and publish the palette to the cloud, then add it from the Library in another browser or share it with teammates.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'framer-sync',
+      title: 'What UI Color Palette does in Framer',
+      intro:
+        'Framer works with color styles: no variables, no tokens. UI Color Palette writes styles and exports the rest as code.',
+      caption: 'UI Color Palette features in Framer',
+      rowHeader: 'Feature',
+      columns: ['In Framer'],
+      rows: [
+        {
+          label: 'Color styles, with a light and a dark value',
+          values: [true],
+        },
+        { label: 'Variables or design tokens in the project', values: [false] },
+        {
+          label: 'Palette documentation in the document',
+          values: ['/pro, with Framer’s canvas permissions'],
+        },
+        {
+          label: 'Export to code',
+          values: [
+            'CSS, SCSS, Less, Tailwind v3 and v4, JSON tokens (native and DTCG)',
+          ],
+        },
+        {
+          label: 'Where palettes are stored',
+          values: ['In your browser, or in the cloud once published'],
+        },
+      ],
+    },
+    {
+      id: 'plans',
+      title: 'What you get on each plan in Framer',
+      intro:
+        'Syncing with Framer color styles is free. Volume, documentation and most code formats are on /pro.',
+      caption: 'UI Color Palette for Framer, per plan',
+      rowHeader: 'Feature',
+      columns: ['/basic', '/pro'],
+      rows: [
+        {
+          label: 'Palettes per document (Framer project)',
+          values: ['1', 'Unlimited'],
+        },
+        { label: 'Source colors per palette', values: ['5', 'Unlimited'] },
+        { label: 'Color modes per palette', values: ['2', 'Unlimited'] },
+        { label: 'Sync with color styles', values: [true, true] },
+        {
+          label: 'WCAG 2.1 and APCA score on every shade',
+          values: [true, true],
+        },
+        {
+          label: 'Palette documentation in the document',
+          values: [false, true],
+        },
+        {
+          label: 'Export to code',
+          values: ['CSS', 'CSS, SCSS, Less, Tailwind, JSON tokens'],
+        },
+      ],
+    },
+  ],
+  faq: {
+    intro:
+      'Adding a palette to Framer, dark mode with color styles, and exporting it.',
+    items: [
+      {
+        question: 'How do I add a color palette to Framer?',
+        answer:
+          'Run UI Color Palette in your project, create the palette, then click Sync with the local styles: every shade becomes a Framer color style, grouped by source color and named after the palette.',
+      },
+      {
+        question: 'How does dark mode work with Framer color styles?',
+        answer:
+          'A Framer color style holds a light and a dark value. UI Color Palette fills the light value with the shade and the dark value with its mirror in the same scale — the darkest shade for the lightest — so switching Framer’s mode flips the palette.',
+      },
+      {
+        question: 'Does Framer support color variables or design tokens?',
+        answer:
+          'Not as such: Framer works with color styles. UI Color Palette syncs the palette to color styles, and on /pro exports it as JSON tokens, native or DTCG, for your codebase.',
+      },
+      {
+        question:
+          'Where does the Framer color palette plugin store my palettes?',
+        answer:
+          'In your browser, because Framer has no room in the project for a full palette. Clearing your browser data or switching device can lose it, so sign in and publish the palette to the cloud to keep it and share it.',
+      },
+      {
+        question: 'Can I export a Framer color palette to Tailwind or CSS?',
+        answer:
+          'Yes. CSS export is free; on /pro, you also get SCSS, Less, Tailwind v3 and v4, and JSON tokens. Apple, Android and spreadsheet formats are not available in Framer.',
+      },
+      {
+        question: 'Is the Framer color palette plugin free?',
+        answer: `Yes, on the /basic plan: one palette per document, up to 5 source colors and 2 color modes, contrast scores on every shade, sync with color styles and the CSS export. /pro lifts the caps (see ${htmlLink('/pricing', 'pricing')}).`,
+      },
+    ],
+  },
+  nextSteps: [
+    {
+      icon: 'glasses',
+      title: 'Generate a UI color palette',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'Check WCAG & APCA contrast',
+      label: 'See the capability',
+      href: '/capabilities/wcag-apca-contrast',
+    },
+    {
+      icon: 'glasses',
+      title: 'Build palettes in OKLCH',
+      label: 'See the capability',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+    {
+      icon: 'glasses',
+      title: 'Simulate color blindness',
+      label: 'See the capability',
+      href: '/capabilities/color-blindness-simulation',
+    },
+  ],
 }
 
 const code = (text: string) => `<code>${text}</code>`
@@ -263,14 +865,14 @@ export const claudePage: PlatformPage = {
   platform: 'Claude',
   offerName: 'Free',
   seo: {
-    title: 'Claude Color Palette Plugin & MCP Server — UI Color Palette',
+    title: 'UI Color Palette for Claude — Color Palette Plugin & MCP',
     description:
       'Generate accessible color palettes in Claude Code: WCAG and APCA audits, 14 code and token formats, and MCP sync to Figma, Penpot, Sketch and Framer.',
   },
   hero: {
-    title: 'Claude color palette plugin & MCP server',
+    title: 'UI Color Palette for Claude',
     tagline:
-      'Generate, audit and ship accessible color palettes with Claude AI, in Claude Code or any MCP client.',
+      'The Claude color palette plugin and MCP server: generate, audit and ship accessible color palettes with Claude AI, in Claude Code or any MCP client.',
     cta: { label: 'Add to Claude', href: links.runClaudePlugin },
   },
   surfaces: {
@@ -532,9 +1134,9 @@ export const claudePage: PlatformPage = {
     },
     {
       icon: 'glasses',
-      title: 'Simulate color blindness',
+      title: 'Build semantic color tokens',
       label: 'See the capability',
-      href: '/capabilities/color-blindness-simulation',
+      href: '/capabilities/semantic-color-system',
     },
     {
       icon: 'newspaper',

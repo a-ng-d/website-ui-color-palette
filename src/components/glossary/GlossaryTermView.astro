@@ -3,6 +3,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro'
 import HueRamp from '@/components/glossary/HueRamp.astro'
 import VisionRamp from '@/components/glossary/VisionRamp.astro'
 import ContrastRamp from '@/components/glossary/ContrastRamp.astro'
+import HarmonyRamp from '@/components/glossary/HarmonyRamp.astro'
+import ScaleRamp from '@/components/glossary/ScaleRamp.astro'
+import TokenRamp from '@/components/glossary/TokenRamp.astro'
 import Reinsurance from '@/components/home/Reinsurance.astro'
 import NextSteps from '@/components/platform/NextSteps.astro'
 import PlatformHero from '@/components/platform/PlatformHero.astro'
@@ -83,6 +86,12 @@ const jsonLd = [
       <ContrastRamp />
     ) : term.visual === 'vision' ? (
       <VisionRamp />
+    ) : term.visual === 'scale' ? (
+      <ScaleRamp />
+    ) : term.visual === 'primitive' || term.visual === 'semantic' ? (
+      <TokenRamp layer={term.visual} />
+    ) : term.visual === 'harmony' ? (
+      <HarmonyRamp />
     ) : (
       <HueRamp space={term.visual} />
     )}

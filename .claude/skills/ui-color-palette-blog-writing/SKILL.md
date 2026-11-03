@@ -19,7 +19,8 @@ Never write a feature from memory or from marketing copy. The workspace holds th
 
 | Need | Read |
 | --- | --- |
-| What a feature does, its rules, limits, plan gating | `../specs-ui-color-palette/02-features/<feature>.md` (**Rules**, **Acceptance criteria**, **Out of scope**) |
+| What a feature does, its rules, limits | `../specs-ui-color-palette/02-features/<feature>.md` (**Rules**, **Acceptance criteria**, **Out of scope**) |
+| Plans: /basic vs /pro, caps, what is free | `../docs-ui-color-palette/general/introduction/free-and-pro.md` (the specs carry no plan content) |
 | Vocabulary (Source Color, Scale, Theme, Shade, Color System…) | `../specs-ui-color-palette/00-overview/glossary.md`, `01-domain-model/` |
 | MCP tools, API, events (for AI / developer articles) | `../specs-ui-color-palette/04-contracts/mcp-tools.md`, `api-endpoints.md` |
 | How a user-facing step is worded, screenshots, per-platform steps | `../docs-ui-color-palette/` (`general/`, `figma/`, `claude/`, `mcp/`…) |
@@ -29,8 +30,8 @@ Rules:
 1. Only describe features whose spec **Status** is `Implemented`. `Draft`/`Proposed` = do not announce.
 2. **Spec wins on behaviour, docs win on UI wording.** If they disagree, say so to the
    user instead of picking silently.
-3. Check **Platforms** and **Credits / plan** in the spec before writing "you can…". A
-   harmony rule or a tool can be plan-gated or missing on a platform: say so, don't imply
+3. Check **Platforms** in the spec and the plan in `free-and-pro.md` before writing "you
+   can…". A tool can be /pro or missing on a platform: say so, don't imply
    "everyone, everywhere". When unsure, write what the spec guarantees, nothing more.
 4. Numbers (users, countries, scale presets, supported languages, prices) come from the
    spec, the pricing page or an existing article. **Never invent a statistic, quote,

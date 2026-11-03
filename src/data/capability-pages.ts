@@ -1,7 +1,8 @@
 import { links } from '@/config/site'
-import type { NextStep, Steps, Table } from '@/data/blocks'
+import type { LinkCard, NextStep, Steps, Table } from '@/data/blocks'
 import type { DemoId } from '@/data/capabilities'
 import { htmlLink, type FaqItem } from '@/data/faq'
+import { glossary } from '@/data/glossary'
 
 export interface CapabilityPage {
   slug: string
@@ -13,7 +14,8 @@ export interface CapabilityPage {
     tagline: string
     cta: { label: string; href: string }
   }
-  overview: { title: string; lead: string; demo: DemoId }
+  /** `semantic-layer` shows the glossary's semantic TokenRamp instead of a demo. */
+  overview: { title: string; lead: string; demo: DemoId | 'semantic-layer' }
   how: Steps
   tables: Table[]
   faq: { intro: string; items: FaqItem[] }
@@ -533,7 +535,7 @@ export const contrastPage: CapabilityPage = {
       },
       {
         question: 'Can I build a palette from target contrast ratios?',
-        answer: `Yes, on every plan. Switch the scale to contrast ratio, type the ratio each stop must reach, and UI Color Palette recomputes its lightness; it works well with the ${htmlLink('/glossary/hsluv', 'HSLuv')} color space.`,
+        answer: `Yes, on every plan. Switch the scale to contrast ratio, type the ratio each stop must reach, and UI Color Palette recomputes its lightness; it works well with the ${htmlLink('/glossary/hsluv', 'HSLuv')} color space, on /pro. For a web and code tool built around target ratios, see ${htmlLink('/compare/ui-color-palette-vs-leonardo', 'UI Color Palette vs Adobe Leonardo')}.`,
       },
       {
         question: 'Does the contrast change for color-blind users?',
@@ -561,9 +563,9 @@ export const contrastPage: CapabilityPage = {
     },
     {
       icon: 'glasses',
-      title: 'Color blindness simulation',
-      label: 'See the capability',
-      href: '/capabilities/color-blindness-simulation',
+      title: 'Color palette generator',
+      label: 'See the next capability',
+      href: '/capabilities/color-palette-generator',
     },
     {
       icon: 'ruler',
@@ -574,8 +576,1744 @@ export const contrastPage: CapabilityPage = {
   ],
 }
 
+export const generatorPage: CapabilityPage = {
+  slug: 'color-palette-generator',
+  name: 'Color palette generator',
+  seo: {
+    title: 'UI Color Palette Generator — Shades & Scales',
+    description:
+      'Generate a UI color palette in Figma, Penpot, Sketch or Framer: every source color scaled into shades, set by lightness or contrast per stop. Free to start.',
+  },
+  hero: {
+    title:
+      'UI color palette generator, with a full scale of shades for every color',
+    tagline:
+      'Turn a few source colors into scales of shades and tints, tune each stop by lightness or contrast, and keep the palette inside your design tool.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'What does a UI color palette generator do?',
+    lead: 'A UI color palette generator turns a few source colors into full scales of shades and tints. UI Color Palette does it in Figma, Penpot, Sketch and Framer: pick a preset such as Material 3 or Tailwind, or your own stops, and set each stop by lightness or target contrast.',
+    demo: 'ready',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'A palette is a set of source colors, a lightness scale and color modes. Every change recomputes the shades live in the preview.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/create-a-color-palette`,
+    },
+    steps: [
+      {
+        title: 'Start a palette',
+        text: 'Click + in the Palettes manager: the palette opens with default colors, or with the colors of the filled layers selected on your canvas. You can also start from AI, an image, a color harmony or Color Hunt.',
+      },
+      {
+        title: 'Set your source colors',
+        text: 'Add, rename and reorder colors, and type or pick their hex code. Each source color becomes a scale of shades and tints.',
+      },
+      {
+        title: 'Choose a scale preset',
+        text: 'Pick a lightness scale preset, such as Material 3 or Tailwind, or a Custom set of stops named 1–10, 10–100 or 100–1000.',
+      },
+      {
+        title: 'Tune the stops',
+        text: 'Slide the lightness of each stop, or switch to contrast ratio and type the ratio each stop must reach, from 1 to 21. A distribution easing spreads the stops across the range.',
+      },
+      {
+        title: 'Use the palette',
+        text: 'Sync it with the styles, variables or tokens of your design tool, or export it to code.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'starts',
+      title: 'Five ways to start a palette',
+      intro:
+        'Whichever you choose, you get a complete palette — source colors, lightness scale and color modes — opened and ready to refine.',
+      caption: 'Ways to start a palette in UI Color Palette',
+      rowHeader: 'Start from',
+      columns: ['What you get'],
+      rows: [
+        {
+          label: 'A blank palette',
+          values: [
+            'Default source colors, or the colors of the layers selected on your canvas',
+          ],
+        },
+        {
+          label: 'AI colors',
+          href: '/capabilities/ai-color-palette-generator',
+          values: [
+            'Five colors from a prompt or a preset theme, each with a role: Primary, Text, Success, Warning or Alert',
+          ],
+        },
+        {
+          label: 'An image',
+          href: '/capabilities/image-to-color-palette',
+          values: ['Up to 5 dominant colors from a PNG image'],
+        },
+        {
+          label: 'A color harmony',
+          href: '/capabilities/color-wheel-harmony',
+          values: [
+            'Analogous, complementary, compound, triadic or tetradic colors from a base color',
+          ],
+        },
+        {
+          label: 'Color Hunt',
+          values: ['A palette from the Color Hunt community feed'],
+        },
+      ],
+    },
+    {
+      id: 'plans',
+      title: 'What you get on each plan',
+      intro: 'The same plans apply on Figma, Penpot, Sketch and Framer.',
+      caption: 'Palette generator features per plan',
+      rowHeader: 'Feature',
+      columns: ['/basic', '/pro'],
+      rows: [
+        {
+          label:
+            'Palettes per page (Figma, Penpot) or per document (Sketch, Framer)',
+          values: ['1', 'Unlimited'],
+        },
+        { label: 'Source colors per palette', values: ['5', 'Unlimited'] },
+        { label: 'Color modes per palette', values: ['2', 'Unlimited'] },
+        { label: 'Material 3 and Tailwind presets', values: [true, true] },
+        {
+          label: 'The other named presets (Radix, Spectrum, Carbon, Polaris…)',
+          values: [false, true],
+        },
+        { label: 'Stops in a Custom set', values: ['Up to 6', 'Up to 24'] },
+        {
+          label: 'Lightness and target contrast ratio per stop',
+          values: [true, true],
+        },
+        {
+          label: 'Hue and chroma shifts, per color and for the whole palette',
+          values: [false, true],
+        },
+        { label: 'Source colors lock', values: [false, true] },
+      ],
+      note: 'Syncing the palette with your styles, variables and tokens is free, and so is the CSS export; the other code formats are on /pro.',
+    },
+  ],
+  faq: {
+    intro:
+      'Generating shades from your colors, choosing a scale, and what the free plan covers.',
+    items: [
+      {
+        question: 'Is there a color palette generator plugin for Figma?',
+        answer: `Yes. UI Color Palette is a color scale generator plugin for Figma: each source color becomes a scale of shades you can sync with your styles and variables. It also runs in Penpot, Sketch and Framer (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+      },
+      {
+        question: 'How do I generate shades and tints from a hex color?',
+        answer: `Type or paste the hex code of a source color and UI Color Palette computes its shades and tints along the scale, live, with the hex code of each one in the preview. Found the colors in Coolors or Realtime Colors? See ${htmlLink('/compare/ui-color-palette-vs-coolors', 'UI Color Palette vs Coolors')} and ${htmlLink('/compare/ui-color-palette-vs-realtime-colors', 'UI Color Palette vs Realtime Colors')}.`,
+      },
+      {
+        question: 'How many shades should a UI color scale have?',
+        answer: `It depends on your system. Tailwind uses 11 stops, from 50 to 950, and Material 3 uses 13, from 0 to 100; Atlassian’s ADS Foundations uses 10. Compare them all in the ${htmlLink('/capabilities/design-system-presets', 'design system presets')}. Pick the preset your codebase already follows, or a Custom set (see ${htmlLink('/glossary/color-scale', 'What is a color scale?')}).`,
+      },
+      {
+        question: 'Can I generate a palette from contrast ratios?',
+        answer: `Yes, on every plan. Switch the scale from lightness to contrast ratio and type the ratio each stop must reach, from 1 to 21; the lightness is recomputed to meet it (see ${htmlLink('/capabilities/wcag-apca-contrast', 'WCAG & APCA contrast')}).`,
+      },
+      {
+        question: 'How do I manage several color palettes in Figma?',
+        answer: `A color palette manager keeps all your palettes in one place. In UI Color Palette, the Palettes manager lists the palettes of your page or document, so you can create, duplicate, open and delete them without leaving your design tool (see ${htmlLink('/', 'the WCAG color palette manager')}).`,
+      },
+      {
+        question: 'Is the color palette generator free?',
+        answer:
+          'Yes, on the /basic plan: one palette per page or document, up to 5 source colors and 2 color modes, the Material 3 and Tailwind presets, Custom sets of up to 6 stops, sync with your design tool and the CSS export. /pro lifts the caps and adds the other presets, hue and chroma shifts, and the other code formats (Framer exports a narrower set).',
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'book-open',
+      title: 'What is a color scale?',
+      label: 'Read the definition',
+      href: '/glossary/color-scale',
+    },
+    {
+      icon: 'glasses',
+      title: 'OKLCH & LCH color spaces',
+      label: 'See the capability',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+    {
+      icon: 'glasses',
+      title: 'WCAG & APCA contrast',
+      label: 'See the capability',
+      href: '/capabilities/wcag-apca-contrast',
+    },
+    {
+      icon: 'glasses',
+      title: 'Tailwind color palette',
+      label: 'See the next capability',
+      href: '/capabilities/tailwind-color-palette',
+    },
+  ],
+}
+
+export const tailwindPage: CapabilityPage = {
+  slug: 'tailwind-color-palette',
+  name: 'Tailwind color palette',
+  seo: {
+    title: 'Tailwind Color Palette Generator, v3 & v4 — UI Color Palette',
+    description:
+      'Generate a Tailwind color palette with OKLCH scales in Figma, Penpot, Sketch or Framer. Export a v4 @theme or v3 config, or oklch() CSS, with WCAG scores.',
+  },
+  hero: {
+    title: 'Tailwind color palette generator, for Tailwind v4 and v3',
+    tagline:
+      'Build your own color scales on Tailwind’s 50 to 950 stops, check their contrast, and export them as a Tailwind v4 @theme or a v3 config.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do you generate a custom Tailwind color palette?',
+    lead: 'Start from your brand colors, scale them on Tailwind’s 11 stops, from 50 to 950, and export the result as theme code. UI Color Palette does it in Figma, Penpot, Sketch and Framer: it computes the shades in OKLCH by default, scores their WCAG and APCA contrast, and writes a Tailwind v4 @theme or a v3 config.',
+    demo: 'tokens',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'The Tailwind preset gives your scale the stop names of Tailwind’s own palette. With one color mode, a color named Brand becomes --color-brand-500 and classes such as bg-brand-500 work as usual; with several, the mode name comes first, as in --color-light-brand-500.',
+    docs: {
+      label: 'Read the export guide in the docs',
+      href: `${links.docs}/guides/export-a-color-palette-to-code`,
+    },
+    steps: [
+      {
+        title: 'Add your brand colors',
+        text: 'Pick them, paste their hex codes or generate them. Name each one the way you want its classes to read.',
+      },
+      {
+        title: 'Pick the Tailwind preset',
+        text: 'Its 11 stops run from 50 to 950, like Tailwind’s default palette. The preset is free on every plan.',
+      },
+      {
+        title: 'Check the contrast',
+        text: 'Read the WCAG 2.1 and APCA score of every shade against your text colors, or set the contrast ratio each stop must reach.',
+      },
+      {
+        title: 'Export for Tailwind',
+        text: 'In Export, choose Tailwind v4 for a CSS file with an @theme block, or Tailwind v3 for a tailwind.config.js file. Copy the code or download it.',
+      },
+      {
+        title: 'Use it in your project',
+        text: 'With Tailwind v4, use the file as your CSS entry or copy its @theme block into yours. The shades become utilities right away (here for a palette with one color mode):',
+        code: '<button class="bg-blue-600 text-white hover:bg-blue-700">',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'tailwind-versions',
+      title: 'Tailwind v4 and v3 exports, side by side',
+      intro:
+        'Both exports carry every shade of every source color, in hex. Here is the start of a Tailwind v4 export for one blue color:',
+      code: '@import "tailwindcss";\n\n@theme {\n  --color-*: initial;\n\n  /* Blue */\n  --color-blue-source: #2563eb;\n  --color-blue-950: #02004b;\n  --color-blue-900: #000070;\n  --color-blue-800: #001a92;\n  --color-blue-700: #0034b3;\n  --color-blue-600: #134ed1;\n  /* 500 to 50 follow */\n}',
+      caption: 'Tailwind v4 and Tailwind v3 exports compared',
+      rowHeader: 'Export',
+      columns: ['Tailwind v4', 'Tailwind v3'],
+      rows: [
+        { label: 'File', values: ['tailwind.theme.css', 'tailwind.config.js'] },
+        {
+          label: 'Format',
+          values: ['CSS variables in an @theme block', 'A theme.colors object'],
+        },
+        {
+          label: 'Names',
+          values: ['--color-<color>-<stop>', 'colors.<color>.<stop>'],
+        },
+        {
+          label: 'Color modes',
+          values: [
+            'The mode name is added to each variable',
+            'One nested object per mode',
+          ],
+        },
+        {
+          label: 'Tailwind’s default colors',
+          values: [
+            'Replaced, with --color-*: initial',
+            'Replaced, through theme.colors',
+          ],
+        },
+      ],
+      note: 'Want oklch() values instead of hex? The CSS export writes oklch(), and it is free.',
+    },
+    {
+      id: 'oklch',
+      title: 'Tailwind v4 with OKLCH colors',
+      intro:
+        'Tailwind v4 defines its own palette in OKLCH. UI Color Palette computes your scales in OKLCH by default; the Tailwind file writes them in hex, and the free CSS export writes oklch() values. To use those in Tailwind v4, paste them into your @theme block as --color-blue-500 and so on. Here is the start of a CSS export in OKLCH:',
+      code: ':root {\n  /* Blue */\n  --blue-50: oklch(92% 0.060 215);\n  --blue-100: oklch(84% 0.086 239);\n  --blue-200: oklch(77% 0.120 252);\n  --blue-300: oklch(70% 0.158 258);\n  --blue-400: oklch(63% 0.196 262);\n  --blue-500: oklch(55% 0.212 262);\n  /* 600 to 950 follow */\n}',
+      caption: 'Where OKLCH appears, from the scale to the code',
+      rowHeader: 'Step',
+      columns: ['Values', 'Names'],
+      rows: [
+        {
+          label: 'Scale computation',
+          values: ['OKLCH, by default', 'Stops 50 to 950'],
+        },
+        { label: 'Tailwind v4 export', values: ['Hex', '--color-blue-500'] },
+        {
+          label: 'CSS export (free)',
+          values: ['oklch(), rgb(), hex and more', '--blue-500'],
+        },
+      ],
+    },
+    {
+      id: 'plans',
+      title: 'What you get on each plan',
+      intro:
+        'The Tailwind preset and the contrast scores are free; the Tailwind export is on /pro, in Figma, Penpot, Sketch and Framer.',
+      caption: 'Tailwind features per plan',
+      rowHeader: 'Feature',
+      columns: ['/basic', '/pro'],
+      rows: [
+        { label: 'Tailwind scale preset (50 to 950)', values: [true, true] },
+        {
+          label: 'WCAG 2.1 and APCA score on every shade',
+          values: [true, true],
+        },
+        {
+          label: 'CSS export, with hex, rgb() or oklch() values',
+          values: [true, true],
+        },
+        { label: 'Tailwind v4 and v3 export', values: [false, true] },
+      ],
+      note: 'With Claude or the MCP server, generate_code writes the same Tailwind v4 and v3 files, plus a semantic file when you pass a color system.',
+    },
+  ],
+  faq: {
+    intro:
+      'Custom Tailwind colors, OKLCH in Tailwind v4, and what the export replaces.',
+    items: [
+      {
+        question: 'How do I add a custom color palette to Tailwind v4?',
+        answer: `Declare your colors as --color-* variables in an @theme block, and each becomes utilities such as bg-brand-500. UI Color Palette writes that block for you, with a full scale per color (see ${htmlLink('https://tailwindcss.com/docs/theme', 'Tailwind’s theme docs')}).`,
+      },
+      {
+        question:
+          'Does Tailwind v4 use OKLCH colors, and can I export oklch() values?',
+        answer: `Yes: Tailwind v4’s default palette is defined in OKLCH. UI Color Palette computes your scales in ${htmlLink('/glossary/oklch', 'OKLCH')} too, by default. The Tailwind export writes hex values; the free CSS export writes oklch() values you can paste into an @theme block as --color-* variables.`,
+      },
+      {
+        question: 'Can I export a Tailwind config from Figma?',
+        answer:
+          'Yes, on /pro. In Figma, Penpot, Sketch or Framer, open Export and choose Tailwind v4 for an @theme CSS file, or Tailwind v3 for a tailwind.config.js file.',
+      },
+      {
+        question: 'Will the export replace Tailwind’s default colors?',
+        answer:
+          'Yes. The v4 file starts with --color-*: initial and the v3 file sets theme.colors, so only your palette remains. Delete that line in v4 if you want to keep Tailwind’s colors next to yours.',
+      },
+      {
+        question:
+          'Can I recreate Tailwind’s default color scales for my brand color?',
+        answer: `Yes. The Tailwind preset gives your color the same 11 stops as Tailwind’s default palette, from 50 to 950, so a color named Brand becomes --color-brand-500. The shades are computed from your color, so they do not copy Tailwind’s own values (see ${htmlLink('/capabilities/design-system-presets', 'the other design system scales')}).`,
+      },
+      {
+        question: 'How do I make sure my Tailwind shades are accessible?',
+        answer: `Check them before you export. Every shade shows its WCAG 2.1 ratio and APCA score against your text colors, and you can set the ratio each stop must reach (see ${htmlLink('/capabilities/wcag-apca-contrast', 'WCAG & APCA contrast')}).`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'glasses',
+      title: 'Color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'OKLCH & LCH color spaces',
+      label: 'See the capability',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+    {
+      icon: 'glasses',
+      title: 'Export design tokens',
+      label: 'See the capability',
+      href: '/capabilities/export-design-tokens',
+    },
+    {
+      icon: 'glasses',
+      title: 'SwiftUI & Compose colors',
+      label: 'See the next capability',
+      href: '/capabilities/swiftui-compose-colors',
+    },
+  ],
+}
+
+export const nativePage: CapabilityPage = {
+  slug: 'swiftui-compose-colors',
+  name: 'SwiftUI & Compose colors',
+  seo: {
+    title: 'SwiftUI & Jetpack Compose Color Palette — UI Color Palette',
+    description:
+      'Export a color palette to SwiftUI, Jetpack Compose, Android colors.xml or UIKit from Figma, Penpot or Sketch, with WCAG and APCA scores on every shade.',
+  },
+  hero: {
+    title:
+      'SwiftUI and Jetpack Compose color palette, exported from your design tool',
+    tagline:
+      'Turn the palette you build in Figma, Penpot or Sketch into Swift and Kotlin code: SwiftUI, UIKit, Jetpack Compose and Android XML resources.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do you export a color palette to SwiftUI or Compose?',
+    lead: 'Build the palette in your design tool, then export it as native code. UI Color Palette writes every shade of every source color to a SwiftUI or UIKit Swift file, a Jetpack Compose Kotlin file or an Android XML resource file, from Figma, Penpot and Sketch, so your app uses the same scale as your designs.',
+    demo: 'handoff',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'The export is generated from the palette as it is now, so run it again after each change to the scale or the colors.',
+    docs: {
+      label: 'Read the export guide in the docs',
+      href: `${links.docs}/guides/export-a-color-palette-to-code`,
+    },
+    steps: [
+      {
+        title: 'Build the palette',
+        text: 'Set your source colors and scale preset in Figma, Penpot or Sketch, and add a color mode for each theme your app needs.',
+      },
+      {
+        title: 'Check the contrast',
+        text: 'Read the WCAG 2.1 and APCA score of every shade against your text colors before it reaches your app.',
+      },
+      {
+        title: 'Export for Apple or Android',
+        text: 'In Export, choose SwiftUI or UIKit for a .swift file, or Compose or Resources for a .kt or .xml file. Copy the code or download it.',
+      },
+      {
+        title: 'Add it to your project',
+        text: 'Drop the file into Xcode or Android Studio. In SwiftUI, every shade is a constant of Color.Token (with color modes, the mode comes first, as in Color.Token.LightBlue600):',
+        code: 'Text("Pay").foregroundStyle(Color.Token.Blue600)',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'native-formats',
+      title: 'SwiftUI, UIKit, Compose and Android colors.xml formats',
+      intro:
+        'Each file lists every shade, named after its source color and stop. Here is the start of a SwiftUI export for one blue color:',
+      code: 'import SwiftUI\n\npublic extension Color {\n  static let Token = Color.TokenColor()\n  struct TokenColor {\n    // Blue\n    public let Blue500 = Color(red: 0.169, green: 0.408, blue: 0.933)\n    public let Blue600 = Color(red: 0.075, green: 0.306, blue: 0.820)\n  }\n}',
+      caption: 'Apple and Android export formats',
+      rowHeader: 'Format',
+      columns: ['File', 'What it contains'],
+      rows: [
+        {
+          label: 'SwiftUI',
+          values: ['.swift', 'A Color extension with one constant per shade'],
+        },
+        {
+          label: 'UIKit',
+          values: [
+            '.swift',
+            'One constant per shade, in one struct per color mode when there are several',
+          ],
+        },
+        {
+          label: 'Jetpack Compose',
+          values: ['.kt', 'One Color value per shade, such as blue_500'],
+        },
+        {
+          label: 'Android resources',
+          values: ['.xml', 'One color resource per shade'],
+        },
+      ],
+      note: 'When a palette has several color modes, each shade is exported once per mode, with the mode in its name.',
+    },
+    {
+      id: 'availability',
+      title: 'Where you can export to Apple and Android',
+      intro:
+        'Apple and Android exports are on /pro, in the design-tool plugins that offer the full format set. Here is the start of an Android resources export:',
+      code: '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  <!--Blue-->\n  <color name="blue_500">#2b68ee</color>\n  <color name="blue_600">#134ed1</color>\n  <color name="blue_700">#0034b3</color>\n</resources>',
+      caption: 'Apple and Android export availability per platform',
+      rowHeader: 'Platform',
+      columns: ['SwiftUI and UIKit', 'Compose and Android XML'],
+      rows: [
+        { label: 'Figma', href: '/figma', values: ['/pro', '/pro'] },
+        { label: 'Penpot', href: '/penpot', values: ['/pro', '/pro'] },
+        { label: 'Sketch', href: '/sketch', values: ['/pro', '/pro'] },
+        { label: 'Framer', href: '/framer', values: [false, false] },
+      ],
+      note: 'With Claude or the MCP server, generate_code writes the same four formats.',
+    },
+  ],
+  faq: {
+    intro:
+      'Exporting colors to SwiftUI, Jetpack Compose and Android resources, and where it works.',
+    items: [
+      {
+        question: 'How do I export Figma colors to SwiftUI?',
+        answer: `Build the palette with UI Color Palette in Figma, open Export and choose SwiftUI. You get a .swift file that extends Color with one constant per shade, ready for Xcode (see ${htmlLink('/figma', 'UI Color Palette for Figma')}). The Apple export is on /pro.`,
+      },
+      {
+        question: 'How do I add a color palette to Jetpack Compose?',
+        answer:
+          'Export the palette with the Compose format to get a Kotlin file with one Color value per shade, such as blue_500. Add it to your project and use it in your composables, for example Text("Pay", color = blue_600).',
+      },
+      {
+        question: 'Can I generate an Android colors.xml from Figma?',
+        answer:
+          'Yes. Choose Resources in Export to get an XML resource file with one color per shade, in Figma, Penpot or Sketch, on /pro.',
+      },
+      {
+        question: 'How do I add a color palette to Xcode?',
+        answer:
+          'Export SwiftUI or UIKit, then drag the .swift file into your Xcode project and reference shades such as Color.Token.Blue600. Run the export again when the palette changes.',
+      },
+      {
+        question: 'Does it work with light and dark themes?',
+        answer:
+          'Each color mode of the palette is exported with its own names, so a light and a dark mode give you two sets of constants to switch between in your app.',
+      },
+      {
+        question: 'Can I export to SwiftUI from Framer?',
+        answer: `No. Framer exports CSS, SCSS, Less, Tailwind and JSON tokens only; use Figma, Penpot or Sketch for Apple and Android code, or ${htmlLink('/claude', 'Claude and the MCP server')}.`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'glasses',
+      title: 'Tailwind color palette',
+      label: 'See the capability',
+      href: '/capabilities/tailwind-color-palette',
+    },
+    {
+      icon: 'glasses',
+      title: 'WCAG & APCA contrast',
+      label: 'See the capability',
+      href: '/capabilities/wcag-apca-contrast',
+    },
+    {
+      icon: 'book-open',
+      title: 'What is a design token?',
+      label: 'Read the definition',
+      href: '/glossary/design-token',
+    },
+    {
+      icon: 'glasses',
+      title: 'Export design tokens',
+      label: 'See the next capability',
+      href: '/capabilities/export-design-tokens',
+    },
+  ],
+}
+
+export const tokensPage: CapabilityPage = {
+  slug: 'export-design-tokens',
+  name: 'Export design tokens',
+  seo: {
+    title: 'Export Colors as Design Tokens (DTCG) — UI Color Palette',
+    description:
+      'Export your colors as design tokens from Figma, Penpot, Sketch or Framer: W3C DTCG with WCAG and APCA scores, Style Dictionary and native JSON.',
+  },
+  hero: {
+    title:
+      'Export colors as design tokens: DTCG, Style Dictionary and native JSON',
+    tagline:
+      'Turn every shade of your palette into JSON design tokens your pipeline can read, with WCAG and APCA scores in the DTCG format.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do you export colors as design tokens?',
+    lead: 'Build the palette in your design tool, then export it as JSON. UI Color Palette writes every shade, source color included, as a design token: in the W3C DTCG format with WCAG and APCA scores in each token, for Style Dictionary v3, or as native tokens for Tokens Studio and Penpot. Framer exports the native and DTCG tokens.',
+    demo: 'tokens',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'The export is generated from the palette as it is now, so run it again after each change. To keep design files in sync instead, sync the palette with Figma variables or Penpot tokens, for free.',
+    docs: {
+      label: 'Read the export guide in the docs',
+      href: `${links.docs}/guides/export-a-color-palette-to-code`,
+    },
+    steps: [
+      {
+        title: 'Build the palette',
+        text: 'Set your source colors and scale preset, and add a color mode for each theme your product needs.',
+      },
+      {
+        title: 'Check the contrast',
+        text: 'Read the WCAG 2.1 and APCA score of every shade against your text colors: the DTCG export carries them into each token.',
+      },
+      {
+        title: 'Choose a token format',
+        text: 'In Export, pick DTCG tokens, Native tokens, Style Dictionary or Universal JSON. Copy the code or download it.',
+      },
+      {
+        title: 'Feed your pipeline',
+        text: 'Style Dictionary v4 and Terrazzo read the DTCG files; Tokens Studio and Penpot import the native tokens.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'token-formats',
+      title: 'Four JSON token formats',
+      intro:
+        'UI Color Palette exports four JSON token formats: DTCG, native tokens, Style Dictionary and universal JSON. Each holds every shade of every source color; here is one shade of a DTCG export, with its contrast scores in $extensions:',
+      code: '{\n  "Blue": {\n    "500": {\n      "$type": "color",\n      "$value": {\n        "colorSpace": "srgb",\n        "components": [0.169, 0.408, 0.933],\n        "hex": "#2b68ee"\n      },\n      "$description": "Shade/Tint color with 56.0% of lightness — WCAG 4.86:1 (AA) · APCA Lc 78.5 (content text)",\n      "$extensions": {\n        "com.uicp.wcag": {\n          "light": { "score": "AA", "ratio": 4.86 },\n          "dark": { "score": "A", "ratio": 4.32 }\n        },\n        "com.uicp.apca": {\n          "light": { "score": 78.48, "recommendation": "CONTENT_TEXT" },\n          "dark": { "score": 31.03, "recommendation": "SPOT_TEXT" }\n        }\n      }\n    }\n  }\n}',
+      caption: 'Design token export formats',
+      rowHeader: 'Format',
+      columns: ['Read by', 'What it contains'],
+      rows: [
+        {
+          label: 'DTCG tokens',
+          values: [
+            'Style Dictionary v4, Terrazzo and other DTCG tools',
+            'sRGB components and hex, WCAG and APCA scores; with several color modes, one file per mode, tied by a tokens.resolver.json file',
+          ],
+        },
+        {
+          label: 'Native tokens',
+          values: [
+            'Tokens Studio, Penpot',
+            'One token set per color mode, listed in $themes',
+          ],
+        },
+        {
+          label: 'Style Dictionary',
+          values: [
+            'Style Dictionary v3',
+            'A basic Style Dictionary v3 configuration (a legacy format: v4 reads DTCG)',
+          ],
+        },
+        {
+          label: 'Universal JSON',
+          values: [
+            'Any tool that reads JSON',
+            'Every color space value of each shade',
+          ],
+        },
+      ],
+      note: 'The design-tool Export writes the primitives. With Claude or the MCP server, generate_code with a color system adds semantic tokens in every format, DTCG included.',
+    },
+    {
+      id: 'availability',
+      title: 'Where you can export design tokens',
+      intro:
+        'Token exports are on /pro. Figma, Penpot and Sketch offer all four formats; Framer offers the native and DTCG tokens.',
+      caption: 'Design token export availability per platform',
+      rowHeader: 'Platform',
+      columns: [
+        'DTCG and native tokens',
+        'Style Dictionary and universal JSON',
+      ],
+      rows: [
+        { label: 'Figma', href: '/figma', values: ['/pro', '/pro'] },
+        { label: 'Penpot', href: '/penpot', values: ['/pro', '/pro'] },
+        { label: 'Sketch', href: '/sketch', values: ['/pro', '/pro'] },
+        { label: 'Framer', href: '/framer', values: ['/pro', false] },
+      ],
+      note: 'With Claude or the MCP server, generate_code writes the same four formats.',
+    },
+  ],
+  faq: {
+    intro:
+      'The DTCG format, Style Dictionary, contrast scores in tokens, and color modes.',
+    items: [
+      {
+        question: 'What is the DTCG design token format?',
+        answer: `A JSON format for design tokens published by the W3C Design Tokens Community Group (${htmlLink('https://www.designtokens.org/', 'designtokens.org')}). Each token has a type, such as color, and a value; tools such as Style Dictionary v4 and Terrazzo read it (see ${htmlLink('/glossary/design-token', 'What is a design token?')}).`,
+      },
+      {
+        question: 'How do I export Figma colors as design tokens?',
+        answer: `Build the palette with UI Color Palette in Figma, open Export and choose DTCG tokens, Native tokens, Style Dictionary or Universal JSON (/pro). To keep the colors inside Figma, sync them with your local variables instead, for free (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+      },
+      {
+        question: 'Does Style Dictionary read DTCG tokens?',
+        answer:
+          'Yes, Style Dictionary v4 reads the DTCG export. For a Style Dictionary v3 project, choose the Style Dictionary format, a basic v3 configuration.',
+      },
+      {
+        question: 'Do the design tokens include contrast scores?',
+        answer: `Yes, in the DTCG export: each token carries its WCAG 2.1 ratio and grade and its APCA score against your light and dark text colors, in ${code('$extensions')}, and a summary in its description.`,
+      },
+      {
+        question: 'How are light and dark modes exported as tokens?',
+        answer:
+          'With several color modes, the DTCG export gives each mode its own complete token file, packaged in a zip with a tokens.resolver.json file that a resolver-aware tool reads to pick the active mode. The native tokens export lists one token set per mode.',
+      },
+      {
+        question: 'Can I export semantic color tokens?',
+        answer: `Yes, with Claude or the MCP server: pass a color system to generate_code and the output adds semantic tokens that reference the primitives, in a separate file for most formats and merged into tokens.json for native tokens. The design-tool Export writes the primitives (see ${htmlLink('/capabilities/semantic-color-system', 'Semantic color system')}).`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'book-open',
+      title: 'What is a design token?',
+      label: 'Read the definition',
+      href: '/glossary/design-token',
+    },
+    {
+      icon: 'glasses',
+      title: 'Tailwind color palette',
+      label: 'See the capability',
+      href: '/capabilities/tailwind-color-palette',
+    },
+    {
+      icon: 'glasses',
+      title: 'SwiftUI & Compose colors',
+      label: 'See the capability',
+      href: '/capabilities/swiftui-compose-colors',
+    },
+    {
+      icon: 'glasses',
+      title: 'Semantic color system',
+      label: 'See the next capability',
+      href: '/capabilities/semantic-color-system',
+    },
+  ],
+}
+
+export const semanticPage: CapabilityPage = {
+  slug: 'semantic-color-system',
+  name: 'Semantic color system',
+  seo: {
+    title: 'Semantic vs Primitive Color Tokens — UI Color Palette',
+    description:
+      'Build semantic color tokens on your palette: roles, states and per-theme bindings, made with Claude or the MCP server and exported with your primitives.',
+  },
+  hero: {
+    title: 'Semantic color tokens, built on your palette with Claude and MCP',
+    tagline:
+      'Name colors by their role, bind each one to a shade per theme, and export a semantic file next to your primitives.',
+    cta: { label: 'Add to Claude', href: links.runClaudePlugin },
+  },
+  overview: {
+    title: 'How do you build semantic color tokens?',
+    lead: 'Name each color by its role, such as brand.default or link.default, and point it to a primitive shade of your palette, with a different shade per theme when you need one. UI Color Palette builds this semantic layer with Claude, or through the MCP server and the API, and writes it as a semantic file next to your primitives.',
+    demo: 'semantic-layer',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'The semantic layer sits on top of the palette and never changes it. Today it is built with Claude, the MCP server or the API.',
+    docs: {
+      label: 'Read the Claude plugin docs',
+      href: `${links.docs}/claude`,
+    },
+    steps: [
+      {
+        title: 'Start from a palette',
+        text: 'Generate it with Claude, or build it in your design tool first. Its shades are the primitives the semantic tokens point to.',
+      },
+      {
+        title: 'Pick a naming pattern',
+        text: 'Choose the dimensions of your token names, such as Role × State or Role × Prominence × State, or define your own.',
+      },
+      {
+        title: 'Bind tokens to shades',
+        text: 'Claude proposes a shade for each token; you refine the bindings and confirm. A binding can point to a different shade in each theme.',
+        code: '/ui-color-palette:build-color-system',
+      },
+      {
+        title: 'Generate the code',
+        text: `Ask for the code: ${'generate_code'} writes the primitives file and, next to it, a semantic file whose tokens reference them.`,
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'primitive-vs-semantic',
+      title: 'Primitive vs semantic color tokens',
+      intro:
+        'Primitive tokens name a raw shade, such as blue.600; semantic tokens name a role, such as brand.default, and point to a primitive. Components use the semantic ones.',
+      caption: 'Primitive and semantic color tokens compared',
+      rowHeader: 'Token',
+      columns: ['Primitive tokens', 'Semantic tokens'],
+      rows: [
+        {
+          label: 'Named by',
+          values: ['Hue and stop: blue.600', 'Role: brand.default'],
+        },
+        {
+          label: 'Holds',
+          values: ['A color value', 'A reference to a primitive'],
+        },
+        {
+          label: 'In dark mode',
+          values: ['The shade of that mode', 'Can point to another shade'],
+        },
+        {
+          label: 'Used by',
+          values: ['The semantic tokens', 'Your components'],
+        },
+      ],
+    },
+    {
+      id: 'naming',
+      title: 'Color token naming patterns: role, prominence, state',
+      intro:
+        'A naming pattern combines a few dimensions; each combination becomes a token. Here is a CSS semantic file for two roles and two prominences, with a dark theme; its first comment lists the token left without a binding:',
+      code: "/* Unbound semantic tokens */\n/*   Link-Subtle */\n\n:root {\n  --brand-default: var(--blue-600);\n  --brand-subtle: var(--blue-100);\n  --link-default: var(--blue-700);\n}\n\n/* Dark */\n:root[data-theme='dark'] {\n  --brand-default: var(--blue-400);\n  --brand-subtle: var(--blue-900);\n  --link-default: var(--blue-300);\n}",
+      caption: 'Semantic color naming patterns',
+      rowHeader: 'Pattern',
+      columns: ['Dimensions', 'Example token'],
+      rows: [
+        {
+          label: 'Role × State',
+          values: [
+            'Role (brand, danger, success) and state (default, hover, disabled)',
+            'brand.hover',
+          ],
+        },
+        {
+          label: 'Role × Prominence × State',
+          values: [
+            'Role, prominence (default, subtle, strong) and state',
+            'danger.subtle.hover',
+          ],
+        },
+        {
+          label: 'Surface × Content',
+          values: [
+            'Surface (background, border) and content (primary, secondary, inverse)',
+            'background.primary',
+          ],
+        },
+        {
+          label: 'Custom',
+          values: ['Your own dimensions and members', 'Any path'],
+        },
+      ],
+      note: 'A token with no binding stays in the output, flagged as unbound, so gaps stay visible; a token marked as excluded is left out of every file.',
+    },
+    {
+      id: 'outputs',
+      title: 'Where the semantic layer goes',
+      intro:
+        'The same color system feeds your code and, through Claude, your design files.',
+      caption: 'Outputs of the semantic color system',
+      rowHeader: 'Output',
+      columns: ['Semantic layer'],
+      rows: [
+        {
+          label: 'Code and token exports, with Claude or the MCP server',
+          values: [
+            'Every format: a semantic file next to the primitives, merged into tokens.json for native tokens',
+          ],
+        },
+        {
+          label: 'Figma variables and Penpot tokens, with Claude',
+          href: '/claude',
+          values: [
+            'Semantic variables or tokens referencing the primitive shades',
+          ],
+        },
+        {
+          label: 'Export in the design-tool plugins',
+          values: ['The primitives'],
+        },
+      ],
+      note: 'Through the MCP server or the API, get_color_system resolves every token for every theme.',
+    },
+  ],
+  faq: {
+    intro:
+      'Semantic versus primitive tokens, naming, themes, and where the semantic layer is built.',
+    items: [
+      {
+        question: 'How do semantic color tokens work in UI Color Palette?',
+        answer: `Each token has a role name, such as brand.default, and points to a primitive shade, with a different shade per theme when needed. UI Color Palette writes them as a semantic file next to your primitives (see ${htmlLink('/glossary/semantic-color', 'What are semantic colors?')}).`,
+      },
+      {
+        question:
+          'What is the difference between primitive and semantic tokens?',
+        answer: `Primitives hold the raw shades of a palette, such as blue.600; semantic tokens point to them by role, such as brand.default. Components use the semantic tokens, so you can change a theme or a brand color by rebinding them (see ${htmlLink('/glossary/design-token', 'What is a design token?')}).`,
+      },
+      {
+        question: 'How should I name semantic color tokens?',
+        answer:
+          'Along a few dimensions: a role (brand, danger, success), a prominence (default, subtle, strong) and a state (hover, pressed, disabled), or a surface and its content. Keep the set small: every token is one more decision to maintain.',
+      },
+      {
+        question: 'Can a semantic token use a different shade in dark mode?',
+        answer: `Yes. A binding has a default shade and can override it for each theme, so brand.default can point to blue.600 in light mode and blue.400 in dark mode (see ${htmlLink('/capabilities/light-dark-themes', 'dark mode color palette')}).`,
+      },
+      {
+        question: 'Can I build semantic tokens in Figma?',
+        answer: `With Claude, yes: once the color system is built, the Figma skill writes semantic variables that reference the primitive variables, and the Penpot skill does the same with tokens (see ${htmlLink('/claude', 'UI Color Palette for Claude')}).`,
+      },
+      {
+        question: 'Which export formats include the semantic layer?',
+        answer:
+          'Every format, through generate_code with a color system: CSS, SCSS, Less, Tailwind, SwiftUI, UIKit, Compose, Android XML, CSV, Style Dictionary, universal JSON and DTCG get semantic tokens next to the primitives, and native tokens merge them into tokens.json. The design-tool Export writes the primitives.',
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'book-open',
+      title: 'What are semantic colors?',
+      label: 'Read the definition',
+      href: '/glossary/semantic-color',
+    },
+    {
+      icon: 'glasses',
+      title: 'Export design tokens',
+      label: 'See the capability',
+      href: '/capabilities/export-design-tokens',
+    },
+    {
+      icon: 'glasses',
+      title: 'Tailwind color palette',
+      label: 'See the capability',
+      href: '/capabilities/tailwind-color-palette',
+    },
+    {
+      icon: 'ruler',
+      title: 'Use it with Claude',
+      label: 'See the Claude plugin',
+      href: '/claude',
+    },
+  ],
+}
+
+export const aiPage: CapabilityPage = {
+  slug: 'ai-color-palette-generator',
+  name: 'AI color palette generator',
+  seo: {
+    title: 'AI Color Palette Generator from a Prompt — UI Color Palette',
+    description:
+      'Describe a mood or a use case and get a 5-color UI palette, one color per role, in Figma, Penpot, Sketch, Framer or Claude. Free on every plan.',
+  },
+  hero: {
+    title: 'AI color palette generator, from a prompt to a full UI palette',
+    tagline:
+      'Describe the mood or the product you have in mind, or pick a preset, and get five source colors with a role each, ready to scale.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How does an AI color palette generator work?',
+    lead: 'An AI color palette generator turns a short description into colors. In UI Color Palette, Mistral AI returns five source colors from your prompt, one per role — primary, text, success, warning and alert — which become a full palette with scales and contrast scores, in Figma, Penpot, Sketch and Framer.',
+    demo: 'ai',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'AI generation is one of the ways to start a palette, free on every plan. You see the whole palette before you create it.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/create-a-color-palette#generate-colors-with-ai`,
+    },
+    steps: [
+      {
+        title: 'Open AI Colors',
+        text: 'In the Colors combinator, open AI Colors and type what you have in mind: a mood, a brand, a product.',
+      },
+      {
+        title: 'Or pick a preset',
+        text: 'Choose one of 12 preset prompts, from Cyberpunk to Documentation. Hover a preset to read its full prompt first.',
+      },
+      {
+        title: 'Generate the colors',
+        text: 'The AI returns five colors, one per role, each named after its role and its color, such as Primary · Crimson Red.',
+      },
+      {
+        title: 'Use the palette',
+        text: 'Create the palette from these colors: it opens with a scale for each color. Then tune the stops and check their contrast.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'presets',
+      title: 'Twelve preset prompts',
+      intro:
+        'Six presets set a mood, six fit a kind of product. Each one fills the prompt for you; you can still edit it.',
+      caption: 'AI color palette preset prompts',
+      rowHeader: 'Kind',
+      columns: ['Presets'],
+      rows: [
+        {
+          label: 'Vibes',
+          values: ['Cyberpunk, Minimalist, Pastel, Corporate, Nature, Vintage'],
+        },
+        {
+          label: 'Use cases',
+          values: [
+            'Landing page, Blog, Resume, Portfolio, Documentation, E-commerce',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'where',
+      title: 'Where you can generate a palette from a prompt',
+      intro:
+        'The same AI generation runs in the design-tool plugins and through the MCP server.',
+      caption: 'AI palette generation per surface',
+      rowHeader: 'Surface',
+      columns: ['How', 'What you get'],
+      rows: [
+        {
+          label: 'Figma, Penpot, Sketch and Framer',
+          values: [
+            'AI Colors, in the Colors combinator',
+            'Five source colors with a role each, on every plan',
+          ],
+        },
+        {
+          label: 'Claude and MCP clients',
+          href: '/claude',
+          values: [
+            'generate_colors_from_prompt, with a prompt of up to 500 characters',
+            'Source colors ready for get_palette',
+          ],
+        },
+      ],
+    },
+  ],
+  faq: {
+    intro:
+      'Generating a UI palette from a prompt, the presets, and what happens next.',
+    items: [
+      {
+        question: 'Can AI generate a color palette for my UI?',
+        answer:
+          'Yes. Describe the mood or the product, and UI Color Palette’s AI returns five source colors with a role each — primary, text, success, warning and alert — then turns them into a full palette with a scale for each color, in your design tool.',
+      },
+      {
+        question: 'What AI does UI Color Palette use to generate colors?',
+        answer:
+          'Mistral AI. The colors are adapted to their role: an alert color is always reddish, for example. Each one is named after its role and its color.',
+      },
+      {
+        question: 'How do I generate a color palette from a prompt?',
+        answer:
+          'Open AI Colors in the Colors combinator, type a mood or a product, or pick one of 12 presets, and generate: you get five source colors with a role each, then create the palette from them. It is free on every plan.',
+      },
+      {
+        question: 'Are AI-generated colors accessible?',
+        answer: `The AI picks the source colors; accessibility comes from the scale. Every shade shows its WCAG 2.1 ratio and APCA score, and you can set the contrast ratio each stop must reach (see ${htmlLink('/capabilities/wcag-apca-contrast', 'WCAG & APCA contrast')}).`,
+      },
+      {
+        question: 'Can I generate a palette from a prompt in Claude or Cursor?',
+        answer: `Yes, through the MCP server: generate_colors_from_prompt turns a description of up to 500 characters into source colors, and get_palette scales them (see ${htmlLink('/claude', 'UI Color Palette for Claude')}).`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'glasses',
+      title: 'Color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'WCAG & APCA contrast',
+      label: 'See the capability',
+      href: '/capabilities/wcag-apca-contrast',
+    },
+    {
+      icon: 'ruler',
+      title: 'Use it with Claude',
+      label: 'See the Claude plugin',
+      href: '/claude',
+    },
+    {
+      icon: 'glasses',
+      title: 'Image to color palette',
+      label: 'See the next capability',
+      href: '/capabilities/image-to-color-palette',
+    },
+  ],
+}
+
+export const imagePage: CapabilityPage = {
+  slug: 'image-to-color-palette',
+  name: 'Image to color palette',
+  seo: {
+    title: 'Extract a Color Palette from an Image — UI Color Palette',
+    description:
+      'Drop or paste a PNG to extract its 5 dominant colors and turn them into an accessible UI palette in Figma, Penpot, Sketch or Framer. Free on every plan.',
+  },
+  hero: {
+    title: 'Color palette from an image, extracted inside your design tool',
+    tagline:
+      'Drop or paste a PNG, or select an image on your canvas: its dominant colors become the source colors of a full, accessible palette.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do you extract a color palette from an image?',
+    lead: 'A palette extractor finds the colors that cover most of an image and gives them back as swatches. In UI Color Palette, you drop or paste a PNG, or select an image on your canvas in Figma, Sketch and Framer, and up to 5 dominant colors become the source colors of a palette with full scales, in every design-tool plugin.',
+    demo: 'image',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'Image extraction is one of the ways to start a palette, free on every plan. The colors are extracted in the plugin, and you see them before you create the palette.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/create-a-color-palette#extract-colors-from-an-image`,
+    },
+    steps: [
+      {
+        title: 'Open Image palette',
+        text: 'In the Colors combinator, open Image palette.',
+      },
+      {
+        title: 'Bring in the image',
+        text: 'Drop a PNG file or click to browse, paste a PNG with Ctrl+V or Cmd+V, or, in Figma, Sketch and Framer, select an image on your canvas.',
+      },
+      {
+        title: 'Check the colors',
+        text: 'Up to 5 dominant colors appear next to the image.',
+      },
+      {
+        title: 'Use the palette',
+        text: 'Create the palette from these colors: it opens with a scale for each color. Then tune the stops and check their contrast.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'inputs',
+      title: 'Ways to bring in an image',
+      intro:
+        'In the plugins, the image comes from the clipboard or from your canvas; with Claude or an MCP client, from a URL.',
+      caption: 'Image sources for color extraction',
+      rowHeader: 'Source',
+      columns: ['Formats', 'Colors extracted'],
+      rows: [
+        {
+          label: 'Drop, browse or paste a file',
+          values: ['PNG only', 'Up to 5'],
+        },
+        {
+          label: 'Image selected on the canvas (Figma, Sketch, Framer)',
+          values: ['The selected image', 'Up to 5'],
+        },
+        {
+          label: 'Claude and MCP clients',
+          href: '/claude',
+          values: ['A public JPEG or PNG URL', '1 to 16, 5 by default'],
+        },
+      ],
+      note: 'Through the MCP server, extract_dominant_colors uses k-means clustering and can skip transparent pixels.',
+    },
+  ],
+  faq: {
+    intro:
+      'Extracting colors from an image, the formats that work, and what you get.',
+    items: [
+      {
+        question: 'How do I extract colors from an image?',
+        answer: `Open Image palette in the Colors combinator, then drop or paste a PNG, or select an image on your canvas in Figma, Sketch or Framer. Up to 5 dominant colors appear; create the palette from them to get a scale for each (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+      },
+      {
+        question: 'How many colors are extracted from an image?',
+        answer:
+          'Up to 5 dominant colors in the design-tool plugins. Through the MCP server, extract_dominant_colors returns 1 to 16 colors, 5 by default.',
+      },
+      {
+        question: 'Can I extract a color palette from a JPEG?',
+        answer:
+          'Not in the plugins: they accept PNG images only, and other formats are ignored. Save the image as a PNG first, or use Claude or an MCP client, which read JPEG and PNG images from a URL.',
+      },
+      {
+        question: 'Is the image to color palette tool free?',
+        answer: `Yes, on every plan. The free /basic plan keeps one palette per page or document; /pro lifts that cap (see ${htmlLink('/pricing', 'pricing')}).`,
+      },
+      {
+        question: 'Are the extracted colors ready for a UI?',
+        answer: `They are a starting point. Image colors are rarely balanced for text and backgrounds, so UI Color Palette turns each one into a scale and shows the WCAG 2.1 and APCA score of every shade (see ${htmlLink('/glossary/color-scale', 'What is a color scale?')}).`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'glasses',
+      title: 'AI color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/ai-color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'Color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'book-open',
+      title: 'What is a color scale?',
+      label: 'Read the definition',
+      href: '/glossary/color-scale',
+    },
+    {
+      icon: 'glasses',
+      title: 'Color wheel & harmonies',
+      label: 'See the next capability',
+      href: '/capabilities/color-wheel-harmony',
+    },
+  ],
+}
+
+export const wheelPage: CapabilityPage = {
+  slug: 'color-wheel-harmony',
+  name: 'Color wheel & harmonies',
+  seo: {
+    title: 'Color Harmony Generator on a Color Wheel — UI Color Palette',
+    description:
+      'Pick a base color and a harmony rule — complementary, triadic, analogous, compound or tetradic — and get an accessible UI palette with full scales.',
+  },
+  hero: {
+    title: 'Color harmony generator, from a base color to a full UI palette',
+    tagline:
+      'Pick a base color and one of five harmony rules on the color wheel, preview the colors live, and turn them into scales with contrast scores.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do you generate a color harmony palette?',
+    lead: 'A color harmony generator builds a palette from one base color and a rule on the color wheel. In UI Color Palette, pick analogous, complementary, compound, triadic or tetradic, and the harmony colors become source colors with full scales and contrast scores, in Figma, Penpot, Sketch and Framer.',
+    demo: 'wheel',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'The color wheel is one of the ways to start a palette, free on every plan. The swatches update as you change the base color or the rule.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/create-a-color-palette#create-a-color-harmony`,
+    },
+    steps: [
+      {
+        title: 'Open Color harmony',
+        text: 'In the Colors combinator, open Color harmony.',
+      },
+      {
+        title: 'Pick a base color',
+        text: 'Choose the color the harmony starts from, such as your brand color.',
+      },
+      {
+        title: 'Choose a rule',
+        text: 'Analogous, complementary, compound, triadic or tetradic. The swatches update live, each with its hex code and the closest color name.',
+      },
+      {
+        title: 'Use the palette',
+        text: 'Create the palette from these colors: they become source colors, and the palette opens with a scale for each.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'rules',
+      title: 'The five harmony rules',
+      intro:
+        'Each rule turns the hue of the base color on the wheel and keeps its saturation and lightness.',
+      caption: 'Color harmony rules',
+      rowHeader: 'Rule',
+      columns: ['Colors', 'Hues'],
+      rows: [
+        { label: 'Analogous', values: ['3', 'The base, and 30° on each side'] },
+        { label: 'Complementary', values: ['2', 'The base and its opposite'] },
+        {
+          label: 'Compound',
+          values: ['3', 'The base, and 30° on each side of its opposite'],
+        },
+        { label: 'Triadic', values: ['3', 'Three hues 120° apart'] },
+        { label: 'Tetradic', values: ['4', 'Four hues 90° apart'] },
+      ],
+      note: 'Through the MCP server, create_color_harmony also accepts a square type (the same hues as tetradic) and a custom spread for analogous colors.',
+    },
+  ],
+  faq: {
+    intro:
+      'Harmony rules, how harmonies become UI colors, and where you can use them.',
+    items: [
+      {
+        question: 'What is a color harmony generator?',
+        answer: `A tool that picks colors by their positions on the color wheel from a base color, such as its opposite for a complementary harmony (see ${htmlLink('/glossary/color-harmony', 'What is color harmony?')}). UI Color Palette then turns those colors into full scales for your UI.`,
+      },
+      {
+        question: 'Which harmony rules can I use?',
+        answer:
+          'Five in the design-tool plugins: analogous, complementary, compound, triadic and tetradic. Through the MCP server, create_color_harmony adds a square rule and lets you set the analogous spread.',
+      },
+      {
+        question: 'Do harmony colors pass WCAG contrast?',
+        answer: `Not by themselves: a harmony picks hues, not lightness. UI Color Palette turns each color into a scale and shows the WCAG 2.1 ratio and APCA score of every shade, so you pick the stops that pass (see ${htmlLink('/capabilities/wcag-apca-contrast', 'WCAG & APCA contrast')}).`,
+      },
+      {
+        question:
+          'What is the difference between complementary, triadic and analogous palettes?',
+        answer:
+          'Complementary uses the base color and its opposite on the wheel, 2 colors; triadic uses three hues 120° apart; analogous uses the base and its neighbors, 30° on each side. All three are free on every plan.',
+      },
+      {
+        question: 'Can I generate color harmonies with Claude?',
+        answer: `Yes. Through the MCP server, create_color_harmony computes harmonies from a base color, and Claude can turn them into a full palette (see ${htmlLink('/claude', 'UI Color Palette for Claude')}).`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'book-open',
+      title: 'What is color harmony?',
+      label: 'Read the definition',
+      href: '/glossary/color-harmony',
+    },
+    {
+      icon: 'glasses',
+      title: 'AI color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/ai-color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'Image to color palette',
+      label: 'See the capability',
+      href: '/capabilities/image-to-color-palette',
+    },
+    {
+      icon: 'glasses',
+      title: 'Color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+  ],
+}
+
+export const modesPage: CapabilityPage = {
+  slug: 'light-dark-themes',
+  name: 'Light & dark modes',
+  seo: {
+    title: 'Dark Mode Color Palette & Light Themes — UI Color Palette',
+    description:
+      'Build light and dark color modes for one palette, each with its own scale, text colors and background, then sync them as Figma variable modes or Penpot themes.',
+  },
+  hero: {
+    title: 'Dark mode color palette, with light and dark modes side by side',
+    tagline:
+      'Give each color mode its own lightness scale, text colors and background, then sync the modes to Figma or Penpot, or export them with your code.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'How do you build a dark mode color palette?',
+    lead: 'A dark mode palette uses the same colors as the light one, with shades and contrast tuned for a dark background. In UI Color Palette, you add a color mode per theme: each has its own lightness scale, text colors, background and vision simulation, and syncs as Figma variable modes or Penpot themes, or exports with your code.',
+    demo: 'modes',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'Color modes share the palette’s source colors; what changes is the scale and the colors the contrast is measured against. The free /basic plan includes 2 color modes.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/manage-a-color-palette#create-color-modes`,
+    },
+    steps: [
+      {
+        title: 'Add a color mode',
+        text: 'Click + in Color modes and name it, such as Dark. The new mode becomes the active one.',
+      },
+      {
+        title: 'Set its background and text colors',
+        text: 'Give it a dark palette background, and the light and dark foreground colors your dark theme uses: the contrast scores are measured against them.',
+      },
+      {
+        title: 'Tune its scale',
+        text: 'Each mode has its own lightness scale: move the stops, reverse them, or set the contrast ratio each stop must reach against the mode’s text colors.',
+      },
+      {
+        title: 'Check every mode',
+        text: 'Switch between modes to read the WCAG 2.1 and APCA score of every shade in each one.',
+      },
+      {
+        title: 'Sync or export the modes',
+        text: 'Sync them as Figma variable modes or Penpot themes, or export them: each mode gets its own set of values in the code. CSS is free; the other formats are on /pro.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'mode-settings',
+      title: 'What each color mode sets',
+      intro:
+        'A color mode is a variant of the whole palette. These settings belong to the mode, not to the palette:',
+      caption: 'Settings of a color mode',
+      rowHeader: 'Setting',
+      columns: ['What it changes'],
+      rows: [
+        {
+          label: 'Lightness scale',
+          values: [
+            'The lightness, or the target contrast ratio, of every stop',
+          ],
+        },
+        {
+          label: 'Light and dark text colors',
+          values: ['The colors every contrast score is measured against'],
+        },
+        {
+          label: 'Palette background',
+          values: [
+            'The background the shades are shown on, darker for a dark mode',
+          ],
+        },
+        {
+          label: 'Vision simulation',
+          href: '/capabilities/color-blindness-simulation',
+          values: [
+            'One of the 8 types of color blindness, or none (protanomaly is free, the other 7 are on /pro)',
+          ],
+        },
+        {
+          label: 'Name and description',
+          values: ['How the mode is named in your variables, tokens and code'],
+        },
+      ],
+    },
+    {
+      id: 'mode-outputs',
+      title: 'How color modes reach your tools',
+      intro:
+        'Figma and Penpot store color modes natively; Sketch and Framer have no mode switching. In CSS, every mode you add gets its own block, selected with a data-theme attribute. Here are the first stops of a palette whose dark mode reverses the scale:',
+      code: "/* Light */\n:root[data-theme='light'] {\n  /* Blue */\n  --blue-50: rgb(184 240 255);\n  --blue-100: rgb(152 213 255);\n  /* 200 to 950 follow */\n}\n\n/* Dark */\n:root[data-theme='dark'] {\n  /* Blue */\n  --blue-50: rgb(2 0 75);\n  --blue-100: rgb(0 0 112);\n  /* 200 to 950 follow */\n}",
+      caption: 'Color modes per design tool and in code',
+      rowHeader: 'Target',
+      columns: ['What you get'],
+      rows: [
+        {
+          label: 'Figma',
+          href: '/figma',
+          values: ['One variable mode per color mode, in one collection'],
+        },
+        {
+          label: 'Penpot',
+          href: '/penpot',
+          values: ['One token set and one Penpot theme per color mode'],
+        },
+        {
+          label: 'Sketch',
+          href: '/sketch',
+          values: [
+            'Flat swatches and shared styles for each color mode: Sketch has no mode switching',
+          ],
+        },
+        {
+          label: 'Framer',
+          href: '/framer',
+          values: [
+            'Color styles with a light and a dark value, the shade and its mirror in the scale, rather than your color modes',
+          ],
+        },
+        {
+          label: 'CSS, SCSS and Less',
+          values: [
+            'One block of variables per color mode you add, after the default :root block; CSS is free, SCSS and Less are on /pro',
+          ],
+        },
+        {
+          label: 'DTCG tokens',
+          href: '/capabilities/export-design-tokens',
+          values: [
+            'One token file per color mode, tied by a resolver file, on /pro',
+          ],
+        },
+      ],
+      note: 'Figma caps variable modes per collection: 1 on the Starter plan, 10 on Professional and Organization.',
+    },
+  ],
+  faq: {
+    intro:
+      'Dark mode palettes, color modes in Figma and Penpot, and contrast in each mode.',
+    items: [
+      {
+        question: 'How do I create a dark mode color palette in Figma?',
+        answer: `Add a Dark color mode to your palette, give it a dark background and its own scale, then sync with the local variables: each color mode becomes a variable mode of the same collection (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+      },
+      {
+        question: 'Can light and dark mode use different shades?',
+        answer: `Yes. Each mode has its own lightness scale, so the same stop can be lighter or darker from one mode to the next. With Claude or the MCP server, semantic tokens can also point to a different shade per mode (see ${htmlLink('/capabilities/semantic-color-system', 'Semantic color system')}).`,
+      },
+      {
+        question:
+          'How many light and dark modes can a Figma color palette have?',
+        answer: `2 on the free /basic plan, as many as you need on /pro. In Figma, your Figma plan also caps variable modes per collection (see ${htmlLink('/pricing', 'pricing')}).`,
+      },
+      {
+        question: 'How do I check contrast in dark mode?',
+        answer: `Set the dark mode’s light and dark text colors: every shade of that mode shows its WCAG 2.1 ratio and APCA score against them, on every plan (see ${htmlLink('/capabilities/wcag-apca-contrast', 'WCAG & APCA contrast')}).`,
+      },
+      {
+        question: 'How do you make a dark mode color palette in CSS?',
+        answer:
+          "Each mode gets its own block of custom properties, such as :root[data-theme='dark'], so switching the attribute on your root element switches every color.",
+      },
+      {
+        question: 'Can a color mode simulate color blindness?',
+        answer: `Yes. Each mode can simulate one of the 8 types of color blindness: protanomaly is free, the other 7 are on /pro. Keep a mode to check your palette with deuteranopia, for example (see ${htmlLink('/capabilities/color-blindness-simulation', 'Color blindness simulation')}).`,
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'glasses',
+      title: 'Color blindness simulation',
+      label: 'See the capability',
+      href: '/capabilities/color-blindness-simulation',
+    },
+    {
+      icon: 'glasses',
+      title: 'Semantic color system',
+      label: 'See the capability',
+      href: '/capabilities/semantic-color-system',
+    },
+    {
+      icon: 'ruler',
+      title: 'Use it in Figma',
+      label: 'See the Figma plugin',
+      href: '/figma',
+    },
+    {
+      icon: 'glasses',
+      title: 'Design system presets',
+      label: 'See the next capability',
+      href: '/capabilities/design-system-presets',
+    },
+  ],
+}
+
+export const presetsPage: CapabilityPage = {
+  slug: 'design-system-presets',
+  name: 'Design system presets',
+  seo: {
+    title: 'Material 3 Color Palette & Design Scales — UI Color Palette',
+    description:
+      'Start a palette from 16 design system color scales — Material 3, Spectrum, Atlassian, Carbon, Polaris, Fluent, Tailwind and more — in your design tool.',
+  },
+  hero: {
+    title: 'Material 3 color palette and 15 more design system color scales',
+    tagline:
+      'Give your palette the stop names your codebase already uses, from Material 3’s 0 to 100 to Tailwind’s 50 to 950.',
+    cta: { label: 'Get UI Color Palette', href: '/download' },
+  },
+  overview: {
+    title: 'Which color scale should your design system use?',
+    lead: 'Choose the color scale your codebase already uses, so designers and developers share the same stop names. UI Color Palette has 16 presets inspired by design systems — Material 3, Tailwind, Spectrum, Atlassian, Carbon, Polaris, Fluent and more — plus 3 custom sets. Material 3 and Tailwind are free, and every stop is computed from your own colors.',
+    demo: 'presets',
+  },
+  how: {
+    title: 'How it works',
+    intro:
+      'A preset sets the stops, their names, the lightness range and the easing of the scale. Your source colors stay yours: every shade is computed from them.',
+    docs: {
+      label: 'Read the guide in the docs',
+      href: `${links.docs}/guides/create-a-color-palette#choose-a-lightness-scale-preset`,
+    },
+    steps: [
+      {
+        title: 'Pick a preset',
+        text: 'In the scale settings, choose a preset, grouped by family: Google, Frameworks, Atlassian, Adobe and more. Material 3 and Tailwind are free.',
+      },
+      {
+        title: 'Get the stops',
+        text: 'The scale is recomputed with the preset’s stops and names, such as 50 to 950 for Tailwind, for every source color.',
+      },
+      {
+        title: 'Fine-tune it',
+        text: 'Move each stop’s lightness or set the contrast ratio it must reach. On /pro, shift the hue and chroma of the scale too.',
+      },
+      {
+        title: 'Or make your own',
+        text: 'Choose a Custom set named 1–10, 10–100 or 100–1000, and add or remove stops: up to 6 on /basic, 24 on /pro.',
+      },
+    ],
+  },
+  tables: [
+    {
+      id: 'presets',
+      title: 'The 16 design system presets',
+      intro:
+        'UI Color Palette has 16 design system presets: Material 3 (13 stops, 0 to 100) and Tailwind (11 stops, 50 to 950) are free; the other 14 are on /pro. Each follows the stop names and count of the design system it is inspired by; the colors come from your palette.',
+      caption: 'Design system color scale presets',
+      rowHeader: 'Preset',
+      columns: ['Inspired by', 'Stops', 'Names', 'Plan'],
+      rows: [
+        {
+          label: 'Material Design',
+          values: ['Google', '10', '50 to 900', '/pro'],
+        },
+        {
+          label: 'Material 3',
+          values: ['Google', '13', '0 to 100', 'Free'],
+        },
+        {
+          label: 'Tailwind',
+          href: '/capabilities/tailwind-color-palette',
+          values: ['Tailwind CSS', '11', '50 to 950', 'Free'],
+        },
+        {
+          label: 'Ant Design',
+          values: ['Ant Design', '10', '1 to 10', '/pro'],
+        },
+        {
+          label: 'Bootstrap',
+          values: ['Bootstrap', '9', '100 to 900', '/pro'],
+        },
+        { label: 'Radix', values: ['Radix', '12', '1 to 12', '/pro'] },
+        {
+          label: 'Untitled UI',
+          values: ['Untitled UI', '12', '25 to 950', '/pro'],
+        },
+        { label: 'Open Color', values: ['Open Color', '10', '0 to 9', '/pro'] },
+        {
+          label: 'ADS Foundations',
+          values: ['Atlassian', '10', '100 to 1000', '/pro'],
+        },
+        {
+          label: 'ADS Foundations Neutral',
+          values: ['Atlassian', '12', '0 to 1100', '/pro'],
+        },
+        { label: 'Spectrum', values: ['Adobe', '13', '100 to 1300', '/pro'] },
+        {
+          label: 'Spectrum Neutral',
+          values: ['Adobe', '11', '50 to 900', '/pro'],
+        },
+        { label: 'Carbon', values: ['IBM', '10', '10 to 100', '/pro'] },
+        { label: 'Base', values: ['Uber', '8', '50 to 700', '/pro'] },
+        { label: 'Polaris', values: ['Shopify', '16', '1 to 16', '/pro'] },
+        { label: 'Fluent 2', values: ['Microsoft', '16', '10 to 160', '/pro'] },
+      ],
+      note: 'Presets set the stops, not the values: UI Color Palette does not copy the colors of these design systems, it computes yours on their scale.',
+    },
+    {
+      id: 'custom-sets',
+      title: 'Custom sets',
+      intro:
+        'When no design system fits, start from a Custom set and shape the stops yourself.',
+      caption: 'Custom scale sets',
+      rowHeader: 'Set',
+      columns: ['Stop names', 'Stops you can have'],
+      rows: [
+        {
+          label: '1–10',
+          values: ['1, 2, 3…', 'Up to 6 on /basic, 24 on /pro'],
+        },
+        {
+          label: '10–100',
+          values: ['10, 20, 30…', 'Up to 6 on /basic, 24 on /pro'],
+        },
+        {
+          label: '100–1000',
+          values: ['100, 200, 300…', 'Up to 6 on /basic, 24 on /pro'],
+        },
+      ],
+    },
+  ],
+  faq: {
+    intro:
+      'Using Material 3, Tailwind or Radix scales, and what the free plan includes.',
+    items: [
+      {
+        question: 'Can I use the Material 3 color scale in Figma?',
+        answer: `Yes, on every plan. The Material 3 preset gives your colors its 13 stops, from 0 to 100, computed from your own colors (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+      },
+      {
+        question: 'Which design system presets are free?',
+        answer: `Material 3 and Tailwind, plus the 3 Custom sets with up to 6 stops. The other 14 presets, from Radix to Fluent, are on /pro (see ${htmlLink('/pricing', 'pricing')}).`,
+      },
+      {
+        question: 'Does UI Color Palette have a 12-step scale like Radix?',
+        answer: `The Radix preset gives your colors 12 stops, from 1 to 12, on /pro. The shades are computed from your colors, so they follow your palette rather than copying the Radix Colors values. See how the two compare in ${htmlLink('/compare/ui-color-palette-vs-radix-colors', 'UI Color Palette vs Radix Colors')}.`,
+      },
+      {
+        question:
+          'Is the Material 3 preset the same as Material Theme Builder?',
+        answer: `Not exactly. The Material 3 preset gives your colors its stop names and count, but every shade is computed from your source colors: no preset copies a design system’s own colors. For Material 3 schemes in HCT, see ${htmlLink('/compare/ui-color-palette-vs-material-theme-builder', 'UI Color Palette vs Material Theme Builder')}.`,
+      },
+      {
+        question: 'Can I add or remove stops in a preset?',
+        answer: `Only in a Custom set: click the range to add a stop, select one and press Backspace to remove it, up to 6 stops on /basic and 24 on /pro (see ${htmlLink('/glossary/color-scale', 'What is a color scale?')}).`,
+      },
+      {
+        question: 'What are the Atlassian and Adobe Spectrum color scales?',
+        answer:
+          'UI Color Palette has ADS Foundations (10 stops, 100 to 1000) and ADS Foundations Neutral (12 stops, 0 to 1100) for Atlassian, and Spectrum (13 stops, 100 to 1300) and Spectrum Neutral (11 stops, 50 to 900) for Adobe, on /pro. The stops follow those systems; the colors come from your palette.',
+      },
+    ],
+  },
+  related: [
+    {
+      icon: 'glasses',
+      title: 'Color palette generator',
+      label: 'See the capability',
+      href: '/capabilities/color-palette-generator',
+    },
+    {
+      icon: 'glasses',
+      title: 'Tailwind color palette',
+      label: 'See the capability',
+      href: '/capabilities/tailwind-color-palette',
+    },
+    {
+      icon: 'book-open',
+      title: 'What is a color scale?',
+      label: 'Read the definition',
+      href: '/glossary/color-scale',
+    },
+    {
+      icon: 'glasses',
+      title: 'OKLCH & LCH color spaces',
+      label: 'See the capability',
+      href: '/capabilities/oklch-lch-color-spaces',
+    },
+  ],
+}
+
 export const capabilityPages = [
   colorSpacesPage,
   colorBlindnessPage,
   contrastPage,
+  generatorPage,
+  tailwindPage,
+  nativePage,
+  tokensPage,
+  semanticPage,
+  aiPage,
+  imagePage,
+  wheelPage,
+  modesPage,
+  presetsPage,
 ]
+
+export const inDepth = {
+  title: 'Capabilities in depth',
+  intro:
+    'One page per capability: how it works, what you get on each plan, and the questions people ask.',
+  cards: [
+    ...capabilityPages.map((page): LinkCard => ({
+      title: page.name,
+      text: page.hero.tagline,
+      label: 'Explore in depth',
+      href: capabilityPath(page),
+    })),
+    {
+      title: 'Color glossary',
+      text: glossary.tagline,
+      label: 'Read the definitions',
+      href: '/glossary',
+    },
+  ],
+}

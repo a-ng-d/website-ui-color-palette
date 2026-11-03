@@ -25,6 +25,9 @@ column), `479.98px` (small phones). Mobile first is not required; keep desktop r
 | **Title card + live embed + editor cards** | `platform/PlatformSurfaces` | 3 cols: rotated title (col 1, rows 1–2), plugin iframe (cols 2–3, rows 1–2), `IconTile` cards on row 3; 2 cols < 1024 with the embed last on a full row; 1 col < 640 |
 | **Static text cards** | `ui/TextCardsSection` (glossary terms) | one column per card (`cards`: title + HTML paragraphs), `--space-inset-800`; 1 col < 1024 |
 | **Terms grid** | `/glossary` | 2 cols of whole-card `<a class="card">` (term, definition, "Read more"), link named by the term (`aria-labelledby`); 1 col < 640 |
+| **Capabilities in depth** | `capabilities/InDepthSection` (`/capabilities`, data `inDepth` in `capability-pages.ts`) | intro `surface-card` (soft border, site surface, not rotated) full width, then 3 cols of compact whole-card `<a class="card">` (page name, hero tagline, "Explore in depth"), link named by the title (`aria-labelledby`), `--space-inset-600`, 8px gutter throughout; 2 cols < 1024, 1 col < 640. Lists every `capabilityPages` entry plus the glossary |
+| **Comparison page** | `compare/ComparePageView` (`/compare/<slug>`, data `comparePages` in `src/data/compare-pages.ts`) | `platform/PlatformHero`; a one-card `ui/TextCardsSection` "UI Color Palette vs X in short" (answer-first summary, 40 to 60 words); `ui/TableSection` (columns: UI Color Palette, then the competitor; the date of `verified` is appended to its intro); a two-card `ui/TextCardsSection` "When to choose …"; `home/Faq`; a one-card `ui/TextCardsSection` "Sources" (`<time datetime>` "Last verified" paragraph, links as a `links` list, never a run of inline links joined by separators); `platform/NextSteps`; `home/Reinsurance` |
+| **Comparison hub** | `pages/compare.astro` | `platform/PlatformHero` (no CTA), then `capabilities/InDepthSection` fed with one card per `comparePages` entry (title "UI Color Palette vs X", hero tagline, "Read the comparison"), then `home/Reinsurance`; JSON-LD `CollectionPage` with an `ItemList` |
 | **Next steps link cards** | `platform/NextSteps` | one column per whole-card `<a class="card">`, 4 at most per row (`steps` prop; default: capabilities, pricing, downloads, blog); 1 col < 1024. Also on the 404 |
 
 Capability pages (`/capabilities/<slug>`) are data-driven too: a `CapabilityPage` in
@@ -34,6 +37,8 @@ related `NextSteps`). Glossary terms (`/glossary/<term>`) come from `src/data/gl
 through `glossary/GlossaryTermView` (hero without tagline so the definition is the first
 paragraph, `glossary/HueRamp` visual, two text cards, related terms); `/glossary` lists them.
 Shared types (steps, tables, next steps, icons) live in `src/data/blocks.ts`.
+
+Comparison pages (`/compare/<slug>`) are data-driven: a `ComparePage` in `src/data/compare-pages.ts`, rendered by `compare/ComparePageView`; `/compare` lists them. Competitor facts come only from dated primary sources; re-verify them and bump `verified` (the only place the date is written: page, table intro, JSON-LD `dateModified` and sitemap `lastmod` all read it) whenever a comparison is edited.
 
 Platform pages (`/figma`, `/penpot`, `/sketch`, `/framer`, `/claude`) are data-driven:
 a `PlatformPage` in `src/data/platform-pages.ts`, rendered by

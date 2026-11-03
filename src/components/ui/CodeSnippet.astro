@@ -1,0 +1,15 @@
+---
+interface Props {
+  code: string
+}
+
+const { code } = Astro.props
+const isBlock = code.includes('\n')
+---
+
+{isBlock ? (
+  // prettier-ignore
+  <pre class="code-snippet code-snippet--block" tabindex="0"><code>{code}</code></pre>
+) : (
+  <code class="code-snippet">{code}</code>
+)}

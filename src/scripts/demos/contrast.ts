@@ -21,7 +21,6 @@ import {
 
 const HUE = 264
 export const CONTRAST_FOREGROUND: Rgb = [1, 1, 1]
-/** Slider value (0–100) of the still picture: a comfortable AAA. */
 export const CONTRAST_START = 20
 
 const shade = (value: number) => {
@@ -41,7 +40,6 @@ export const contrastAt = (value: number) => {
   }
 }
 
-/** The message shown for each WCAG grade (SemanticMessage type + text). */
 export const GRADES: Record<
   WcagGrade,
   { type: 'success' | 'warning' | 'error'; text: string }
@@ -52,14 +50,12 @@ export const GRADES: Record<
   Fail: { type: 'error', text: 'Fail · Not readable' },
 }
 
-/** Track of the slider: the shade sampled across its range. */
 export const contrastTrack = () =>
   Array.from({ length: 11 }, (_, i) => ({
     offset: i / 10,
     color: hex(shade(i * 10)),
   }))
 
-/** AAA → AA → AA Large → Fail, then back. */
 const KEYS: Keys = [
   [0, 20],
   [1600, 20],

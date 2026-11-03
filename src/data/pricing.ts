@@ -38,42 +38,26 @@ export interface PlanFeature {
   label: string
 }
 
-/** What a card shows for one billing period. */
 export interface PlanVariant {
-  /** Big title: the price, or a sentence when there is none. */
   title: string
   subtitle?: string
-  /**
-   * Subtitle with the localized total (`{total}`), used when prices are read
-   * from Polar. `subtitle` stays as the USD fallback written in the HTML.
-   */
   subtitleTemplate?: string
-  /**
-   * Price derived from a Polar product (/ultimate is sold on request, and
-   * priced at twice /pro). `{ productId, multiplier }`.
-   */
   priceOf?: { productId: string; multiplier: number }
-  /** Months the price covers: the title shows the price per month. */
   months?: number
-  /** Numeric price (USD), for schema.org. Omitted when there is none. */
   price?: string
-  /** Polar product behind the call to action (checkout). */
   productId?: string
   cta?: { label: string; href: string; variant: 'secondary' | 'primary' }
 }
 
 export interface Plan {
   id: 'basic' | 'pro' | 'ultimate'
-  /** Tag shown on the card and in the table header. */
   tag: string
-  /** Same content whatever the billing period. */
   fixed?: PlanVariant
   variants?: Record<BillingPeriod, PlanVariant>
   features: PlanFeature[]
   badge?: string
 }
 
-/** Polar products, production ids of the Polar organization. */
 export const polarProducts: Record<BillingPeriod, string> = {
   week: '17eb1281-cf21-4d58-9144-76a1426ec73c',
   month: '1c4ad049-f424-4ec4-ac66-0997050e0060',
@@ -81,11 +65,6 @@ export const polarProducts: Record<BillingPeriod, string> = {
   lifetime: '9ed0e164-8972-4f60-88cf-91b805991e87',
 }
 
-/**
- * Checkout of a /pro period: a real link to the checkout function (302 to the
- * hosted Polar checkout without JS), upgraded to the embedded checkout by the
- * Plans script.
- */
 export const checkoutHref = (productId: string) =>
   `/api/checkout?product=${productId}`
 
@@ -209,12 +188,10 @@ export const plans: Plan[] = [
   },
 ]
 
-/** A table cell: a text value, or included / not included. */
 export type Cell = string | boolean
 
 export interface CompareRow {
   feature: string
-  /** Same order as `compareColumns`: basic, pro, ultimate. */
   values: [Cell, Cell, Cell]
 }
 

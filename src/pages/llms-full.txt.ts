@@ -1,3 +1,9 @@
+import {
+  compare,
+  comparePages,
+  comparePath,
+  type ComparePage,
+} from '@/data/compare-pages'
 import type { APIRoute } from 'astro'
 
 import { site } from '@/config/site'
@@ -112,6 +118,25 @@ export const GET: APIRoute = async () => {
     ...faqLines(page.name, page.faq.items),
   ]
 
+  const compareSection = (page: ComparePage) => [
+    `## UI Color Palette vs ${page.competitor}`,
+    '',
+    `URL: ${url(comparePath(page))}`,
+    '',
+    page.summary,
+    '',
+    ...tableLines(page.table),
+    '### When to choose UI Color Palette',
+    '',
+    ...page.chooseUs.map(stripHtml).flatMap((p) => [p, '']),
+    `### When to choose ${page.competitor}`,
+    '',
+    ...page.chooseThem.map(stripHtml).flatMap((p) => [p, '']),
+    ...faqLines(`UI Color Palette vs ${page.competitor}`, page.faq.items),
+    `Last verified: ${page.verified}. Sources: ${page.sources.map((source) => source.href).join(', ')}`,
+    '',
+  ]
+
   const cell = (value: string | boolean) =>
     value === true ? 'included' : value === false ? 'not included' : value
 
@@ -184,6 +209,13 @@ export const GET: APIRoute = async () => {
         line.startsWith('### ') ? `#${line}` : line
       ),
     ]),
+    `## ${compare.title}`,
+    '',
+    `URL: ${url('/compare')}`,
+    '',
+    compare.tagline,
+    '',
+    ...comparePages.flatMap(compareSection),
     `## ${glossary.title}`,
     '',
     `URL: ${url('/glossary')}`,

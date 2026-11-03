@@ -16,10 +16,13 @@ You do not rewrite anything; you say what is true, what is not, and where the pr
 
 1. `../specs-ui-color-palette/02-features/*.md` — behaviour, **Rules**, **Acceptance
    criteria**, **Out of scope**, **Status**, and the implementation notes for
-   **Platforms** and **Credits / plan**.
-2. `../specs-ui-color-palette/00-overview/glossary.md`, `01-domain-model/`, `04-contracts/`.
-3. `../docs-ui-color-palette/` — user-facing wording and steps.
-4. `src/data/` and `src/config/site.ts` of this repo — pricing, platforms, links.
+   **Platforms**. The specs carry no plan content.
+2. Plans (/basic vs /pro, caps, what is free):
+   `../docs-ui-color-palette/general/introduction/free-and-pro.md`, the only source.
+   Platforms: `../docs-ui-color-palette/general/introduction/platform-capabilities.md`.
+3. `../specs-ui-color-palette/00-overview/glossary.md`, `01-domain-model/`, `04-contracts/`.
+4. `../docs-ui-color-palette/` — user-facing wording and steps.
+5. `src/data/` and `src/config/site.ts` of this repo — pricing, platforms, links.
 
 The `ui-color-palette-blog-writing` skill, §1, defines what counts as grounded.
 
