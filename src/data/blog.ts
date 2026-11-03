@@ -1,4 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
+import type { NextStep } from '@/data/blocks'
+import { capabilityPages, capabilityPath } from '@/data/capability-pages'
+import { platformPages } from '@/data/platform-pages'
 
 export type Post = CollectionEntry<'blog'>
 
@@ -18,13 +21,38 @@ export const blogPage = {
 
 export const postPath = (post: Post) => `/blog/${post.id}`
 
+const pillarPaths = new Set([
+  ...capabilityPages.map(capabilityPath),
+  ...platformPages.map((page) => page.path),
+])
+
 /** Published articles, newest first. */
-export const getPosts = async () =>
-  (await getCollection('blog', ({ data }) => !data.draft)).sort(
+export const getPosts = async () => {
+  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
     (a, b) =>
       b.data.pubDate.getTime() - a.data.pubDate.getTime() ||
       a.id.localeCompare(b.id)
   )
+  const orphan = posts.find(
+    ({ data }) => data.pillar && !pillarPaths.has(data.pillar)
+  )
+  if (orphan)
+    throw new Error(
+      `Blog post "${orphan.id}": unknown pillar "${orphan.data.pillar}".`
+    )
+  return posts
+}
+
+/** The articles of a pillar's cluster, newest first, as related cards. */
+export const pillarArticles = async (path: string): Promise<NextStep[]> =>
+  (await getPosts())
+    .filter(({ data }) => data.pillar === path)
+    .map((post) => ({
+      icon: 'newspaper',
+      title: post.data.title,
+      label: 'Read the article',
+      href: postPath(post),
+    }))
 
 /** Related articles: same category, then shared tags, then newest. */
 export const relatedPosts = (post: Post, posts: Post[], limit = 2) => {

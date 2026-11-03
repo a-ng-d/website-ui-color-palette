@@ -9,6 +9,7 @@ import PlatformHero from '@/components/platform/PlatformHero.astro'
 import IntroCardSection from '@/components/ui/IntroCardSection.astro'
 import StepsSection from '@/components/ui/StepsSection.astro'
 import TableSection from '@/components/ui/TableSection.astro'
+import { pillarArticles } from '@/data/blog'
 import { capabilityPath, type CapabilityPage } from '@/data/capability-pages'
 import {
   breadcrumbs,
@@ -24,6 +25,7 @@ interface Props {
 
 const { page } = Astro.props
 const path = capabilityPath(page)
+const related = [...(await pillarArticles(path)), ...page.related]
 
 const jsonLd = [
   organization(),
@@ -71,7 +73,7 @@ const jsonLd = [
     intro={page.faq.intro}
   />
   <NextSteps
-    steps={page.related}
+    steps={related}
     title={`Related to ${page.name}`}
   />
   <Reinsurance />

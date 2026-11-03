@@ -14,6 +14,7 @@ import PlatformSurfaces from '@/components/platform/PlatformSurfaces.astro'
 import StepsSection from '@/components/ui/StepsSection.astro'
 import TableSection from '@/components/ui/TableSection.astro'
 import { site } from '@/config/site'
+import { pillarArticles } from '@/data/blog'
 import { nextSteps, type PlatformPage } from '@/data/platform-pages'
 import {
   faqPage,
@@ -31,7 +32,7 @@ interface Props {
 const { page } = Astro.props
 const name = `${site.name} for ${page.platform}`
 const textOnly = page.why.cards.every((card) => !card.demo)
-const steps =
+const defaultSteps =
   page.nextSteps ??
   nextSteps.map((step) =>
     step.href === '/download'
@@ -43,6 +44,7 @@ const steps =
         }
       : step
   )
+const steps = [...(await pillarArticles(page.path)), ...defaultSteps]
 
 const jsonLd = [
   organization(),

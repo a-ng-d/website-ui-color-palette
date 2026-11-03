@@ -202,7 +202,7 @@ export const colorSpacesPage: CapabilityPage = {
     items: [
       {
         question: 'OKLCH vs HSL: which is better for a color palette?',
-        answer: `OKLCH. HSL computes lightness from the RGB channels, so a yellow and a blue at 50% lightness look nothing alike; ${htmlLink('/glossary/oklch', 'OKLCH')} lightness follows how light a color looks, so steps stay even across hues. UI Color Palette shows a warning when you pick HSL.`,
+        answer: `OKLCH. HSL computes lightness from the RGB channels, so a yellow and a blue at 50% lightness look nothing alike; ${htmlLink('/glossary/oklch', 'OKLCH')} lightness follows how light a color looks, so steps stay even across hues. UI Color Palette shows a warning when you pick HSL. Full comparison: ${htmlLink('/blog/oklch-vs-hsl-for-ui-palettes', 'OKLCH vs HSL for UI palettes')}.`,
       },
       {
         question: 'LCH vs OKLCH: what is the difference?',
@@ -527,7 +527,7 @@ export const contrastPage: CapabilityPage = {
       },
       {
         question: 'APCA vs WCAG: which contrast method should I use?',
-        answer: `Both. The ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG 2.1 ratio')} is what accessibility laws and standards most often cite; ${htmlLink('/glossary/apca', 'APCA')} models perceived contrast more closely, taking text size and weight into account. UI Color Palette shows both on every shade.`,
+        answer: `Both. The ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG 2.1 ratio')} is what accessibility laws and standards most often cite; ${htmlLink('/glossary/apca', 'APCA')} models perceived contrast more closely, taking text size and weight into account. UI Color Palette shows both on every shade. Full comparison: ${htmlLink('/blog/apca-vs-wcag-2-what-changes-for-ui-colors', 'APCA vs WCAG 2: what changes for UI colors')}.`,
       },
       {
         question: 'What contrast ratio does WCAG require for text?',

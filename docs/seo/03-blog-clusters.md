@@ -1,6 +1,6 @@
 # Phase 3 — Blog topic clusters
 
-- **Status**: Draft
+- **Status**: In progress (branch `seo/phase-3`)
 - **Package(s) concerned**: `website-ui-color-palette` (`src/content/blog/`)
 - **Related spec**: [02-capability-pages.md](02-capability-pages.md), skill `ui-color-palette-blog-writing`
 
@@ -82,8 +82,17 @@ Candidates for wave 2:
 ## Implementation notes
 
 - Every article goes through `blog-writer`, then `seo-reviewer` and `fact-checker`, then a revision.
-- Track progress by adding a `cluster` field to the front-matter. This is optional and would require a schema change in `src/content.config.ts`. The alternative is a table in this file.
-- Pillar → article links: Lot A pages can list their cluster articles automatically by matching a tag or `cluster` value.
+- **Pillar field.** Each article sets `pillar:` in its front-matter to the path of its pillar page (`/capabilities/<slug>` or a platform page such as `/penpot`). The schema is in `src/content.config.ts`. `getPosts()` in `src/data/blog.ts` fails the build on an unknown pillar path.
+- **Pillar → article links** are automatic. `pillarArticles(path)` in `src/data/blog.ts` puts the cluster's articles, newest first, ahead of the curated related cards on capability pages (`CapabilityPageView.astro`) and platform pages (`PlatformPageView.astro`).
+- **Pillar FAQ link.** Adding the "Full comparison: …" link to the pillar FAQ answer is done by hand in `src/data/capability-pages.ts` when the article ships.
+- **Progress** is tracked in the table below.
+
+## Progress
+
+| # | Slug | Status | Open before merge |
+|---|---|---|---|
+| 1 | `apca-vs-wcag-2-what-changes-for-ui-colors` | Reviewed (SEO + facts), revised | Cover (placeholder), screenshots and Screen Studio clip |
+| 5 | `oklch-vs-hsl-for-ui-palettes` | Reviewed (SEO + facts), revised | Cover (placeholder), diagram, Screen Studio clip, export screenshot |
 
 ## See also
 
@@ -95,3 +104,4 @@ Candidates for wave 2:
 | Date | Change |
 | ---- | ------ |
 | 2026-10-26 | Created |
+| 2026-11-03 | Implementation started: `pillar` front-matter field, automatic pillar → article cards, articles 1 and 5 drafted |

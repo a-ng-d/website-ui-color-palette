@@ -129,3 +129,39 @@ export const externalLinks = defineHastPlugin({
     },
   },
 })
+
+const childElements = (node, tagName) =>
+  (node?.children ?? []).filter(
+    (child) => child.type === 'element' && child.tagName === tagName
+  )
+
+/**
+ * Markdown tables scroll in a focusable region on narrow screens, like the
+ * site's TableSection, instead of overflowing the article card. The region is
+ * named after the column headers so screen readers can tell tables apart.
+ */
+export const scrollableTables = defineHastPlugin({
+  name: 'blog-scrollable-tables',
+  element: {
+    filter: ['table'],
+    visit(node, ctx) {
+      const headerRow = childElements(childElements(node, 'thead')[0], 'tr')[0]
+      const headerCells = childElements(headerRow, 'th')
+      headerCells.forEach((cell) => ctx.setProperty(cell, 'scope', 'col'))
+      const headers = headerCells
+        .map((cell) => ctx.textContent(cell).trim())
+        .filter(Boolean)
+      ctx.wrapNode(node, {
+        type: 'element',
+        tagName: 'div',
+        properties: {
+          className: ['table-scroll'],
+          tabIndex: 0,
+          role: 'region',
+          ariaLabel: headers.length ? headers.join(', ') : 'Table',
+        },
+        children: [],
+      })
+    },
+  },
+})

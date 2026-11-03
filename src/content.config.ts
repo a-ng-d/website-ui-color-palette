@@ -28,6 +28,7 @@ const blog = defineCollection({
       tags: z.array(z.string()).default([]),
       /** Guides, Product, AI or News. */
       category: z.string().optional(),
+      pillar: z.string().startsWith('/').optional(),
       draft: z.boolean().default(false),
       /** Overrides for search engines and social cards; each falls back to the field above. */
       seo: z
