@@ -924,6 +924,10 @@ export const tailwindPage: CapabilityPage = {
       {
         question: 'How do I add a custom color palette to Tailwind v4?',
         answer: `Declare your colors as --color-* variables in an @theme block, and each becomes utilities such as bg-brand-500. UI Color Palette writes that block for you, with a full scale per color (see ${htmlLink('https://tailwindcss.com/docs/theme', 'Tailwind’s theme docs')}).`,
+        article: {
+          lead: 'Step by step',
+          post: 'tailwind-v4-oklch-palette-from-figma',
+        },
       },
       {
         question:
@@ -1469,6 +1473,10 @@ export const semanticPage: CapabilityPage = {
         question: 'How should I name semantic color tokens?',
         answer:
           'Along a few dimensions: a role (brand, danger, success), a prominence (default, subtle, strong) and a state (hover, pressed, disabled), or a surface and its content. Keep the set small: every token is one more decision to maintain.',
+        article: {
+          lead: 'How to structure them',
+          post: 'primitive-vs-semantic-color-tokens',
+        },
       },
       {
         question: 'Can a semantic token use a different shade in dark mode?',

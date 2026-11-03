@@ -98,6 +98,8 @@ Candidates for wave 2:
 | 6 | `lch-vs-oklch-for-design-systems` | Reviewed (SEO + facts), revised | Cover (placeholder), Screen Studio clip, 2 screenshots (`TODO(asset)` comments in the body) |
 | 2 | `how-to-build-an-accessible-color-scale` (pubDate 2026-11-17) | Reviewed (SEO + facts), revised; cover done | 2 screenshots and a Screen Studio clip (`TODO(asset)`) |
 | 4 | `designing-for-color-blindness-ui-checklist` (pubDate 2026-11-20) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip (`TODO(asset)`) |
+| 8 | `primitive-vs-semantic-color-tokens` (pubDate 2026-11-24) | Reviewed (SEO + facts), revised; cover and diagram done | Claude token-matrix capture (`TODO(asset)`) |
+| 11 | `tailwind-v4-oklch-palette-from-figma` (pubDate 2026-11-27) | Reviewed (SEO + facts), revised; cover done | Export screenshot and Screen Studio clip (`TODO(asset)`) |
 
 ## See also
 
@@ -113,3 +115,4 @@ Candidates for wave 2:
 | 2026-11-03 | Articles 3 and 6 drafted (pubDate 2026-11-10), pillar FAQ links added |
 | 2026-11-03 | Scheduled publishing (future `pubDate` hidden in production, daily rebuild) and conditional pillar FAQ links |
 | 2026-11-03 | Articles 2 and 4 drafted and reviewed; the AI post gets `/claude` as its pillar |
+| 2026-11-03 | Articles 8 and 11 drafted and reviewed |
