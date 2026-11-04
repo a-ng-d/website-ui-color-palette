@@ -100,6 +100,13 @@ Candidates for wave 2:
 | 4 | `designing-for-color-blindness-ui-checklist` (pubDate 2026-11-20) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip (`TODO(asset)`) |
 | 8 | `primitive-vs-semantic-color-tokens` (pubDate 2026-11-24) | Reviewed (SEO + facts), revised; cover and diagram done | Claude token-matrix capture (`TODO(asset)`) |
 | 11 | `tailwind-v4-oklch-palette-from-figma` (pubDate 2026-11-27) | Reviewed (SEO + facts), revised; cover done | Export screenshot and Screen Studio clip (`TODO(asset)`) |
+| 7 | `perceptual-lightness-explained` (pubDate 2026-12-01) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip (`TODO(asset)`) |
+| 9 | `export-colors-to-dtcg-and-style-dictionary` (pubDate 2026-12-04) | Reviewed (SEO + facts), revised; cover and diagram done | Export panel screenshot (`TODO(asset)`) |
+| 10 | `material-3-vs-tailwind-vs-spectrum-color-scales` (pubDate 2026-12-08) | Reviewed (SEO + facts), revised; cover and diagram done | Preset menu screenshot (`TODO(asset)`) |
+| 12 | `swiftui-and-jetpack-compose-color-palette` (pubDate 2026-12-11) | Reviewed (SEO + facts), revised; cover and diagram done | SwiftUI export screenshot (`TODO(asset)`) |
+| 13 | `sync-a-color-palette-to-penpot-design-tokens` (pubDate 2026-12-15) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip (`TODO(asset)`) |
+| 14 | `ai-color-palette-generator-from-a-prompt` (pubDate 2026-12-18) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip (`TODO(asset)`) |
+| 15 | `color-palette-from-image` (pubDate 2026-12-22) | Reviewed (SEO + facts), revised; cover and diagram done | Screenshot and Screen Studio clip (`TODO(asset)`) |
 
 ## See also
 
@@ -116,3 +123,4 @@ Candidates for wave 2:
 | 2026-11-03 | Scheduled publishing (future `pubDate` hidden in production, daily rebuild) and conditional pillar FAQ links |
 | 2026-11-03 | Articles 2 and 4 drafted and reviewed; the AI post gets `/claude` as its pillar |
 | 2026-11-03 | Articles 8 and 11 drafted and reviewed |
+| 2026-11-04 | Wave 1 complete: articles 7, 9, 10, 12, 13, 14 and 15 drafted, reviewed and scheduled through 2026-12-22; platform-page FAQs support `article` links |

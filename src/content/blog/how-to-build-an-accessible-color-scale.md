@@ -132,11 +132,11 @@ UI Color Palette applies one scale to all your source colors and scores every sh
 - **Read every shade** — each shade shows its WCAG 2.1 ratio and APCA score against both foreground colors; hover a ratio to see its A, AA or AAA grade.
 - **Catch the weak hue on /pro** — the score interval shows the gap between the lowest and highest score at a stop, across your colors, which is step 5 at a glance. Pass and fail filters and the contrast report add the details.
 
-<!-- TODO(asset): Screenshot, light mode, 2x, cropped to the Scale panel. Tailwind preset selected, view switched to `Contrast ratio`, stops 50 to 950 set to the targets of the table in step 3 (1.05, 1.39, 1.83, 2.41, 3.19, 4.21, 5.55, 7.33, 9.68, 12.77, 16.86) against the light foreground color. Other stops may adjust as you type: re-check every value once the 11 are entered. File: src/assets/blog/how-to-build-an-accessible-color-scale/contrast-ratio-targets.png. Alt: "Scale panel in Contrast ratio view, with a target ratio typed on each Tailwind stop from 50 to 950". -->
+![Scale panel with the Tailwind preset: the Lightness slider, and the Contrast ratio section where the knob of stop 600 is open on a typed target of 5.5](../../assets/blog/how-to-build-an-accessible-color-scale/contrast-ratio-targets.png)
 
 <!-- TODO(asset): Screen Studio clip, 15–20 s, no audio. 1) Open the Scale panel with the Tailwind preset, 2) toggle from `Lightness` to `Contrast ratio`, 3) type 5.55 on stop 600 and watch the shades update in the Preview, 4) hover the WCAG ratio of a 600 shade to show its AA grade. Zoom on the ratio field, then on the tooltip. File: public/videos/accessible-color-scale-contrast-targets.mp4. Caption link: "Set a target contrast ratio on a stop and read its WCAG grade in UI Color Palette". -->
 
-<!-- TODO(asset): Screenshot (/pro), light mode, 2x, cropped to the Preview. Four source colors (red, blue, yellow, green) with WCAG scores and intervals shown, and the "fail" filter on the light foreground color active, so the yellow and green shades of one stop stand out. File: src/assets/blog/how-to-build-an-accessible-color-scale/interval-and-filters.png. Alt: "Preview showing the WCAG score interval of each stop and the shades that fail against white text". -->
+![Preview of a red, a blue, a yellow and a green on the Tailwind scale from 950 to 50, with the WCAG 2.1 ratio on each shade and a WCAG 2.1 interval row at the bottom, the gap between the lowest and highest ratio of each stop](../../assets/blog/how-to-build-an-accessible-color-scale/interval-and-filters.png)
 
 The docs explain each setting in [Adjust the contrast configuration](https://docs.ui-color-palette.com/guides/master-a-color-palette#adjust-the-contrast-configuration).
 

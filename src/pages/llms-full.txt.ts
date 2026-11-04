@@ -82,7 +82,7 @@ export const GET: APIRoute = async () => {
     ...faq(items).map((line) => (line.startsWith('### ') ? `#${line}` : line)),
   ]
 
-  const platformSection = (page: PlatformPage) => [
+  const platformSection = (page: PlatformPage, faqItems: FaqItem[]) => [
     `## ${page.hero.title}`,
     '',
     `URL: ${url(page.path)}`,
@@ -101,7 +101,7 @@ export const GET: APIRoute = async () => {
     '',
     ...(page.setup ? stepsLines(page.setup) : []),
     ...(page.tables ?? []).flatMap(tableLines),
-    ...(page.faq ? faqLines(page.hero.title, page.faq.items) : []),
+    ...(page.faq ? faqLines(page.hero.title, faqItems) : []),
     `Install: ${page.hero.cta.href}`,
     '',
   ]
@@ -144,6 +144,9 @@ export const GET: APIRoute = async () => {
   const capabilityFaqs = await Promise.all(
     capabilityPages.map((page) => withArticleLinks(page.faq.items))
   )
+  const platformFaqs = await Promise.all(
+    platformPages.map((page) => withArticleLinks(page.faq?.items ?? []))
+  )
 
   const body = [
     `# ${site.name}`,
@@ -177,7 +180,9 @@ export const GET: APIRoute = async () => {
     ...capabilityPages.flatMap((page, index) =>
       capabilitySection(page, capabilityFaqs[index])
     ),
-    ...platformPages.flatMap(platformSection),
+    ...platformPages.flatMap((page, index) =>
+      platformSection(page, platformFaqs[index])
+    ),
     '## Download',
     '',
     `URL: ${url(downloadPage.path)}`,

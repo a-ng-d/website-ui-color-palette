@@ -5,7 +5,7 @@ skills:
   - ui-color-palette-blog-writing
   - seo-geo
   - ui-color-palette-corpo-website
-model: opus
+model: sonnet
 effort: high
 maxTurns: 60
 ---

@@ -14,7 +14,7 @@ import PlatformSurfaces from '@/components/platform/PlatformSurfaces.astro'
 import StepsSection from '@/components/ui/StepsSection.astro'
 import TableSection from '@/components/ui/TableSection.astro'
 import { site } from '@/config/site'
-import { pillarArticles } from '@/data/blog'
+import { pillarArticles, withArticleLinks } from '@/data/blog'
 import { nextSteps, type PlatformPage } from '@/data/platform-pages'
 import {
   faqPage,
@@ -45,6 +45,7 @@ const defaultSteps =
       : step
   )
 const articles = await pillarArticles(page.path)
+const faqItems = page.faq ? await withArticleLinks(page.faq.items) : []
 const steps = [
   ...articles,
   ...defaultSteps.filter(({ href }) => !articles.some((a) => a.href === href)),
@@ -71,7 +72,7 @@ const jsonLd = [
     about: platformSoftwareId(page.path),
   }),
   pageBreadcrumbs(name, page.path),
-  ...(page.faq ? [faqPage(page.faq.items)] : []),
+  ...(page.faq ? [faqPage(faqItems)] : []),
 ]
 ---
 
@@ -103,7 +104,7 @@ const jsonLd = [
   ))}
   {page.faq && (
     <Faq
-      items={page.faq.items}
+      items={faqItems}
       intro={page.faq.intro}
     />
   )}

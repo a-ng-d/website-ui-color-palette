@@ -123,7 +123,7 @@ The change applies at once and recomputes every shade. Your source colors and yo
 
 Look at the lightest stops of your blue scale in each space: low-chroma blues are where LCH can drift toward purple. Each shade shows its WCAG 2.1 and APCA score, so you can check that the stops you use for text still clear their threshold after the switch.
 
-<!-- TODO(asset): screenshot, 2× light mode — the same blue scale side by side, computed in LCH and in OKLCH, cropped to the shades with their contrast scores. Save as src/assets/blog/lch-vs-oklch-for-design-systems/lch-and-oklch-blue-scales.png -->
+![The same blue scale in LCH above and OKLCH below, with the WCAG and APCA score of every shade from 950 to 50: the pale LCH stops lean toward violet, the OKLCH ones stay light blue](../../assets/blog/lch-vs-oklch-for-design-systems/lch-and-oklch-blue-scales.png)
 
 ### 3 · Export lch() or oklch() values
 
@@ -131,7 +131,7 @@ The CSS, SCSS and Less exports let you choose the color model of the values they
 
 If your design system consumes tokens rather than stylesheets, see the [design token exports](/capabilities/export-design-tokens): DTCG, Style Dictionary and native JSON. The DTCG export writes its values in RGB or OKLCH, not LCH, so an OKLCH palette reaches your tokens without conversion. Tailwind v4 has its own export. Every export format except CSS needs /pro.
 
-<!-- TODO(asset): screenshot, 2× light mode — Export mode with CSS selected and the color-space choice open on OKLCH, the code preview showing oklch() values. Save as src/assets/blog/lch-vs-oklch-for-design-systems/export-css-oklch.png -->
+![Export panel with Custom Properties (CSS) selected, the color space menu open on OKLCH, and the generated oklch() values of a blue scale from 50 to 950](../../assets/blog/lch-vs-oklch-for-design-systems/export-css-oklch.png)
 
 ## Which should you choose: LCH or OKLCH?
 

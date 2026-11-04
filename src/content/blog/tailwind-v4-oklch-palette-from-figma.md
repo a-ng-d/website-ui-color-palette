@@ -131,7 +131,7 @@ Use it as your CSS entry, or copy its `@theme` block into yours. Three details t
 - **The source color has its own variable** — `--color-brand-source` gives you `bg-brand-source`, the exact color you started from.
 - **Color modes add their name** — with several modes, a shade becomes `--color-light-brand-500`, so each mode gets its own utilities.
 
-<!-- TODO(asset): screenshot, 2× light mode, cropped to the Export panel — format menu on "Tailwind v4 (CSS)", code preview showing the @theme block above with --color-brand-* lines. Save as src/assets/blog/tailwind-v4-oklch-palette-from-figma/export-tailwind-v4.png. Alt: "Export panel with Tailwind v4 (CSS) selected and the generated @theme block in the preview". -->
+![Export panel with Tailwind v4 (CSS) selected and the generated @theme block, with one --color-brand variable per stop](../../assets/blog/tailwind-v4-oklch-palette-from-figma/export-tailwind-v4.png)
 
 ## 5 · Or paste oklch() values into @theme (free)
 
