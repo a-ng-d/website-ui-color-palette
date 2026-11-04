@@ -26,6 +26,7 @@ Target at 3 months: **~70 useful URLs** and a measurable lift in impressions, cl
 | Baseline figures | [baseline.md](baseline.md) | 2026-10-28 |
 | 2 — Capability, comparison, platform and glossary pages | [02-capability-pages.md](02-capability-pages.md) | Done (follow-ups open) |
 | 3 — Blog topic clusters | [03-blog-clusters.md](03-blog-clusters.md) | In progress (branch `seo/phase-3`) |
+| 3 bis — Blog media: clips and last captures | [03b-blog-media.md](03b-blog-media.md) | Draft (deferred) |
 | 4 — Off-site authority & AI-source presence | [04-off-site-authority.md](04-off-site-authority.md) | Draft |
 | 5 — Monthly optimization loop | [05-optimization-loop.md](05-optimization-loop.md) | Draft |
 

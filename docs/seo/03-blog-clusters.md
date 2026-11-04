@@ -1,6 +1,6 @@
 # Phase 3 — Blog topic clusters
 
-- **Status**: In progress (branch `seo/phase-3`)
+- **Status**: Done (wave 1 shipped; remaining `TODO(asset)` captures tracked in the table below)
 - **Package(s) concerned**: `website-ui-color-palette` (`src/content/blog/`)
 - **Related spec**: [02-capability-pages.md](02-capability-pages.md), skill `ui-color-palette-blog-writing`
 
@@ -92,21 +92,21 @@ Candidates for wave 2:
 
 | # | Slug | Status | Open before merge |
 |---|---|---|---|
-| 1 | `apca-vs-wcag-2-what-changes-for-ui-colors` | Reviewed (SEO + facts), revised | Cover (placeholder), screenshots and Screen Studio clip |
-| 5 | `oklch-vs-hsl-for-ui-palettes` | Reviewed (SEO + facts), revised | Cover (placeholder), diagram, Screen Studio clip, export screenshot |
-| 3 | `contrast-ratio-for-buttons-borders-and-text` | Reviewed (SEO + facts), revised | Cover (placeholder), optional screenshot and clip |
-| 6 | `lch-vs-oklch-for-design-systems` | Reviewed (SEO + facts), revised | Cover (placeholder), Screen Studio clip, 2 screenshots (`TODO(asset)` comments in the body) |
-| 2 | `how-to-build-an-accessible-color-scale` (pubDate 2026-11-17) | Reviewed (SEO + facts), revised; cover done | 2 screenshots and a Screen Studio clip (`TODO(asset)`) |
-| 4 | `designing-for-color-blindness-ui-checklist` (pubDate 2026-11-20) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip (`TODO(asset)`) |
-| 8 | `primitive-vs-semantic-color-tokens` (pubDate 2026-11-24) | Reviewed (SEO + facts), revised; cover and diagram done | Claude token-matrix capture (`TODO(asset)`) |
-| 11 | `tailwind-v4-oklch-palette-from-figma` (pubDate 2026-11-27) | Reviewed (SEO + facts), revised; cover done | Export screenshot and Screen Studio clip (`TODO(asset)`) |
-| 7 | `perceptual-lightness-explained` (pubDate 2026-12-01) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip (`TODO(asset)`) |
-| 9 | `export-colors-to-dtcg-and-style-dictionary` (pubDate 2026-12-04) | Reviewed (SEO + facts), revised; cover and diagram done | Export panel screenshot (`TODO(asset)`) |
-| 10 | `material-3-vs-tailwind-vs-spectrum-color-scales` (pubDate 2026-12-08) | Reviewed (SEO + facts), revised; cover and diagram done | Preset menu screenshot (`TODO(asset)`) |
-| 12 | `swiftui-and-jetpack-compose-color-palette` (pubDate 2026-12-11) | Reviewed (SEO + facts), revised; cover and diagram done | SwiftUI export screenshot (`TODO(asset)`) |
-| 13 | `sync-a-color-palette-to-penpot-design-tokens` (pubDate 2026-12-15) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip (`TODO(asset)`) |
-| 14 | `ai-color-palette-generator-from-a-prompt` (pubDate 2026-12-18) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip (`TODO(asset)`) |
-| 15 | `color-palette-from-image` (pubDate 2026-12-22) | Reviewed (SEO + facts), revised; cover and diagram done | Screenshot and Screen Studio clip (`TODO(asset)`) |
+| 1 | `apca-vs-wcag-2-what-changes-for-ui-colors` | Reviewed (SEO + facts), revised; cover done | None required (clip optional, see [phase 3 bis](03b-blog-media.md)) |
+| 5 | `oklch-vs-hsl-for-ui-palettes` | Reviewed (SEO + facts), revised; cover done | None required (clip optional, see [phase 3 bis](03b-blog-media.md)) |
+| 3 | `contrast-ratio-for-buttons-borders-and-text` | Reviewed (SEO + facts), revised; cover done | None required (clip optional, see [phase 3 bis](03b-blog-media.md)) |
+| 6 | `lch-vs-oklch-for-design-systems` | Reviewed (SEO + facts), revised; cover, 2 screenshots and clip done | None |
+| 2 | `how-to-build-an-accessible-color-scale` (pubDate 2026-11-17) | Reviewed (SEO + facts), revised; cover and 2 screenshots done | Screen Studio clip → [phase 3 bis](03b-blog-media.md) |
+| 4 | `designing-for-color-blindness-ui-checklist` (pubDate 2026-11-20) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip → [phase 3 bis](03b-blog-media.md) |
+| 8 | `primitive-vs-semantic-color-tokens` (pubDate 2026-11-24) | Reviewed (SEO + facts), revised; cover and diagram done | Claude desktop capture, by hand → [phase 3 bis](03b-blog-media.md) |
+| 11 | `tailwind-v4-oklch-palette-from-figma` (pubDate 2026-11-27) | Reviewed (SEO + facts), revised; cover and export screenshot done | Screen Studio clip → [phase 3 bis](03b-blog-media.md) |
+| 7 | `perceptual-lightness-explained` (pubDate 2026-12-01) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip → [phase 3 bis](03b-blog-media.md) |
+| 9 | `export-colors-to-dtcg-and-style-dictionary` (pubDate 2026-12-04) | Reviewed (SEO + facts), revised; cover, diagram and screenshot done | None |
+| 10 | `material-3-vs-tailwind-vs-spectrum-color-scales` (pubDate 2026-12-08) | Reviewed (SEO + facts), revised; cover, diagram and screenshot done | None |
+| 12 | `swiftui-and-jetpack-compose-color-palette` (pubDate 2026-12-11) | Reviewed (SEO + facts), revised; cover, diagram and screenshot done | None |
+| 13 | `sync-a-color-palette-to-penpot-design-tokens` (pubDate 2026-12-15) | Reviewed (SEO + facts), revised; cover and diagram done | Penpot clip, by hand → [phase 3 bis](03b-blog-media.md) |
+| 14 | `ai-color-palette-generator-from-a-prompt` (pubDate 2026-12-18) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip → [phase 3 bis](03b-blog-media.md) |
+| 15 | `color-palette-from-image` (pubDate 2026-12-22) | Reviewed (SEO + facts), revised; cover, diagram and screenshot done | Screen Studio clip → [phase 3 bis](03b-blog-media.md) |
 
 ## See also
 
@@ -124,3 +124,5 @@ Candidates for wave 2:
 | 2026-11-03 | Articles 2 and 4 drafted and reviewed; the AI post gets `/claude` as its pillar |
 | 2026-11-03 | Articles 8 and 11 drafted and reviewed |
 | 2026-11-04 | Wave 1 complete: articles 7, 9, 10, 12, 13, 14 and 15 drafted, reviewed and scheduled through 2026-12-22; platform-page FAQs support `article` links |
+| 2026-11-04 | Phase 3 marked done; home "Latest posts" section is a single-row modular grid (title fixed at 1/4, up to 3 posts sharing the remaining 3/4) |
+| 2026-11-04 | Remaining media (clips, Penpot and Claude desktop captures) moved to [phase 3 bis](03b-blog-media.md); screenshots of the web app done; first clip embedded |
