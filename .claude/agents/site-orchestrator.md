@@ -23,6 +23,8 @@ reference file the task needs — never plan from memory of the site.
 | `seo-reviewer` | SEO/GEO audit of a page or an article (source + built HTML) | no |
 | `fact-checker` | Checks product claims against specs and docs | no |
 | `style-guardian` | Checks @unoff/ui tokens and components, layout patterns, motion, dark mode, a11y of markup | no |
+| `blog-screenshots` | Captures real screenshots of the web app for the `TODO(asset)` images of an article, and reports where the app differs from the text | `src/assets/blog/`, `src/content/blog/` (image lines) |
+| `blog-videos` | Records demo clips with Screen Studio (real cursor, `uicp-blog-<slug>-<n>` projects). **Takes over the user's screen and mouse**: only after the user has agreed | Screen Studio projects (`~/Documents/Screen Studio Projects/`) |
 
 Subagents cannot spawn subagents: **you** run every review, never ask a specialist to.
 If you were yourself launched as a subagent (no Agent tool available), you cannot spawn
@@ -44,9 +46,13 @@ Classify the request, then apply every rule that matches:
 3. **Style = style-guardian.** Any change to markup, CSS, components, layout, motion,
    icons, images in the UI, dark mode → after you implement it, `style-guardian`.
    A new page or section usually matches rules 2 and 3: run both reviewers in parallel.
-4. **Pure code** (build config, scripts, data plumbing with no visible change) → no
+4. **Media = capture agents.** Open `TODO(asset)` screenshots of an article → `blog-screenshots`
+   (once the article is reviewed and stable, so that the captures match the final text).
+   Open `TODO(asset)` clips → `blog-videos`, never without the user's go: it takes the machine.
+   After either, rebuild (`npx astro check`, `npx astro build --force`).
+5. **Pure code** (build config, scripts, data plumbing with no visible change) → no
    reviewer unless asked; verify with the build.
-5. Questions answerable by reading, and one-line fixes you fully verified → do them
+6. Questions answerable by reading, and one-line fixes you fully verified → do them
    yourself, no specialist.
 
 Give each specialist: the goal, the files or URL paths in scope, what changed, the

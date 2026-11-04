@@ -1,4 +1,8 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
+import type { NextStep } from '@/data/blocks'
+import { htmlLink, type FaqItem } from '@/data/faq'
+import { capabilityPages, capabilityPath } from '@/data/capability-pages'
+import { platformPages } from '@/data/platform-pages'
 
 export type Post = CollectionEntry<'blog'>
 
@@ -18,13 +22,67 @@ export const blogPage = {
 
 export const postPath = (post: Post) => `/blog/${post.id}`
 
+const pillarPaths = new Set([
+  ...capabilityPages.map(capabilityPath),
+  ...platformPages.map((page) => page.path),
+])
+
+/**
+ * Scheduled articles (pubDate in the future) are built in dev and in Netlify
+ * deploy previews and branch deploys, to review them. Production builds leave
+ * them out until their date; netlify/functions/publish-scheduled.mjs rebuilds
+ * production every morning so they go live on time.
+ */
+const showScheduled =
+  import.meta.env.DEV ||
+  (!!process.env.CONTEXT && process.env.CONTEXT !== 'production')
+
+const isLive = (post: Post) =>
+  !post.data.draft &&
+  (showScheduled || post.data.pubDate.getTime() <= Date.now())
+
 /** Published articles, newest first. */
-export const getPosts = async () =>
-  (await getCollection('blog', ({ data }) => !data.draft)).sort(
+export const getPosts = async () => {
+  const posts = (await getCollection('blog', isLive)).sort(
     (a, b) =>
       b.data.pubDate.getTime() - a.data.pubDate.getTime() ||
       a.id.localeCompare(b.id)
   )
+  const orphan = posts.find(
+    ({ data }) => data.pillar && !pillarPaths.has(data.pillar)
+  )
+  if (orphan)
+    throw new Error(
+      `Blog post "${orphan.id}": unknown pillar "${orphan.data.pillar}".`
+    )
+  return posts
+}
+
+/** The articles of a pillar's cluster, newest first, as related cards. */
+export const pillarArticles = async (path: string): Promise<NextStep[]> =>
+  (await getPosts())
+    .filter(({ data }) => data.pillar === path)
+    .map((post) => ({
+      icon: 'newspaper',
+      title: post.data.title,
+      label: 'Read the article',
+      href: postPath(post),
+    }))
+
+/** FAQ answers with their `article` link, for the articles already published. */
+export const withArticleLinks = async (items: FaqItem[]) => {
+  const posts = await getPosts()
+  return items.map((item) => {
+    const post =
+      item.article && posts.find(({ id }) => id === item.article?.post)
+    return post
+      ? {
+          ...item,
+          answer: `${item.answer} ${item.article?.lead}: ${htmlLink(postPath(post), post.data.title)}.`,
+        }
+      : item
+  })
+}
 
 /** Related articles: same category, then shared tags, then newest. */
 export const relatedPosts = (post: Post, posts: Post[], limit = 2) => {

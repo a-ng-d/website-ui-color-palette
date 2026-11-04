@@ -159,7 +159,7 @@ export const figmaPage: PlatformPage = {
       },
       {
         title: 'Sync with local styles or variables',
-        text: 'Sync with the local variables to get one collection named after the palette, with one mode per color mode; or with the local styles. Run it again after each change: existing styles and variables are updated, never duplicated.',
+        text: 'Sync with local variables to get one collection named after the palette, with one mode per color mode; or with the local styles. Run it again after each change: existing styles and variables are updated, never duplicated.',
       },
       {
         title: 'Hand it off',
@@ -233,7 +233,7 @@ export const figmaPage: PlatformPage = {
       {
         question: 'How do I turn a color palette into Figma variables?',
         answer:
-          'Click Sync with the local variables. UI Color Palette creates a collection named after the palette, with the shades grouped by source color and one mode per color mode. Each generated shade’s description gives its lightness and its WCAG and APCA scores, so anyone inspecting it sees them without the plugin.',
+          'Click Sync with local variables. UI Color Palette creates a collection named after the palette, with the shades grouped by source color and one mode per color mode. Each generated shade’s description gives its lightness and its WCAG and APCA scores, so anyone inspecting it sees them without the plugin.',
       },
       {
         question: 'Can I use UI Color Palette in Dev Mode?',
@@ -346,11 +346,11 @@ export const penpotPage: PlatformPage = {
       },
       {
         title: 'Sync with tokens',
-        text: 'Click Synchronize, then Synchronize with tokens. Every shade becomes a Penpot design token, with one token set and one Penpot theme per color mode. Run it again after each change: existing sets, themes and tokens are updated, never duplicated.',
+        text: 'Click Synchronize palette, then Sync with local tokens. Every shade becomes a Penpot design token, with one token set and one Penpot theme per color mode, to link in Penpot’s Edit themes. Run it again after each change: existing sets, themes and tokens are updated, never duplicated.',
       },
       {
         title: 'Or sync with library colors',
-        text: 'Sync with the local styles to add every shade to the file’s library colors instead, grouped by source color, and publish them as a library.',
+        text: 'Sync with local styles to add every shade to the file’s library colors instead, grouped by source color, and publish them as a library.',
       },
     ],
   },
@@ -362,18 +362,13 @@ export const penpotPage: PlatformPage = {
         'Penpot has native design tokens, so the palette can land as tokens with themes, or as plain library colors.',
       caption: 'What UI Color Palette creates in Penpot',
       rowHeader: 'Sync',
-      columns: [
-        'What it creates',
-        'Color modes',
-        'Lightness and contrast in the description',
-      ],
+      columns: ['What it creates', 'Color modes'],
       rows: [
         {
           label: 'Tokens',
           values: [
             'One design token per shade, grouped by source color',
-            'One token set and one Penpot theme per mode',
-            true,
+            'One token set and one Penpot theme per mode, linked in Penpot',
           ],
         },
         {
@@ -381,7 +376,6 @@ export const penpotPage: PlatformPage = {
           values: [
             'One library color per shade, grouped by source color',
             'Groups named after each mode',
-            false,
           ],
         },
       ],
@@ -425,12 +419,16 @@ export const penpotPage: PlatformPage = {
       },
       {
         question: 'How do I create Penpot color tokens from a palette?',
-        answer: `Click Synchronize, then Synchronize with tokens: each shade becomes a Penpot color design token. UI Color Palette creates them through Penpot’s plugin API, with no file to export or import, and documents each shade with its lightness and its WCAG and APCA scores (see ${htmlLink('/glossary/design-token', 'design tokens')}).`,
+        answer: `Click Synchronize palette, then Sync with local tokens: each shade becomes a Penpot color design token. UI Color Palette creates them through Penpot’s plugin API, with no file to export or import, (see ${htmlLink('/glossary/design-token', 'design tokens')}).`,
+        article: {
+          lead: 'Full guide',
+          post: 'sync-a-color-palette-to-penpot-design-tokens',
+        },
       },
       {
         question: 'How do color modes map to Penpot themes?',
         answer:
-          'Each color mode of the palette gets its own token set, paired with a Penpot theme, so switching the theme switches every shade. A palette with no color mode goes into a single set.',
+          'Each color mode of the palette gets its own token set and its own Penpot theme, in a group named after the palette. The sync does not link a theme to its set: in Penpot, open Edit themes and turn on the matching set for each theme, then switching the theme switches every shade. A palette with no color mode goes into a single set.',
       },
       {
         question: 'Does Penpot support design tokens natively?',
@@ -536,7 +534,7 @@ export const sketchPage: PlatformPage = {
       },
       {
         title: 'Sync with variables or styles',
-        text: 'Sync with the local variables to get a color variable per shade, or with the local styles to get a layer style per shade, grouped by source color, and under the palette name when it has a custom name.',
+        text: 'Sync with local variables to get a color variable per shade, or with the local styles to get a layer style per shade, grouped by source color, and under the palette name when it has a custom name.',
       },
       {
         title: 'Share it',
@@ -611,7 +609,7 @@ export const sketchPage: PlatformPage = {
       {
         question: 'How do I create color variables in Sketch from a palette?',
         answer:
-          'Click Sync with the local variables. UI Color Palette adds a color variable for every shade to the document, grouped by source color, and under the palette name when it has a custom name.',
+          'Click Sync with local variables. UI Color Palette adds a color variable for every shade to the document, grouped by source color, and under the palette name when it has a custom name.',
       },
       {
         question: 'Does Sketch support light and dark color modes?',
@@ -800,7 +798,7 @@ export const framerPage: PlatformPage = {
       {
         question: 'How do I add a color palette to Framer?',
         answer:
-          'Run UI Color Palette in your project, create the palette, then click Sync with the local styles: every shade becomes a Framer color style, grouped by source color and named after the palette.',
+          'Run UI Color Palette in your project, create the palette, then click Sync with local styles: every shade becomes a Framer color style, grouped by source color and named after the palette.',
       },
       {
         question: 'How does dark mode work with Framer color styles?',

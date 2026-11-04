@@ -1,6 +1,6 @@
 # SEO / GEO program — ui-color-palette.com
 
-- **Status**: Accepted (Phase 1 in progress, Phase 2 done, Phases 0, 3–5 Draft)
+- **Status**: Accepted (Phase 1 in progress, Phase 2 done, Phase 3 in progress, Phases 0, 4–5 Draft)
 - **Package(s) concerned**: `website-ui-color-palette`, and `docs-ui-color-palette`, which drives ~65% of organic clicks (see [baseline.md](baseline.md))
 - **Owner workflow**: `site-orchestrator` → `blog-writer` / `seo-reviewer` / `fact-checker` / `style-guardian`
 
@@ -25,7 +25,8 @@ Target at 3 months: **~70 useful URLs** and a measurable lift in impressions, cl
 | 1b — Indexation recovery (site, docs, app subdomains) — **priority 1** | [01-indexation-recovery.md](01-indexation-recovery.md) | Draft |
 | Baseline figures | [baseline.md](baseline.md) | 2026-10-28 |
 | 2 — Capability, comparison, platform and glossary pages | [02-capability-pages.md](02-capability-pages.md) | Done (follow-ups open) |
-| 3 — Blog topic clusters | [03-blog-clusters.md](03-blog-clusters.md) | Draft |
+| 3 — Blog topic clusters | [03-blog-clusters.md](03-blog-clusters.md) | In progress (branch `seo/phase-3`) |
+| 3 bis — Blog media: clips and last captures | [03b-blog-media.md](03b-blog-media.md) | Draft (deferred) |
 | 4 — Off-site authority & AI-source presence | [04-off-site-authority.md](04-off-site-authority.md) | Draft |
 | 5 — Monthly optimization loop | [05-optimization-loop.md](05-optimization-loop.md) | Draft |
 

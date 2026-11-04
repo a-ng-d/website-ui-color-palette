@@ -4,6 +4,8 @@ export interface FaqItem {
   question: string
   /** Trusted, authored HTML. Rendered on the page and reused in FAQPage JSON-LD. */
   answer: string
+  /** Appends "<lead>: <article title>." to the answer, once that blog post (its id) is published. */
+  article?: { lead: string; post: string }
 }
 
 export const htmlLink = (href: string, label: string) =>

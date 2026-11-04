@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap'
 import preact from '@astrojs/preact'
 import devFunctions from './netlify/dev-functions.mjs'
 import { satteri } from '@astrojs/markdown-satteri'
-import blogPlugin, { externalLinks } from './src/plugins/blog-markdown.mjs'
+import blogPlugin, { externalLinks, scrollableTables } from './src/plugins/blog-markdown.mjs'
 import { lastmodFor } from './src/plugins/sitemap-lastmod.mjs'
 
 // @unoff/ui only exposes its barrel file in `exports`, which pulls the CSS of
@@ -38,7 +38,7 @@ export default defineConfig({
   // devFunctions: Netlify functions (/api/*) on the dev server.
   markdown: { processor: satteri({
       mdastPlugins: [blogPlugin],
-      hastPlugins: [externalLinks],
+      hastPlugins: [externalLinks, scrollableTables],
     }) },
   integrations: [
     preact({ compat: true }),

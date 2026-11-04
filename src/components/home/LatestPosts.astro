@@ -13,7 +13,7 @@ interface Props {
 }
 
 const {
-  limit = 2,
+  limit = 3,
   tag = 'News',
   title = 'Latest from the UI Color Palette blog',
   meta = false,
@@ -60,7 +60,8 @@ const posts = (Astro.props.posts ?? (await getPosts())).slice(0, limit)
 <style>
   .posts__layout {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* Four equal tracks: the intro takes one, the posts share the other three. */
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--space-gap-200);
   }
 
@@ -70,7 +71,6 @@ const posts = (Astro.props.posts ?? (await getPosts())).slice(0, limit)
     justify-content: flex-end;
     align-items: flex-start;
     gap: var(--space-gap-400);
-    transform: rotate(1deg);
     border: var(--stroke-width-thin) solid var(--site-border-soft);
     border-radius: var(--site-radius-card);
     background-color: var(--site-surface);
@@ -79,6 +79,9 @@ const posts = (Astro.props.posts ?? (await getPosts())).slice(0, limit)
 
   .posts__list {
     display: grid;
+    grid-column: 2 / -1;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
     gap: var(--space-gap-200);
     padding: 0;
     list-style: none;
@@ -117,7 +120,6 @@ const posts = (Astro.props.posts ?? (await getPosts())).slice(0, limit)
     text-decoration: none;
   }
 
-  /* The whole card is clickable through the title link. */
   .post__link::after {
     position: absolute;
     inset: 0;
@@ -155,9 +157,20 @@ const posts = (Astro.props.posts ?? (await getPosts())).slice(0, limit)
       grid-template-columns: minmax(0, 1fr);
     }
 
-    .posts__intro {
-      transform: none;
-      min-height: 240px;
+    .posts__list {
+      grid-column: auto;
+      grid-auto-flow: row;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .posts__list:has(> li:only-child) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 639.98px) {
+    .posts__list {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>

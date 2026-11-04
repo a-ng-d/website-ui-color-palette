@@ -6,6 +6,7 @@ coverAlt: UI Color Palette connected to AI agents through the MCP server, skills
 pubDate: 2026-07-13
 tags: [ai, mcp, claude, design-tokens]
 category: AI
+pillar: /claude
 seo:
   title: 3 ways AI builds, audits and ships color systems
 faq:

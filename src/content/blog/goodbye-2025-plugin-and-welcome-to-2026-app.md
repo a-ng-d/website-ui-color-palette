@@ -72,6 +72,8 @@ The goal isn't simply to add features, but to build a reproducible model. An arc
 
 UI Color Palette is no longer a plugin — it's a mini-app. And this mini-app is built to grow.
 
+Not using it yet? [Download UI Color Palette](/download) for Figma, Penpot, Sketch or Framer.
+
 ## Thank You
 
 ![A thank-you to the UI Color Palette community](../../assets/blog/goodbye-2025-plugin-and-welcome-to-2026-app/thank-you.png)

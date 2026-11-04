@@ -203,10 +203,18 @@ export const colorSpacesPage: CapabilityPage = {
       {
         question: 'OKLCH vs HSL: which is better for a color palette?',
         answer: `OKLCH. HSL computes lightness from the RGB channels, so a yellow and a blue at 50% lightness look nothing alike; ${htmlLink('/glossary/oklch', 'OKLCH')} lightness follows how light a color looks, so steps stay even across hues. UI Color Palette shows a warning when you pick HSL.`,
+        article: {
+          lead: 'Full comparison',
+          post: 'oklch-vs-hsl-for-ui-palettes',
+        },
       },
       {
         question: 'LCH vs OKLCH: what is the difference?',
         answer: `Both describe a color by lightness, chroma and hue. ${htmlLink('/glossary/lch', 'LCH')} is built on CIELAB (1976) and OKLCH on ${htmlLink('/glossary/oklab', 'OKLab')} (2020), which predicts hue and lightness more evenly: blues no longer drift toward purple as chroma changes. OKLCH is the default in UI Color Palette.`,
+        article: {
+          lead: 'Full comparison',
+          post: 'lch-vs-oklch-for-design-systems',
+        },
       },
       {
         question: 'HSLuv vs OKLCH: which one should you pick?',
@@ -220,6 +228,10 @@ export const colorSpacesPage: CapabilityPage = {
         question: 'Which color space does UI Color Palette use by default?',
         answer:
           'OKLCH, for every new palette. Each palette has its own color space: changing it recomputes every shade but keeps your scale and your source colors, so you can compare them freely.',
+        article: {
+          lead: 'What lightness means',
+          post: 'perceptual-lightness-explained',
+        },
       },
     ],
   },
@@ -362,6 +374,10 @@ export const colorBlindnessPage: CapabilityPage = {
       {
         question: 'Can I simulate color blindness in Figma?',
         answer: `Yes. In the UI Color Palette plugin, add a color mode to your palette and set its vision simulation to one of 8 types; the shades and their contrast update. It works the same in Penpot, Sketch and Framer (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+        article: {
+          lead: 'How to design for it',
+          post: 'designing-for-color-blindness-ui-checklist',
+        },
       },
       {
         question: 'Protanopia vs deuteranopia: how do they differ?',
@@ -528,14 +544,26 @@ export const contrastPage: CapabilityPage = {
       {
         question: 'APCA vs WCAG: which contrast method should I use?',
         answer: `Both. The ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG 2.1 ratio')} is what accessibility laws and standards most often cite; ${htmlLink('/glossary/apca', 'APCA')} models perceived contrast more closely, taking text size and weight into account. UI Color Palette shows both on every shade.`,
+        article: {
+          lead: 'Full comparison',
+          post: 'apca-vs-wcag-2-what-changes-for-ui-colors',
+        },
       },
       {
         question: 'What contrast ratio does WCAG require for text?',
-        answer: `At level AA, 4.5:1 for body text and 3:1 for large text (24px, or about 18.7px bold); at level AAA, 7:1 and 4.5:1. UI components, such as input borders and focus indicators, and meaningful graphics need 3:1 (see the ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG contrast ratio')}).`,
+        answer: `At level AA, 4.5:1 for body text and 3:1 for large text (24px, or about 18.5px bold); at level AAA, 7:1 and 4.5:1. UI components, such as input borders and focus indicators, and meaningful graphics need 3:1 (see the ${htmlLink('/glossary/wcag-contrast-ratio', 'WCAG contrast ratio')}).`,
+        article: {
+          lead: 'For buttons, borders and focus rings',
+          post: 'contrast-ratio-for-buttons-borders-and-text',
+        },
       },
       {
         question: 'Can I build a palette from target contrast ratios?',
         answer: `Yes, on every plan. Switch the scale to contrast ratio, type the ratio each stop must reach, and UI Color Palette recomputes its lightness; it works well with the ${htmlLink('/glossary/hsluv', 'HSLuv')} color space, on /pro. For a web and code tool built around target ratios, see ${htmlLink('/compare/ui-color-palette-vs-leonardo', 'UI Color Palette vs Adobe Leonardo')}.`,
+        article: {
+          lead: 'Step by step',
+          post: 'how-to-build-an-accessible-color-scale',
+        },
       },
       {
         question: 'Does the contrast change for color-blind users?',
@@ -900,6 +928,10 @@ export const tailwindPage: CapabilityPage = {
       {
         question: 'How do I add a custom color palette to Tailwind v4?',
         answer: `Declare your colors as --color-* variables in an @theme block, and each becomes utilities such as bg-brand-500. UI Color Palette writes that block for you, with a full scale per color (see ${htmlLink('https://tailwindcss.com/docs/theme', 'Tailwind’s theme docs')}).`,
+        article: {
+          lead: 'Step by step',
+          post: 'tailwind-v4-oklch-palette-from-figma',
+        },
       },
       {
         question:
@@ -1081,6 +1113,10 @@ export const nativePage: CapabilityPage = {
         question: 'Does it work with light and dark themes?',
         answer:
           'Each color mode of the palette is exported with its own names, so a light and a dark mode give you two sets of constants to switch between in your app.',
+        article: {
+          lead: 'Full guide',
+          post: 'swiftui-and-jetpack-compose-color-palette',
+        },
       },
       {
         question: 'Can I export to SwiftUI from Framer?',
@@ -1159,7 +1195,7 @@ export const tokensPage: CapabilityPage = {
       },
       {
         title: 'Feed your pipeline',
-        text: 'Style Dictionary v4 and Terrazzo read the DTCG files; Tokens Studio and Penpot import the native tokens.',
+        text: 'Style Dictionary 5.3 or later and Terrazzo read the DTCG files; Tokens Studio and Penpot import the native tokens.',
       },
     ],
   },
@@ -1177,7 +1213,7 @@ export const tokensPage: CapabilityPage = {
         {
           label: 'DTCG tokens',
           values: [
-            'Style Dictionary v4, Terrazzo and other DTCG tools',
+            'Style Dictionary 5.3+, Terrazzo and other DTCG tools',
             'sRGB components and hex, WCAG and APCA scores; with several color modes, one file per mode, tied by a tokens.resolver.json file',
           ],
         },
@@ -1231,7 +1267,7 @@ export const tokensPage: CapabilityPage = {
     items: [
       {
         question: 'What is the DTCG design token format?',
-        answer: `A JSON format for design tokens published by the W3C Design Tokens Community Group (${htmlLink('https://www.designtokens.org/', 'designtokens.org')}). Each token has a type, such as color, and a value; tools such as Style Dictionary v4 and Terrazzo read it (see ${htmlLink('/glossary/design-token', 'What is a design token?')}).`,
+        answer: `A JSON format for design tokens published by the W3C Design Tokens Community Group (${htmlLink('https://www.designtokens.org/', 'designtokens.org')}). Each token has a type, such as color, and a value; tools such as Style Dictionary 5.3+ and Terrazzo read it (see ${htmlLink('/glossary/design-token', 'What is a design token?')}).`,
       },
       {
         question: 'How do I export Figma colors as design tokens?',
@@ -1240,7 +1276,11 @@ export const tokensPage: CapabilityPage = {
       {
         question: 'Does Style Dictionary read DTCG tokens?',
         answer:
-          'Yes, Style Dictionary v4 reads the DTCG export. For a Style Dictionary v3 project, choose the Style Dictionary format, a basic v3 configuration.',
+          'Yes, Style Dictionary 5.3 or later reads the DTCG export (older versions write [object Object] for its colors). For a Style Dictionary v3 project, choose the Style Dictionary format, a basic v3 configuration.',
+        article: {
+          lead: 'Full guide',
+          post: 'export-colors-to-dtcg-and-style-dictionary',
+        },
       },
       {
         question: 'Do the design tokens include contrast scores?',
@@ -1445,6 +1485,10 @@ export const semanticPage: CapabilityPage = {
         question: 'How should I name semantic color tokens?',
         answer:
           'Along a few dimensions: a role (brand, danger, success), a prominence (default, subtle, strong) and a state (hover, pressed, disabled), or a surface and its content. Keep the set small: every token is one more decision to maintain.',
+        article: {
+          lead: 'How to structure them',
+          post: 'primitive-vs-semantic-color-tokens',
+        },
       },
       {
         question: 'Can a semantic token use a different shade in dark mode?',
@@ -1602,6 +1646,10 @@ export const aiPage: CapabilityPage = {
         question: 'How do I generate a color palette from a prompt?',
         answer:
           'Open AI Colors in the Colors combinator, type a mood or a product, or pick one of 12 presets, and generate: you get five source colors with a role each, then create the palette from them. It is free on every plan.',
+        article: {
+          lead: 'The 12 presets explained',
+          post: 'ai-color-palette-generator-from-a-prompt',
+        },
       },
       {
         question: 'Are AI-generated colors accessible?',
@@ -1730,7 +1778,7 @@ export const imagePage: CapabilityPage = {
       {
         question: 'Can I extract a color palette from a JPEG?',
         answer:
-          'Not in the plugins: they accept PNG images only, and other formats are ignored. Save the image as a PNG first, or use Claude or an MCP client, which read JPEG and PNG images from a URL.',
+          'Not in the plugins: they accept PNG images only, and a JPEG shows a message asking for a PNG. Save the image as a PNG first, or use Claude or an MCP client, which read JPEG and PNG images from a URL.',
       },
       {
         question: 'Is the image to color palette tool free?',
@@ -1739,6 +1787,10 @@ export const imagePage: CapabilityPage = {
       {
         question: 'Are the extracted colors ready for a UI?',
         answer: `They are a starting point. Image colors are rarely balanced for text and backgrounds, so UI Color Palette turns each one into a scale and shows the WCAG 2.1 and APCA score of every shade (see ${htmlLink('/glossary/color-scale', 'What is a color scale?')}).`,
+        article: {
+          lead: 'Full guide',
+          post: 'color-palette-from-image',
+        },
       },
     ],
   },
@@ -2002,7 +2054,9 @@ export const modesPage: CapabilityPage = {
         {
           label: 'Penpot',
           href: '/penpot',
-          values: ['One token set and one Penpot theme per color mode'],
+          values: [
+            'One token set per color mode, plus a Penpot theme to link to it',
+          ],
         },
         {
           label: 'Sketch',
@@ -2229,6 +2283,10 @@ export const presetsPage: CapabilityPage = {
       {
         question: 'Can I use the Material 3 color scale in Figma?',
         answer: `Yes, on every plan. The Material 3 preset gives your colors its 13 stops, from 0 to 100, computed from your own colors (see ${htmlLink('/figma', 'UI Color Palette for Figma')}).`,
+        article: {
+          lead: 'Full comparison',
+          post: 'material-3-vs-tailwind-vs-spectrum-color-scales',
+        },
       },
       {
         question: 'Which design system presets are free?',

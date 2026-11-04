@@ -1,6 +1,6 @@
 # Phase 3 — Blog topic clusters
 
-- **Status**: Draft
+- **Status**: Done (wave 1 shipped; remaining `TODO(asset)` captures tracked in the table below)
 - **Package(s) concerned**: `website-ui-color-palette` (`src/content/blog/`)
 - **Related spec**: [02-capability-pages.md](02-capability-pages.md), skill `ui-color-palette-blog-writing`
 
@@ -82,8 +82,31 @@ Candidates for wave 2:
 ## Implementation notes
 
 - Every article goes through `blog-writer`, then `seo-reviewer` and `fact-checker`, then a revision.
-- Track progress by adding a `cluster` field to the front-matter. This is optional and would require a schema change in `src/content.config.ts`. The alternative is a table in this file.
-- Pillar → article links: Lot A pages can list their cluster articles automatically by matching a tag or `cluster` value.
+- **Pillar field.** Each article sets `pillar:` in its front-matter to the path of its pillar page (`/capabilities/<slug>` or a platform page such as `/penpot`). The schema is in `src/content.config.ts`. `getPosts()` in `src/data/blog.ts` fails the build on an unknown pillar path.
+- **Pillar → article links** are automatic. `pillarArticles(path)` in `src/data/blog.ts` puts the cluster's articles, newest first, ahead of the curated related cards on capability pages (`CapabilityPageView.astro`) and platform pages (`PlatformPageView.astro`).
+- **Pillar FAQ link.** Set `article: { lead: 'Full comparison', post: '<post id>' }` on the pillar FAQ item in `src/data/capability-pages.ts`. `withArticleLinks()` in `src/data/blog.ts` appends "<lead>: <article title>." to the answer (page, FAQPage JSON-LD, `llms-full.txt`) only once the article is published.
+- **Scheduled publishing.** An article with a future `pubDate` is built in `npm run dev` and in Netlify deploy previews and branch deploys, so it can be reviewed, and left out of production builds until its date (`isLive` in `src/data/blog.ts`). `netlify/functions/publish-scheduled.mjs` triggers a production rebuild every day at 06:00 UTC through a build hook (`BUILD_HOOK_URL`). An article may link only to articles published on or before its own `pubDate`.
+- **Progress** is tracked in the table below.
+
+## Progress
+
+| # | Slug | Status | Open before merge |
+|---|---|---|---|
+| 1 | `apca-vs-wcag-2-what-changes-for-ui-colors` | Reviewed (SEO + facts), revised; cover done | None required (clip optional, see [phase 3 bis](03b-blog-media.md)) |
+| 5 | `oklch-vs-hsl-for-ui-palettes` | Reviewed (SEO + facts), revised; cover done | None required (clip optional, see [phase 3 bis](03b-blog-media.md)) |
+| 3 | `contrast-ratio-for-buttons-borders-and-text` | Reviewed (SEO + facts), revised; cover done | None required (clip optional, see [phase 3 bis](03b-blog-media.md)) |
+| 6 | `lch-vs-oklch-for-design-systems` | Reviewed (SEO + facts), revised; cover, 2 screenshots and clip done | None |
+| 2 | `how-to-build-an-accessible-color-scale` (pubDate 2026-11-17) | Reviewed (SEO + facts), revised; cover and 2 screenshots done | Screen Studio clip → [phase 3 bis](03b-blog-media.md) |
+| 4 | `designing-for-color-blindness-ui-checklist` (pubDate 2026-11-20) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip → [phase 3 bis](03b-blog-media.md) |
+| 8 | `primitive-vs-semantic-color-tokens` (pubDate 2026-11-24) | Reviewed (SEO + facts), revised; cover and diagram done | Claude desktop capture, by hand → [phase 3 bis](03b-blog-media.md) |
+| 11 | `tailwind-v4-oklch-palette-from-figma` (pubDate 2026-11-27) | Reviewed (SEO + facts), revised; cover and export screenshot done | Screen Studio clip → [phase 3 bis](03b-blog-media.md) |
+| 7 | `perceptual-lightness-explained` (pubDate 2026-12-01) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip → [phase 3 bis](03b-blog-media.md) |
+| 9 | `export-colors-to-dtcg-and-style-dictionary` (pubDate 2026-12-04) | Reviewed (SEO + facts), revised; cover, diagram and screenshot done | None |
+| 10 | `material-3-vs-tailwind-vs-spectrum-color-scales` (pubDate 2026-12-08) | Reviewed (SEO + facts), revised; cover, diagram and screenshot done | None |
+| 12 | `swiftui-and-jetpack-compose-color-palette` (pubDate 2026-12-11) | Reviewed (SEO + facts), revised; cover, diagram and screenshot done | None |
+| 13 | `sync-a-color-palette-to-penpot-design-tokens` (pubDate 2026-12-15) | Reviewed (SEO + facts), revised; cover and diagram done | Penpot clip, by hand → [phase 3 bis](03b-blog-media.md) |
+| 14 | `ai-color-palette-generator-from-a-prompt` (pubDate 2026-12-18) | Reviewed (SEO + facts), revised; cover and diagram done | Screen Studio clip → [phase 3 bis](03b-blog-media.md) |
+| 15 | `color-palette-from-image` (pubDate 2026-12-22) | Reviewed (SEO + facts), revised; cover, diagram and screenshot done | Screen Studio clip → [phase 3 bis](03b-blog-media.md) |
 
 ## See also
 
@@ -95,3 +118,11 @@ Candidates for wave 2:
 | Date | Change |
 | ---- | ------ |
 | 2026-10-26 | Created |
+| 2026-11-03 | Implementation started: `pillar` front-matter field, automatic pillar → article cards, articles 1 and 5 drafted |
+| 2026-11-03 | Articles 3 and 6 drafted (pubDate 2026-11-10), pillar FAQ links added |
+| 2026-11-03 | Scheduled publishing (future `pubDate` hidden in production, daily rebuild) and conditional pillar FAQ links |
+| 2026-11-03 | Articles 2 and 4 drafted and reviewed; the AI post gets `/claude` as its pillar |
+| 2026-11-03 | Articles 8 and 11 drafted and reviewed |
+| 2026-11-04 | Wave 1 complete: articles 7, 9, 10, 12, 13, 14 and 15 drafted, reviewed and scheduled through 2026-12-22; platform-page FAQs support `article` links |
+| 2026-11-04 | Phase 3 marked done; home "Latest posts" section is a single-row modular grid (title fixed at 1/4, up to 3 posts sharing the remaining 3/4) |
+| 2026-11-04 | Remaining media (clips, Penpot and Claude desktop captures) moved to [phase 3 bis](03b-blog-media.md); screenshots of the web app done; first clip embedded |
