@@ -9,6 +9,7 @@ UI Color Palette web app (https://app.ui-color-palette.com) for blog articles.
 | `win.mjs` | A real visible Chromium window (app mode) + page→screen coordinates, for Screen Studio |
 | `mousectl.swift` | Moves and clicks the real cursor (needs the Accessibility permission of the host app) |
 | `scenario.template.mjs` | Template of a recorded scenario (READY / `go` / DONE protocol) |
+| `fetch-share.mjs` | Downloads the video behind a Screen Studio share link into `public/videos/` (the share page cannot be embedded) |
 
 ## Setup (in a temporary folder, never in the repo)
 

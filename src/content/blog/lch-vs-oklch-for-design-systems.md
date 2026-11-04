@@ -117,7 +117,7 @@ Every new palette starts in OKLCH. To change it, open the palette settings, or t
 
 The change applies at once and recomputes every shade. Your source colors and your scale stay as they are, so you can switch back and forth to compare.
 
-<!-- TODO(asset): Screen Studio clip, 10–15 s — open a palette with a blue source color in OKLCH; open the palette settings; pick LCH in the color space dropdown (zoom on it); the shades recompute; pick OKLCH again. Expected result: the pale blue shades lean toward purple in LCH and return to blue in OKLCH (check this on the real scale before recording; pick a source color around #2563EB if the drift is too subtle). Save as public/videos/lch-vs-oklch-for-design-systems-switch.mp4 -->
+[Switch a palette from OKLCH to LCH and back in UI Color Palette, and watch the pale blue shades change](/videos/lch-vs-oklch-for-design-systems-switch.mp4)
 
 ### 2 · Compare the pale blues
 

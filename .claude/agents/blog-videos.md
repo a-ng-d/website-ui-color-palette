@@ -77,5 +77,19 @@ Name the palette's color (Brand…) so the title bar does not read "Untitled".
 
 Per clip: project name and path, duration of the scenario, what it shows, anything that deviated
 from the TODO or from what the article says about the product (quote UI labels), whether the UICP
-preset was confirmed, and what the user must do next (apply the preset if needed, trim, export to
-`public/videos/<slug>-<what>.mp4`, then add the caption-link line to the article).
+preset was confirmed, and what the user must do next: apply the preset if needed, trim, then
+**Share link** in Screen Studio and give you the link.
+
+## From the share link to the article
+
+A Screen Studio share page cannot be embedded (it forbids framing, and its mp4 link is signed and
+expires after 2 hours). So you host the file on the site: when the user gives you a share link,
+
+1. `node scripts/capture/fetch-share.mjs <share-link> public/videos/<article-slug>-<what>.mp4`
+   (about 3 MB for 20 s; keep clips under 8 MB);
+2. replace the clip's `TODO(asset)` comment in the article by the caption-link line on its own
+   line: `[Caption describing what the video shows](/videos/<article-slug>-<what>.mp4)`;
+3. `npx astro check` and `npx astro build --force` (use `CONTEXT=deploy-preview` to see scheduled articles).
+
+The share title may carry another name than the project (the user can rename it): trust the
+article slug of the task, not the share title, and tell the user if they differ.
