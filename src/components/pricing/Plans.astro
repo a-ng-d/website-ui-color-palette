@@ -57,6 +57,20 @@ const arrow = (plan: (typeof plans)[number]) => plan.id === 'pro'
                       {variant.subtitle}
                     </p>
                   )}
+                  {variant.productId && !variant.priceOf && (
+                    <div
+                      class="plan__offer"
+                      data-offer={variant.productId}
+                      hidden
+                    >
+                      <Tag>
+                        <span data-offer-tag />
+                      </Tag>
+                      <p class="t-accent">
+                        <s data-offer-was /> <span data-offer-code />
+                      </p>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -109,17 +123,39 @@ const arrow = (plan: (typeof plans)[number]) => plan.id === 'pro'
 </section>
 
 <script>
-  // Embedded checkout. Without JS (or if anything fails) the button is a plain
-  // link to /api/checkout, which redirects to the hosted Polar checkout.
   import { PolarEmbedCheckout } from '@polar-sh/checkout/embed'
+  import { createChip, isRunning, loadOffers } from '@/scripts/offers'
+
+
+  loadOffers().then((offers) => {
+    for (const box of document.querySelectorAll<HTMLElement>('[data-offer]')) {
+      const offer = offers.find(
+        (o) => o.productId === box.dataset.offer && isRunning(o)
+      )
+      const period = box.closest<HTMLElement>('[data-tab]')?.dataset.tab
+      const tab = period
+        ? document.querySelector(`.tabs__list label[for="billing-${period}"]`)
+        : null
+      if (offer && tab && !tab.querySelector('.offer-chip'))
+        tab.append(createChip(`−${offer.percentOff}%`))
+    }
+  })
+
+  interface Offer {
+    productId: string
+    eventName: string
+    discountId: string
+    discountCode: string | null
+    percentOff: number
+    startsAt: string | null
+    endsAt: string | null
+  }
 
   const theme = () =>
     document.documentElement.dataset.mode === 'yelbolt-uicp-dark'
       ? 'dark'
       : 'light'
 
-  // The HTML carries USD prices; /api/prices returns every Polar currency. We pick the visitor's
-  // currency from their locale (same rules as the plugin) and keep USD on any failure.
   const CURRENCIES: Record<string, string> = {
     GB: 'gbp',
     CH: 'chf',
@@ -140,9 +176,6 @@ const arrow = (plan: (typeof plans)[number]) => plan.id === 'pro'
     ),
   }
 
-  // A browser set to plain "en"/"en-US" says nothing about where the visitor
-  // lives: the time zone does. Use the first language that names a region
-  // other than the US, then the time zone, then the primary language.
   const locale = navigator.languages?.[0] ?? navigator.language ?? 'en-US'
   const regionOf = (tag: string) => {
     try {
@@ -183,7 +216,12 @@ const arrow = (plan: (typeof plans)[number]) => plan.id === 'pro'
   fetch('/api/prices')
     .then((response) => (response.ok ? response.json() : null))
     .then(
-      (data: { prices?: Record<string, Record<string, number>> } | null) => {
+      (
+        data: {
+          prices?: Record<string, Record<string, number>>
+          offers?: Offer[]
+        } | null
+      ) => {
         if (!data?.prices) return
         const format = (cents: number) =>
           new Intl.NumberFormat(locale, {
@@ -192,18 +230,50 @@ const arrow = (plan: (typeof plans)[number]) => plan.id === 'pro'
             minimumFractionDigits: 0,
           }).format(cents / 100)
 
+        const now = Date.now()
+        const offerFor = (productId = '') =>
+          (data.offers ?? []).find(
+            (offer) =>
+              offer.productId === productId &&
+              (!offer.endsAt || now < Date.parse(offer.endsAt))
+          )
+
         for (const title of document.querySelectorAll<HTMLElement>(
           '[data-price]'
         )) {
           const base = data.prices?.[title.dataset.price ?? '']?.[currency]
           if (!base) continue
 
-          // /ultimate = N × /pro. Doubling a x.99 price gives x.98: keep the
-          // x.99 look, as in the USD prices.
           let cents = base * (Number(title.dataset.multiplier) || 1)
           if (cents % 100 === 98) cents += 1
 
           const months = Number(title.dataset.months) || 1
+
+          const box = title
+            .closest('.plan__price')
+            ?.querySelector<HTMLElement>('[data-offer]')
+          const offer = box ? offerFor(box.dataset.offer) : undefined
+          if (box && offer) {
+            const was = format(Math.floor(cents / months))
+            cents = Math.round(cents * (1 - offer.percentOff / 100))
+            const fill = (selector: string, text: string) => {
+              const element = box.querySelector(selector)
+              if (element) element.textContent = text
+            }
+            fill(
+              '[data-offer-tag]',
+              `${offer.eventName} → −${offer.percentOff}%`
+            )
+            fill('[data-offer-was]', was)
+            fill(
+              '[data-offer-code]',
+              offer.discountCode
+                ? `Code ${offer.discountCode} applied at checkout`
+                : 'Applied at checkout'
+            )
+            box.hidden = false
+          }
+
           title.textContent = format(Math.floor(cents / months))
 
           const note = title
@@ -255,6 +325,17 @@ const arrow = (plan: (typeof plans)[number]) => plan.id === 'pro'
     display: flex;
     flex-direction: column;
     gap: var(--space-gap-200);
+  }
+
+  .plan__offer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-gap-200);
+  }
+
+  .plan__offer[hidden] {
+    display: none;
   }
 
   .plans__cards {

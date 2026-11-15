@@ -130,7 +130,27 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
 </header>
 
 <script>
+  import {
+    createChip,
+    featuredOffer,
+    loadOffers,
+    offerLabel,
+  } from '@/scripts/offers'
+
   const header = document.querySelector<HTMLElement>('[data-header]')
+
+  const pricingLink = header?.querySelector<HTMLAnchorElement>(
+    '.header__links a[href="/pricing"]'
+  )
+  if (pricingLink)
+    loadOffers().then((offers) => {
+      const offer = featuredOffer(offers)
+      if (!offer) return
+      const group = document.createElement('span')
+      group.className = 'header__offer'
+      pricingLink.replaceWith(group)
+      group.append(pricingLink, createChip(offerLabel(offer)))
+    })
   const toggle = header?.querySelector<HTMLButtonElement>('[data-menu-toggle]')
   const themeToggles = header
     ? Array.from(
@@ -240,11 +260,27 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
   }
 
   .header__links :global([aria-current='page']) {
-    text-decoration: underline;
-    text-underline-offset: 6px;
+    position: relative;
   }
 
-  /* Toggles use the @unoff/ui tertiary button; only the caret is custom. */
+  .header__links :global([aria-current='page'])::after {
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    translate: -50% 0;
+    border-radius: 4px;
+    background-color: var(--site-ink);
+    width: 16px;
+    height: 4px;
+    content: '';
+  }
+
+  .header__links :global(.header__offer) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-gap-400);
+  }
+
   .header__dropdown-toggle :global(svg) {
     transition: transform var(--motion-duration-fast)
       var(--motion-easing-standard);
@@ -256,7 +292,6 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
     transform: rotate(180deg);
   }
 
-  /* The panel spans the header (the sticky header is its containing block). */
   .header__panel {
     display: grid;
     position: absolute;
@@ -354,8 +389,6 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
     .header__bar {
       border-radius: var(--site-radius-card);
       padding-right: var(--space-inset-400);
-      /* The first row (logo + actions) owns the bar height, so opening the
-         menu (second row) does not move it. */
       min-height: 0;
     }
 
@@ -377,7 +410,6 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
       display: none;
     }
 
-    /* Level 1: links aligned left, Resources opens a second level. */
     .header[data-enhanced]:has([aria-expanded='true']) .header__links {
       display: flex;
       flex-direction: column;
@@ -403,13 +435,11 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
       width: 100%;
     }
 
-    /* The caret points right: there is a second level. */
     .header__dropdown .header__dropdown-toggle :global(svg),
     .header__dropdown[open] .header__dropdown-toggle :global(svg) {
       transform: rotate(-90deg);
     }
 
-    /* Level 2: the stack takes the whole width, "back" chevron on the left. */
     .header__links:has(.header__dropdown[open])
       > :global(*:not(.header__dropdown)) {
       display: none;
