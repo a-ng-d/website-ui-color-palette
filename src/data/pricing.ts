@@ -11,7 +11,7 @@ import UsersIcon from '@lucide/astro/icons/users'
 import PlusIcon from '@lucide/astro/icons/plus'
 import LockOpenIcon from '@lucide/astro/icons/lock-open'
 import ContrastIcon from '@lucide/astro/icons/contrast'
-import LibraryIcon from '@lucide/astro/icons/library'
+import CoinsIcon from '@lucide/astro/icons/coins'
 import EyeIcon from '@lucide/astro/icons/eye'
 import FilePlusIcon from '@lucide/astro/icons/file-plus'
 import SquareCodeIcon from '@lucide/astro/icons/square-code'
@@ -94,11 +94,14 @@ export const plans: Plan[] = [
       cta: { label: 'Try it out', href: site.appUrl, variant: 'secondary' },
     },
     features: [
-      { icon: PaletteIcon, label: '2 palettes per document' },
+      { icon: PaletteIcon, label: '3 palettes per page or document' },
       { icon: PaintbrushIcon, label: '5 source colors per palette' },
-      { icon: CombineIcon, label: '6 custom stops per palette' },
+      { icon: CombineIcon, label: '8 custom stops per palette' },
       { icon: BlendIcon, label: '2 color modes' },
-      { icon: LibraryIcon, label: 'Sync with local libraries' },
+      {
+        icon: CoinsIcon,
+        label: '500 credits per month for sync, documents, simulation, and AI',
+      },
       { icon: BracesIcon, label: 'CSS export' },
       { icon: UsersIcon, label: 'Community support' },
     ],
@@ -142,8 +145,9 @@ export const plans: Plan[] = [
       { icon: PlusIcon, label: 'All /basic features, plus:' },
       {
         icon: LockOpenIcon,
-        label: 'Unlimited palettes, colors, stops, and modes',
+        label: 'Unlimited palettes, colors, and modes, up to 24 custom stops',
       },
+      { icon: CoinsIcon, label: 'Unlimited credits' },
       { icon: ContrastIcon, label: 'Advanced accessibility tools' },
       { icon: EyeIcon, label: 'Every vision simulation' },
       { icon: FilePlusIcon, label: 'Generated documentation' },
@@ -199,8 +203,8 @@ export const compareColumns = ['/basic', '/pro', '/ultimate'] as const
 
 export const compareRows: CompareRow[] = [
   {
-    feature: 'Palette per document',
-    values: ['2 palettes', 'Unlimited', 'Unlimited'],
+    feature: 'Palettes per page or document',
+    values: ['3 palettes', 'Unlimited', 'Unlimited'],
   },
   {
     feature: 'Source colors per palette',
@@ -208,11 +212,15 @@ export const compareRows: CompareRow[] = [
   },
   {
     feature: 'Custom stops per palette',
-    values: ['6 custom stops', 'Unlimited', 'Unlimited'],
+    values: ['8 custom stops', '24 custom stops', '24 custom stops'],
   },
   {
     feature: 'Color modes',
     values: ['2 color modes', 'Unlimited', 'Unlimited'],
+  },
+  {
+    feature: 'Credits',
+    values: ['500 per month', 'Unlimited', 'Unlimited'],
   },
   {
     feature: 'Lightness presets',
@@ -227,8 +235,19 @@ export const compareRows: CompareRow[] = [
   { feature: 'Accessibility report', values: [false, true, true] },
   { feature: 'Vision simulations', values: ['Protanomaly', 'All 8', 'All 8'] },
   { feature: 'Code generation', values: ['CSS', true, true] },
-  { feature: 'Sync with local libraries', values: [true, true, true] },
-  { feature: 'Documentation generation', values: [false, true, true] },
+  {
+    feature: 'Sync with local libraries',
+    values: ['With credits', true, true],
+  },
+  {
+    feature: 'Documentation generation',
+    values: ['With credits', true, true],
+  },
+  {
+    feature: 'Palette simulation on a selection',
+    values: ['With credits', true, true],
+  },
+  { feature: 'AI color generation', values: ['With credits', true, true] },
   { feature: 'Publication', values: [true, true, true] },
   { feature: 'Support', values: ['Community', 'Chat', 'Dedicated'] },
   { feature: 'Onboarding', values: [false, false, 'Custom'] },

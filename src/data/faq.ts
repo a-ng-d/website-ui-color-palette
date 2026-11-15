@@ -38,7 +38,7 @@ export const homeFaq: FaqItem[] = [
   },
   {
     question: 'Is there a free plan?',
-    answer: `Yes! The /basic plan is free forever — 2 palettes per document, 5 source colors, 6 stops, 2 color modes, and CSS export. Upgrade to /pro for unlimited everything and full code export whenever you're ready. See ${htmlLink('/pricing', 'Pricing')}.`,
+    answer: `Yes! The /basic plan is free forever — 3 palettes per page or document, 5 source colors, 8 custom stops, 2 color modes, and CSS export. Upgrade to /pro to lift the caps (up to 24 custom stops) and get full code export whenever you're ready. See ${htmlLink('/pricing', 'Pricing')}.`,
   },
   {
     question: "What should I do if I'm stuck and need help?",
@@ -81,6 +81,22 @@ export const pricingFaq: FaqCategory[] = [
         question:
           "Would I be refunded if my subscription isn't what I expected?",
         answer: `Refunds are handled case by case, in line with our ${htmlLink(links.sale, 'Terms of Sale')}. You can cancel anytime on ${polar} to stop future renewals; for a refund, contact us at ${mail} with your order details and we'll review your request.`,
+      },
+    ],
+  },
+  {
+    id: 'credits',
+    label: 'Credits',
+    items: [
+      {
+        question: 'How do credits work on the free plan?',
+        answer:
+          "On <strong>/basic</strong>, you get <strong>500 credits (cdts) every month</strong>; on <strong>/pro</strong>, credits are unlimited. You pay for what an action actually produces, so a small palette or selection costs little and a large one costs more. Before an action, its button shows an estimate (for example <strong>≈ 48 cdts</strong>); if your balance is lower, the action is locked. After it, only what really changed is charged: an up-to-date style, an unchanged layer or a failed action costs nothing. Credits renew every month and unused ones don't carry over.",
+      },
+      {
+        question: 'Which actions use credits?',
+        answer:
+          'Actions that write something durable into your file or call the AI: <strong>sync with styles</strong> (2 cdts per style), <strong>sync with variables or tokens</strong> (4 cdts each), <strong>generating a document</strong> (4, 6 or 8 cdts per source color, in each color mode, for a simple palette, a detailed palette or a color sheet), <strong>simulating the palette on a selection</strong> (2 cdts per layer that changes color) and <strong>generating colors with AI</strong> (1 cdt per 40 tokens, usually around 40 cdts). Creating palettes, importing them, extracting colors from an image and building color harmonies are always free, and so is the CSS export.',
       },
     ],
   },
