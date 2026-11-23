@@ -165,6 +165,7 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
     toggle.hidden = false
     toggle.addEventListener('click', () => {
       const open = toggle.getAttribute('aria-expanded') !== 'true'
+      header.dataset.animate = ''
       toggle.setAttribute('aria-expanded', String(open))
       if (!open) dropdowns.forEach((d) => (d.open = false))
     })
@@ -391,9 +392,18 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
       min-height: 0;
     }
 
-    /* A full pill would clip a stacked list: it only stays closed. */
-    .header:not([data-enhanced]) .header__bar,
-    .header:has([aria-expanded='true']) .header__bar {
+    /* A pill only while closed. Any radius above half the closed bar's height
+       renders as a full pill, and unlike `radius-full` it can be transitioned. */
+    .header:not([data-enhanced]) .header__bar {
+      border-radius: var(--site-radius-card);
+    }
+
+    .header[data-enhanced] .header__bar {
+      row-gap: 0;
+      border-radius: var(--control-size-1600);
+    }
+
+    .header[data-enhanced]:has([aria-expanded='true']) .header__bar {
       border-radius: var(--site-radius-card);
     }
 
@@ -411,20 +421,55 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
       display: none;
     }
 
+    /* Closed: kept in the layout at zero height, hidden from focus and from
+       assistive tech, so that its height can animate. Browsers without
+       `interpolate-size` open it without the height transition. */
     .header[data-enhanced] .header__links {
-      display: none;
+      interpolate-size: allow-keywords;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      visibility: hidden;
+      opacity: 0;
+      padding-block: 0;
+      width: 100%;
+      height: 0;
+      overflow: hidden;
+      overscroll-behavior: contain;
+      scrollbar-width: none;
+      text-align: left;
     }
 
     .header[data-enhanced]:has([aria-expanded='true']) .header__links {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding-bottom: var(--space-inset-200);
-      width: 100%;
+      visibility: visible;
+      opacity: 1;
+      padding-block: var(--space-inset-200);
+      height: auto;
       max-height: calc(100dvh - 7rem);
       overflow-y: auto;
-      overscroll-behavior: contain;
-      text-align: left;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .header[data-animate] .header__bar {
+        transition: border-radius var(--duration-xlarge) var(--easing-emphasized);
+      }
+
+      .header[data-animate][data-enhanced] .header__links {
+        transition:
+          height var(--duration-xlarge) var(--easing-emphasized),
+          padding var(--duration-xlarge) var(--easing-emphasized),
+          opacity var(--duration-large) var(--easing-standard),
+          visibility 0s linear var(--duration-xlarge);
+      }
+
+      .header[data-animate][data-enhanced]:has([aria-expanded='true'])
+        .header__links {
+        transition:
+          height var(--duration-xlarge) var(--easing-emphasized),
+          padding var(--duration-xlarge) var(--easing-emphasized),
+          opacity var(--duration-large) var(--easing-standard),
+          visibility 0s;
+      }
     }
 
     .header__links :global(.text-button--primary) {
