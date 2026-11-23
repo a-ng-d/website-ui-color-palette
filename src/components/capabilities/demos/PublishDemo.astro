@@ -4,6 +4,7 @@ import Button from '../kit/Button.astro'
 import CheckIcon from '@lucide/astro/icons/check'
 import LoaderIcon from '@lucide/astro/icons/loader'
 import Share2Icon from '@lucide/astro/icons/share-2'
+import { logos } from '@/data/logos'
 import { platforms } from '@/data/platforms'
 import { shadesOf } from '@/scripts/demos/palette'
 
@@ -65,10 +66,10 @@ const shades = shadesOf({ name: 'primary', hue: 264, chroma: 0.16 })
       >
         <span
           class="tool__tile"
-          style={`--tile:${tool.tile}`}
+          style={`--tile:${logos[tool.id].tile}`}
         >
           <img
-            src={tool.logo.src}
+            src={logos[tool.id].src.src}
             alt=""
             width="20"
             height="20"
