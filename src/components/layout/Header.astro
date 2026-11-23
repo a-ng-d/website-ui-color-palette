@@ -451,7 +451,8 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
 
     @media (prefers-reduced-motion: no-preference) {
       .header[data-animate] .header__bar {
-        transition: border-radius var(--duration-xlarge) var(--easing-emphasized);
+        transition: border-radius var(--duration-xlarge) var(--easing-emphasized)
+          var(--duration-medium);
       }
 
       .header[data-animate][data-enhanced] .header__links {
@@ -467,7 +468,8 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
         transition:
           height var(--duration-xlarge) var(--easing-emphasized),
           padding var(--duration-xlarge) var(--easing-emphasized),
-          opacity var(--duration-large) var(--easing-standard),
+          opacity var(--duration-large) var(--easing-standard)
+            var(--duration-small),
           visibility 0s;
       }
     }
