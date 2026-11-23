@@ -1,4 +1,6 @@
-# UI Color Palette — website
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f7459ab5-a22e-4681-ac06-701b205b2b2f/deploy-status)](https://app.netlify.com/projects/website-ui-color-palette/deploys)
+# UI Color Palette — Website
 
 Source of [ui-color-palette.com](https://ui-color-palette.com): a static site built with [Astro](https://astro.build) and deployed on Netlify. It replaces the Figma Sites version.
 
