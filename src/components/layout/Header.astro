@@ -392,15 +392,15 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
       min-height: 0;
     }
 
-    /* A pill only while closed. Any radius above half the closed bar's height
-       renders as a full pill, and unlike `radius-full` it can be transitioned. */
+    /* A pill only while closed: half the closed bar's height, so the radius
+       change is visible from its first frame (`radius-full` cannot transition). */
     .header:not([data-enhanced]) .header__bar {
       border-radius: var(--site-radius-card);
     }
 
     .header[data-enhanced] .header__bar {
       row-gap: 0;
-      border-radius: var(--control-size-1600);
+      border-radius: calc(var(--control-size-1600) / 2);
     }
 
     .header[data-enhanced]:has([aria-expanded='true']) .header__bar {
@@ -463,13 +463,19 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
           visibility 0s linear var(--duration-xlarge);
       }
 
+      .header[data-animate]:has([aria-expanded='true']) .header__bar {
+        transition-delay: 0s;
+      }
+
       .header[data-animate][data-enhanced]:has([aria-expanded='true'])
         .header__links {
         transition:
-          height var(--duration-xlarge) var(--easing-emphasized),
-          padding var(--duration-xlarge) var(--easing-emphasized),
+          height var(--duration-xlarge) var(--easing-emphasized)
+            var(--duration-medium),
+          padding var(--duration-xlarge) var(--easing-emphasized)
+            var(--duration-medium),
           opacity var(--duration-large) var(--easing-standard)
-            var(--duration-small),
+            var(--duration-large),
           visibility 0s;
       }
     }
