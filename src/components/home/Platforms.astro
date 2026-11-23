@@ -1,4 +1,5 @@
 ---
+import LogoTile from '@/components/ui/LogoTile.astro'
 import { platforms } from '@/data/platforms'
 ---
 
@@ -27,24 +28,13 @@ import { platforms } from '@/data/platforms'
       >
         <div class="platform__illustration">
           <figure class="platform__thumbnail thumbnail illustration-grid">
-            <span
-              class="platform__tile"
-              style={`--tile:${platform.tile};--tilt:${platform.tilt}deg`}
-            >
-              <img
-                class="platform__logo"
-                src={platform.logo.src}
-                width={platform.logo.width}
-                height={platform.logo.height}
-                alt=""
-                loading="lazy"
-              />
-              <span
-                class="platform__shards shards"
-                aria-hidden="true"
-                style={`inset:${platform.shardsInset};mask-image:url(${platform.shards.src});--sparkle-delay:${index * 0.35}s`}
-              />
-            </span>
+            <LogoTile
+              logo={platform.id}
+              tilt={platform.tilt}
+              index={index}
+              shard={platform.shard}
+              decorative
+            />
           </figure>
         </div>
         <div class="platform__info">
@@ -103,31 +93,6 @@ import { platforms } from '@/data/platforms'
     padding: var(--space-inset-800);
     min-height: 200px;
     overflow: clip;
-  }
-
-  .platform__tile {
-    display: flex;
-    position: relative;
-    justify-content: center;
-    align-items: center;
-    transform: rotate(var(--tilt));
-    border: var(--stroke-width-thin) solid rgb(0 0 0 / 0.1);
-    border-radius: var(--site-radius-card);
-    background-color: var(--tile);
-    padding: var(--space-inset-300);
-    width: var(--control-size-1600);
-    height: var(--control-size-1600);
-  }
-
-  .platform__logo {
-    width: auto;
-    max-width: 100%;
-    height: auto;
-    max-height: 100%;
-  }
-
-  .platform__shards {
-    position: absolute;
   }
 
   .platform__info {

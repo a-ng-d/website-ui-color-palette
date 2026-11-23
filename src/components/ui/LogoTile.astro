@@ -1,0 +1,47 @@
+---
+import { logos, shards, type LogoId } from '@/data/logos'
+
+interface Props {
+  logo: LogoId
+  /** Degrees. */
+  tilt?: number
+  /** px. */
+  size?: number
+  /** Position in a row: picks the shard shape and phase-shifts the sparkle. */
+  index?: number
+  /** Index in `shards`, when the design fixes the shape instead of the position. */
+  shard?: number
+  /** Decorative when the card already names the brand. */
+  decorative?: boolean
+}
+
+const {
+  logo,
+  tilt = 0,
+  size = 64,
+  index = 0,
+  shard = index,
+  decorative = false,
+} = Astro.props
+const item = logos[logo]
+const ray = shards[shard % shards.length]
+---
+
+<span
+  class="logo-tile"
+  style={`--tile:${item.tile};--tilt:${tilt}deg;--logo-tile-size:${size}px;--logo-tile-scale:${size / 64}`}
+>
+  <span
+    class="shards"
+    aria-hidden="true"
+    style={`inset:${ray.inset};mask-image:url(${ray.src.src});--sparkle-delay:${index * 0.35}s`}
+  ></span>
+  <img
+    src={item.src.src}
+    alt={decorative ? '' : `${item.name} logo`}
+    width={item.src.width}
+    height={item.src.height}
+    loading="lazy"
+    decoding="async"
+  />
+</span>
