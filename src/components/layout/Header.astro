@@ -387,9 +387,14 @@ const current = Astro.url.pathname.replace(/\.html$/, '')
 
   @media (max-width: 799.98px) {
     .header__bar {
-      border-radius: var(--site-radius-card);
       padding-right: var(--space-inset-400);
       min-height: 0;
+    }
+
+    /* A full pill would clip a stacked list: it only stays closed. */
+    .header:not([data-enhanced]) .header__bar,
+    .header:has([aria-expanded='true']) .header__bar {
+      border-radius: var(--site-radius-card);
     }
 
     .header__logo,
