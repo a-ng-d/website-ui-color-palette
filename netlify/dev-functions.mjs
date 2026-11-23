@@ -1,11 +1,11 @@
 /**
  * Serves the Netlify functions (netlify/functions/*) from the Astro dev
- * server, so `/api/prices` and `/api/checkout` work with `npm run dev` without
- * the Netlify CLI. Dev only: in production Netlify serves them. (`astro
- * preview` is a static server and does not run them: use `netlify dev`.)
+ * server, so `/api/*` works with `npm run dev` without the Netlify CLI. Dev
+ * only: in production Netlify serves them. (`astro preview` is a static server
+ * and does not run them: use `netlify dev`.)
  *
  * The routes come from each function's `config.path`. Environment variables
- * (POLAR_*) are read from .env / .env.local, like Netlify does.
+ * are read from .env / .env.local, like Netlify does.
  */
 import { readdirSync, statSync } from 'node:fs'
 import { fileURLToPath, pathToFileURL } from 'node:url'
