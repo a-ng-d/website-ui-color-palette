@@ -9,6 +9,7 @@ export {}
  * - `data-inview` follows visibility, so ambient loops pause off screen.
  */
 const REVEAL = [
+  '.header__bar',
   '.card',
   '.surface-card',
   '.shade-grid__area',

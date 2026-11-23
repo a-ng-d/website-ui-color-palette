@@ -67,6 +67,19 @@
   }
 }
 
+/* The header bar enters as the first of the batch, with the same scale-in but
+   no cover: its dropdowns are positioned against the header, so it must not
+   get `position`/`overflow`, nor keep a `scale` once revealed. */
+.motion .header__bar:not([data-revealed]) {
+  scale: 0.94;
+  opacity: 0;
+}
+
+.motion .header__bar[data-revealed] {
+  animation: card-in var(--reveal-scale-duration) var(--easing-emphasized)
+    var(--reveal-delay) backwards;
+}
+
 .motion
   :is(
     .surface-card,

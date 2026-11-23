@@ -31,6 +31,9 @@ and `reveal.ts` (`REVEAL`): `.card, .surface-card, .shade-grid__area, .platforms
 The content is never moved, blurred or removed: it is painted from the start and only
 covered (crawlers, screen readers and LCP are unaffected by the reveal).
 
+- **Header bar**: not in the REVEAL list (its dropdowns forbid `position`/`overflow`). `reveal.ts` still
+  observes `.header__bar` so it enters first in the batch, with the scale-in only (`motion.css`, no cover).
+
 ### Adding a new revealable element
 
 - If it has one of the classes above, nothing to do.
